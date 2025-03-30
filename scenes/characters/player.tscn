@@ -1,0 +1,134 @@
+[gd_scene load_steps=18 format=3 uid="uid://be8s6fsuvru6m"]
+
+[ext_resource type="Script" path="res://scripts/characters/player/player.gd" id="1_nibrf"]
+[ext_resource type="Texture2D" uid="uid://mxri75br078t" path="res://sprites/characters/player/Front animations/spr_player_front_idle.png" id="2_gbdbw"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6wds6"]
+atlas = ExtResource("2_gbdbw")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qgksk"]
+atlas = ExtResource("2_gbdbw")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_epjxu"]
+atlas = ExtResource("2_gbdbw")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jdr5h"]
+atlas = ExtResource("2_gbdbw")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ju2fp"]
+atlas = ExtResource("2_gbdbw")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_87xf1"]
+atlas = ExtResource("2_gbdbw")
+region = Rect2(320, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r08ls"]
+atlas = ExtResource("2_gbdbw")
+region = Rect2(384, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_67gue"]
+atlas = ExtResource("2_gbdbw")
+region = Rect2(448, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7acyl"]
+atlas = ExtResource("2_gbdbw")
+region = Rect2(512, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i3jpk"]
+atlas = ExtResource("2_gbdbw")
+region = Rect2(576, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c0wl1"]
+atlas = ExtResource("2_gbdbw")
+region = Rect2(640, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8pdyo"]
+atlas = ExtResource("2_gbdbw")
+region = Rect2(704, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_6myrh"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6wds6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qgksk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_epjxu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jdr5h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ju2fp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_87xf1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r08ls")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_67gue")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7acyl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i3jpk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c0wl1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8pdyo")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 8.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"new_animation",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_84ouj"]
+size = Vector2(13, 21)
+
+[sub_resource type="GDScript" id="GDScript_gqdda"]
+script/source = "extends CollisionShape2D
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pass
+"
+
+[node name="player" type="CharacterBody2D"]
+script = ExtResource("1_nibrf")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+position = Vector2(4.76837e-07, 4.76837e-07)
+scale = Vector2(1.17188, 1.17188)
+sprite_frames = SubResource("SpriteFrames_6myrh")
+animation = &"idle"
+frame_progress = 0.876694
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-0.5, 3.5)
+shape = SubResource("RectangleShape2D_84ouj")
+script = SubResource("GDScript_gqdda")
