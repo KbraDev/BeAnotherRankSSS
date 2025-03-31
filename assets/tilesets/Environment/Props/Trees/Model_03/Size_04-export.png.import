@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bgaek1rnfvgnx"
-path="res://.godot/imported/Size_03-export.png-5a0d36fd7bf1db52db75594b7716d956.ctex"
+uid="uid://bdncih52l1yf1"
+path="res://.godot/imported/Size_04-export.png-73b0dd72dd709a00878c23b3f425a7f8.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/tilesets/Environment/Props/Static/Trees/Model_03/Size_03-export.png"
-dest_files=["res://.godot/imported/Size_03-export.png-5a0d36fd7bf1db52db75594b7716d956.ctex"]
+source_file="res://assets/tilesets/Environment/Props/Trees/Model_03/Size_04-export.png"
+dest_files=["res://.godot/imported/Size_04-export.png-73b0dd72dd709a00878c23b3f425a7f8.ctex"]
 
 [params]
 

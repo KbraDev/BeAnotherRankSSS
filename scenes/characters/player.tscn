@@ -101,7 +101,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_84ouj"]
-size = Vector2(13, 21)
+size = Vector2(15, 23)
 
 [sub_resource type="GDScript" id="GDScript_gqdda"]
 script/source = "extends CollisionShape2D
@@ -122,13 +122,12 @@ script = ExtResource("1_nibrf")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
-position = Vector2(4.76837e-07, 4.76837e-07)
-scale = Vector2(1.17188, 1.17188)
+scale = Vector2(1.30469, 1.30469)
 sprite_frames = SubResource("SpriteFrames_6myrh")
 animation = &"idle"
 frame_progress = 0.876694
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-0.5, 3.5)
+position = Vector2(-0.5, 4.5)
 shape = SubResource("RectangleShape2D_84ouj")
 script = SubResource("GDScript_gqdda")
