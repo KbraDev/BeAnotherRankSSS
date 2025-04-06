@@ -23,6 +23,10 @@ folder_colors={
 "res://sprites/": "green"
 }
 
+[global_group]
+
+player=""
+
 [input]
 
 up={

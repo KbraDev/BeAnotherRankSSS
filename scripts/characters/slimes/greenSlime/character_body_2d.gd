@@ -2,11 +2,15 @@ extends CharacterBody2D ## GREEN SLIME
 
 
 # Stats
-@export var speed: float = 50 
+@export var speed: float = 50 # Velocidad normal
+@export var panic_speed = 120 # velocidad en estado de panico
 @export var idle_time: float = 4.0 # Tiempo en reposo
 @export var move_time: float = 5.0 # Tiempo moviendose
 
 @onready var animation = $AnimatedSprite2D
+@onready var vision_area = $VisionArea
+
+var player: Node2D = null
 
 # Variables de movimiento
 var direction: Vector2 = Vector2.ZERO
@@ -30,8 +34,15 @@ func _process(delta: float) -> void:
 			velocity = direction * speed
 			if timer >= move_time:
 				start_idle()
-				
-	var collision = move_and_slide()
+		"panic":
+			if player:
+				var flee_direction = (global_position - player.global_position).normalized()
+				velocity = flee_direction * panic_speed
+				update_last_direction(flee_direction)
+			else: 
+				start_idle()
+	
+	move_and_slide()
 	
 func start_idle():
 	state = "idle"
@@ -44,6 +55,11 @@ func start_moving():
 	set_random_direction()
 	animation.play("walk_" + last_direction)
 	
+func start_panic():
+	state = "panic"
+	timer = 0
+	animation.play("run_" + last_direction)
+
 func set_random_direction():
 	var angle = randf() * TAU
 	direction = Vector2(cos(angle), sin(angle)).normalized()
@@ -54,3 +70,20 @@ func set_random_direction():
 	else: 
 		last_direction = "front" if direction.y > 0 else "back"
 	
+
+func  update_last_direction(dir: Vector2):
+	if abs(dir.x) > abs(dir.y):
+		last_direction = "right_side" if dir.x > 0 else "left_side"
+	else: 
+		last_direction = "front" if dir.y > 0 else "back"
+
+func _on_vision_area_body_entered(body: Node2D) -> void:
+	if body.is_in_group("player"):
+		player = body
+		start_panic()
+
+
+func _on_vision_area_body_exited(body: Node2D) -> void:
+	if body.is_in_group("player"):
+		player = null
+		start_idle()

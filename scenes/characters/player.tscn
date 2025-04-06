@@ -793,7 +793,7 @@ func _process(delta: float) -> void:
 	pass
 "
 
-[node name="player" type="CharacterBody2D"]
+[node name="player" type="CharacterBody2D" groups=["player"]]
 script = ExtResource("1_nibrf")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
