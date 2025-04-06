@@ -440,12 +440,14 @@ animations = [{
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_gf0xv"]
+radius = 7.0
 
 [node name="greenSlime" type="CharacterBody2D"]
+position = Vector2(146, 71)
 script = ExtResource("1_6ycib")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-scale = Vector2(1.4375, 1.4375)
+scale = Vector2(0.92969, 0.92969)
 sprite_frames = SubResource("SpriteFrames_8botf")
 animation = &"walk_right_side"
 
