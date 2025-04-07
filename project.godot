@@ -26,6 +26,7 @@ folder_colors={
 [global_group]
 
 player=""
+enemies=""
 
 [input]
 

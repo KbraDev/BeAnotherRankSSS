@@ -800,7 +800,7 @@ script = ExtResource("1_nibrf")
 texture_filter = 1
 scale = Vector2(1.30469, 1.30469)
 sprite_frames = SubResource("SpriteFrames_6myrh")
-animation = &"attack_right_side"
+animation = &"attack_front"
 frame = 6
 frame_progress = 1.0
 
@@ -808,3 +808,8 @@ frame_progress = 1.0
 position = Vector2(-0.5, 4.5)
 shape = SubResource("RectangleShape2D_84ouj")
 script = SubResource("GDScript_gqdda")
+
+[node name="attack_ray" type="RayCast2D" parent="."]
+scale = Vector2(6, 1)
+enabled = false
+target_position = Vector2(0, 34)

@@ -3,12 +3,14 @@ extends CharacterBody2D ## GREEN SLIME
 
 # Stats
 @export var speed: float = 50 # Velocidad normal
-@export var panic_speed = 120 # velocidad en estado de panico
+@export var panic_speed = 100 # velocidad en estado de panico
 @export var idle_time: float = 4.0 # Tiempo en reposo
 @export var move_time: float = 5.0 # Tiempo moviendose
 
 @onready var animation = $AnimatedSprite2D
 @onready var vision_area = $VisionArea
+
+@export var health: float = 10.0
 
 var player: Node2D = null
 
@@ -87,3 +89,24 @@ func _on_vision_area_body_exited(body: Node2D) -> void:
 	if body.is_in_group("player"):
 		player = null
 		start_idle()
+		
+
+func take_damage(amount: float) -> void:
+	if state == "dead":
+		return # no recibe mas danio si esta muerto
+	
+	animation.play("hurt_" + last_direction)
+	health -= amount
+	print("Slime recibio dano. Vida restante: ", health)
+	
+	if health <= 0:
+		die()
+	
+func die():
+	state = "dead"
+	velocity = Vector2.ZERO
+	animation.play("die_" + last_direction)
+	
+	await get_tree().create_timer(1.5).timeout
+	
+	queue_free()
