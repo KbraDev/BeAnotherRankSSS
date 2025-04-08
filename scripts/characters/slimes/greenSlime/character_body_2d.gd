@@ -9,6 +9,8 @@ extends CharacterBody2D ## GREEN SLIME
 
 @onready var animation = $AnimatedSprite2D
 @onready var vision_area = $VisionArea
+@onready var health_bar = $HealthBar
+
 
 @export var health: float = 10.0
 
@@ -98,6 +100,9 @@ func take_damage(amount: float) -> void:
 	animation.play("hurt_" + last_direction)
 	health -= amount
 	print("Slime recibio dano. Vida restante: ", health)
+	
+	health_bar.value = health
+	health_bar.show_for_a_while()
 	
 	if health <= 0:
 		die()

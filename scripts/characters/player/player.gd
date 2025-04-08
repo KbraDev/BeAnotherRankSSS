@@ -107,6 +107,6 @@ func _process(delta: float) -> void:
 	if attack_ray.enabled and attack_ray.is_colliding():
 		var target = attack_ray.get_collider()
 		if target.is_in_group("enemies"):
-			target.take_damage(3)
+			target.take_damage(2)
 			attack_ray.enabled = false
 			print("golpe a: ", target.name)
