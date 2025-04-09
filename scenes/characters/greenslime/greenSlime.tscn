@@ -1153,7 +1153,7 @@ animations = [{
 radius = 7.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_skkqj"]
-radius = 47.0
+radius = 38.0132
 
 [node name="greenSlime" type="CharacterBody2D" groups=["enemies"]]
 position = Vector2(146, 71)

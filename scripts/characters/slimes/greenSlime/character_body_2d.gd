@@ -3,7 +3,7 @@ extends CharacterBody2D ## GREEN SLIME
 
 # Stats
 @export var speed: float = 50 # Velocidad normal
-@export var panic_speed = 100 # velocidad en estado de panico
+@export var panic_speed = 80 # velocidad en estado de panico
 @export var idle_time: float = 4.0 # Tiempo en reposo
 @export var move_time: float = 5.0 # Tiempo moviendose
 

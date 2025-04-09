@@ -810,6 +810,6 @@ shape = SubResource("RectangleShape2D_84ouj")
 script = SubResource("GDScript_gqdda")
 
 [node name="attack_ray" type="RayCast2D" parent="."]
-scale = Vector2(6, 1)
+scale = Vector2(15, 1)
 enabled = false
 target_position = Vector2(0, 34)
