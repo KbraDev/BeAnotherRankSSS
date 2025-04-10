@@ -1,7 +1,7 @@
 extends CharacterBody2D   ## Player
 
 const SPEED = 150.0
-const ATTACK_COOLDOWN = 0.8 # Tiempo entre cada ataque
+const ATTACK_COOLDOWN = 0.4 # Tiempo entre cada ataque
 
 @onready var attack_ray = $attack_ray
 @onready var animation = $AnimatedSprite2D
