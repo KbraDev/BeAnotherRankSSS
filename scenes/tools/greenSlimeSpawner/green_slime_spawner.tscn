@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://cp6tcgnryblkm"]
+
+[ext_resource type="Script" path="res://scenes/tools/greenSlimeSpawner/scripts/green_slime_spawner.gd" id="1_j30e8"]
+[ext_resource type="PackedScene" uid="uid://34rn42brxq64" path="res://scenes/characters/greenslime/greenSlime.tscn" id="2_lnut5"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_8dmv3"]
+radius = 187.024
+
+[node name="GreenSlimeSpawner" type="Area2D"]
+position = Vector2(224, 103)
+script = ExtResource("1_j30e8")
+slime_scene = ExtResource("2_lnut5")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_8dmv3")
+debug_color = Color(0.177333, 0.607444, 0.593744, 0.42)

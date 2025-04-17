@@ -3,7 +3,7 @@
 [ext_resource type="TileSet" uid="uid://b5hv8dt77b7j5" path="res://assets/tilesets/terrain.tres" id="1_2u8v6"]
 [ext_resource type="TileSet" uid="uid://df2ewgbh7ofxg" path="res://assets/tilesets/houses.tres" id="2_gdhpg"]
 [ext_resource type="PackedScene" uid="uid://caxi8icj50uuv" path="res://scenes/world/towns/olid_town/gremio.tscn" id="2_gswpd"]
-[ext_resource type="PackedScene" uid="uid://be8s6fsuvru6m" path="res://scenes/characters/player.tscn" id="3_0gjec"]
+[ext_resource type="PackedScene" uid="uid://be8s6fsuvru6m" path="res://scenes/characters/player/player.tscn" id="3_0gjec"]
 [ext_resource type="TileSet" uid="uid://bj24uhrd5jao7" path="res://assets/tilesets/vegetation.tres" id="3_c4co0"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_he7ee"]
