@@ -11,6 +11,7 @@ extends CharacterBody2D ## GREEN SLIME
 @onready var vision_area = $VisionArea
 @onready var health_bar = $HealthBar
 
+signal slime_died
 
 @export var health: float = 10.0
 
@@ -114,4 +115,5 @@ func die():
 	
 	await get_tree().create_timer(1.5).timeout
 	
+	emit_signal("slime_died")
 	queue_free()
