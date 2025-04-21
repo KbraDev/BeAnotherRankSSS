@@ -1,11 +1,6 @@
-[gd_resource type="TileSet" load_steps=15 format=3 uid="uid://df2ewgbh7ofxg"]
+[gd_resource type="TileSet" load_steps=10 format=3 uid="uid://df2ewgbh7ofxg"]
 
 [ext_resource type="Texture2D" uid="uid://brx1wxmamsl7g" path="res://assets/tilesets/Environment/Structures/buildingsheet.png" id="1_cy0wf"]
-[ext_resource type="Texture2D" uid="uid://blmq7ok3gtj5o" path="res://assets/tilesets/Environment/Structures/Buildings/Floors.png" id="2_cyerp"]
-[ext_resource type="Texture2D" uid="uid://cyaoef7j7ildx" path="res://assets/tilesets/Environment/Structures/Buildings/Props.png" id="3_uwcdo"]
-[ext_resource type="Texture2D" uid="uid://cv4rcy4fjhqkm" path="res://assets/tilesets/Environment/Structures/Buildings/Roofs.png" id="4_q6ym2"]
-[ext_resource type="Texture2D" uid="uid://cc8v5r7laauoh" path="res://assets/tilesets/Environment/Structures/Buildings/Shadows.png" id="5_l5rpi"]
-[ext_resource type="Texture2D" uid="uid://b4652uam5fopx" path="res://assets/tilesets/Environment/Structures/Buildings/Walls.png" id="6_c4avl"]
 [ext_resource type="Texture2D" uid="uid://ctnxhwwaetjuj" path="res://assets/tilesets/pixelrium/Sprites/Tileset/spr_grass_tileset.png" id="7_1yoeh"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lbn6g"]
@@ -3054,7 +3049,6 @@ texture = ExtResource("1_cy0wf")
 89:61/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5tlgf"]
-texture = ExtResource("2_cyerp")
 0:0/0 = 0
 1:0/0 = 0
 2:0/0 = 0
@@ -3066,7 +3060,6 @@ texture = ExtResource("2_cyerp")
 2:2/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_b6rst"]
-texture = ExtResource("3_uwcdo")
 0:1/0 = 0
 1:1/0 = 0
 2:1/0 = 0
@@ -3203,7 +3196,6 @@ texture = ExtResource("3_uwcdo")
 3:15/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_w4kwv"]
-texture = ExtResource("4_q6ym2")
 3:0/0 = 0
 4:0/0 = 0
 11:0/0 = 0
@@ -3429,7 +3421,6 @@ texture = ExtResource("4_q6ym2")
 2:18/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_oisyt"]
-texture = ExtResource("5_l5rpi")
 0:0/0 = 0
 1:0/0 = 0
 2:0/0 = 0
@@ -3463,7 +3454,6 @@ texture = ExtResource("5_l5rpi")
 1:5/0 = 0
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_671ww"]
-texture = ExtResource("6_c4avl")
 1:0/0 = 0
 2:0/0 = 0
 3:0/0 = 0
