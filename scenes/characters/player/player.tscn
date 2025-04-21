@@ -1,4 +1,4 @@
-[gd_scene load_steps=116 format=3 uid="uid://be8s6fsuvru6m"]
+[gd_scene load_steps=117 format=3 uid="uid://be8s6fsuvru6m"]
 
 [ext_resource type="Script" path="res://scripts/characters/player/player.gd" id="1_nibrf"]
 [ext_resource type="Texture2D" uid="uid://uyr48pfpnpoe" path="res://sprites/characters/player/Back animations/spr_player_back_idle.png" id="2_aesxs"]
@@ -793,7 +793,11 @@ func _process(delta: float) -> void:
 	pass
 "
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8fna1"]
+size = Vector2(33, 24)
+
 [node name="player" type="CharacterBody2D" groups=["player"]]
+position = Vector2(168, 59)
 script = ExtResource("1_nibrf")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -805,11 +809,16 @@ frame = 6
 frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(-0.5, 4.5)
 shape = SubResource("RectangleShape2D_84ouj")
 script = SubResource("GDScript_gqdda")
 
-[node name="attack_ray" type="RayCast2D" parent="."]
-scale = Vector2(15, 1)
-enabled = false
-target_position = Vector2(0, 34)
+[node name="attack_area" type="Area2D" parent="."]
+position = Vector2(0, 2)
+monitoring = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="attack_area"]
+position = Vector2(0, 17)
+shape = SubResource("RectangleShape2D_8fna1")
+debug_color = Color(0.715864, 0.481528, 0.0693465, 0.42)

@@ -1,13 +1,11 @@
-extends CharacterBody2D   ## Player
+extends CharacterBody2D ## Player
 
 const SPEED = 150.0
 const ATTACK_COOLDOWN = 0.4 # Tiempo entre cada ataque
 
-@onready var attack_ray = $attack_ray
+@onready var attack_area = $attack_area
 @onready var animation = $AnimatedSprite2D
 @onready var attack_timer = Timer.new()
-
-
 
 var last_direction := "front"
 
@@ -15,8 +13,6 @@ var last_direction := "front"
 var can_attack := true
 var is_attacking := false
 var damage: float = 2.0
-
-
 
 func _ready() -> void:
 	animation.play("idle_front")
@@ -27,7 +23,6 @@ func _ready() -> void:
 	animation.connect("animation_finished", _on_animation_finished)
 
 func _physics_process(delta: float) -> void:
-	# Si está atacando, no moverse
 	if is_attacking: 
 		velocity = Vector2.ZERO 
 		move_and_slide()
@@ -41,7 +36,7 @@ func _physics_process(delta: float) -> void:
 
 func directional_Movement():
 	if is_attacking:
-		return  # No moverse mientras ataca
+		return
 	
 	var direction := Vector2(
 		Input.get_axis("left", "right"),
@@ -58,7 +53,7 @@ func directional_Movement():
 
 func handle_Animations(direction: Vector2):
 	if is_attacking:
-		return  # No cambiar animación si está atacando
+		return
 	
 	if direction == Vector2.ZERO:
 		animation.play("idle_" + last_direction)
@@ -74,23 +69,32 @@ func perform_attack():
 	can_attack = false
 	is_attacking = true 
 	
-	# Setea la direccion del RayCast
+	# Mueve el Area2D según dirección
 	match last_direction:
 		"front":
-			attack_ray.rotation = deg_to_rad(0)
+			attack_area.position = Vector2(0, 16)
 		"back": 
-			attack_ray.rotation = deg_to_rad(180)
+			attack_area.position = Vector2(-0, -32)
 		"left_side":
-			attack_ray.rotation = deg_to_rad(90)
+			attack_area.position = Vector2(-16, -8)
 		"right_side":
-			attack_ray.rotation = deg_to_rad(-90)
+			attack_area.position = Vector2(16, -8)
 	
+	# Activa el área
+	attack_area.monitoring = true
+	attack_area.set_deferred("collision_layer", 1)
+
 	animation.flip_h = (last_direction == "right_side")
 	animation.play("attack_" + last_direction)
-	
-	attack_ray.enabled = true
+
+	# Espera un poquito y detecta enemigos
+	await get_tree().create_timer(0.05).timeout
+	for body in attack_area.get_overlapping_bodies():
+		if body.is_in_group("enemies"):
+			body.take_damage(damage)
+			print("¡Golpe a: ", body.name, "!")
+
 	attack_timer.start()
-	
 	print("Ataque hacia: ", last_direction)
 
 func _on_attack_cooldown_timeout():
@@ -99,14 +103,7 @@ func _on_attack_cooldown_timeout():
 func _on_animation_finished():
 	if is_attacking:
 		is_attacking = false
-		attack_ray.enabled = false
+		attack_area.monitoring = false
+		attack_area.set_deferred("collision_layer", 0)
 		animation.flip_h = false
 		animation.play("idle_" + last_direction)
-
-func _process(delta: float) -> void:
-	if attack_ray.enabled and attack_ray.is_colliding():
-		var target = attack_ray.get_collider()
-		if target.is_in_group("enemies"):
-			target.take_damage(2)
-			attack_ray.enabled = false
-			print("golpe a: ", target.name)
