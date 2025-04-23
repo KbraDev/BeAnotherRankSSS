@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://1dkq06k35v37"]
+
+[ext_resource type="Script" path="res://scenes/tools/gate/scripts/gate.gd" id="1_tw0bm"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kbgkj"]
+size = Vector2(1171, 47)
+
+[node name="gate" type="Area2D"]
+position = Vector2(574, 281)
+script = ExtResource("1_tw0bm")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_kbgkj")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]
