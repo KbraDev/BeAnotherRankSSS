@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://drfawir77urlq"]
+
+[ext_resource type="PackedScene" uid="uid://1dkq06k35v37" path="res://scenes/tools/gate/gate.tscn" id="1_hotxy"]
+[ext_resource type="PackedScene" uid="uid://be8s6fsuvru6m" path="res://scenes/characters/player/player.tscn" id="2_mrmq4"]
+
+[node name="CityMilis" type="Node2D"]
+
+[node name="gates" type="Node" parent="."]
+
+[node name="gateFromMilisTrail" parent="gates" instance=ExtResource("1_hotxy")]
+position = Vector2(579, 138)
+target_scene = "res://scenes/world/zones/milistrail/milis_trail.tscn"
+target_gate_name = "GateFromMilisTrail"
+
+[node name="player" parent="." instance=ExtResource("2_mrmq4")]
+
+[node name="Camera2D" type="Camera2D" parent="player"]
+zoom = Vector2(1.6, 1.6)
+position_smoothing_enabled = true
+position_smoothing_speed = 2.0
