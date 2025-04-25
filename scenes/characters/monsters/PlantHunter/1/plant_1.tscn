@@ -1,4 +1,4 @@
-[gd_scene load_steps=170 format=3 uid="uid://cs3uf42nyqw0y"]
+[gd_scene load_steps=173 format=3 uid="uid://cs3uf42nyqw0y"]
 
 [ext_resource type="Texture2D" uid="uid://dio3rce2asiho" path="res://sprites/characters/PlantHunter/1/Idle.png" id="1_bungc"]
 [ext_resource type="Script" path="res://scenes/characters/monsters/PlantHunter/1/script/plant_1.gd" id="1_c4id0"]
@@ -1004,7 +1004,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_tocgf")
 }],
-"loop": false,
+"loop": true,
 "name": &"idle_front",
 "speed": 10.0
 }, {
@@ -1021,7 +1021,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_vfu5m")
 }],
-"loop": false,
+"loop": true,
 "name": &"idle_left_side",
 "speed": 10.0
 }, {
@@ -1038,7 +1038,7 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_h754x")
 }],
-"loop": false,
+"loop": true,
 "name": &"idle_right_side",
 "speed": 10.0
 }, {
@@ -1255,16 +1255,59 @@ animations = [{
 radius = 20.0
 height = 46.0
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_4xla3"]
+radius = 160.05
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_c4ndd"]
+radius = 48.0104
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_01ode"]
+radius = 38.0
+
 [node name="Plant1" type="CharacterBody2D"]
-position = Vector2(113, 49)
+position = Vector2(539, 292)
 script = ExtResource("1_c4id0")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(1.38062, 1.36527)
 sprite_frames = SubResource("SpriteFrames_xnk7u")
-animation = &"run_right_side"
-frame_progress = 0.444361
+animation = &"attack_front"
+frame = 6
+frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(0, 2)
 shape = SubResource("CapsuleShape2D_qwd0k")
+
+[node name="Vision_area" type="Area2D" parent="."]
+visible = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Vision_area"]
+shape = SubResource("CircleShape2D_4xla3")
+debug_color = Color(0.44715, 0.0068571, 1.44392e-07, 0.42)
+
+[node name="attack_vision_area" type="Area2D" parent="."]
+visible = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="attack_vision_area"]
+shape = SubResource("CircleShape2D_c4ndd")
+debug_color = Color(0.388685, 0.252633, 0.0592137, 0.42)
+
+[node name="attack_area" type="Area2D" parent="."]
+visible = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="attack_area"]
+shape = SubResource("CircleShape2D_01ode")
+debug_color = Color(0.682375, 0.497616, 0.195211, 0.42)
+
+[node name="healthbar" type="TextureProgressBar" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position_smoothing_enabled = true
+
+[connection signal="body_entered" from="Vision_area" to="." method="_on_vision_area_body_entered"]
+[connection signal="body_exited" from="Vision_area" to="." method="_on_vision_area_body_exited"]
+[connection signal="body_entered" from="attack_vision_area" to="." method="_on_attack_vision_area_body_entered"]

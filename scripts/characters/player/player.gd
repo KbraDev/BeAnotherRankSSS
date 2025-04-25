@@ -24,7 +24,6 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	if is_attacking: 
-		velocity = Vector2.ZERO 
 		move_and_slide()
 		return
 		
@@ -107,3 +106,35 @@ func _on_animation_finished():
 		attack_area.set_deferred("collision_layer", 0)
 		animation.flip_h = false
 		animation.play("idle_" + last_direction)
+
+# ==============================
+# 🧱 Empuje desde la planta
+# ==============================
+func _on_plant_player_hit(damage: float, push_direction: Vector2):
+	take_damage(damage)
+
+	# Mini aturdimiento al ser golpeado
+	is_attacking = true
+	velocity = push_direction * 250.0
+	move_and_slide()
+
+	await get_tree().create_timer(0.2).timeout
+	is_attacking = false
+
+# ==============================
+# ❤️ Lógica de daño del jugador
+# ==============================
+var health: float = 100.0 # o el valor que quieras
+
+func take_damage(amount: float) -> void:
+	health -= amount
+	print("¡El jugador recibió ", amount, " de daño! Vida restante: ", health)
+
+	# TODO: reproducir animación, sonido, mostrar barra de vida, etc.
+
+	if health <= 0:
+		die()
+
+func die():
+	print("💀 El jugador ha muerto")
+	# Aquí podrías reiniciar la escena, emitir una señal, etc.
