@@ -140,7 +140,6 @@ func take_damage(amount: float):
 	if health <= 0:
 		die()
 
-
 # senales de area 
 
 func _on_vision_area_body_entered(body: Node2D) -> void:
@@ -157,6 +156,7 @@ func _on_vision_area_body_exited(body: Node2D) -> void:
 func _on_attack_vision_area_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
 		start_attack()
+		print("ataque al jugador desde la planta")
 
 # Fisicas
 func _physics_process(delta: float) -> void:

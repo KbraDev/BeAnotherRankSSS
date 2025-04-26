@@ -1259,10 +1259,10 @@ height = 46.0
 radius = 160.05
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_c4ndd"]
-radius = 48.0104
+radius = 42.0119
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_01ode"]
-radius = 38.0
+radius = 40.0125
 
 [node name="Plant1" type="CharacterBody2D"]
 position = Vector2(539, 292)
@@ -1276,26 +1276,22 @@ frame = 6
 frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
 position = Vector2(0, 2)
 shape = SubResource("CapsuleShape2D_qwd0k")
 
 [node name="Vision_area" type="Area2D" parent="."]
-visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Vision_area"]
 shape = SubResource("CircleShape2D_4xla3")
 debug_color = Color(0.44715, 0.0068571, 1.44392e-07, 0.42)
 
 [node name="attack_vision_area" type="Area2D" parent="."]
-visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="attack_vision_area"]
 shape = SubResource("CircleShape2D_c4ndd")
 debug_color = Color(0.388685, 0.252633, 0.0592137, 0.42)
 
 [node name="attack_area" type="Area2D" parent="."]
-visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="attack_area"]
 shape = SubResource("CircleShape2D_01ode")
