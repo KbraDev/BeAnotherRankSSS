@@ -7,7 +7,7 @@ extends CharacterBody2D ## Plant Hunter 1
 @export var walk_speed: float = 25.0
 @export var run_speed: float = 60.0
 @export var idle_time: float = 5.0
-@export var walk_time:float = 7.0
+@export var walk_time:float = 4.0
 @export var attack_cooldown: float = 1.3
 @export var health: float = 22.0
 
@@ -17,8 +17,8 @@ extends CharacterBody2D ## Plant Hunter 1
 @onready var attack_area = $attack_area
 @onready var health_bar = $healthbar
 
-signal plat_died
-signal player_hit(damage: float, push_direction: Vector2)
+signal plant_died
+signal player_hit(damage: float)
 
 var player: Node2D = null
 var direction: Vector2 = Vector2.ZERO
@@ -46,14 +46,15 @@ func _process(delta: float) -> void:
 				start_idle()
 		"chase":
 			if player:
-				# Si el jugador está dentro del área de ataque, no moverse más
-				if not attack_area.get_overlapping_bodies().has(player):
-					direction = (player.global_position - global_position).normalized()
-					update_last_direction(direction)
-					velocity = direction * run_speed
-				else:
-					velocity = Vector2.ZERO
-			else: 
+				direction = (player.global_position - global_position).normalized()
+				update_last_direction(direction)
+				velocity = direction * run_speed
+				
+				#actualizar animacion segun el movimiento
+				var new_animation = "run_" + last_direction
+				if animation.animation != new_animation:
+					animation.play("run_" + last_direction)
+			else:
 				start_walk()
 		"attack":
 			velocity = Vector2.ZERO
@@ -80,10 +81,12 @@ func start_walk():
 func start_chase():
 	state = "chase"
 	timer = 0
+	
 	if player:
 		direction = (player.global_position - global_position).normalized()
 		update_last_direction(direction)
-	animation.play("run_" + last_direction)
+		animation.play("run_" + last_direction)
+		
 
 func start_attack():
 	if is_attacking:
@@ -96,12 +99,11 @@ func start_attack():
 	await get_tree().create_timer(1.0).timeout
 	
 	# si el jugador esta detnro del area de ataque 
-	for body in attack_area.get_overlapping_bodies():
-		if body.is_in_group("player"):
-			var push_dir = (body.global_position - global_position).normalized()
-			emit_signal("player_hit", 12.0, push_dir)
-		break
-
+	is_attacking = false
+	if player:
+		start_chase()
+	else:
+		start_walk()
 	
 
 func die():
@@ -119,7 +121,6 @@ func set_random_direction():
 	var angle = randf() * TAU
 	direction = Vector2(cos(angle), sin(angle)).normalized()
 	update_last_direction(direction)
-	animation.play("walk_" + last_direction)
 
 func update_last_direction(dir: Vector2):
 	if abs(dir.x) > abs(dir.y):
