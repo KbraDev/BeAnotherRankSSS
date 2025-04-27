@@ -1268,7 +1268,8 @@ radius = 40.0125
 
 [node name="Plant1" type="CharacterBody2D" groups=["enemies"]]
 position = Vector2(539, 292)
-collision_layer = 4
+collision_layer = 6
+collision_mask = 3
 script = ExtResource("1_c4id0")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]

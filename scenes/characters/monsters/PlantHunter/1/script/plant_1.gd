@@ -4,8 +4,8 @@ extends CharacterBody2D ## Plant Hunter 1
 #=== Configuración ===
 #=====================
 
-@export var walk_speed: float = 25.0
-@export var run_speed: float = 60.0
+@export var walk_speed: float = 15.0
+@export var run_speed: float = 40.0
 @export var idle_time: float = 5.0
 @export var walk_time: float = 4.0
 @export var attack_interval: float = 2.0
