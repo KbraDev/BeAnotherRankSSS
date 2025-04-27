@@ -2,6 +2,7 @@ extends CharacterBody2D ## Player
 
 const SPEED = 150.0
 const ATTACK_COOLDOWN = 0.4 # Tiempo entre cada ataque
+const DAMAGE = 3.0 # Daño fijo del jugador
 
 @onready var attack_area = $attack_area
 @onready var animation = $AnimatedSprite2D
@@ -12,7 +13,6 @@ var last_direction := "front"
 # Variables de ataque 
 var can_attack := true
 var is_attacking := false
-var damage: float = 2.0
 
 func _ready() -> void:
 	animation.play("idle_front")
@@ -86,15 +86,13 @@ func perform_attack():
 	animation.flip_h = (last_direction == "right_side")
 	animation.play("attack_" + last_direction)
 
-	# Espera un poquito y detecta enemigos
 	await get_tree().create_timer(0.05).timeout
 	for body in attack_area.get_overlapping_bodies():
 		if body.is_in_group("enemies"):
-			body.take_damage(damage)
+			body.take_damage(DAMAGE)
 			print("¡Golpe a: ", body.name, "!")
 
 	attack_timer.start()
-	print("Ataque hacia: ", last_direction)
 
 func _on_attack_cooldown_timeout():
 	can_attack = true
@@ -106,35 +104,3 @@ func _on_animation_finished():
 		attack_area.set_deferred("collision_layer", 0)
 		animation.flip_h = false
 		animation.play("idle_" + last_direction)
-
-# ==============================
-# 🧱 Empuje desde la planta
-# ==============================
-func _on_plant_player_hit(damage: float, push_direction: Vector2):
-	take_damage(damage)
-
-	# Mini aturdimiento al ser golpeado
-	is_attacking = true
-	velocity = push_direction * 250.0
-	move_and_slide()
-
-	await get_tree().create_timer(0.2).timeout
-	is_attacking = false
-
-# ==============================
-# ❤️ Lógica de daño del jugador
-# ==============================
-var health: float = 100.0 # o el valor que quieras
-
-func take_damage(amount: float) -> void:
-	health -= amount
-	print("¡El jugador recibió ", amount, " de daño! Vida restante: ", health)
-
-	# TODO: reproducir animación, sonido, mostrar barra de vida, etc.
-
-	if health <= 0:
-		die()
-
-func die():
-	print("💀 El jugador ha muerto")
-	# Aquí podrías reiniciar la escena, emitir una señal, etc.

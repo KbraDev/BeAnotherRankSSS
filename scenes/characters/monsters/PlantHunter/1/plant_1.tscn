@@ -1,4 +1,4 @@
-[gd_scene load_steps=173 format=3 uid="uid://cs3uf42nyqw0y"]
+[gd_scene load_steps=175 format=3 uid="uid://cs3uf42nyqw0y"]
 
 [ext_resource type="Texture2D" uid="uid://dio3rce2asiho" path="res://sprites/characters/PlantHunter/1/Idle.png" id="1_bungc"]
 [ext_resource type="Script" path="res://scenes/characters/monsters/PlantHunter/1/script/plant_1.gd" id="1_c4id0"]
@@ -7,6 +7,8 @@
 [ext_resource type="Texture2D" uid="uid://bqndtooxeggok" path="res://sprites/characters/PlantHunter/1/Hurt.png" id="4_eb0bn"]
 [ext_resource type="Texture2D" uid="uid://d2pbs57ac7oru" path="res://sprites/characters/PlantHunter/1/Run.png" id="4_ikd26"]
 [ext_resource type="Texture2D" uid="uid://0fonnukmfih1" path="res://sprites/characters/PlantHunter/1/Walk.png" id="5_oyndb"]
+[ext_resource type="Texture2D" uid="uid://7jj4m1llmyec" path="res://sprites/healthBar/marco.png" id="8_ou6qf"]
+[ext_resource type="Texture2D" uid="uid://d1nrndp7wviwo" path="res://sprites/healthBar/progress.png" id="9_01omn"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ngx36"]
 atlas = ExtResource("2_ycsex")
@@ -1264,16 +1266,14 @@ radius = 42.0119
 [sub_resource type="CircleShape2D" id="CircleShape2D_01ode"]
 radius = 40.0125
 
-[node name="Plant1" type="CharacterBody2D"]
+[node name="Plant1" type="CharacterBody2D" groups=["enemies"]]
 position = Vector2(539, 292)
 script = ExtResource("1_c4id0")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(1.38062, 1.36527)
 sprite_frames = SubResource("SpriteFrames_xnk7u")
-animation = &"attack_front"
-frame = 6
-frame_progress = 1.0
+animation = &"idle_front"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 2)
@@ -1298,11 +1298,13 @@ shape = SubResource("CircleShape2D_01ode")
 debug_color = Color(0.682375, 0.497616, 0.195211, 0.42)
 
 [node name="healthbar" type="TextureProgressBar" parent="."]
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="Camera2D" type="Camera2D" parent="."]
-position_smoothing_enabled = true
+offset_left = -10.0
+offset_top = -31.0
+offset_right = 30.0
+offset_bottom = 9.0
+max_value = 22.0
+texture_over = ExtResource("8_ou6qf")
+texture_progress = ExtResource("9_01omn")
 
 [connection signal="body_entered" from="Vision_area" to="." method="_on_vision_area_body_entered"]
 [connection signal="body_exited" from="Vision_area" to="." method="_on_vision_area_body_exited"]

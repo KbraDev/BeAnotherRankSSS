@@ -809,7 +809,6 @@ frame = 6
 frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
 position = Vector2(-0.5, 4.5)
 shape = SubResource("RectangleShape2D_84ouj")
 script = SubResource("GDScript_gqdda")
