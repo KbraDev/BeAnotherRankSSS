@@ -104,3 +104,7 @@ func _on_animation_finished():
 		attack_area.set_deferred("collision_layer", 0)
 		animation.flip_h = false
 		animation.play("idle_" + last_direction)
+		
+func take_damage(amount: float):
+	print("el jugador recibio dano, ", amount, " de dano")
+	
