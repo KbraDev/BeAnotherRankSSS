@@ -798,6 +798,7 @@ size = Vector2(33, 24)
 
 [node name="player" type="CharacterBody2D" groups=["player"]]
 position = Vector2(168, 59)
+collision_layer = 2
 script = ExtResource("1_nibrf")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -815,6 +816,8 @@ script = SubResource("GDScript_gqdda")
 
 [node name="attack_area" type="Area2D" parent="."]
 position = Vector2(0, 2)
+collision_layer = 8
+collision_mask = 4
 monitoring = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="attack_area"]

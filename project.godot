@@ -71,9 +71,13 @@ attack={
 
 [layer_names]
 
+2d_physics/layer_1="ambiente"
 2d_navigation/layer_1="floor"
+2d_physics/layer_2="jugador"
 2d_navigation/layer_2="walls"
+2d_physics/layer_3="monstruos"
 2d_navigation/layer_3="props"
+2d_physics/layer_4="areas de ataque/visiion"
 2d_navigation/layer_4="roofs"
 2d_navigation/layer_5="skies"
 

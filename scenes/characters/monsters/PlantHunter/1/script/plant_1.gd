@@ -143,9 +143,9 @@ func die():
 	emit_signal("plant_died")
 	queue_free()
 
-#=====================
+#============================
 #=== Funciones auxiliares ===
-#=====================
+#============================
 
 func set_random_direction():
 	var angle = randf() * TAU
