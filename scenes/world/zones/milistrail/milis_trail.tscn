@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=4 uid="uid://fc0amgg3okou"]
+[gd_scene load_steps=8 format=4 uid="uid://fc0amgg3okou"]
 
 [ext_resource type="Script" path="res://scenes/world/zones/milistrail/scripts/milis_trail.gd" id="1_5pgpl"]
 [ext_resource type="TileSet" uid="uid://rngchcx3q02t" path="res://assets/tilesets/terrain.tres" id="2_usr3p"]
@@ -6,6 +6,7 @@
 [ext_resource type="TileSet" uid="uid://dvfkq370f0fmb" path="res://assets/tilesets/props.tres" id="3_i7piv"]
 [ext_resource type="PackedScene" uid="uid://1dkq06k35v37" path="res://scenes/tools/gate/gate.tscn" id="4_cw0qq"]
 [ext_resource type="PackedScene" uid="uid://cs3uf42nyqw0y" path="res://scenes/characters/monsters/PlantHunter/1/plant_1.tscn" id="6_r84uq"]
+[ext_resource type="PackedScene" uid="uid://bgwanxekq56pu" path="res://scenes/characters/monsters/PlantHunter/2/plant_2.tscn" id="7_rcmsy"]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_5pgpl")
@@ -85,3 +86,9 @@ target_gate_name = "GateToMilis"
 [node name="Plant1" parent="." instance=ExtResource("6_r84uq")]
 z_index = 2
 position = Vector2(632, 1142)
+
+[node name="Plant2" parent="." groups=["enemies"] instance=ExtResource("7_rcmsy")]
+z_index = 2
+position = Vector2(1775, 1397)
+collision_layer = 6
+collision_mask = 3
