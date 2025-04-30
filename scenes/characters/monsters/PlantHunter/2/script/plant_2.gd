@@ -8,7 +8,7 @@ extends CharacterBody2D ## Plant Hunter 1
 @export var run_speed: float = 30.0
 @export var idle_time: float = 5.0
 @export var walk_time: float = 4.0
-@export var attack_interval: float = 2.0
+@export var attack_interval: float = 1.4
 @export var health: float = 18.0
 
 @onready var animation = $AnimatedSprite2D

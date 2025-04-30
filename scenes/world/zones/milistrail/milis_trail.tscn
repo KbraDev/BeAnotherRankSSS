@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=4 uid="uid://fc0amgg3okou"]
+[gd_scene load_steps=9 format=4 uid="uid://fc0amgg3okou"]
 
 [ext_resource type="Script" path="res://scenes/world/zones/milistrail/scripts/milis_trail.gd" id="1_5pgpl"]
 [ext_resource type="TileSet" uid="uid://rngchcx3q02t" path="res://assets/tilesets/terrain.tres" id="2_usr3p"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://1dkq06k35v37" path="res://scenes/tools/gate/gate.tscn" id="4_cw0qq"]
 [ext_resource type="PackedScene" uid="uid://cs3uf42nyqw0y" path="res://scenes/characters/monsters/PlantHunter/1/plant_1.tscn" id="6_r84uq"]
 [ext_resource type="PackedScene" uid="uid://bgwanxekq56pu" path="res://scenes/characters/monsters/PlantHunter/2/plant_2.tscn" id="7_rcmsy"]
+[ext_resource type="PackedScene" uid="uid://cohdelthugg5h" path="res://scenes/characters/monsters/PlantHunter/3/plant_3.tscn" id="8_ihedr"]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_5pgpl")
@@ -83,12 +84,36 @@ collision_mask = 2
 target_scene = "res://scenes/world/location/CityMilis/city_milis.tscn"
 target_gate_name = "GateToMilis"
 
-[node name="Plant1" parent="." instance=ExtResource("6_r84uq")]
-z_index = 2
-position = Vector2(632, 1142)
+[node name="monsters" type="Node" parent="."]
 
-[node name="Plant2" parent="." groups=["enemies"] instance=ExtResource("7_rcmsy")]
+[node name="plant6" parent="monsters" instance=ExtResource("8_ihedr")]
+position = Vector2(2104, 2716)
+
+[node name="plant5" parent="monsters" instance=ExtResource("8_ihedr")]
+position = Vector2(2348, 2643)
+
+[node name="plant4" parent="monsters" instance=ExtResource("8_ihedr")]
+position = Vector2(3240, 1173)
+
+[node name="plant3" parent="monsters" instance=ExtResource("8_ihedr")]
+position = Vector2(2288, 938)
+
+[node name="Plant3" parent="monsters" groups=["enemies"] instance=ExtResource("7_rcmsy")]
+z_index = 2
+position = Vector2(2010, 1718)
+collision_layer = 6
+collision_mask = 3
+
+[node name="Plant2" parent="monsters" groups=["enemies"] instance=ExtResource("7_rcmsy")]
 z_index = 2
 position = Vector2(1775, 1397)
 collision_layer = 6
 collision_mask = 3
+
+[node name="Plant4" parent="monsters" instance=ExtResource("6_r84uq")]
+z_index = 2
+position = Vector2(1048, 1482)
+
+[node name="Plant1" parent="monsters" instance=ExtResource("6_r84uq")]
+z_index = 2
+position = Vector2(632, 1142)

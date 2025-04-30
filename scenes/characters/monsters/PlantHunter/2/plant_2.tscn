@@ -1311,4 +1311,6 @@ texture_progress = ExtResource("9_7chyb")
 shape = SubResource("CapsuleShape2D_0n8p8")
 
 [connection signal="body_entered" from="Vision_area" to="." method="_on_vision_area_body_entered"]
+[connection signal="body_exited" from="Vision_area" to="." method="_on_vision_area_body_exited"]
 [connection signal="body_entered" from="attack_vision_area" to="." method="_on_attack_vision_area_body_entered"]
+[connection signal="body_exited" from="attack_vision_area" to="." method="_on_attack_vision_area_body_exited"]

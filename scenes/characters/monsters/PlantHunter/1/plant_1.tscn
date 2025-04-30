@@ -1272,9 +1272,10 @@ collision_mask = 3
 script = ExtResource("1_c4id0")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-scale = Vector2(1.38062, 1.36527)
+scale = Vector2(1.594, 1.576)
 sprite_frames = SubResource("SpriteFrames_xnk7u")
 animation = &"idle_back"
+frame_progress = 0.965344
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 2)
