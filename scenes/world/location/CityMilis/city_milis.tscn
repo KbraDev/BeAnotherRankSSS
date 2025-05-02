@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=4 uid="uid://drfawir77urlq"]
+[gd_scene load_steps=5 format=4 uid="uid://drfawir77urlq"]
 
 [ext_resource type="TileSet" uid="uid://rngchcx3q02t" path="res://assets/tilesets/terrain.tres" id="1_dwt25"]
 [ext_resource type="TileSet" uid="uid://df2ewgbh7ofxg" path="res://assets/tilesets/houses.tres" id="2_ccgwm"]
 [ext_resource type="PackedScene" uid="uid://be8s6fsuvru6m" path="res://scenes/characters/player/player.tscn" id="3_brcfv"]
+[ext_resource type="PackedScene" uid="uid://cn8gfuu11mtd6" path="res://scenes/tools/shopBeta/shop_beta.tscn" id="4_y740i"]
 
 [node name="CityMilis" type="Node2D"]
 
@@ -46,3 +47,9 @@ position = Vector2(632, 366)
 zoom = Vector2(1.8, 1.8)
 position_smoothing_enabled = true
 position_smoothing_speed = 2.0
+
+[node name="shops" type="Node" parent="."]
+
+[node name="shopBeta" parent="shops" instance=ExtResource("4_y740i")]
+z_index = 2
+position = Vector2(-988, 1041)

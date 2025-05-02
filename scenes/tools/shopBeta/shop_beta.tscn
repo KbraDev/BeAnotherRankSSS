@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://cn8gfuu11mtd6"]
+
+[ext_resource type="Texture2D" uid="uid://cad7iq2dxpuay" path="res://sprites/foodTruck_variationnone.png" id="1_e84fc"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_n51um"]
+size = Vector2(78, 17)
+
+[node name="shopBeta" type="StaticBody2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(1.17578, 1.17578)
+texture = ExtResource("1_e84fc")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1, 14.5)
+shape = SubResource("RectangleShape2D_n51um")
