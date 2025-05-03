@@ -3,14 +3,14 @@
 [ext_resource type="Texture2D" uid="uid://cad7iq2dxpuay" path="res://sprites/foodTruck_variationnone.png" id="1_e84fc"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_n51um"]
-size = Vector2(78, 17)
+size = Vector2(70, 67)
 
 [node name="shopBeta" type="StaticBody2D"]
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(1.17578, 1.17578)
+scale = Vector2(1.0332, 1.0332)
 texture = ExtResource("1_e84fc")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-1, 14.5)
+position = Vector2(-1, -16.5)
 shape = SubResource("RectangleShape2D_n51um")
