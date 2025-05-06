@@ -82,7 +82,7 @@ position = Vector2(2274, 3465)
 collision_layer = 8
 collision_mask = 2
 target_scene = "res://scenes/world/location/CityMilis/city_milis.tscn"
-target_gate_name = "GateToMilis"
+target_gate_name = "GateFromMilisTrail"
 
 [node name="monsters" type="Node" parent="."]
 
