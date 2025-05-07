@@ -17,6 +17,21 @@ var is_attacking := false
 var attack_click_count := 0
 var current_attack := 1
 
+#Variables para el dash
+var is_dashing: bool = false
+var dash_speed := 400.0
+var dash_duration := 0.3
+var dash_cooldown := 2.0
+var can_dash := true
+
+@onready var dash_timer := Timer.new()
+@onready var dash_cooldown_timer := Timer.new()
+
+#capas originales
+var original_layer := 2 | 3  # ambiente (2) + enemigos (3)
+var original_mask := 1 | 2   # recibe de ambiente (1) + enemigos (2)
+
+
 
 func _ready():
 	animation.play("idle_" + last_direction)
@@ -31,6 +46,17 @@ func _ready():
 	attack_timer.one_shot = true
 	attack_timer.wait_time = 0.4
 	attack_timer.connect("timeout", _on_attack_cooldown_timeout)
+	
+	# timers de dash
+	add_child(dash_timer)
+	dash_timer.one_shot = true
+	dash_timer.wait_time = dash_duration
+	dash_timer.connect("timeout", _on_dash_finished)
+
+	add_child(dash_cooldown_timer)
+	dash_cooldown_timer.one_shot = true
+	dash_cooldown_timer.wait_time = dash_cooldown
+	dash_cooldown_timer.connect("timeout", _on_dash_cooldown_finished)
 
 	# Señal de animación
 	animation.connect("animation_finished", _on_animation_finished)
@@ -47,8 +73,13 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("attack") and can_attack and current_state == PlayerState.armed:
 		attack_click_count += 1
 
-		if not is_attacking:
-			perform_attack()
+	# Solo atacar si hay clics acumulados y no estás atacando ahora
+	if attack_click_count > 0 and not is_attacking and can_attack and current_state == PlayerState.armed:
+		velocity = Vector2.ZERO
+		perform_attack()
+		
+	if Input.is_action_just_pressed("dash_action") and can_dash and not is_dashing:
+		start_dash()
 
 
 func handle_state_input():
@@ -62,10 +93,9 @@ func handle_state_input():
 
 
 func directional_movement():
-	if is_attacking:
-		velocity = Vector2.ZERO
-		return
-	
+	if is_attacking or is_dashing:
+		return  # no cambiar velocity si ya está en dash
+
 	var direction := Vector2(
 		Input.get_axis("left", "right"),
 		Input.get_axis("up", "down")
@@ -77,7 +107,7 @@ func directional_movement():
 	else:
 		velocity = Vector2.ZERO
 
-	handle_Animations(direction)
+	handle_Animations(direction)  
 
 
 func handle_Animations(direction: Vector2):
@@ -171,6 +201,40 @@ func _on_animation_finished():
 		attack_click_count = 0
 		handle_Animations(Vector2.ZERO)
 
+func start_dash():
+	is_dashing = true
+	can_dash = false
+	
+	# invulnerable
+	# Quitar solo capa/máscara de enemigos
+	set_collision_layer(2)  # solo ambiente
+	set_collision_mask(1)   # solo recibe de ambiente
+	
+	# Direccion del dash basada en last direcion
+	match last_direction:
+		"front": velocity = Vector2(0, 1)
+		"back": velocity = Vector2(0, -1)
+		"left_side": velocity = Vector2(-1, 0)
+		"right_side": velocity = Vector2(1, 0)
+
+	velocity = velocity.normalized() * dash_speed
+	
+	# Animacion
+	animation.play("dash_" + last_direction)
+	
+	dash_timer.start()
+	dash_cooldown_timer.start()
+
+func _on_dash_finished():
+	is_dashing = false
+	velocity = Vector2.ZERO
+	
+	#restaurar colisiones
+	set_collision_layer(original_layer)
+	set_collision_mask(original_mask)
+
+func _on_dash_cooldown_finished():
+	can_dash = true
 
 func take_damage(amount: float):
 	print("🩸 El jugador recibió", amount, "de daño.")
