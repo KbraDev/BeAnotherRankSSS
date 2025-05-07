@@ -17,7 +17,6 @@ extends CharacterBody2D ## Plant Hunter 1
 @onready var attack_area = $attack_area
 @onready var health_bar = $healthbar
 
-signal plant_died
 signal player_hit(damage: float)
 
 var player: Node2D = null
@@ -32,6 +31,8 @@ var can_attack: bool = false
 # Barra de vida
 var health_timer: Timer
 
+
+var has_died = false
 #=====================
 #=== Métodos base ===
 #=====================
@@ -136,6 +137,9 @@ func start_attack():
 		start_walk()
 
 func die():
+	if has_died:
+		return
+	
 	state = "dead"
 	velocity = Vector2.ZERO
 	animation.play("death_" + last_direction)
@@ -170,6 +174,22 @@ func take_damage(amount: float):
 	
 	if health <= 0:
 		die()
+
+
+func _on_animated_sprite_2d_animation_finished() -> void:
+		if has_died and animation.animation == "death_" + last_direction:
+			var pickup_scene = preload("res://scenes/World_pick-ups/pick_ups_items.tscn")
+			var pickup = pickup_scene.instantiate()
+			pickup.item_data = preload("res://items/resources/carnivorusPlant_fang.tres")
+			pickup.amount = 1
+			pickup.global_position = global_position
+
+			get_tree().current_scene.add_child(pickup)
+
+		emit_signal("slime_died")
+		queue_free()
+
+
 
 func _on_hide_health_bar():
 	health_bar.visible = false

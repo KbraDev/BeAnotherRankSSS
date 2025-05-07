@@ -1922,9 +1922,10 @@ func _process(delta: float) -> void:
 "
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8fna1"]
-size = Vector2(36.125, 24)
+size = Vector2(36.125, 31)
 
 [node name="player" type="CharacterBody2D" groups=["player"]]
+z_index = 2
 position = Vector2(168, 59)
 collision_layer = 6
 collision_mask = 3
@@ -1944,13 +1945,12 @@ shape = SubResource("CapsuleShape2D_ejou4")
 script = SubResource("GDScript_gqdda")
 
 [node name="attack_area" type="Area2D" parent="."]
-visible = false
 collision_layer = 8
 collision_mask = 4
 monitoring = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="attack_area"]
-position = Vector2(0, 17)
+position = Vector2(0, 20.5)
 shape = SubResource("RectangleShape2D_8fna1")
 debug_color = Color(0.715864, 0.481528, 0.0693465, 0.42)
 

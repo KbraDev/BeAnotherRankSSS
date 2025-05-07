@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ItemData" load_steps=3 format=3 uid="uid://bfey4ghmpoo6o"]
+
+[ext_resource type="Texture2D" uid="uid://dxpx2qaf1473p" path="res://items/sprites/SlimeTear.png" id="1_04ov5"]
+[ext_resource type="Script" path="res://items/items_date.gd" id="2_fhge1"]
+
+[resource]
+script = ExtResource("2_fhge1")
+item_name = "Lagrima de Slime"
+icon = ExtResource("1_04ov5")
+description = "Lagrima con buen sazon para Alquimia"
+max_stack = 4

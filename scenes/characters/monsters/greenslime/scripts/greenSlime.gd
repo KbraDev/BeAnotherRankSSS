@@ -12,6 +12,7 @@ extends CharacterBody2D ## GREEN SLIME
 @onready var health_bar = $HealthBar
 
 signal slime_died
+var has_died := false
 
 @export var health: float = 10.0
 
@@ -100,7 +101,6 @@ func take_damage(amount: float) -> void:
 	
 	animation.play("hurt_" + last_direction)
 	health -= amount
-	print("Slime recibio dano. Vida restante: ", health)
 	
 	health_bar.value = health
 	health_bar.show_for_a_while()
@@ -109,11 +109,29 @@ func take_damage(amount: float) -> void:
 		die()
 	
 func die():
+	if has_died:
+		return
+	
+	has_died = true
 	state = "dead"
 	velocity = Vector2.ZERO
 	animation.play("die_" + last_direction)
-	
+
 	await get_tree().create_timer(1.5).timeout
-	
+
 	emit_signal("slime_died")
 	queue_free()
+
+
+func _on_animated_sprite_2d_animation_finished():
+	if has_died and animation.animation == "die_" + last_direction:
+		var pickup_scene = preload("res://scenes/World_pick-ups/pick_ups_items.tscn")
+		var pickup = pickup_scene.instantiate()
+		pickup.item_data = preload("res://items/resources/slime_teardrop.tres")
+		pickup.amount = 1
+		pickup.global_position = global_position
+
+		get_tree().current_scene.add_child(pickup)
+
+		emit_signal("slime_died")
+		queue_free()

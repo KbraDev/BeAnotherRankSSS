@@ -28,6 +28,7 @@ window/stretch/mode="viewport"
 
 folder_colors={
 "res://assets/": "red",
+"res://items/": "teal",
 "res://scenes/": "orange",
 "res://scripts/": "yellow",
 "res://sprites/": "green"

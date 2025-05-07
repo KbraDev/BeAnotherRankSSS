@@ -31,7 +31,15 @@ var can_dash := true
 var original_layer := 2 | 3  # ambiente (2) + enemigos (3)
 var original_mask := 1 | 2   # recibe de ambiente (1) + enemigos (2)
 
+# Inventario
+const INVENTORY_ROWS := 3
+const INVENTORY_COLS := 5
+const INVENTORY_SIZE := INVENTORY_COLS * INVENTORY_ROWS
 
+var inventory: Array = []
+
+
+## FUNCIONES
 
 func _ready():
 	animation.play("idle_" + last_direction)
@@ -60,7 +68,12 @@ func _ready():
 
 	# Señal de animación
 	animation.connect("animation_finished", _on_animation_finished)
-
+	
+	inventory.resize(INVENTORY_SIZE)
+	for i in range(INVENTORY_SIZE):
+		inventory[i] = null
+	
+	print(inventory)
 
 func _physics_process(delta: float) -> void:
 	handle_state_input()
@@ -238,3 +251,52 @@ func _on_dash_cooldown_finished():
 
 func take_damage(amount: float):
 	print("🩸 El jugador recibió", amount, "de daño.")
+
+
+
+func add_item_to_inventory(item_data: ItemData, amount: int = 1) -> bool:
+	var remaining := amount
+
+	# 1. Apilar en slots existentes
+	for slot in inventory:
+		if slot != null and slot.item_data == item_data:
+			var space_left = item_data.max_stack - slot.amount
+			var to_add = min(space_left, remaining)
+			slot.amount += to_add
+			remaining -= to_add
+			if remaining <= 0:
+				break
+
+	# 2. Usar slots vacíos
+	if remaining > 0:
+		for i in inventory.size():
+			if inventory[i] == null:
+				var to_add = min(item_data.max_stack, remaining)
+				inventory[i] = {
+					"item_data": item_data,
+					"amount": to_add
+				}
+				remaining -= to_add
+				if remaining <= 0:
+					break
+
+	# 3. Resultado
+	if remaining > 0:
+		print("⚠️ Inventario lleno. No se pudo recoger: ", remaining, " x ", item_data.item_name)
+		return false
+	else:
+		print("✔️ Agregado: ", amount, " x ", item_data.item_name)
+		print(inventory)
+		return true
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
