@@ -34,7 +34,6 @@ func _ready():
 
 	# Señal de animación
 	animation.connect("animation_finished", _on_animation_finished)
-	print("🎮 Ready. Animación actual:", animation.animation)
 
 
 func _physics_process(delta: float) -> void:
@@ -46,29 +45,27 @@ func _physics_process(delta: float) -> void:
 
 	# Ataque solo si está armado
 	if Input.is_action_just_pressed("attack") and can_attack and current_state == PlayerState.armed:
-		print("🖱️ Ataque clic detectado")
 		attack_click_count += 1
 
 		if not is_attacking:
-			print("🟢 Iniciando ataque")
 			perform_attack()
-		else:
-			print("🟡 Clic adicional mientras ataca. Clics:", attack_click_count)
 
 
 func handle_state_input():
 	if Input.is_action_just_pressed("1"):
 		current_state = PlayerState.unarmed
-		print("🔄 Estado cambiado a: Desarmado")
 	elif Input.is_action_just_pressed("2"):
 		current_state = PlayerState.armed
-		print("🔄 Estado cambiado a: Armado")
 	elif Input.is_action_just_pressed("3"):
 		current_state = PlayerState.bow
 		print("🔄 Estado cambiado a: Arco (WIP)")
 
 
 func directional_movement():
+	if is_attacking:
+		velocity = Vector2.ZERO
+		return
+	
 	var direction := Vector2(
 		Input.get_axis("left", "right"),
 		Input.get_axis("up", "down")
@@ -110,7 +107,6 @@ func handle_Animations(direction: Vector2):
 
 func perform_attack():
 	if current_state != PlayerState.armed:
-		print("❌ No se puede atacar: no estás armado.")
 		return
 
 	is_attacking = true
@@ -125,10 +121,8 @@ func perform_attack():
 	elif current_attack == 2:
 		animation_name = "attack2_" + last_direction
 		damage = 8
-
-	print("⚔️ Ejecutando ataque", current_attack, "- Animación:", animation_name)
+		
 	animation.play(animation_name)
-	print("▶️ Animación activa:", animation.animation, "| Reproduciendo:", animation.is_playing())
 
 	# Posicionar el área de ataque
 	match last_direction:
@@ -145,7 +139,6 @@ func perform_attack():
 	for body in attack_area.get_overlapping_bodies():
 		if body.is_in_group("enemies"):
 			body.take_damage(damage)
-			print("💥 Golpe a:", body.name, "| Daño:", damage)
 
 	attack_timer.start()
 	combo_timer.start()
@@ -153,20 +146,16 @@ func perform_attack():
 
 func _on_attack_cooldown_timeout():
 	can_attack = true
-	print("🕒 Cooldown terminado. Puedes atacar de nuevo.")
 
 
 func _on_combo_timer_timeout():
-	print("⏱️ Combo expirado. Reiniciando combo.")
 	attack_click_count = 0
 	current_attack = 1
 
 
 func _on_animation_finished():
-	print("🎞️ Animación finalizada:", animation.animation)
 
 	if is_attacking:
-		print("✅ Fin del ataque", current_attack)
 		is_attacking = false
 		attack_area.monitoring = false
 		attack_area.set_deferred("collision_layer", 0)
@@ -175,7 +164,6 @@ func _on_animation_finished():
 		if attack_click_count > 1 and current_attack == 1:
 			current_attack = 2
 			attack_click_count = 1
-			print("🔁 Combo detectado. Iniciando ataque 2.")
 			perform_attack()
 			return
 
