@@ -90,7 +90,7 @@ z_index = 2
 position = Vector2(641, -196)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="limits/StaticBody2D5"]
-position = Vector2(-26, 477)
+position = Vector2(-19, 477)
 rotation = 1.5708
 shape = SubResource("RectangleShape2D_too1d")
 debug_color = Color(0.997841, 0, 0.156752, 0.42)

@@ -1325,7 +1325,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"attackSpecial",
-"speed": 16.0
+"speed": 14.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -1555,7 +1555,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_am38n")
 }],
 "loop": true,
-"name": &"idle_Sword_back",
+"name": &"idleSword_back",
 "speed": 8.0
 }, {
 "frames": [{
@@ -1578,7 +1578,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_qdcbg")
 }],
 "loop": true,
-"name": &"idle_Sword_front",
+"name": &"idleSword_front",
 "speed": 8.0
 }, {
 "frames": [{
@@ -1601,7 +1601,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_atj6c")
 }],
 "loop": true,
-"name": &"idle_Sword_left_side",
+"name": &"idleSword_left_side",
 "speed": 8.0
 }, {
 "frames": [{
@@ -1624,7 +1624,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_mxeer")
 }],
 "loop": true,
-"name": &"idle_Sword_right_side",
+"name": &"idleSword_right_side",
 "speed": 8.0
 }, {
 "frames": [{
@@ -1739,7 +1739,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_7xxme")
 }],
 "loop": true,
-"name": &"run_Sword_back",
+"name": &"runSword_back",
 "speed": 12.0
 }, {
 "frames": [{
@@ -1762,7 +1762,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_2le8p")
 }],
 "loop": true,
-"name": &"run_Sword_front",
+"name": &"runSword_front",
 "speed": 12.0
 }, {
 "frames": [{
@@ -1785,7 +1785,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_ve1m6")
 }],
 "loop": true,
-"name": &"run_Sword_left_side",
+"name": &"runSword_left_side",
 "speed": 12.0
 }, {
 "frames": [{
@@ -1808,7 +1808,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_h68yo")
 }],
 "loop": true,
-"name": &"run_Sword_right_side",
+"name": &"runSword_right_side",
 "speed": 12.0
 }, {
 "frames": [{
@@ -1944,7 +1944,6 @@ shape = SubResource("CapsuleShape2D_ejou4")
 script = SubResource("GDScript_gqdda")
 
 [node name="attack_area" type="Area2D" parent="."]
-visible = false
 collision_layer = 8
 collision_mask = 4
 monitoring = false

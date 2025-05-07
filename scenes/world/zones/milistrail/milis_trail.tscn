@@ -62,7 +62,7 @@ tile_set = ExtResource("3_i7piv")
 z_index = 2
 position = Vector2(217, 309)
 
-[node name="Camera2D" type="Camera2D" parent="player"]
+[node name="Camera2D2" type="Camera2D" parent="player"]
 zoom = Vector2(1.8, 1.8)
 position_smoothing_enabled = true
 position_smoothing_speed = 2.0
