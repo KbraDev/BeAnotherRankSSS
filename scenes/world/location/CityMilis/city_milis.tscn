@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=4 uid="uid://drfawir77urlq"]
+[gd_scene load_steps=12 format=4 uid="uid://drfawir77urlq"]
 
 [ext_resource type="Script" path="res://scenes/world/location/CityMilis/script/city_milis.gd" id="1_c06ub"]
 [ext_resource type="TileSet" uid="uid://rngchcx3q02t" path="res://assets/tilesets/terrain.tres" id="1_dwt25"]
@@ -7,13 +7,16 @@
 [ext_resource type="TileSet" uid="uid://deyvxljh6vbg7" path="res://scenes/world/location/CityMilis/interiors.tres" id="3_wphr1"]
 [ext_resource type="TileSet" uid="uid://dvfkq370f0fmb" path="res://assets/tilesets/props.tres" id="4_i4g13"]
 [ext_resource type="PackedScene" uid="uid://cn8gfuu11mtd6" path="res://scenes/tools/shopBeta/shop_beta.tscn" id="6_q4qjh"]
-[ext_resource type="PackedScene" uid="uid://1dkq06k35v37" path="res://scenes/tools/gate/gate.tscn" id="7_w57ur"]
+[ext_resource type="Script" path="res://scenes/world/location/CityMilis/script/to_milis_trail.gd" id="8_6yi0m"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_too1d"]
 size = Vector2(34, 1752)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vqxe7"]
 size = Vector2(3331, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xsyc0"]
+size = Vector2(390, 20)
 
 [node name="CityMilis" type="Node2D"]
 script = ExtResource("1_c06ub")
@@ -144,23 +147,21 @@ z_index = 2
 position = Vector2(56, 1568)
 
 [node name="player" parent="." instance=ExtResource("3_brcfv")]
-z_index = 2
 position = Vector2(386, 392)
 
-[node name="gates" type="Node" parent="."]
+[node name="FromMilisTrail" type="Marker2D" parent="."]
+position = Vector2(619, 334)
 
-[node name="GateFromMilisTrail" parent="gates" instance=ExtResource("7_w57ur")]
-position = Vector2(616, 316)
-collision_layer = 8
-collision_mask = 2
+[node name="portals" type="Node" parent="."]
+
+[node name="ToMilisTrail" type="Area2D" parent="portals"]
+position = Vector2(618, 296)
+script = ExtResource("8_6yi0m")
 target_scene = "res://scenes/world/zones/milistrail/milis_trail.tscn"
-target_gate_name = "GateToMilis"
+target_marker_name = "FromMilisCity"
 
-[node name="GateToBeach" parent="gates" instance=ExtResource("7_w57ur")]
-position = Vector2(-276, 1129)
-rotation = 1.5708
-scale = Vector2(0.4, 0.4)
-collision_layer = 8
-collision_mask = 2
-target_scene = "res://scenes/world/zones/milisBeach/beach_milis.tscn"
-target_gate_name = "GateFromMilis"
+[node name="CollisionShape2D" type="CollisionShape2D" parent="portals/ToMilisTrail"]
+position = Vector2(-10, 0)
+shape = SubResource("RectangleShape2D_xsyc0")
+
+[connection signal="body_entered" from="portals/ToMilisTrail" to="portals/ToMilisTrail" method="_on_body_entered"]

@@ -14,9 +14,11 @@ func _on_body_entered(body: Node2D) -> void:
 	if body.name == "player" and can_trigger:
 		can_trigger = false
 		GateManager.set_next_gate(target_gate_name)
-		get_tree().change_scene_to_file(target_scene)
-		print("Nombre del portal usado " + target_gate_name)
-		print("Nombre de la escena: " + target_scene)
+
+		# En vez de change_scene, llamamos al WorldManager
+		var world_manager = get_tree().get_root().get_node("WorldManager")
+		world_manager.change_world(target_scene)
+
 
 
 func _on_body_exited(body: Node2D) -> void:
