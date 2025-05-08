@@ -1,4 +1,4 @@
-extends Area2D
+extends Area2D ## Portal
 
 @export var target_scene: String
 @export var target_marker_name: String
