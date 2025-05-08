@@ -26,6 +26,7 @@ var last_direction: String = "front" # Guarda la ultima direccion
 
 func _ready() -> void:
 	animation.play("idle_front")
+	add_to_group("slime")
 	set_process(true)
 
 func _process(delta: float) -> void:

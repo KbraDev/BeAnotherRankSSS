@@ -42,7 +42,8 @@ func spawn_slime():
 	if slime.has_signal("slime_died"):
 		slime.connect("slime_died", _on_slime_died)
 	
-	get_tree().get_current_scene().add_child(slime)
+	get_parent().add_child(slime)
+
 
 func _on_slime_died():
 	current_slimes -= 1
