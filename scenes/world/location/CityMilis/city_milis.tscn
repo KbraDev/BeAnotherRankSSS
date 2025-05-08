@@ -1,9 +1,8 @@
-[gd_scene load_steps=12 format=4 uid="uid://drfawir77urlq"]
+[gd_scene load_steps=11 format=4 uid="uid://drfawir77urlq"]
 
 [ext_resource type="Script" path="res://scenes/world/location/CityMilis/script/city_milis.gd" id="1_c06ub"]
 [ext_resource type="TileSet" uid="uid://rngchcx3q02t" path="res://assets/tilesets/terrain.tres" id="1_dwt25"]
 [ext_resource type="TileSet" uid="uid://df2ewgbh7ofxg" path="res://assets/tilesets/houses.tres" id="2_ccgwm"]
-[ext_resource type="PackedScene" uid="uid://be8s6fsuvru6m" path="res://scenes/characters/player/player.tscn" id="3_brcfv"]
 [ext_resource type="TileSet" uid="uid://deyvxljh6vbg7" path="res://scenes/world/location/CityMilis/interiors.tres" id="3_wphr1"]
 [ext_resource type="TileSet" uid="uid://dvfkq370f0fmb" path="res://assets/tilesets/props.tres" id="4_i4g13"]
 [ext_resource type="PackedScene" uid="uid://cn8gfuu11mtd6" path="res://scenes/tools/shopBeta/shop_beta.tscn" id="6_q4qjh"]
@@ -145,9 +144,6 @@ position = Vector2(1088, 1568)
 [node name="shopBeta7" parent="shops" instance=ExtResource("6_q4qjh")]
 z_index = 2
 position = Vector2(56, 1568)
-
-[node name="player" parent="." instance=ExtResource("3_brcfv")]
-position = Vector2(386, 392)
 
 [node name="FromMilisTrail" type="Marker2D" parent="."]
 position = Vector2(619, 334)
