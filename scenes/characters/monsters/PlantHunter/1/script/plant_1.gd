@@ -32,7 +32,7 @@ var can_attack: bool = false
 var health_timer: Timer
 
 
-var has_died = false
+var has_died := false
 #=====================
 #=== Métodos base ===
 #=====================
@@ -140,6 +140,7 @@ func die():
 	if has_died:
 		return
 	
+	has_died = true
 	state = "dead"
 	velocity = Vector2.ZERO
 	animation.play("death_" + last_direction)
@@ -177,17 +178,18 @@ func take_damage(amount: float):
 
 
 func _on_animated_sprite_2d_animation_finished() -> void:
-		if has_died and animation.animation == "death_" + last_direction:
-			var pickup_scene = preload("res://scenes/World_pick-ups/pick_ups_items.tscn")
-			var pickup = pickup_scene.instantiate()
-			pickup.item_data = preload("res://items/resources/carnivorusPlant_fang.tres")
-			pickup.amount = 1
-			pickup.global_position = global_position
+	if has_died and animation.animation == "death_" + last_direction:
+		var pickup_scene = preload("res://scenes/World_pick-ups/pick_ups_items.tscn")
+		var pickup = pickup_scene.instantiate()
+		pickup.item_data = preload("res://items/resources/carnivorusPlant_fang.tres")
+		pickup.amount = 1
+		pickup.global_position = global_position
 
-			get_tree().current_scene.add_child(pickup)
+		get_tree().current_scene.add_child(pickup)
 
 		emit_signal("slime_died")
 		queue_free()
+
 
 
 
@@ -205,16 +207,14 @@ func _on_vision_area_body_entered(body: Node2D) -> void:
 
 func _on_vision_area_body_exited(body: Node2D) -> void:
 	if body.is_in_group("player"):
-		print("Jugador salió de visión")
 		player = null
 		start_walk()
 
 func _on_attack_vision_area_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
 		can_attack = true
-		print("Jugador entró en zona de ataque")
+
 
 func _on_attack_vision_area_body_exited(body: Node2D) -> void:
 	if body.is_in_group("player"):
 		can_attack = false
-		print("Jugador salió de zona de ataque")

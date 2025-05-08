@@ -8,4 +8,4 @@ script = ExtResource("2_fhge1")
 item_name = "Lagrima de Slime"
 icon = ExtResource("1_04ov5")
 description = "Lagrima con buen sazon para Alquimia"
-max_stack = 4
+max_stack = 16
