@@ -6,6 +6,14 @@ extends Node2D
 var current_world: Node = null
 
 func _ready():
+	var player = $player
+	var inventory_ui = $HUD/InventoryUI
+	
+	player.connect("inventory_updated", inventory_ui.update_ui)
+	
+	# mostrar inventario al iniciar
+	inventory_ui.update_ui(player.inventory)
+	
 	current_world = world_container.get_child(0)
 
 func change_world(scene_path: String, target_marker_name: String) -> void:

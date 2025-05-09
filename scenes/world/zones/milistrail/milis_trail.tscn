@@ -20,6 +20,10 @@ metadata/_edit_horizontal_guides_ = [3317.0]
 [node name="FromOlidForest" type="Marker2D" parent="."]
 position = Vector2(205, 349)
 
+[node name="FromMilisCity" type="Marker2D" parent="."]
+z_index = 2
+position = Vector2(2253, 3199)
+
 [node name="tiles" type="Node" parent="."]
 
 [node name="terrain" type="Node" parent="tiles"]
@@ -122,8 +126,6 @@ target_marker_name = "FromMilisTrail"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="portals/FromOlidForest"]
 position = Vector2(7.5, 0)
 shape = SubResource("RectangleShape2D_hm48r")
-
-[node name="FromMilisCity" type="Marker2D" parent="."]
 
 [connection signal="body_entered" from="portals/ToMilisCity" to="portals/ToMilisCity" method="_on_body_entered"]
 [connection signal="body_entered" from="portals/FromOlidForest" to="portals/FromOlidForest" method="_on_body_entered"]

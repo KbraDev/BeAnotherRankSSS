@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://xxcf6vh7atqn"]
+[gd_scene load_steps=5 format=3 uid="uid://xxcf6vh7atqn"]
 
 [ext_resource type="Script" path="res://scenes/world/world_manager.gd" id="1_548at"]
 [ext_resource type="PackedScene" uid="uid://be8s6fsuvru6m" path="res://scenes/characters/player/player.tscn" id="1_armst"]
 [ext_resource type="PackedScene" uid="uid://cy1x2ljkv8lcm" path="res://scenes/world/zones/olidForest/OlidForest.tscn" id="2_5d05l"]
+[ext_resource type="PackedScene" uid="uid://bi8atwwdsaybi" path="res://UIs/InventoryUI/inventory_ui.tscn" id="4_utxr1"]
 
 [node name="WorldManager" type="Node2D"]
 script = ExtResource("1_548at")
@@ -13,3 +14,12 @@ position = Vector2(544, -32)
 [node name="WorldContainer" type="Node2D" parent="."]
 
 [node name="OlidForest" parent="WorldContainer" instance=ExtResource("2_5d05l")]
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="InventoryUI" parent="HUD" node_paths=PackedStringArray("player") instance=ExtResource("4_utxr1")]
+offset_left = 934.0
+offset_top = 5.0
+offset_right = 934.0
+offset_bottom = 5.0
+player = NodePath("../../player")

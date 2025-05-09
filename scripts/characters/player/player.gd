@@ -38,6 +38,9 @@ const INVENTORY_SIZE := INVENTORY_COLS * INVENTORY_ROWS
 
 var inventory: Array = []
 
+## Signals
+signal inventory_updated(inventory: Array)
+
 
 ## FUNCIONES
 
@@ -288,15 +291,5 @@ func add_item_to_inventory(item_data: ItemData, amount: int = 1) -> bool:
 		print("✔️ Agregado: ", amount, " x ", item_data.item_name)
 		print(inventory)
 		return true
-
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	emit_signal("inventory_updated", inventory)
