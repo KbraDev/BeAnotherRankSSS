@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://bi8atwwdsaybi"]
+[gd_scene load_steps=4 format=3 uid="uid://bi8atwwdsaybi"]
 
 [ext_resource type="PackedScene" uid="uid://bwbwbn64u5hob" path="res://UIs/InventoryUI/InventorySlotUI/inventorySlotUI.tscn" id="1_ewr2i"]
 [ext_resource type="Script" path="res://UIs/InventoryUI/inventory_ui.gd" id="1_trdmu"]
+[ext_resource type="Texture2D" uid="uid://dd8atw78xfwms" path="res://sprites/UIS/inventoryASSET.png" id="2_hgc33"]
 
 [node name="InventoryUI" type="Control"]
 layout_mode = 3
@@ -10,17 +11,23 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("1_trdmu")
 
+[node name="InventoryAsset" type="Sprite2D" parent="."]
+position = Vector2(442, 286)
+scale = Vector2(2.6875, 2.5375)
+texture = ExtResource("2_hgc33")
+
 [node name="NinePatchRect" type="NinePatchRect" parent="."]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 221.0
+offset_bottom = 344.0
 
 [node name="GridContainer" type="GridContainer" parent="NinePatchRect"]
 layout_mode = 0
-offset_left = 2.0
-offset_right = 343.0
-offset_bottom = 201.0
-columns = 5
+offset_left = 343.0
+offset_top = 138.0
+offset_right = 543.0
+offset_bottom = 474.0
+columns = 3
 
 [node name="InventorySlotUI" parent="NinePatchRect/GridContainer" instance=ExtResource("1_ewr2i")]
 layout_mode = 2

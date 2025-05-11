@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://7jj4m1llmyec"
-path="res://.godot/imported/marco.png-1cadf7a0bf6409421a5af665c08aef83.ctex"
+uid="uid://dd8atw78xfwms"
+path="res://.godot/imported/inventoryASSET.png-0e51827202a5f1eee3d4c614e6f6b7e4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/healthBar/marco.png"
-dest_files=["res://.godot/imported/marco.png-1cadf7a0bf6409421a5af665c08aef83.ctex"]
+source_file="res://sprites/UIS/inventoryASSET.png"
+dest_files=["res://.godot/imported/inventoryASSET.png-0e51827202a5f1eee3d4c614e6f6b7e4.ctex"]
 
 [params]
 

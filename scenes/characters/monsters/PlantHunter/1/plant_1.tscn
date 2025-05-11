@@ -7,8 +7,8 @@
 [ext_resource type="Texture2D" uid="uid://bqndtooxeggok" path="res://sprites/characters/PlantHunter/1/Hurt.png" id="4_eb0bn"]
 [ext_resource type="Texture2D" uid="uid://d2pbs57ac7oru" path="res://sprites/characters/PlantHunter/1/Run.png" id="4_ikd26"]
 [ext_resource type="Texture2D" uid="uid://0fonnukmfih1" path="res://sprites/characters/PlantHunter/1/Walk.png" id="5_oyndb"]
-[ext_resource type="Texture2D" uid="uid://7jj4m1llmyec" path="res://sprites/healthBar/marco.png" id="8_ou6qf"]
-[ext_resource type="Texture2D" uid="uid://d1nrndp7wviwo" path="res://sprites/healthBar/progress.png" id="9_01omn"]
+[ext_resource type="Texture2D" uid="uid://7jj4m1llmyec" path="res://sprites/UIS/healthBar/marco.png" id="8_ou6qf"]
+[ext_resource type="Texture2D" uid="uid://d1nrndp7wviwo" path="res://sprites/UIS/healthBar/progress.png" id="9_01omn"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ngx36"]
 atlas = ExtResource("2_ycsex")
