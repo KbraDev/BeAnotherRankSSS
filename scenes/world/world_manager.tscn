@@ -18,8 +18,8 @@ position = Vector2(544, -32)
 [node name="HUD" type="CanvasLayer" parent="."]
 
 [node name="InventoryUI" parent="HUD" node_paths=PackedStringArray("player") instance=ExtResource("4_utxr1")]
-offset_left = 709.0
-offset_top = -82.0
-offset_right = 709.0
-offset_bottom = -82.0
+offset_left = 34.0
+offset_top = 61.0
+offset_right = 34.0
+offset_bottom = 61.0
 player = NodePath("../../player")

@@ -12,7 +12,7 @@ size_flags_vertical = 3
 script = ExtResource("1_trdmu")
 
 [node name="InventoryAsset" type="Sprite2D" parent="."]
-position = Vector2(442, 286)
+position = Vector2(100, 148)
 scale = Vector2(2.6875, 2.5375)
 texture = ExtResource("2_hgc33")
 
@@ -23,10 +23,8 @@ offset_bottom = 344.0
 
 [node name="GridContainer" type="GridContainer" parent="NinePatchRect"]
 layout_mode = 0
-offset_left = 343.0
-offset_top = 138.0
-offset_right = 543.0
-offset_bottom = 474.0
+offset_right = 200.0
+offset_bottom = 336.0
 columns = 3
 
 [node name="InventorySlotUI" parent="NinePatchRect/GridContainer" instance=ExtResource("1_ewr2i")]

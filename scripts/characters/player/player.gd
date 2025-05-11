@@ -2,6 +2,7 @@ extends CharacterBody2D
 
 const SPEED = 160.0
 const DAMAGE = 3.0
+var can_move = true
 
 enum PlayerState { unarmed, armed, bow }
 var current_state: PlayerState = PlayerState.unarmed
@@ -107,10 +108,12 @@ func handle_state_input():
 		current_state = PlayerState.bow
 		print("🔄 Estado cambiado a: Arco (WIP)")
 
-
 func directional_movement():
-	if is_attacking or is_dashing:
-		return  # no cambiar velocity si ya está en dash
+	# Solo bloquea el movimiento normal del jugador, no afecta el dash
+	if not can_move or is_attacking or is_dashing:
+		if not is_dashing:
+			velocity = Vector2.ZERO
+		return
 
 	var direction := Vector2(
 		Input.get_axis("left", "right"),
@@ -123,7 +126,7 @@ func directional_movement():
 	else:
 		velocity = Vector2.ZERO
 
-	handle_Animations(direction)  
+	handle_Animations(direction)
 
 
 func handle_Animations(direction: Vector2):
