@@ -1,12 +1,19 @@
-extends Control
+extends Control  ## INVENTARIO
 
 @export var player: Node
 var slots: Array = []
 var inventory_cooldown := false
 
+@onready var tooltip = $ItemTooltip/Label
+
 func _ready() -> void:
-	visible = false  # ← oculta el inventario al empezar
+	visible = false
 	slots = $NinePatchRect/GridContainer.get_children()
+
+	for slot in slots:
+		slot.connect("hover_started", Callable(self, "_on_slot_hover_started"))
+		slot.connect("hover_ended", Callable(self, "_on_slot_hover_ended"))
+
  
 
 func _unhandled_input(event):
@@ -21,12 +28,14 @@ func _unhandled_input(event):
 func toggle_inventory():
 	visible = !visible
 	if visible:
+		player.can_attack = false
 		player.can_move = false
 		player.velocity = Vector2.ZERO  # Asegura que no siga deslizando
 		player.animation.play("idle_" + player.last_direction)  # ← Forzar idle
 		update_ui(player.inventory)
 	else:
 		player.can_move = true
+		player.can_attack = true
 
 
 
@@ -40,6 +49,23 @@ func update_ui(inventory_data: Array):
 		var slot = slots[i]
 		var data = inventory_data[i]
 		if data != null:
-			slot.set_item(data["item_data"].icon, data["amount"])
+			slot.set_item(data["item_data"], data["amount"])
 		else:
 			slot.set_item(null, 0)
+
+
+func _on_slot_hover_started(item_data: ItemData, global_pos: Vector2):
+	if item_data == null:
+		return
+
+	tooltip.text = "Nombre: %s\nDescripción: %s" % [
+		item_data.item_name,
+		item_data.description
+	]
+
+	$ItemTooltip.visible = true
+
+
+
+func _on_slot_hover_ended():
+	$ItemTooltip.visible = false
