@@ -1,11 +1,10 @@
-[gd_scene load_steps=11 format=4 uid="uid://drfawir77urlq"]
+[gd_scene load_steps=10 format=4 uid="uid://drfawir77urlq"]
 
 [ext_resource type="TileSet" uid="uid://rngchcx3q02t" path="res://assets/tilesets/terrain.tres" id="1_dwt25"]
 [ext_resource type="TileSet" uid="uid://df2ewgbh7ofxg" path="res://assets/tilesets/houses.tres" id="2_ccgwm"]
 [ext_resource type="TileSet" uid="uid://deyvxljh6vbg7" path="res://scenes/world/location/CityMilis/interiors.tres" id="3_wphr1"]
 [ext_resource type="TileSet" uid="uid://dvfkq370f0fmb" path="res://assets/tilesets/props.tres" id="4_i4g13"]
 [ext_resource type="PackedScene" uid="uid://cn8gfuu11mtd6" path="res://scenes/tools/shopBeta/shop_beta.tscn" id="6_q4qjh"]
-[ext_resource type="PackedScene" uid="uid://be8s6fsuvru6m" path="res://scenes/characters/player/player.tscn" id="7_dbigt"]
 [ext_resource type="Script" path="res://scenes/world/location/CityMilis/script/to_milis_trail.gd" id="8_6yi0m"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_too1d"]
@@ -158,8 +157,5 @@ target_marker_name = "FromMilisCity"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="portals/ToMilisTrail"]
 position = Vector2(-10, 0)
 shape = SubResource("RectangleShape2D_xsyc0")
-
-[node name="player" parent="." instance=ExtResource("7_dbigt")]
-position = Vector2(603, 363)
 
 [connection signal="body_entered" from="portals/ToMilisTrail" to="portals/ToMilisTrail" method="_on_body_entered"]
