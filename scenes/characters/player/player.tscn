@@ -1905,7 +1905,8 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ejou4"]
-radius = 5.0
+radius = 9.0
+height = 32.0
 
 [sub_resource type="GDScript" id="GDScript_gqdda"]
 script/source = "extends CollisionShape2D
@@ -1933,14 +1934,13 @@ script = ExtResource("1_nibrf")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
-scale = Vector2(1.37891, 1.37891)
+scale = Vector2(1.57227, 1.57227)
 sprite_frames = SubResource("SpriteFrames_6myrh")
 animation = &"attackSpecial"
 frame = 23
 frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
 shape = SubResource("CapsuleShape2D_ejou4")
 script = SubResource("GDScript_gqdda")
 
