@@ -2,11 +2,11 @@
 
 [ext_resource type="TileSet" uid="uid://rngchcx3q02t" path="res://assets/tilesets/terrain.tres" id="1_dwt25"]
 [ext_resource type="TileSet" uid="uid://df2ewgbh7ofxg" path="res://assets/tilesets/houses.tres" id="2_ccgwm"]
-[ext_resource type="TileSet" uid="uid://deyvxljh6vbg7" path="res://scenes/world/location/CityMilis/interiors.tres" id="3_wphr1"]
+[ext_resource type="TileSet" uid="uid://deyvxljh6vbg7" path="res://assets/tilesets/Interrior/interiors.tres" id="3_wphr1"]
 [ext_resource type="TileSet" uid="uid://dvfkq370f0fmb" path="res://assets/tilesets/props.tres" id="4_i4g13"]
 [ext_resource type="PackedScene" uid="uid://cn8gfuu11mtd6" path="res://scenes/tools/shopBeta/shop_beta.tscn" id="6_q4qjh"]
-[ext_resource type="PackedScene" uid="uid://be8s6fsuvru6m" path="res://scenes/characters/player/player.tscn" id="7_0kf6r"]
 [ext_resource type="Script" path="res://scenes/world/location/CityMilis/script/to_milis_trail.gd" id="8_6yi0m"]
+[ext_resource type="PackedScene" uid="uid://dtx1cf8t6sflo" path="res://scenes/guilds/guild_ouside.tscn" id="8_vqqju"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_too1d"]
 size = Vector2(34, 1752)
@@ -159,6 +159,13 @@ target_marker_name = "FromMilisCity"
 position = Vector2(-10, 0)
 shape = SubResource("RectangleShape2D_xsyc0")
 
-[node name="player" parent="." instance=ExtResource("7_0kf6r")]
+[node name="guild" type="Node" parent="."]
+
+[node name="guildOuside" parent="guild" instance=ExtResource("8_vqqju")]
+position = Vector2(2134, 895)
+scale = Vector2(0.5, 0.5)
+
+[node name="ToOutside" type="Marker2D" parent="."]
+position = Vector2(2376, 1206)
 
 [connection signal="body_entered" from="portals/ToMilisTrail" to="portals/ToMilisTrail" method="_on_body_entered"]
