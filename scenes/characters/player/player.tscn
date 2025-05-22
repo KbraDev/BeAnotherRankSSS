@@ -1,4 +1,4 @@
-[gd_scene load_steps=282 format=3 uid="uid://be8s6fsuvru6m"]
+[gd_scene load_steps=281 format=3 uid="uid://be8s6fsuvru6m"]
 
 [ext_resource type="Script" path="res://scripts/characters/player/player.gd" id="1_nibrf"]
 [ext_resource type="Texture2D" uid="uid://cfhaugg23e7jo" path="res://sprites/characters/player/PlayerWOutColor/idle/idle_left_side.png" id="2_3kk6t"]
@@ -1908,20 +1908,6 @@ animations = [{
 radius = 9.0
 height = 32.0
 
-[sub_resource type="GDScript" id="GDScript_gqdda"]
-script/source = "extends CollisionShape2D
-
-
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
-"
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8fna1"]
 size = Vector2(36.125, 31)
 
@@ -1942,7 +1928,6 @@ frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_ejou4")
-script = SubResource("GDScript_gqdda")
 
 [node name="attack_area" type="Area2D" parent="."]
 collision_layer = 8
