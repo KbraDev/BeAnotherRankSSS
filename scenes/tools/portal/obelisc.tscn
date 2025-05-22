@@ -1,0 +1,138 @@
+[gd_scene load_steps=21 format=3 uid="uid://bxxyvnfime8io"]
+
+[ext_resource type="Script" path="res://scenes/tools/portal/obelisc.gd" id="1_j0e8e"]
+[ext_resource type="Texture2D" uid="uid://dh2xtsm3p1fl0" path="res://assets/ERW - Ancient Ruins V 1.9.1/Props/animated/Obelisk4-animation2-activated-110x180.png" id="1_phne1"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jfysg"]
+atlas = ExtResource("1_phne1")
+region = Rect2(0, 0, 110, 180)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1eqkg"]
+atlas = ExtResource("1_phne1")
+region = Rect2(110, 0, 110, 180)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_54uo0"]
+atlas = ExtResource("1_phne1")
+region = Rect2(220, 0, 110, 180)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qs60j"]
+atlas = ExtResource("1_phne1")
+region = Rect2(330, 0, 110, 180)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_viv5o"]
+atlas = ExtResource("1_phne1")
+region = Rect2(440, 0, 110, 180)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gdca8"]
+atlas = ExtResource("1_phne1")
+region = Rect2(550, 0, 110, 180)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ceoco"]
+atlas = ExtResource("1_phne1")
+region = Rect2(660, 0, 110, 180)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x48lc"]
+atlas = ExtResource("1_phne1")
+region = Rect2(770, 0, 110, 180)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w4uc8"]
+atlas = ExtResource("1_phne1")
+region = Rect2(880, 0, 110, 180)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cphcq"]
+atlas = ExtResource("1_phne1")
+region = Rect2(990, 0, 110, 180)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_faq7k"]
+atlas = ExtResource("1_phne1")
+region = Rect2(1100, 0, 110, 180)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r5qab"]
+atlas = ExtResource("1_phne1")
+region = Rect2(1210, 0, 110, 180)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t8elr"]
+atlas = ExtResource("1_phne1")
+region = Rect2(1320, 0, 110, 180)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i4bsa"]
+atlas = ExtResource("1_phne1")
+region = Rect2(1430, 0, 110, 180)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a8ibv"]
+atlas = ExtResource("1_phne1")
+region = Rect2(1540, 0, 110, 180)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_61vwn"]
+atlas = ExtResource("1_phne1")
+region = Rect2(1650, 0, 110, 180)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_3ydk2"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jfysg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1eqkg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_54uo0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qs60j")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_viv5o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gdca8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ceoco")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x48lc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w4uc8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cphcq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_faq7k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r5qab")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t8elr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i4bsa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a8ibv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_61vwn")
+}],
+"loop": true,
+"name": &"default",
+"speed": 12.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ptj5e"]
+size = Vector2(43, 26)
+
+[node name="Obelisc" type="StaticBody2D"]
+script = ExtResource("1_j0e8e")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_3ydk2")
+frame_progress = 0.667081
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-0.5, 58)
+shape = SubResource("RectangleShape2D_ptj5e")

@@ -624,11 +624,11 @@ shape = SubResource("CircleShape2D_fr6kw")
 [node name="animationOff" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, -17)
 sprite_frames = SubResource("SpriteFrames_qysei")
-frame_progress = 0.0509296
+frame_progress = 0.599977
 
 [node name="animationOn" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_n8pim")
-frame_progress = 0.880677
+frame_progress = 0.429724
 
 [node name="Area2D" type="Area2D" parent="."]
 visible = false
