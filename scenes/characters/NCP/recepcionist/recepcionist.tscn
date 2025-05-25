@@ -1,0 +1,62 @@
+[gd_scene load_steps=9 format=3 uid="uid://dvhl7s1qwgas3"]
+
+[ext_resource type="Texture2D" uid="uid://nuqm8dtudp3n" path="res://sprites/characters/NPC/recepcionist/NpcFemale_base-Sheet.png" id="1_cemhf"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_whvyc"]
+atlas = ExtResource("1_cemhf")
+region = Rect2(0, 0, 48, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kykvb"]
+atlas = ExtResource("1_cemhf")
+region = Rect2(48, 0, 48, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tehkh"]
+atlas = ExtResource("1_cemhf")
+region = Rect2(96, 0, 48, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_morc6"]
+atlas = ExtResource("1_cemhf")
+region = Rect2(144, 0, 48, 96)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_pi01p"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_whvyc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kykvb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tehkh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_morc6")
+}],
+"loop": true,
+"name": &"front",
+"speed": 6.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_h7s62"]
+radius = 12.0
+height = 62.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_t5cgr"]
+radius = 87.0
+
+[node name="Recepcionist" type="CharacterBody2D"]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_pi01p")
+animation = &"front"
+frame_progress = 0.840147
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_h7s62")
+
+[node name="interactArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="interactArea"]
+shape = SubResource("CircleShape2D_t5cgr")
+debug_color = Color(0.997209, 0, 0.170942, 0.42)
