@@ -1,6 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://dvhl7s1qwgas3"]
+[gd_scene load_steps=24 format=3 uid="uid://dvhl7s1qwgas3"]
 
+[ext_resource type="Script" path="res://scenes/characters/NCP/recepcionist/recepcionist.gd" id="1_4nuhm"]
 [ext_resource type="Texture2D" uid="uid://nuqm8dtudp3n" path="res://sprites/characters/NPC/recepcionist/NpcFemale_base-Sheet.png" id="1_cemhf"]
+[ext_resource type="Texture2D" uid="uid://doaqjqqpk6400" path="res://sprites/UIS/InteractUI/interactUI.png" id="3_uri5h"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_whvyc"]
 atlas = ExtResource("1_cemhf")
@@ -35,28 +37,136 @@ animations = [{
 }],
 "loop": true,
 "name": &"front",
-"speed": 6.0
+"speed": 2.0
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_h7s62"]
 radius = 12.0
 height = 62.0
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_t5cgr"]
-radius = 87.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0cnju"]
+size = Vector2(50, 89)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qiuln"]
+atlas = ExtResource("3_uri5h")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_387nm"]
+atlas = ExtResource("3_uri5h")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yndc5"]
+atlas = ExtResource("3_uri5h")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_isg4s"]
+atlas = ExtResource("3_uri5h")
+region = Rect2(0, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_opuva"]
+atlas = ExtResource("3_uri5h")
+region = Rect2(64, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tvmhh"]
+atlas = ExtResource("3_uri5h")
+region = Rect2(128, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0m3es"]
+atlas = ExtResource("3_uri5h")
+region = Rect2(0, 128, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ilkqc"]
+atlas = ExtResource("3_uri5h")
+region = Rect2(64, 128, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1lh4k"]
+atlas = ExtResource("3_uri5h")
+region = Rect2(128, 128, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8lxlg"]
+atlas = ExtResource("3_uri5h")
+region = Rect2(0, 192, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4dl6u"]
+atlas = ExtResource("3_uri5h")
+region = Rect2(64, 192, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7xyd5"]
+atlas = ExtResource("3_uri5h")
+region = Rect2(128, 192, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_r4a52"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qiuln")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_387nm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yndc5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_isg4s")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_opuva")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tvmhh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0m3es")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ilkqc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1lh4k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8lxlg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4dl6u")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7xyd5")
+}],
+"loop": true,
+"name": &"default",
+"speed": 16.0
+}]
 
 [node name="Recepcionist" type="CharacterBody2D"]
+script = ExtResource("1_4nuhm")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.6, 0.6)
 sprite_frames = SubResource("SpriteFrames_pi01p")
 animation = &"front"
-frame_progress = 0.840147
+frame_progress = 0.54117
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_h7s62")
 
 [node name="interactArea" type="Area2D" parent="."]
+z_index = 2
+position = Vector2(0, 27)
+collision_layer = 6
+collision_mask = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="interactArea"]
-shape = SubResource("CircleShape2D_t5cgr")
+shape = SubResource("RectangleShape2D_0cnju")
 debug_color = Color(0.997209, 0, 0.170942, 0.42)
+
+[node name="InteractUI" type="AnimatedSprite2D" parent="."]
+z_index = 1
+position = Vector2(0, -40)
+scale = Vector2(0.851563, 0.851563)
+sprite_frames = SubResource("SpriteFrames_r4a52")
+frame_progress = 0.101521
+
+[connection signal="body_entered" from="interactArea" to="." method="_on_interact_area_body_entered"]
+[connection signal="body_exited" from="interactArea" to="." method="_on_interact_area_body_exited"]

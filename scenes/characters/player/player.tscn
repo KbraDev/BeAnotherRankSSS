@@ -1913,14 +1913,13 @@ size = Vector2(36.125, 31)
 
 [node name="player" type="CharacterBody2D" groups=["player"]]
 z_index = 2
-position = Vector2(168, 59)
 collision_layer = 6
 collision_mask = 3
 script = ExtResource("1_nibrf")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
-scale = Vector2(1.57227, 1.57227)
+scale = Vector2(1.69238, 1.69238)
 sprite_frames = SubResource("SpriteFrames_6myrh")
 animation = &"attackSpecial"
 frame = 23
