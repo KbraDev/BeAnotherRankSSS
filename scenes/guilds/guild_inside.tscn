@@ -1,9 +1,8 @@
-[gd_scene load_steps=6 format=4 uid="uid://yp86sao00y5j"]
+[gd_scene load_steps=5 format=4 uid="uid://yp86sao00y5j"]
 
 [ext_resource type="TileSet" uid="uid://deyvxljh6vbg7" path="res://assets/tilesets/Interrior/interiors.tres" id="1_hmkhl"]
 [ext_resource type="Script" path="res://scenes/guilds/portaltoOutside.gd" id="2_ns7ed"]
 [ext_resource type="PackedScene" uid="uid://dvhl7s1qwgas3" path="res://scenes/characters/NCP/recepcionist/recepcionist.tscn" id="3_duqof"]
-[ext_resource type="PackedScene" uid="uid://be8s6fsuvru6m" path="res://scenes/characters/player/player.tscn" id="4_xluuu"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xcd4i"]
 size = Vector2(132.5, 20)
@@ -47,8 +46,5 @@ debug_color = Color(0.789966, 0.40629, 0.378425, 0.42)
 [node name="Recepcionist" parent="." instance=ExtResource("3_duqof")]
 z_index = 1
 position = Vector2(238, 89)
-
-[node name="player" parent="." instance=ExtResource("4_xluuu")]
-position = Vector2(241, 205)
 
 [connection signal="body_entered" from="Area2D" to="Area2D" method="_on_body_entered"]

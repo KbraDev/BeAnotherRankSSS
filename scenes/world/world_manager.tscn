@@ -1,19 +1,21 @@
-[gd_scene load_steps=5 format=3 uid="uid://xxcf6vh7atqn"]
+[gd_scene load_steps=6 format=3 uid="uid://xxcf6vh7atqn"]
 
 [ext_resource type="Script" path="res://scenes/world/world_manager.gd" id="1_548at"]
 [ext_resource type="PackedScene" uid="uid://be8s6fsuvru6m" path="res://scenes/characters/player/player.tscn" id="1_armst"]
-[ext_resource type="PackedScene" uid="uid://cy1x2ljkv8lcm" path="res://scenes/world/zones/olidForest/OlidForest.tscn" id="2_5d05l"]
+[ext_resource type="PackedScene" uid="uid://drfawir77urlq" path="res://scenes/world/location/CityMilis/city_milis.tscn" id="3_tvb08"]
 [ext_resource type="PackedScene" uid="uid://bi8atwwdsaybi" path="res://UIs/InventoryUI/inventory_ui.tscn" id="4_utxr1"]
+[ext_resource type="PackedScene" uid="uid://d325q8f2ceybl" path="res://UIs/DialogBox/dialog_box.tscn" id="5_67olm"]
 
 [node name="WorldManager" type="Node2D"]
 script = ExtResource("1_548at")
 
 [node name="player" parent="." instance=ExtResource("1_armst")]
-position = Vector2(544, -32)
+position = Vector2(631, 351)
 
 [node name="WorldContainer" type="Node2D" parent="."]
 
-[node name="OlidForest" parent="WorldContainer" instance=ExtResource("2_5d05l")]
+[node name="CityMilis" parent="WorldContainer" instance=ExtResource("3_tvb08")]
+position = Vector2(-24, -111)
 
 [node name="HUD" type="CanvasLayer" parent="."]
 
@@ -23,3 +25,5 @@ offset_top = 61.0
 offset_right = 34.0
 offset_bottom = 61.0
 player = NodePath("../../player")
+
+[node name="DialogBox" parent="HUD" instance=ExtResource("5_67olm")]

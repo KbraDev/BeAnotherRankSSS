@@ -146,7 +146,7 @@ script = ExtResource("1_4nuhm")
 scale = Vector2(0.6, 0.6)
 sprite_frames = SubResource("SpriteFrames_pi01p")
 animation = &"front"
-frame_progress = 0.54117
+frame_progress = 0.0834912
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_h7s62")
@@ -166,7 +166,7 @@ z_index = 1
 position = Vector2(0, -40)
 scale = Vector2(0.851563, 0.851563)
 sprite_frames = SubResource("SpriteFrames_r4a52")
-frame_progress = 0.101521
+frame_progress = 0.439926
 
 [connection signal="body_entered" from="interactArea" to="." method="_on_interact_area_body_entered"]
 [connection signal="body_exited" from="interactArea" to="." method="_on_interact_area_body_exited"]
