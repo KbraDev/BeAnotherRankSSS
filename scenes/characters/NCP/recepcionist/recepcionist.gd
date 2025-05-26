@@ -27,4 +27,8 @@ func _on_interact_area_body_exited(body: Node2D) -> void:
 func _process(delta: float) -> void:
 	if player_in_range and Input.is_action_just_pressed("interact"):
 		if not dialog_box.is_showing:
-			dialog_box.show_dialog("¡Bienvenido! ¿Cómo podemos ayudarle hoy?")
+			dialog_box.show_dialog([
+				"¡Bienvenido!",
+				"¿Cómo podemos ayudarle hoy?",
+				"Tenemos nuevas misiones disponibles."
+			])
