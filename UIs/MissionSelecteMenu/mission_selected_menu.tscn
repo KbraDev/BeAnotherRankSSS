@@ -1,0 +1,30 @@
+[gd_scene load_steps=3 format=3 uid="uid://jiovenp0b04v"]
+
+[ext_resource type="Script" path="res://UIs/MissionSelecteMenu/mission_selected_menu.gd" id="1_5sowg"]
+[ext_resource type="PackedScene" uid="uid://xo32p22vhwqu" path="res://UIs/MissionSelecteMenu/missionCard/mission_card.tscn" id="2_e4t7d"]
+
+[node name="MissionSelectedMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 500.0
+offset_bottom = 600.0
+script = ExtResource("1_5sowg")
+
+[node name="MissionList" type="VBoxContainer" parent="."]
+custom_minimum_size = Vector2(500, 0)
+layout_mode = 1
+offset_right = 500.0
+offset_bottom = 600.0
+
+[node name="MissionCard" parent="MissionList" instance=ExtResource("2_e4t7d")]
+layout_mode = 2
+
+[node name="MissionCard2" parent="MissionList" instance=ExtResource("2_e4t7d")]
+layout_mode = 2
+
+[node name="MissionCard3" parent="MissionList" instance=ExtResource("2_e4t7d")]
+layout_mode = 2
+
+[node name="btnClose" type="Button" parent="MissionList"]
+layout_mode = 2
+text = "Cerrar"
