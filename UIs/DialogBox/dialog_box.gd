@@ -7,6 +7,8 @@ var dialog_lines := []
 var current_line: int = 0
 var is_showing := false
 
+signal dialog_finished
+
 func _ready() -> void:
 	visible = false
 	next_button.pressed.connect(_on_next_button_pressed)
@@ -23,6 +25,7 @@ func _display_current_line():
 		dialog_label.text = dialog_lines[current_line]
 	else:
 		hide_dialog()
+		emit_signal("dialog_finished")
 
 func _on_next_button_pressed():
 	current_line += 1

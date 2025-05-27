@@ -5,10 +5,27 @@ extends CharacterBody2D
 var player_in_range = false
 
 @onready var dialog_box =  get_tree().get_root().get_node("WorldManager/HUD/DialogBox")
+@onready var menu_ui = get_tree().get_root().get_node("WorldManager/HUD/ReceptionMenu")
 
-func _ready() -> void:
+func _ready():
 	animation.play("front")
 	interacUIAnimation.visible = false
+	dialog_box.dialog_finished.connect(_on_dialog_finished)
+	menu_ui.option_selected.connect(_on_menu_option_selected)
+
+func _on_dialog_finished():
+	menu_ui.open()
+
+func _on_menu_option_selected(option: String):
+	match option:
+		"seleccionar":
+			print("Abrir UI de selección de misiones")
+			# Aquí luego instancias o muestras esa UI
+		"entregar":
+			print("Ir a pantalla de entrega de misiones")
+		"salir":
+			menu_ui.close()
+			dialog_box.hide_dialog()
 
 
 func _on_interact_area_body_entered(body: Node2D) -> void:
