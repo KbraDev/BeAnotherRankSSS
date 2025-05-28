@@ -3,17 +3,18 @@ extends Control ## selected Menu
 signal mission_selected(mission: Mission)
 signal menu_closed
 
-@onready var btn_close = $MissionList/btnClose
-
+@onready var btn_close = $btnClose
 @onready var mission_list = $MissionList
 
 var MissionCardScene = preload("res://UIs/MissionSelecteMenu/missionCard/mission_card.tscn")
 
 func _ready() -> void:
-	btn_close.pressed.connect(_on_close_pressed)
+	if not btn_close.pressed.is_connected(_on_close_pressed):
+		btn_close.pressed.connect(_on_close_pressed)
 	visible = false
 
 func open(missions: Array):  # Array[Mission]
+	print("menu de misiones")
 	visible = true
 	_clear_list()
 
@@ -32,9 +33,10 @@ func _on_mission_accepted(mission: Mission):
 	emit_signal("mission_selected", mission)
 	close()
 
-func close():
-	visible = false
-	emit_signal("menu_closed")
-
 func _on_close_pressed():
 	close()
+
+func close():
+	_clear_list()
+	visible = false
+	emit_signal("menu_closed")

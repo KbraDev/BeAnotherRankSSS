@@ -25,6 +25,9 @@ layout_mode = 2
 [node name="MissionCard3" parent="MissionList" instance=ExtResource("2_e4t7d")]
 layout_mode = 2
 
-[node name="btnClose" type="Button" parent="MissionList"]
+[node name="btnClose" type="Button" parent="."]
 layout_mode = 2
+offset_top = 552.0
+offset_right = 500.0
+offset_bottom = 583.0
 text = "Cerrar"

@@ -46,6 +46,7 @@ signal inventory_updated(inventory: Array)
 ## FUNCIONES
 
 func _ready():
+	print("MissionTracker cargado?", MissionTracker)
 	animation.play("idle_" + last_direction)
 
 	# Timers

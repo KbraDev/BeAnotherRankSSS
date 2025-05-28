@@ -1,0 +1,74 @@
+[gd_scene load_steps=3 format=3 uid="uid://dvgth3wrte133"]
+
+[ext_resource type="FontFile" uid="uid://bpv342cmnccd3" path="res://assets/fonts/MedievalSharp-Bold.ttf" id="1_rqasa"]
+[ext_resource type="FontFile" uid="uid://chu6eiqfwrqhx" path="res://assets/fonts/MedievalSharp-Book.ttf" id="2_rfhyy"]
+
+[node name="DeliveryMissionCard" type="Control"]
+custom_minimum_size = Vector2(500, 180)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -780.0
+offset_bottom = -120.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="."]
+custom_minimum_size = Vector2(500, 0)
+layout_mode = 0
+offset_right = 500.0
+offset_bottom = 180.0
+
+[node name="title" type="Label" parent="Panel"]
+custom_minimum_size = Vector2(480, 0)
+layout_mode = 0
+offset_left = 8.0
+offset_right = 488.0
+offset_bottom = 23.0
+theme_override_fonts/font = ExtResource("1_rqasa")
+text = "Titulo de mision"
+horizontal_alignment = 1
+
+[node name="description" type="Label" parent="Panel"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 0
+offset_left = 8.0
+offset_top = 32.0
+offset_right = 288.0
+offset_bottom = 132.0
+theme_override_fonts/font = ExtResource("2_rfhyy")
+text = "Descripcion de mision
+"
+
+[node name="reward" type="Label" parent="Panel"]
+custom_minimum_size = Vector2(170, 50)
+layout_mode = 0
+offset_left = 320.0
+offset_top = 32.0
+offset_right = 425.0
+offset_bottom = 55.0
+theme_override_fonts/font = ExtResource("2_rfhyy")
+text = "recompensa: "
+
+[node name="Rank" type="Label" parent="Panel"]
+custom_minimum_size = Vector2(170, 50)
+layout_mode = 0
+offset_left = 320.0
+offset_top = 88.0
+offset_right = 369.0
+offset_bottom = 111.0
+theme_override_fonts/font = ExtResource("2_rfhyy")
+text = "Rango
+"
+
+[node name="Button" type="Button" parent="Panel"]
+custom_minimum_size = Vector2(480, 0)
+layout_mode = 0
+offset_left = 8.0
+offset_top = 144.0
+offset_right = 488.0
+offset_bottom = 175.0
+theme_override_fonts/font = ExtResource("1_rqasa")
+text = "Entregrar mision
+"

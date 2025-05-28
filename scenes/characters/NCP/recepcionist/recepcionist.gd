@@ -8,6 +8,8 @@ var player_rank = "E"
 @onready var dialog_box =  get_tree().get_root().get_node("WorldManager/HUD/DialogBox")
 @onready var menu_ui = get_tree().get_root().get_node("WorldManager/HUD/ReceptionMenu")
 @onready var mission_menu = get_tree().get_root().get_node("WorldManager/HUD/MissionSelectedMenu")
+@onready var mission_delivery_menu = get_tree().get_root().get_node("WorldManager/HUD/MissionDeliveryMenu")
+
 
 
 func _ready():
@@ -21,12 +23,16 @@ func _on_dialog_finished():
 
 func _on_menu_option_selected(option: String):
 	match option:
-		"seleccionar":
-			var slime_mission = preload("res://UIs/MissionSelecteMenu/Resources/mission/slime_hunt.tres")
-			mission_menu.open([slime_mission])
+		"seleccionar tarea":
+			var mission_db = get_tree().get_root().get_node("WorldManager/MissionDatabase")
+			var missions = mission_db.get_missions_for_rank(player_rank)
+			print("misiones encontradas: ", missions.size())
+			mission_menu.open(missions)
+
 			# Aquí luego instancias o muestras esa UI
-		"entregar":
-			print("Ir a pantalla de entrega de misiones")
+		"entregar tarea":
+			var active = MissionTracker.get_active_mission()
+			mission_delivery_menu.open(active)
 		"salir":
 			menu_ui.close()
 			dialog_box.hide_dialog()
