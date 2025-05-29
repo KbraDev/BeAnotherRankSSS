@@ -19,23 +19,31 @@ func _ready():
 	menu_ui.option_selected.connect(_on_menu_option_selected)
 
 func _on_dialog_finished():
+	print("Dialogo terminado, abriendo menu de opciones")
 	menu_ui.open()
 
 func _on_menu_option_selected(option: String):
+	print("🟡 Opción seleccionada:", option)
+
 	match option:
-		"seleccionar tarea":
+		"seleccionar":
+			print("🔵 Preparando menú de selección...")
 			var mission_db = get_tree().get_root().get_node("WorldManager/MissionDatabase")
 			var missions = mission_db.get_missions_for_rank(player_rank)
-			print("misiones encontradas: ", missions.size())
+			print("📦 Misiones encontradas:", missions.size())
 			mission_menu.open(missions)
 
-			# Aquí luego instancias o muestras esa UI
-		"entregar tarea":
+		"entregar":
+			print("🔴 Preparando menú de entrega...")
 			var active = MissionTracker.get_active_mission()
+			print("📬 Misiones activas:", active.size())
 			mission_delivery_menu.open(active)
+
 		"salir":
+			print("⚪ Cerrando menú y diálogo.")
 			menu_ui.close()
 			dialog_box.hide_dialog()
+
 
 
 func _on_interact_area_body_entered(body: Node2D) -> void:

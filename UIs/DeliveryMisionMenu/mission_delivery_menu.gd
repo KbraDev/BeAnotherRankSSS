@@ -11,9 +11,12 @@ func _ready():
 		btn_close.pressed.connect(_on_close_pressed)
 
 func open(missions: Array):
+	print("✅ MissionDeliveryMenu abierto. Misiones activas:", missions.size())
 	visible = true
 	_clear_list()
+
 	for mission_state in missions:
+		print("📄 Agregando tarjeta para misión activa:", mission_state.mission.name)
 		var card = DeliveryCardScene.instantiate()
 		card.set_mission_state(mission_state)
 		mission_list.add_child(card)

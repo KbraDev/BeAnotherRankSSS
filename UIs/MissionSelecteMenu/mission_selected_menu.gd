@@ -14,11 +14,12 @@ func _ready() -> void:
 	visible = false
 
 func open(missions: Array):  # Array[Mission]
-	print("menu de misiones")
+	print("✅ MissionSelectedMenu abierto. Misiones recibidas:", missions.size())
 	visible = true
 	_clear_list()
 
 	for mission in missions:
+		print("📄 Agregando tarjeta para:", mission.name)
 		var card = MissionCardScene.instantiate()
 		card.set_mission(mission)
 		card.mission_accepted.connect(_on_mission_accepted)
