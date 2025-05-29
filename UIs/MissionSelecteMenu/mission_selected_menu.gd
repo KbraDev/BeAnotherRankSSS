@@ -14,12 +14,10 @@ func _ready() -> void:
 	visible = false
 
 func open(missions: Array):  # Array[Mission]
-	print("✅ MissionSelectedMenu abierto. Misiones recibidas:", missions.size())
 	visible = true
 	_clear_list()
 
 	for mission in missions:
-		print("📄 Agregando tarjeta para:", mission.name)
 		var card = MissionCardScene.instantiate()
 		card.set_mission(mission)
 		card.mission_accepted.connect(_on_mission_accepted)
@@ -30,8 +28,18 @@ func _clear_list():
 		child.queue_free()
 
 func _on_mission_accepted(mission: Mission):
-	print("Misión aceptada: %s" % mission.name)
-	emit_signal("mission_selected", mission)
+	print("Mision aceptada: %s" % mission.name)
+	
+	# Agregar al tracker
+	var succes := MissionTracker.add_mission(mission)
+	if succes: 
+		emit_signal("mission_selected", mission)
+	else: 
+		print("no se pudo agregar la mision")
+	
+	if mission == null:
+		print("⚠️ Se intentó aceptar una misión nula")
+		return
 	close()
 
 func _on_close_pressed():

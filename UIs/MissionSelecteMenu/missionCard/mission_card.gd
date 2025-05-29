@@ -1,4 +1,4 @@
-extends Control
+extends Control ##Mission_card
 signal mission_accepted(mission: Mission)
 
 @onready var title_label = $Panel/Title
