@@ -1,0 +1,37 @@
+[gd_scene load_steps=3 format=3 uid="uid://cqj38508gjs57"]
+
+[ext_resource type="Script" path="res://UIs/ActiveMissionsMenu/active_missions_menu.gd" id="1_6ipjr"]
+[ext_resource type="PackedScene" uid="uid://dvgth3wrte133" path="res://UIs/DeliveryMisionMenu/delivery_mission_card.tscn" id="2_r542c"]
+
+[node name="ActiveMissionsMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_6ipjr")
+
+[node name="ActiveMissionList" type="VBoxContainer" parent="."]
+custom_minimum_size = Vector2(500, 0)
+layout_mode = 0
+offset_right = 500.0
+offset_bottom = 600.0
+
+[node name="DeliveryMissionCard" parent="ActiveMissionList" instance=ExtResource("2_r542c")]
+layout_mode = 2
+
+[node name="DeliveryMissionCard2" parent="ActiveMissionList" instance=ExtResource("2_r542c")]
+layout_mode = 2
+
+[node name="DeliveryMissionCard3" parent="ActiveMissionList" instance=ExtResource("2_r542c")]
+layout_mode = 2
+
+[node name="btnClose" type="Button" parent="."]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 552.0
+offset_right = 488.0
+offset_bottom = 583.0
+text = "Cerrar
+"

@@ -8,33 +8,28 @@ signal mission_delivered(mission_state: MissionState)
 @onready var deliver_button = $Panel/Button
 
 var mission_state: MissionState
+var show_deliver_button := true
 
 func _ready():
-	# Conectamos el botón aquí para evitar errores de timing
 	if deliver_button and not deliver_button.pressed.is_connected(_on_DeliverButton_pressed):
 		deliver_button.pressed.connect(_on_DeliverButton_pressed)
 
-func set_mission_state(state: MissionState) -> void:
+func set_mission_state(state: MissionState, show_button := true) -> void:
 	mission_state = state
-
-	# Esperamos a que el nodo esté completamente listo
+	show_deliver_button = show_button
 	await self.ready
 	_update_ui()
 
 func _update_ui():
-	print("\n🧪 Ejecutando _update_ui")
-	print("🧩 mission_state:", mission_state)
-	print("🧩 mission_state.mission:", mission_state.mission)
-
 	if mission_state == null or mission_state.mission == null:
-		print("❌ mission_state o mission está vacío.")
 		return
 
 	title_label.text = mission_state.mission.name
 	desc_label.text = mission_state.mission.description
 	reward_label.text = "XP: %s | Monedas: %s" % [mission_state.mission.rewards.xp, mission_state.mission.rewards.coins]
 	rank_label.text = "Rango: %s" % mission_state.mission.rank
-	deliver_button.disabled = mission_state.status != "active"
+	deliver_button.visible = show_deliver_button and mission_state.status == "active"
+
 
 func _on_DeliverButton_pressed():
 	if _has_required_items():
@@ -48,3 +43,7 @@ func _has_required_items() -> bool:
 
 func _remove_items_from_inventory():
 	pass
+	
+func set_deliver_button_visible(value: bool) -> void:
+	if is_instance_valid(deliver_button):
+		deliver_button.visible = value

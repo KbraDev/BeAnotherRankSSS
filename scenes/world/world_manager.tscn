@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://xxcf6vh7atqn"]
+[gd_scene load_steps=11 format=3 uid="uid://xxcf6vh7atqn"]
 
 [ext_resource type="Script" path="res://scenes/world/world_manager.gd" id="1_548at"]
 [ext_resource type="PackedScene" uid="uid://be8s6fsuvru6m" path="res://scenes/characters/player/player.tscn" id="1_armst"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://jiovenp0b04v" path="res://UIs/MissionSelecteMenu/mission_selected_menu.tscn" id="7_2ymlc"]
 [ext_resource type="Script" path="res://scripts/missions/MissionDataBase.gd" id="8_0psd8"]
 [ext_resource type="PackedScene" uid="uid://bfqk3fos52cx5" path="res://UIs/DeliveryMisionMenu/mission_delivery_menu.tscn" id="8_va3kj"]
+[ext_resource type="PackedScene" uid="uid://cqj38508gjs57" path="res://UIs/ActiveMissionsMenu/active_missions_menu.tscn" id="9_7x5vf"]
 
 [node name="WorldManager" type="Node2D"]
 script = ExtResource("1_548at")
@@ -49,6 +50,12 @@ offset_left = 350.0
 offset_top = 10.0
 offset_right = -430.0
 offset_bottom = -110.0
+
+[node name="ActiveMissionsMenu" parent="HUD" instance=ExtResource("9_7x5vf")]
+offset_left = 350.0
+offset_top = 10.0
+offset_right = 350.0
+offset_bottom = 10.0
 
 [node name="MissionDatabase" type="Node2D" parent="."]
 script = ExtResource("8_0psd8")

@@ -2,6 +2,7 @@ extends Node2D
 
 @onready var player := $player
 @onready var world_container := $WorldContainer
+@onready var active_mission_menu = $HUD/ActiveMissionsMenu
 
 var current_world: Node = null
 
@@ -41,6 +42,12 @@ func change_world(scene_path: String, target_marker_name: String) -> void:
 	for s in get_tree().get_nodes_in_group("slime"):
 		s.queue_free()
 
+func _process(delta: float) -> void:
+	if Input.is_action_just_pressed("open_mission"):
+		if not active_mission_menu.visible:
+			active_mission_menu.open()
+		else:
+			active_mission_menu.close()
 
 	
 func _find_marker_in(node: Node, name: String) -> Node:

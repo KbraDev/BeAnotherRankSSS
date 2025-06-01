@@ -1,8 +1,9 @@
-extends Control ## deliveryMissionMenu
+extends Control
 signal menu_closed
 
 @onready var btn_close = $btnClose
 @onready var mission_list = $ActiveMissionList
+
 var DeliveryCardScene = preload("res://UIs/DeliveryMisionMenu/delivery_mission_card.tscn")
 
 func _ready():
@@ -10,23 +11,14 @@ func _ready():
 	if not btn_close.pressed.is_connected(_on_close_pressed):
 		btn_close.pressed.connect(_on_close_pressed)
 
-func open(missions: Array):
+func open():
 	visible = true
 	_clear_list()
-
+	var missions = MissionTracker.get_active_mission()
 	for mission_state in missions:
 		var card = DeliveryCardScene.instantiate()
-		card.set_mission_state(mission_state, true) 
-		card.mission_delivered.connect(_on_mission_delivered)
+		card.set_mission_state(mission_state, false) # 👈 decimos que NO muestre el botón
 		mission_list.add_child(card)
-
-
-
-func _on_mission_delivered(state: MissionState):
-	print("🎉 Misión entregada:", state.mission.name)
-	MissionTracker.complete_mission(state)
-	_clear_list()
-	open(MissionTracker.get_active_mission()) # refresca el menú
 
 
 func _on_close_pressed():
