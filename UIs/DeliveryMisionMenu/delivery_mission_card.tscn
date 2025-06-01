@@ -42,6 +42,7 @@ offset_bottom = 132.0
 theme_override_fonts/font = ExtResource("2_rfhyy")
 text = "Descripcion de mision
 "
+autowrap_mode = 3
 
 [node name="reward" type="Label" parent="Panel"]
 custom_minimum_size = Vector2(170, 50)
@@ -53,7 +54,7 @@ offset_bottom = 55.0
 theme_override_fonts/font = ExtResource("2_rfhyy")
 text = "recompensa: "
 
-[node name="Rank" type="Label" parent="Panel"]
+[node name="rank" type="Label" parent="Panel"]
 custom_minimum_size = Vector2(170, 50)
 layout_mode = 0
 offset_left = 320.0

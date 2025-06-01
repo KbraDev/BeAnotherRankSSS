@@ -1,5 +1,5 @@
 class_name MissionState
-extends Resource
+extends RefCounted 
 
 @export var mission: Mission
 @export var time_started: float
