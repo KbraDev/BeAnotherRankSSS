@@ -27,7 +27,14 @@ func _on_menu_option_selected(option: String):
 		"seleccionar":
 			var mission_db = get_tree().get_root().get_node("WorldManager/MissionDatabase")
 			var missions = mission_db.get_missions_for_rank(player_rank)
-			mission_menu.open(missions)
+
+			#Filtrar misiones activas
+			var active = MissionTracker.get_active_mission()
+			var active_ids = active.map(func(s): return s.mission.id)
+
+			var filtered = missions.filter(func(m): return not active_ids.has(m.id))
+
+			mission_menu.open(filtered)
 
 		"entregar":
 			var active = MissionTracker.get_active_mission()
