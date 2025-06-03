@@ -1,0 +1,19 @@
+[gd_scene load_steps=2 format=3 uid="uid://bhxvv2llsy1ia"]
+
+[ext_resource type="Script" path="res://UIs/notificactionManager/floating_notification_manager.gd" id="1_2cfuf"]
+
+[node name="FloatingNotificationManager" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -880.0
+offset_bottom = -680.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_2cfuf")
+
+[node name="NotificactionStack" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0

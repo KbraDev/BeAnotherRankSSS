@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://xxcf6vh7atqn"]
+[gd_scene load_steps=12 format=3 uid="uid://xxcf6vh7atqn"]
 
 [ext_resource type="Script" path="res://scenes/world/world_manager.gd" id="1_548at"]
 [ext_resource type="PackedScene" uid="uid://be8s6fsuvru6m" path="res://scenes/characters/player/player.tscn" id="1_armst"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" path="res://scripts/missions/MissionDataBase.gd" id="8_0psd8"]
 [ext_resource type="PackedScene" uid="uid://bfqk3fos52cx5" path="res://UIs/DeliveryMisionMenu/mission_delivery_menu.tscn" id="8_va3kj"]
 [ext_resource type="PackedScene" uid="uid://cqj38508gjs57" path="res://UIs/ActiveMissionsMenu/active_missions_menu.tscn" id="9_7x5vf"]
+[ext_resource type="PackedScene" uid="uid://bhxvv2llsy1ia" path="res://UIs/notificactionManager/floating_notification_manager.tscn" id="10_uql5h"]
 
 [node name="WorldManager" type="Node2D"]
 script = ExtResource("1_548at")
@@ -32,12 +33,13 @@ offset_bottom = 61.0
 player = NodePath("../../player")
 
 [node name="DialogBox" parent="HUD" instance=ExtResource("5_67olm")]
+mouse_filter = 2
 
 [node name="ReceptionMenu" parent="HUD" instance=ExtResource("6_37a41")]
 offset_left = 1064.0
-offset_top = 504.0
+offset_top = 488.0
 offset_right = 1064.0
-offset_bottom = 504.0
+offset_bottom = 488.0
 
 [node name="MissionSelectedMenu" parent="HUD" instance=ExtResource("7_2ymlc")]
 offset_left = 350.0
@@ -56,6 +58,8 @@ offset_left = 350.0
 offset_top = 10.0
 offset_right = 350.0
 offset_bottom = 10.0
+
+[node name="FloatingNotificationManager" parent="HUD" instance=ExtResource("10_uql5h")]
 
 [node name="MissionDatabase" type="Node2D" parent="."]
 script = ExtResource("8_0psd8")

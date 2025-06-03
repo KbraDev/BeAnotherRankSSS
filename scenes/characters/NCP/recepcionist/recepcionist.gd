@@ -11,17 +11,24 @@ var player_rank = "E"
 @onready var mission_delivery_menu = get_tree().get_root().get_node("WorldManager/HUD/MissionDeliveryMenu")
 
 
+## var notif_manager = get_node("HUD/FloatingNotificationManager")
+## notif_manager.show_message("🎉 Misión completada", Color.GREEN)
+
 
 func _ready():
 	animation.play("front")
 	interacUIAnimation.visible = false
 	dialog_box.dialog_finished.connect(_on_dialog_finished)
+	print("conectando menu")
 	menu_ui.option_selected.connect(_on_menu_option_selected)
 
 func _on_dialog_finished():
-	menu_ui.open()
+	if not menu_ui.visible:
+		menu_ui.open()
+
 
 func _on_menu_option_selected(option: String):
+	print("Opción recibida:", option)
 
 	match option:
 		"seleccionar":

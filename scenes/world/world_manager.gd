@@ -3,11 +3,15 @@ extends Node2D
 @onready var player := $player
 @onready var world_container := $WorldContainer
 @onready var active_mission_menu = $HUD/ActiveMissionsMenu
+@onready var floating_notification = $HUD/FloatingNotiification
+
+@onready var notif := get_node("HUD/FloatingNotiification")
 
 var current_world: Node = null
 
 func _ready():
-	var player = $player
+	var player = $player      
+
 	var inventory_ui = $HUD/InventoryUI
 	
 	player.connect("inventory_updated", inventory_ui.update_ui)

@@ -32,14 +32,16 @@ func _on_mission_accepted(mission: Mission):
 	
 	# Agregar al tracker
 	var succes := MissionTracker.add_mission(mission)
+
 	if succes: 
 		emit_signal("mission_selected", mission)
 	else: 
 		print("no se pudo agregar la mision")
+
+		# 🚨 Mostrar notificación flotante
+		var floating = get_tree().get_root().get_node("WorldManager/HUD/FloatingNotification")
+		floating.show_message("⚠️ Límite de misiones activas alcanzado")
 	
-	if mission == null:
-		print("⚠️ Se intentó aceptar una misión nula")
-		return
 	close()
 
 func _on_close_pressed():

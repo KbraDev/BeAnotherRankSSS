@@ -25,6 +25,7 @@ offset_top = -114.0
 offset_right = 623.0
 grow_horizontal = 2
 grow_vertical = 0
+mouse_filter = 2
 
 [node name="Label" type="Label" parent="Panel"]
 layout_mode = 1

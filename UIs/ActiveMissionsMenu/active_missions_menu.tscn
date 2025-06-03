@@ -4,10 +4,13 @@
 [ext_resource type="PackedScene" uid="uid://dvgth3wrte133" path="res://UIs/DeliveryMisionMenu/delivery_mission_card.tscn" id="2_r542c"]
 
 [node name="ActiveMissionsMenu" type="Control"]
+custom_minimum_size = Vector2(500, 600)
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_right = -780.0
+offset_bottom = -120.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_6ipjr")

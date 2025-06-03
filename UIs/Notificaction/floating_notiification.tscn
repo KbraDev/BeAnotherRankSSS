@@ -1,0 +1,29 @@
+[gd_scene load_steps=3 format=3 uid="uid://cfugx7irjix46"]
+
+[ext_resource type="Script" path="res://UIs/Notificaction/floating_notiification.gd" id="1_5nfep"]
+[ext_resource type="FontFile" uid="uid://bpv342cmnccd3" path="res://assets/fonts/MedievalSharp-Bold.ttf" id="2_ub57a"]
+
+[node name="FloatingNotiification" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -880.0
+offset_bottom = -680.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_5nfep")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 0
+offset_right = 400.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="Panel"]
+layout_mode = 0
+offset_left = 8.0
+offset_right = 392.0
+offset_bottom = 40.0
+theme_override_fonts/font = ExtResource("2_ub57a")
+theme_override_font_sizes/font_size = 22
+vertical_alignment = 1

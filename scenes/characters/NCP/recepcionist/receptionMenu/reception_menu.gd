@@ -19,10 +19,13 @@ func close():
 	visible = false
 
 func _on_select_pressed():
+	print("Seleccionar presionado")
 	emit_signal("option_selected", "seleccionar")
 
 func _on_deliver_pressed():
+	print("Entregar presionado")
 	emit_signal("option_selected", "entregar")
 
 func _on_exit_pressed():
+	print("Salir presionado")
 	emit_signal("option_selected", "salir")
