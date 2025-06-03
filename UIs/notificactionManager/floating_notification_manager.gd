@@ -4,7 +4,7 @@ extends Control ##NotificactionManager
 const MAX_NOTIFICATIONS := 3
 const NotificationScene := preload("res://UIs/Notificaction/floating_notiification.tscn")
 
-func show_message(text: String, color := Color.WHITE, duration := 3.0):
+func show_message(text: String, color := Color.WHITE, duration := 4.0):
 	if stack.get_child_count() >= MAX_NOTIFICATIONS:
 		print("⚠️ Límite de notificaciones activas alcanzado")
 		return

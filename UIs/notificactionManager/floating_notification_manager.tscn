@@ -13,7 +13,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_2cfuf")
 
-[node name="NotificactionStack" type="VBoxContainer" parent="."]
+[node name="NotificationStack" type="VBoxContainer" parent="."]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0

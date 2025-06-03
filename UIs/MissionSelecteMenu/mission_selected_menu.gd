@@ -5,8 +5,12 @@ signal menu_closed
 
 @onready var btn_close = $btnClose
 @onready var mission_list = $MissionList
+@onready var notif_manager = get_tree().get_root().get_node("WorldManager/HUD/FloatingNotificationManager")
+
 
 var MissionCardScene = preload("res://UIs/MissionSelecteMenu/missionCard/mission_card.tscn")
+
+
 
 func _ready() -> void:
 	if not btn_close.pressed.is_connected(_on_close_pressed):
@@ -28,21 +32,19 @@ func _clear_list():
 		child.queue_free()
 
 func _on_mission_accepted(mission: Mission):
-	print("Mision aceptada: %s" % mission.name)
-	
+	var floating = get_tree().get_root().get_node_or_null("WorldManager/HUD/FloatingNotificationManager")
 	# Agregar al tracker
 	var succes := MissionTracker.add_mission(mission)
 
 	if succes: 
 		emit_signal("mission_selected", mission)
+		floating.show_message("🎉 Misión aceptada: %s" % mission.name, Color.WHITE)
 	else: 
 		print("no se pudo agregar la mision")
+		floating.show_message("⚠️ Límite de misiones activas alcanzado", Color.ORANGE)
 
-		# 🚨 Mostrar notificación flotante
-		var floating = get_tree().get_root().get_node("WorldManager/HUD/FloatingNotification")
-		floating.show_message("⚠️ Límite de misiones activas alcanzado")
-	
 	close()
+
 
 func _on_close_pressed():
 	close()
