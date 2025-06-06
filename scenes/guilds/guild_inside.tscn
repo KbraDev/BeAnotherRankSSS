@@ -1,11 +1,17 @@
-[gd_scene load_steps=5 format=4 uid="uid://yp86sao00y5j"]
+[gd_scene load_steps=8 format=4 uid="uid://yp86sao00y5j"]
 
 [ext_resource type="TileSet" uid="uid://deyvxljh6vbg7" path="res://assets/tilesets/Interrior/interiors.tres" id="1_hmkhl"]
 [ext_resource type="Script" path="res://scenes/guilds/portaltoOutside.gd" id="2_ns7ed"]
 [ext_resource type="PackedScene" uid="uid://dvhl7s1qwgas3" path="res://scenes/characters/NCP/recepcionist/recepcionist.tscn" id="3_duqof"]
+[ext_resource type="Script" path="res://scenes/guilds/scene_meta.gd" id="4_a0oq4"]
+[ext_resource type="Script" path="res://scripts/preload/ScenePortalData.gd" id="5_v6w2y"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xcd4i"]
 size = Vector2(132.5, 20)
+
+[sub_resource type="Resource" id="Resource_eo212"]
+script = ExtResource("5_v6w2y")
+connected_scenes = Array[String](["res://scenes/world/location/CityMilis/city_milis.tscn"])
 
 [node name="GuildInside" type="Node2D"]
 
@@ -46,5 +52,9 @@ debug_color = Color(0.789966, 0.40629, 0.378425, 0.42)
 [node name="Recepcionist" parent="." instance=ExtResource("3_duqof")]
 z_index = 1
 position = Vector2(238, 89)
+
+[node name="SceneMeta" type="Node2D" parent="."]
+script = ExtResource("4_a0oq4")
+portal_data = SubResource("Resource_eo212")
 
 [connection signal="body_entered" from="Area2D" to="Area2D" method="_on_body_entered"]
