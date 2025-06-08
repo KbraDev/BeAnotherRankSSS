@@ -265,6 +265,13 @@ func take_damage(amount: float):
 	current_health = max(current_health - amount, 0)
 	emit_signal("health_changed", current_health, max_health)
 	print("🩸 El jugador recibió", amount, "de daño.")
+	
+	# Animación de recibir daño
+	if not is_attacking and not is_dashing:
+		var anim_name = "take_damage_" + last_direction
+		if animation.sprite_frames.has_animation(anim_name):
+			animation.play(anim_name)
+
 
 
 
