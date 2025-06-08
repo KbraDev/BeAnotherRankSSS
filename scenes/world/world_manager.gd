@@ -15,6 +15,13 @@ var _next_scene: PackedScene = null
 var _preloaded_scenes: Dictionary = {}
 
 func _ready():
+	
+	# Set HUD player
+	var player = $player
+	var hud = $HUD
+	hud.set_player(player)
+	
+	
 	var inventory_ui = $HUD/InventoryUI
 	player.connect("inventory_updated", inventory_ui.update_ui)
 	inventory_ui.update_ui(player.inventory)

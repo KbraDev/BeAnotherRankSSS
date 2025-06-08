@@ -39,9 +39,13 @@ const INVENTORY_SIZE := INVENTORY_COLS * INVENTORY_ROWS
 
 var inventory: Array = []
 
+# Health vars
+var current_health = 50
+var max_health = 50
+
 ## Signals
 signal inventory_updated(inventory: Array)
-
+signal health_changed(current_health, max_health)
 
 ## FUNCIONES
 
@@ -79,6 +83,7 @@ func _ready():
 		inventory[i] = null
 	
 	print(inventory)
+	emit_signal("health_changed", current_health, max_health)
 
 func _physics_process(delta: float) -> void:
 	handle_state_input()
@@ -257,6 +262,8 @@ func _on_dash_cooldown_finished():
 	can_dash = true
 
 func take_damage(amount: float):
+	current_health = max(current_health - amount, 0)
+	emit_signal("health_changed", current_health, max_health)
 	print("🩸 El jugador recibió", amount, "de daño.")
 
 
