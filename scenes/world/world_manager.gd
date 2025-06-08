@@ -110,3 +110,7 @@ func _find_marker_in(node: Node, name: String) -> Node:
 		if found != null:
 			return found
 	return null
+
+func fade_to_black():
+	print("🎬 Ejecutando fundido a negro")
+	$HUD/TransitionOverlay/AnimationPlayer.play("fade_out")

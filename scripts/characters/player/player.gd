@@ -11,6 +11,7 @@ var current_state: PlayerState = PlayerState.unarmed
 @onready var animation = $AnimatedSprite2D
 @onready var attack_timer = Timer.new()
 @onready var combo_timer = Timer.new()
+@onready var camera = $Camera2D
 
 var last_direction := "front"
 var can_attack := true
@@ -265,10 +266,23 @@ func take_damage(amount: float):
 	current_health = max(current_health - amount, 0)
 	emit_signal("health_changed", current_health, max_health)
 	print("🩸 El jugador recibió", amount, "de daño.")
-	
+
+	if current_health == 0:
+		die()
+		return
+
 	# Animación de recibir daño
 	if not is_attacking and not is_dashing:
-		var anim_name = "take_damage_" + last_direction
+		var prefix := ""
+		match current_state:
+			PlayerState.armed:
+				prefix = "sword_"
+			PlayerState.bow:
+				prefix = "bow_"
+			PlayerState.unarmed:
+				prefix = ""
+
+		var anim_name = prefix + "take_damage_" + last_direction
 		if animation.sprite_frames.has_animation(anim_name):
 			animation.play(anim_name)
 
@@ -311,3 +325,47 @@ func add_item_to_inventory(item_data: ItemData, amount: int = 1) -> bool:
 		return true
 	
 	emit_signal("inventory_updated", inventory)
+	
+func die():
+	can_move = false
+	can_attack = false
+	is_attacking = false
+	is_dashing = false
+	velocity = Vector2.ZERO
+
+	set_collision_layer(0)
+	set_collision_mask(0)
+	# Prefijo según estado
+	var prefix := ""
+	match current_state:
+		PlayerState.armed:
+			prefix = "sword_"
+		PlayerState.bow:
+			prefix = "bow_"
+		PlayerState.unarmed:
+			prefix = ""
+
+	var anim_name = prefix + "death_" + last_direction
+
+	if animation.sprite_frames.has_animation(anim_name):
+		animation.play(anim_name)
+	else:
+		print("⚰️ Animación de muerte no encontrada:", anim_name)
+		
+	# set zoom
+	var tween := get_tree().create_tween()
+	tween.tween_property(camera, "zoom", Vector2(2.7, 2.7), 1.5).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+
+	await tween.finished
+	_on_zoom_finished()
+	# Opcional: después de morir, eliminar al jugador o dejarlo quieto
+	# queue_free()  # si querés eliminarlo
+
+func _on_zoom_finished():
+	print("🔍 Buscando world_manager...")
+	var wm := get_tree().get_first_node_in_group("world_manager")
+	if wm:
+		print("✅ WorldManager encontrado, haciendo fade")
+		wm.call("fade_to_black")
+	else:
+		print("❌ No se encontró el WorldManager (grupo 'world_manager')")

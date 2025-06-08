@@ -68,7 +68,7 @@ _data = {
 "fade_out": SubResource("Animation_wihia")
 }
 
-[node name="WorldManager" type="Node2D"]
+[node name="WorldManager" type="Node2D" groups=["world_manager"]]
 script = ExtResource("1_548at")
 
 [node name="player" parent="." instance=ExtResource("1_armst")]
