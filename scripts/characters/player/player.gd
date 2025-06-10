@@ -13,6 +13,9 @@ var current_state: PlayerState = PlayerState.unarmed
 @onready var combo_timer = Timer.new()
 @onready var camera = $Camera2D
 
+var mana = 10
+var level = 1
+
 var last_direction := "front"
 var can_attack := true
 var is_attacking := false
@@ -435,3 +438,27 @@ func _wait_for_checkpoint():
 			return
 		elapsed += get_process_delta_time()
 	print("❌ Timeout esperando al checkpoint:", respawn_pending_checkpoint_id)
+
+## func para guardar estado
+func get_save_data() -> Dictionary:
+	var inv := []
+	for item in inventory:
+		if item != null:
+			inv.append({
+				"item_name": item.item_data.item_name,
+				"amount": item.amount
+			})
+		else:
+			inv.append(null)
+
+	return {
+		"position": global_position,
+		"hp": current_health,
+		"max_hp": max_health,
+		"mana": mana,
+		"level": level, 
+		"inventory": inv,
+		"player_state": current_state,
+		"last_checkpoint_id": last_checkpoint_id,
+		"last_checkpoint_scene": last_checkpoint_scene
+	}
