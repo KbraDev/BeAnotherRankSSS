@@ -1,10 +1,9 @@
-[gd_scene load_steps=14 format=4 uid="uid://drfawir77urlq"]
+[gd_scene load_steps=13 format=4 uid="uid://drfawir77urlq"]
 
 [ext_resource type="TileSet" uid="uid://rngchcx3q02t" path="res://assets/tilesets/terrain.tres" id="1_dwt25"]
 [ext_resource type="TileSet" uid="uid://df2ewgbh7ofxg" path="res://assets/tilesets/houses.tres" id="2_ccgwm"]
 [ext_resource type="TileSet" uid="uid://deyvxljh6vbg7" path="res://assets/tilesets/Interrior/interiors.tres" id="3_wphr1"]
 [ext_resource type="TileSet" uid="uid://dvfkq370f0fmb" path="res://assets/tilesets/props.tres" id="4_i4g13"]
-[ext_resource type="PackedScene" uid="uid://cn8gfuu11mtd6" path="res://scenes/tools/shopBeta/shop_beta.tscn" id="6_q4qjh"]
 [ext_resource type="Script" path="res://scenes/world/location/CityMilis/script/to_milis_trail.gd" id="8_6yi0m"]
 [ext_resource type="Script" path="res://scenes/world/location/CityMilis/script/scene_meta.gd" id="8_rynrl"]
 [ext_resource type="PackedScene" uid="uid://dtx1cf8t6sflo" path="res://scenes/guilds/guild_ouside.tscn" id="8_vqqju"]
@@ -21,7 +20,7 @@ size = Vector2(390, 20)
 
 [sub_resource type="Resource" id="Resource_s7550"]
 script = ExtResource("9_8ulv2")
-connected_scenes = Array[String](["res://scenes/world/zones/milistrail/milis_trail.tscn", "res://scenes/guilds/guild_inside.tscn"])
+connected_scenes = Array[String](["res://scenes/world/zones/milistrail/milis_trail.tscn", "res://scenes/guilds/CitiMilisGuild/CityMilisGuid.tscn"])
 
 [node name="CityMilis" type="Node2D"]
 
@@ -119,36 +118,6 @@ z_index = 2
 position = Vector2(1655.5, 0)
 shape = SubResource("RectangleShape2D_vqxe7")
 debug_color = Color(0.994231, 0.0693685, 0, 0.42)
-
-[node name="shops" type="Node" parent="."]
-
-[node name="shopBeta" parent="shops" instance=ExtResource("6_q4qjh")]
-z_index = 2
-position = Vector2(464, 1568)
-
-[node name="shopBeta2" parent="shops" instance=ExtResource("6_q4qjh")]
-z_index = 2
-position = Vector2(720, 1568)
-
-[node name="shopBeta3" parent="shops" instance=ExtResource("6_q4qjh")]
-z_index = 2
-position = Vector2(848, 1568)
-
-[node name="shopBeta4" parent="shops" instance=ExtResource("6_q4qjh")]
-z_index = 2
-position = Vector2(936, 1568)
-
-[node name="shopBeta5" parent="shops" instance=ExtResource("6_q4qjh")]
-z_index = 2
-position = Vector2(1016, 1568)
-
-[node name="shopBeta6" parent="shops" instance=ExtResource("6_q4qjh")]
-z_index = 2
-position = Vector2(1088, 1568)
-
-[node name="shopBeta7" parent="shops" instance=ExtResource("6_q4qjh")]
-z_index = 2
-position = Vector2(56, 1568)
 
 [node name="FromMilisTrail" type="Marker2D" parent="."]
 position = Vector2(619, 334)

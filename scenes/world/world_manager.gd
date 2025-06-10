@@ -74,6 +74,12 @@ func change_world(scene_path: String, target_marker_name: String) -> void:
 
 	# Precargar nuevas conexiones
 	_preload_connected_scenes(current_world)
+	
+	# Conectar checkpoints al jugador
+	for checkpoint in current_world.get_tree().get_nodes_in_group("checkpoint"):
+		checkpoint.connect("checkpoint_reached", Callable(player, "update_checkpoint"))
+
+
 
 func _preload_connected_scenes(world: Node) -> void:
 	var meta = world.get_node_or_null("SceneMeta")

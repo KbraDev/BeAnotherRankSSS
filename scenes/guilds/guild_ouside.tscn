@@ -4743,7 +4743,7 @@ tile_set = SubResource("TileSet_el735")
 z_index = 2
 position = Vector2(490, 600)
 script = ExtResource("2_ptrns")
-target_scene = "res://scenes/guilds/guild_inside.tscn"
+target_scene = "res://scenes/guilds/CitiMilisGuild/CityMilisGuid.tscn"
 target_marker_name = "fromOut"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="toInside"]

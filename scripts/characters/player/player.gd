@@ -44,6 +44,13 @@ var inventory: Array = []
 var current_health = 50
 var max_health = 50
 
+# checkPoint vars
+var last_checkpoint_id: String = ""
+var last_checkpoint_scene: String = ""
+var respawn_pending_checkpoint_id: String = ""
+
+
+
 ## Signals
 signal inventory_updated(inventory: Array)
 signal health_changed(current_health, max_health)
@@ -364,8 +371,67 @@ func die():
 func _on_zoom_finished():
 	print("🔍 Buscando world_manager...")
 	var wm := get_tree().get_first_node_in_group("world_manager")
-	if wm:
+
+	if wm and last_checkpoint_scene != "":
 		print("✅ WorldManager encontrado, haciendo fade")
-		wm.call("fade_to_black")
+		wm.change_world(last_checkpoint_scene, "")
+		await get_tree().process_frame
+
+		# Esperar a que se registre el checkpoint correspondiente
+		respawn_pending_checkpoint_id = last_checkpoint_id
+		await _wait_for_checkpoint()
 	else:
-		print("❌ No se encontró el WorldManager (grupo 'world_manager')")
+		print("⚠️ No se pudo cargar la escena del checkpoint")
+		global_position = Vector2.ZERO
+
+	# Restaurar estado del jugador
+	current_health = max_health
+	emit_signal("health_changed", current_health, max_health)
+	can_move = true
+	can_attack = true
+	is_attacking = false
+	is_dashing = false
+	set_collision_layer(original_layer)
+	set_collision_mask(original_mask)
+
+	camera.zoom = Vector2(1.5, 1.5)
+	animation.play("idle_" + last_direction)
+
+	if wm:
+		wm.transition_anim.play("fade_in")
+
+
+
+func update_checkpoint(checkpoint_id: String):
+	last_checkpoint_id = checkpoint_id
+
+	var wm := get_tree().get_first_node_in_group("world_manager")
+	if wm and wm.current_world:
+		last_checkpoint_scene = wm.current_world.scene_file_path
+	else:
+		print("⚠️ No se pudo determinar la escena del checkpoint")
+
+	print("📍 Checkpoint actualizado:", checkpoint_id)
+	print("🎬 Escena del checkpoint:", last_checkpoint_scene)
+
+func find_checkpoint_by_id(id: String) -> Node:
+	var checkpoints = get_tree().get_nodes_in_group("checkpoint")
+	for cp in checkpoints:
+		if cp.checkpoint_id == id:
+			return cp
+	print("❌ No se encontró el checkpoint con ID:", id)
+	return null
+
+func _wait_for_checkpoint():
+	var max_wait_time := 3.0  # por si algo se rompe, no esperar eternamente
+	var elapsed := 0.0
+	while elapsed < max_wait_time:
+		await get_tree().process_frame
+		var checkpoint = CheckPointRegistry.get_checkpoint(respawn_pending_checkpoint_id)
+		if checkpoint:
+			global_position = checkpoint.global_position
+			print("✅ Respawneado en checkpoint:", respawn_pending_checkpoint_id)
+			respawn_pending_checkpoint_id = ""
+			return
+		elapsed += get_process_delta_time()
+	print("❌ Timeout esperando al checkpoint:", respawn_pending_checkpoint_id)
