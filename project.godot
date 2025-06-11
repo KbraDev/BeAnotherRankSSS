@@ -21,6 +21,7 @@ GateManager="*res://scripts/globals/GateManager.gd"
 MissionTracker="*res://scripts/missions/missionTracker.gd"
 CheckPointRegistry="*res://scripts/globals/CheckPointRegistry.gd"
 SaveManager="*res://scripts/globals/SaveManager.gd"
+ItemDataBase="*res://scripts/globals/ItemDataBase.gd"
 
 [display]
 

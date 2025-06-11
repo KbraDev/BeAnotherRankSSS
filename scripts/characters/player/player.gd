@@ -452,7 +452,7 @@ func get_save_data() -> Dictionary:
 			inv.append(null)
 
 	return {
-		"position": global_position,
+		"position": [global_position.x, global_position.y],
 		"hp": current_health,
 		"max_hp": max_health,
 		"mana": mana,
@@ -462,3 +462,47 @@ func get_save_data() -> Dictionary:
 		"last_checkpoint_id": last_checkpoint_id,
 		"last_checkpoint_scene": last_checkpoint_scene
 	}
+
+## func para cargar 
+
+func load_from_save(data: Dictionary) -> void:
+	var pos = data.get("position", [0, 0])
+	global_position = Vector2(pos[0], pos[1])
+	current_health = data.get("hp", 50)
+	max_health = data.get("max_hp", 50)
+	mana = data.get("mana", 10)
+	level = data.get("level", 1)
+
+	current_state = data.get("player_state", PlayerState.unarmed)
+
+	last_checkpoint_id = data.get("last_checkpoint_id", "")
+	last_checkpoint_scene = data.get("last_checkpoint_scene", "")
+
+	# Restaurar inventario
+	var inv_data = data.get("inventory", [])
+	inventory.resize(INVENTORY_SIZE)
+	for i in range(INVENTORY_SIZE):
+		if i < inv_data.size():
+			var item_info = inv_data[i]
+			if item_info == null:
+				inventory[i] = null
+			else:
+				var item_name = item_info.get("item_name", "")
+				var amount = item_info.get("amount", 0)
+
+				# Buscar el item por nombre en una base de datos
+				var item_data = ItemDataBase.get_item_by_name(item_name)
+				if item_data:
+					inventory[i] = {
+						"item_data": item_data,
+						"amount": amount
+					}
+				else:
+					print("⚠️ No se encontró el ítem:", item_name)
+		else:
+			inventory[i] = null
+
+	emit_signal("inventory_updated", inventory)
+	emit_signal("health_changed", current_health, max_health)
+
+	print("✅ Jugador restaurado desde guardado.")

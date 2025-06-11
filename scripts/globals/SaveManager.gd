@@ -35,3 +35,37 @@ func load_game(slot: int = 1) -> Dictionary:
 		return {}
 
 	return result
+
+
+func load_slot_and_restore(slot: int):
+	var save_data = load_game(slot)
+	if save_data.is_empty():
+		print("❌ No se pudo cargar el slot ", slot)
+		return
+
+	var scene_path = save_data.get("scene_path", "")
+	if scene_path == "":
+		print("❌ No se especificó ninguna escena.")
+		return
+
+	var packed_scene = load(scene_path)
+	if packed_scene == null:
+		print("❌ No se pudo cargar la escena guardada.")
+		return
+
+	# Cambio de escena
+	get_tree().paused = false
+	get_tree().change_scene_to_packed(packed_scene)
+
+	# Esperar un poco usando un temporizador del SaveManager
+	await get_tree().create_timer(0.01).timeout
+
+	var current_scene = get_tree().current_scene
+	if current_scene:
+		var player = current_scene.get_node_or_null("player")
+		if player:
+			player.load_from_save(save_data["player"])
+		else:
+			print("❌ No se encontró el jugador.")
+	else:
+		print("❌ La escena no se cargó correctamente.")

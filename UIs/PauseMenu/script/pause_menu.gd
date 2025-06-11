@@ -42,3 +42,20 @@ func save_on_slot(slot: int):
 		SaveManager.save_game(player, slot)
 	else:
 		print("❌ No se encontró el nodo del jugador.")
+
+
+## logica de carga
+
+func _on_load_slot_1_pressed():
+	load_from_slot(1)
+
+func _on_load_slot_2_pressed():
+	load_from_slot(2)
+
+func _on_load_slot_3_pressed():
+	load_from_slot(3)
+
+func load_from_slot(slot: int):
+	get_tree().paused = false
+	visible = false
+	SaveManager.load_slot_and_restore(slot)
