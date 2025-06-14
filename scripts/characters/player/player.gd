@@ -15,6 +15,16 @@ var experience_to_next_level := 100
 var stat_points := 0
 
 # ───── STATS Y VARIABLES ─────
+var base_stats := {
+	"hp": 50,
+	"speed": 160,
+	"fuerza": 3,
+	"mana": 10,
+	"resistencia": 0,
+	"resistencia_hechizos": 0,
+	"poder_magico": 0
+}
+
 var can_move = true
 var current_state: PlayerState = PlayerState.unarmed
 
@@ -95,6 +105,16 @@ func _ready():
 
 	print(inventory)
 	emit_signal("health_changed", current_health, max_health)
+	
+	print("💡 Stat actual - velocidad:", base_stats["speed"])
+	print("💡 Puntos disponibles:", stat_points)
+
+# Intentá mejorar velocidad
+	if upgrade_stat("speed"):
+		print("➡️ Nueva velocidad:", base_stats["speed"])
+	else:
+		print("❌ No se pudo mejorar velocidad.")
+
 
 # ───── PROCESO Y ENTRADA ─────
 func _physics_process(delta: float) -> void:
@@ -134,7 +154,7 @@ func directional_movement():
 
 	if direction.length() > 0:
 		direction = direction.normalized()
-		velocity = direction * SPEED
+		velocity = direction * base_stats["speed"]
 	else:
 		velocity = Vector2.ZERO
 
@@ -482,14 +502,46 @@ func level_up():
 	print(" Nivel %d alcalzado! Puntos para gastar: %d " % [level, stat_points])
 	
 
+# Retorna el valor base por stat (para calcular el costo)
+func get_stat_base(stat_name: String) -> int:
+	match stat_name:
+		"hp": return 50
+		"speed": return 160
+		"fuerza": return 3
+		"mana": return 10
+		"resistencia", "resistencia_hechizos", "poder_magico": return 0
+		_: return 0
 
+# Calcula el costo de mejorar una stat según su valor actual
+func get_upgrade_cost(stat_name: String) -> int:
+	if not base_stats.has(stat_name):
+		return 999  # Stat inválida
+	var current_value = base_stats[stat_name]
+	var base_value = get_stat_base(stat_name)
+	var difference = current_value - base_value
+	return int((difference / 10.0 + 1) * 4)
 
+# Intenta mejorar la stat si hay puntos suficientes
+func upgrade_stat(stat_name: String) -> bool:
+	if not base_stats.has(stat_name):
+		print("⚠️ Stat inválida:", stat_name)
+		return false
 
+	var cost = get_upgrade_cost(stat_name)
+	if stat_points >= cost:
+		base_stats[stat_name] += 10
+		stat_points -= cost
+		print("✅ %s mejorado a %d (costó %d puntos)" % [stat_name, base_stats[stat_name], cost])
 
+		# Si es una stat que afecta al instante, como hp o mana, actualizala
+		if stat_name == "hp":
+			max_health = base_stats["hp"]
+			current_health = min(current_health, max_health)
+			emit_signal("health_changed", current_health, max_health)
+		elif stat_name == "mana":
+			mana = base_stats["mana"]
 
-
-
-	
-	
-	
-	
+		return true
+	else:
+		print("❌ No tienes suficientes puntos para mejorar %s (requiere %d)" % [stat_name, cost])
+		return false
