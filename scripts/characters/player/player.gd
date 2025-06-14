@@ -1,20 +1,30 @@
 extends CharacterBody2D
 
+# ───── CONST Y ENUMS ─────
 const SPEED = 160.0
 const DAMAGE = 3.0
-var can_move = true
+const INVENTORY_ROWS := 3
+const INVENTORY_COLS := 5
+const INVENTORY_SIZE := INVENTORY_COLS * INVENTORY_ROWS
 
 enum PlayerState { unarmed, armed, bow }
-var current_state: PlayerState = PlayerState.unarmed
 
-@onready var attack_area = $attack_area
-@onready var animation = $AnimatedSprite2D
-@onready var attack_timer = Timer.new()
-@onready var combo_timer = Timer.new()
-@onready var camera = $Camera2D
+# ----- XP vars -----
+var experience := 0
+var experience_to_next_level := 100
+var stat_points := 0
+
+# ───── STATS Y VARIABLES ─────
+var can_move = true
+var current_state: PlayerState = PlayerState.unarmed
 
 var mana = 10
 var level = 1
+
+var current_health = 50
+var max_health = 50
+
+var inventory: Array = []
 
 var last_direction := "front"
 var can_attack := true
@@ -22,49 +32,41 @@ var is_attacking := false
 var attack_click_count := 0
 var current_attack := 1
 
-#Variables para el dash
+# Dash
 var is_dashing: bool = false
 var dash_speed := 400.0
 var dash_duration := 0.3
 var dash_cooldown := 2.0
 var can_dash := true
 
-@onready var dash_timer := Timer.new()
-@onready var dash_cooldown_timer := Timer.new()
+# Colisiones originales
+var original_layer := 2 | 3
+var original_mask := 1 | 2
 
-#capas originales
-var original_layer := 2 | 3  # ambiente (2) + enemigos (3)
-var original_mask := 1 | 2   # recibe de ambiente (1) + enemigos (2)
-
-# Inventario
-const INVENTORY_ROWS := 3
-const INVENTORY_COLS := 5
-const INVENTORY_SIZE := INVENTORY_COLS * INVENTORY_ROWS
-
-var inventory: Array = []
-
-# Health vars
-var current_health = 50
-var max_health = 50
-
-# checkPoint vars
+# Checkpoints
 var last_checkpoint_id: String = ""
 var last_checkpoint_scene: String = ""
 var respawn_pending_checkpoint_id: String = ""
 
+# ───── NODOS Y TIMERS ─────
+@onready var attack_area = $attack_area
+@onready var animation = $AnimatedSprite2D
+@onready var camera = $Camera2D
 
+@onready var attack_timer = Timer.new()
+@onready var combo_timer = Timer.new()
+@onready var dash_timer := Timer.new()
+@onready var dash_cooldown_timer := Timer.new()
 
-## Signals
+# ───── SEÑALES ─────
 signal inventory_updated(inventory: Array)
 signal health_changed(current_health, max_health)
 
-## FUNCIONES
-
+# ───── READY ─────
 func _ready():
 	print("MissionTracker cargado?", MissionTracker)
 	animation.play("idle_" + last_direction)
 
-	# Timers
 	add_child(combo_timer)
 	combo_timer.one_shot = true
 	combo_timer.wait_time = 1.2
@@ -74,8 +76,7 @@ func _ready():
 	attack_timer.one_shot = true
 	attack_timer.wait_time = 0.4
 	attack_timer.connect("timeout", _on_attack_cooldown_timeout)
-	
-	# timers de dash
+
 	add_child(dash_timer)
 	dash_timer.one_shot = true
 	dash_timer.wait_time = dash_duration
@@ -86,35 +87,30 @@ func _ready():
 	dash_cooldown_timer.wait_time = dash_cooldown
 	dash_cooldown_timer.connect("timeout", _on_dash_cooldown_finished)
 
-	# Señal de animación
 	animation.connect("animation_finished", _on_animation_finished)
-	
+
 	inventory.resize(INVENTORY_SIZE)
 	for i in range(INVENTORY_SIZE):
 		inventory[i] = null
-	
+
 	print(inventory)
 	emit_signal("health_changed", current_health, max_health)
 
+# ───── PROCESO Y ENTRADA ─────
 func _physics_process(delta: float) -> void:
 	handle_state_input()
-
-	# Movimiento
 	directional_movement()
 	move_and_slide()
 
-	# Ataque solo si está armado
 	if Input.is_action_just_pressed("attack") and can_attack and current_state == PlayerState.armed:
 		attack_click_count += 1
 
-	# Solo atacar si hay clics acumulados y no estás atacando ahora
 	if attack_click_count > 0 and not is_attacking and can_attack and current_state == PlayerState.armed:
 		velocity = Vector2.ZERO
 		perform_attack()
-		
+
 	if Input.is_action_just_pressed("dash_action") and can_dash and not is_dashing:
 		start_dash()
-
 
 func handle_state_input():
 	if Input.is_action_just_pressed("1"):
@@ -126,7 +122,6 @@ func handle_state_input():
 		print("🔄 Estado cambiado a: Arco (WIP)")
 
 func directional_movement():
-	# Solo bloquea el movimiento normal del jugador, no afecta el dash
 	if not can_move or is_attacking or is_dashing:
 		if not is_dashing:
 			velocity = Vector2.ZERO
@@ -145,31 +140,26 @@ func directional_movement():
 
 	handle_Animations(direction)
 
-
+# ───── COMBATE Y ANIMACIÓN ─────
 func handle_Animations(direction: Vector2):
-	# Evitar sobrescribir animaciones de ataque
 	if is_attacking:
 		return
 
 	var state_prefix := ""
 	match current_state:
-		PlayerState.unarmed:
-			state_prefix = ""
-		PlayerState.armed:
-			state_prefix = "Sword_"
-		PlayerState.bow:
-			state_prefix = "Bow_"  # aún no implementado
+		PlayerState.unarmed: state_prefix = ""
+		PlayerState.armed: state_prefix = "Sword_"
+		PlayerState.bow: state_prefix = "Bow_"
 
 	if direction == Vector2.ZERO:
 		animation.play("idle_" + state_prefix + last_direction)
 	else:
-		if abs(direction.x) > abs(direction.y):
-			last_direction = "right_side" if direction.x > 0 else "left_side"
-		else:
-			last_direction = "front" if direction.y > 0 else "back"
-
+		last_direction = (
+			"right_side" if direction.x > 0 else "left_side"
+			if abs(direction.x) > abs(direction.y)
+			else "front" if direction.y > 0 else "back"
+		)
 		animation.play("run_" + state_prefix + last_direction)
-
 
 func perform_attack():
 	if current_state != PlayerState.armed:
@@ -178,19 +168,11 @@ func perform_attack():
 	is_attacking = true
 	can_attack = false
 
-	var animation_name := ""
-	var damage := 0
+	var animation_name = "attack%d_%s" % [current_attack, last_direction]
+	var damage = 6 if current_attack == 1 else 8
 
-	if current_attack == 1:
-		animation_name = "attack1_" + last_direction
-		damage = 6
-	elif current_attack == 2:
-		animation_name = "attack2_" + last_direction
-		damage = 8
-		
 	animation.play(animation_name)
 
-	# Posicionar el área de ataque
 	match last_direction:
 		"front": attack_area.position = Vector2(0, 16)
 		"back": attack_area.position = Vector2(-16, -32)
@@ -209,18 +191,14 @@ func perform_attack():
 	attack_timer.start()
 	combo_timer.start()
 
-
 func _on_attack_cooldown_timeout():
 	can_attack = true
-
 
 func _on_combo_timer_timeout():
 	attack_click_count = 0
 	current_attack = 1
 
-
 func _on_animation_finished():
-
 	if is_attacking:
 		is_attacking = false
 		attack_area.monitoring = false
@@ -237,16 +215,14 @@ func _on_animation_finished():
 		attack_click_count = 0
 		handle_Animations(Vector2.ZERO)
 
+# ───── DASH ─────
 func start_dash():
 	is_dashing = true
 	can_dash = false
-	
-	# invulnerable
-	# Quitar solo capa/máscara de enemigos
-	set_collision_layer(2)  # solo ambiente
-	set_collision_mask(1)   # solo recibe de ambiente
-	
-	# Direccion del dash basada en last direcion
+
+	set_collision_layer(2)
+	set_collision_mask(1)
+
 	match last_direction:
 		"front": velocity = Vector2(0, 1)
 		"back": velocity = Vector2(0, -1)
@@ -254,24 +230,21 @@ func start_dash():
 		"right_side": velocity = Vector2(1, 0)
 
 	velocity = velocity.normalized() * dash_speed
-	
-	# Animacion
 	animation.play("dash_" + last_direction)
-	
+
 	dash_timer.start()
 	dash_cooldown_timer.start()
 
 func _on_dash_finished():
 	is_dashing = false
 	velocity = Vector2.ZERO
-	
-	#restaurar colisiones
 	set_collision_layer(original_layer)
 	set_collision_mask(original_mask)
 
 func _on_dash_cooldown_finished():
 	can_dash = true
 
+# ───── DAÑO Y MUERTE ─────
 func take_damage(amount: float):
 	current_health = max(current_health - amount, 0)
 	emit_signal("health_changed", current_health, max_health)
@@ -281,95 +254,40 @@ func take_damage(amount: float):
 		die()
 		return
 
-	# Animación de recibir daño
 	if not is_attacking and not is_dashing:
 		var prefix := ""
 		match current_state:
-			PlayerState.armed:
-				prefix = "sword_"
-			PlayerState.bow:
-				prefix = "bow_"
-			PlayerState.unarmed:
-				prefix = ""
+			PlayerState.armed: prefix = "sword_"
+			PlayerState.bow: prefix = "bow_"
+			PlayerState.unarmed: prefix = ""
 
 		var anim_name = prefix + "take_damage_" + last_direction
 		if animation.sprite_frames.has_animation(anim_name):
 			animation.play(anim_name)
 
-
-
-
-func add_item_to_inventory(item_data: ItemData, amount: int = 1) -> bool:
-	var remaining := amount
-
-	# 1. Apilar en slots existentes
-	for slot in inventory:
-		if slot != null and slot.item_data == item_data:
-			var space_left = item_data.max_stack - slot.amount
-			var to_add = min(space_left, remaining)
-			slot.amount += to_add
-			remaining -= to_add
-			if remaining <= 0:
-				break
-
-	# 2. Usar slots vacíos
-	if remaining > 0:
-		for i in inventory.size():
-			if inventory[i] == null:
-				var to_add = min(item_data.max_stack, remaining)
-				inventory[i] = {
-					"item_data": item_data,
-					"amount": to_add
-				}
-				remaining -= to_add
-				if remaining <= 0:
-					break
-
-	# 3. Resultado
-	if remaining > 0:
-		print("⚠️ Inventario lleno. No se pudo recoger: ", remaining, " x ", item_data.item_name)
-		return false
-	else:
-		print("✔️ Agregado: ", amount, " x ", item_data.item_name)
-		print(inventory)
-		return true
-	
-	emit_signal("inventory_updated", inventory)
-	
 func die():
 	can_move = false
 	can_attack = false
 	is_attacking = false
 	is_dashing = false
 	velocity = Vector2.ZERO
-
 	set_collision_layer(0)
 	set_collision_mask(0)
-	# Prefijo según estado
+
 	var prefix := ""
 	match current_state:
-		PlayerState.armed:
-			prefix = "sword_"
-		PlayerState.bow:
-			prefix = "bow_"
-		PlayerState.unarmed:
-			prefix = ""
+		PlayerState.armed: prefix = "sword_"
+		PlayerState.bow: prefix = "bow_"
+		PlayerState.unarmed: prefix = ""
 
 	var anim_name = prefix + "death_" + last_direction
-
 	if animation.sprite_frames.has_animation(anim_name):
 		animation.play(anim_name)
-	else:
-		print("⚰️ Animación de muerte no encontrada:", anim_name)
-		
-	# set zoom
+
 	var tween := get_tree().create_tween()
 	tween.tween_property(camera, "zoom", Vector2(2.7, 2.7), 1.5).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
-
 	await tween.finished
 	_on_zoom_finished()
-	# Opcional: después de morir, eliminar al jugador o dejarlo quieto
-	# queue_free()  # si querés eliminarlo
 
 func _on_zoom_finished():
 	print("🔍 Buscando world_manager...")
@@ -404,7 +322,47 @@ func _on_zoom_finished():
 		wm.transition_anim.play("fade_in")
 
 
+# ------ Inventory -------
+func add_item_to_inventory(item_data: ItemData, amount: int = 1) -> bool:
+	var remaining := amount
 
+	# 1. Apilar en slots existentes
+	for slot in inventory:
+		if slot != null and slot.item_data == item_data:
+			var space_left = item_data.max_stack - slot.amount
+			var to_add = min(space_left, remaining)
+			slot.amount += to_add
+			remaining -= to_add
+			if remaining <= 0:
+				break
+
+	# 2. Usar slots vacíos
+	if remaining > 0:
+		for i in inventory.size():
+			if inventory[i] == null:
+				var to_add = min(item_data.max_stack, remaining)
+				inventory[i] = {
+					"item_data": item_data,
+					"amount": to_add
+				}
+				remaining -= to_add
+				if remaining <= 0:
+					break
+
+	# 3. Resultado
+	if remaining > 0:
+		print("⚠️ Inventario lleno. No se pudo recoger: ", remaining, " x ", item_data.item_name)
+		return false
+	else:
+		print("✔️ Agregado: ", amount, " x ", item_data.item_name)
+		print(inventory)
+		return true
+
+	emit_signal("inventory_updated", inventory)
+	
+
+
+# ----- CheckPoints -----
 func update_checkpoint(checkpoint_id: String):
 	last_checkpoint_id = checkpoint_id
 
@@ -426,7 +384,7 @@ func find_checkpoint_by_id(id: String) -> Node:
 	return null
 
 func _wait_for_checkpoint():
-	var max_wait_time := 3.0  # por si algo se rompe, no esperar eternamente
+	var max_wait_time := 3.0
 	var elapsed := 0.0
 	while elapsed < max_wait_time:
 		await get_tree().process_frame
@@ -439,7 +397,8 @@ func _wait_for_checkpoint():
 		elapsed += get_process_delta_time()
 	print("❌ Timeout esperando al checkpoint:", respawn_pending_checkpoint_id)
 
-## func para guardar estado
+# ----- Save & Load -----
+
 func get_save_data() -> Dictionary:
 	var inv := []
 	for item in inventory:
@@ -456,14 +415,12 @@ func get_save_data() -> Dictionary:
 		"hp": current_health,
 		"max_hp": max_health,
 		"mana": mana,
-		"level": level, 
+		"level": level,
 		"inventory": inv,
 		"player_state": current_state,
 		"last_checkpoint_id": last_checkpoint_id,
 		"last_checkpoint_scene": last_checkpoint_scene
 	}
-
-## func para cargar 
 
 func load_from_save(data: Dictionary) -> void:
 	var pos = data.get("position", [0, 0])
@@ -472,13 +429,10 @@ func load_from_save(data: Dictionary) -> void:
 	max_health = data.get("max_hp", 50)
 	mana = data.get("mana", 10)
 	level = data.get("level", 1)
-
 	current_state = data.get("player_state", PlayerState.unarmed)
-
 	last_checkpoint_id = data.get("last_checkpoint_id", "")
 	last_checkpoint_scene = data.get("last_checkpoint_scene", "")
 
-	# Restaurar inventario
 	var inv_data = data.get("inventory", [])
 	inventory.resize(INVENTORY_SIZE)
 	for i in range(INVENTORY_SIZE):
@@ -489,8 +443,6 @@ func load_from_save(data: Dictionary) -> void:
 			else:
 				var item_name = item_info.get("item_name", "")
 				var amount = item_info.get("amount", 0)
-
-				# Buscar el item por nombre en una base de datos
 				var item_data = ItemDataBase.get_item_by_name(item_name)
 				if item_data:
 					inventory[i] = {
@@ -504,5 +456,40 @@ func load_from_save(data: Dictionary) -> void:
 
 	emit_signal("inventory_updated", inventory)
 	emit_signal("health_changed", current_health, max_health)
-
 	print("✅ Jugador restaurado desde guardado.")
+
+
+# ----- XP & StatPoints Gains -----
+
+func gain_experience(amount: int):
+	experience += amount
+	print("Ganaste %d XP (Total): %d / %d" % [amount, experience, experience_to_next_level])
+	while experience >= experience_to_next_level:
+		experience -= experience_to_next_level
+		level_up()
+	
+
+func level_up():
+	level += 1
+	experience_to_next_level = int(experience_to_next_level * 1.2)
+	
+	# reparto de puntos segundo multiplo de 5
+	if level % 5 == 0:
+		stat_points += 5
+	else:
+		stat_points += 3
+	
+	print(" Nivel %d alcalzado! Puntos para gastar: %d " % [level, stat_points])
+	
+
+
+
+
+
+
+
+
+	
+	
+	
+	

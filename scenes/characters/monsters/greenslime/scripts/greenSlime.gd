@@ -6,6 +6,7 @@ extends CharacterBody2D ## GREEN SLIME
 @export var panic_speed = 80 # velocidad en estado de panico
 @export var idle_time: float = 4.0 # Tiempo en reposo
 @export var move_time: float = 5.0 # Tiempo moviendose
+@export var xp_reward_range := Vector2(6, 12)
 
 @onready var animation = $AnimatedSprite2D
 @onready var vision_area = $VisionArea
@@ -30,6 +31,9 @@ func _ready() -> void:
 	set_process(true)
 
 func _process(delta: float) -> void:
+	if has_died:
+		return
+	
 	timer += delta
 	
 	match state:
@@ -97,42 +101,52 @@ func _on_vision_area_body_exited(body: Node2D) -> void:
 		
 
 func take_damage(amount: float) -> void:
-	if state == "dead":
-		return # no recibe mas danio si esta muerto
-	
-	animation.play("hurt_" + last_direction)
-	health -= amount
-	
-	health_bar.value = health
-	health_bar.show_for_a_while()
-	
-	if health <= 0:
-		die()
-	
-func die():
 	if has_died:
 		return
 	
+	# No permitir que se ejecute varias veces en un solo frame
+	health -= amount
+	health = max(health, 0)  # Nunca menos de 0
+
+	animation.play("hurt_" + last_direction)
+	health_bar.value = health
+	health_bar.show_for_a_while()
+
+	if health <= 0:
+		die()
+
+
+func die():
+	if has_died:
+		return
+
 	has_died = true
 	state = "dead"
 	velocity = Vector2.ZERO
+
+	# Bloquea todo movimiento desde ya
+	set_physics_process(false)
+	vision_area.monitoring = false
+
 	animation.play("die_" + last_direction)
 
-	await get_tree().create_timer(1.5).timeout
-
-	emit_signal("slime_died")
-	queue_free()
 
 
 func _on_animated_sprite_2d_animation_finished():
 	if has_died and animation.animation == "die_" + last_direction:
+		# Drop de ítem
 		var pickup_scene = preload("res://scenes/World_pick-ups/pick_ups_items.tscn")
 		var pickup = pickup_scene.instantiate()
 		pickup.item_data = preload("res://items/resources/slime_teardrop.tres")
 		pickup.amount = 1
 		pickup.global_position = global_position
-
 		get_tree().current_scene.add_child(pickup)
+
+		# Otorgar experiencia
+		var player = get_tree().get_first_node_in_group("player")
+		if player:
+			var xp = randi_range(xp_reward_range.x, xp_reward_range.y)
+			player.gain_experience(xp)
 
 		emit_signal("slime_died")
 		queue_free()
