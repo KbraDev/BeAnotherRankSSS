@@ -1,0 +1,25 @@
+[gd_scene load_steps=2 format=3 uid="uid://br10nlqajj42s"]
+
+[ext_resource type="Script" path="res://UIs/StatsMenu/stat_row.gd" id="1_al8j5"]
+
+[node name="StatRow" type="HBoxContainer"]
+custom_minimum_size = Vector2(512, 30)
+offset_right = 420.0
+offset_bottom = 31.0
+alignment = 1
+script = ExtResource("1_al8j5")
+
+[node name="StatNameLabel" type="Label" parent="."]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+vertical_alignment = 1
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+custom_minimum_size = Vector2(270, 30)
+layout_mode = 2
+max_value = 300.0
+
+[node name="UpgradeButton" type="Button" parent="."]
+custom_minimum_size = Vector2(20, 30)
+layout_mode = 2
+text = "+"

@@ -1,0 +1,146 @@
+[gd_scene load_steps=10 format=3 uid="uid://2diufhet7676"]
+
+[ext_resource type="Texture2D" uid="uid://8khtur21f4hh" path="res://sprites/characters/player/PlayerWOutColor/idle/idle_front.png" id="1_1qn68"]
+[ext_resource type="PackedScene" uid="uid://br10nlqajj42s" path="res://UIs/StatsMenu/stat_row.tscn" id="1_w0m2v"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7bocu"]
+atlas = ExtResource("1_1qn68")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f0ual"]
+atlas = ExtResource("1_1qn68")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vlr0p"]
+atlas = ExtResource("1_1qn68")
+region = Rect2(256, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d7nfl"]
+atlas = ExtResource("1_1qn68")
+region = Rect2(384, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_54ewe"]
+atlas = ExtResource("1_1qn68")
+region = Rect2(512, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jl005"]
+atlas = ExtResource("1_1qn68")
+region = Rect2(640, 0, 128, 128)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ju04o"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7bocu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f0ual")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vlr0p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d7nfl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_54ewe")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jl005")
+}],
+"loop": true,
+"name": &"default",
+"speed": 12.0
+}]
+
+[node name="StatsMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RightPanel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -512.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="MainBox" type="Control" parent="RightPanel"]
+custom_minimum_size = Vector2(512, 720)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PlayerPreview" type="AnimatedSprite2D" parent="RightPanel/MainBox"]
+position = Vector2(256, 144)
+scale = Vector2(4, 4)
+sprite_frames = SubResource("SpriteFrames_ju04o")
+frame = 3
+frame_progress = 0.071284
+
+[node name="LevelBarContainer" type="HBoxContainer" parent="RightPanel/MainBox"]
+custom_minimum_size = Vector2(512, 30)
+layout_mode = 0
+offset_top = 256.0
+offset_right = 512.0
+offset_bottom = 286.0
+alignment = 1
+
+[node name="Level" type="Label" parent="RightPanel/MainBox/LevelBarContainer"]
+custom_minimum_size = Vector2(120, 30)
+layout_mode = 2
+text = "Nivel 1"
+vertical_alignment = 1
+
+[node name="XpBar" type="ProgressBar" parent="RightPanel/MainBox/LevelBarContainer"]
+custom_minimum_size = Vector2(270, 30)
+layout_mode = 2
+
+[node name="NextLevel" type="Label" parent="RightPanel/MainBox/LevelBarContainer"]
+custom_minimum_size = Vector2(20, 30)
+layout_mode = 2
+text = "2
+"
+vertical_alignment = 1
+
+[node name="StatsList" type="VBoxContainer" parent="RightPanel/MainBox"]
+layout_mode = 2
+offset_top = 304.0
+offset_right = 512.0
+offset_bottom = 545.0
+
+[node name="StatRow" parent="RightPanel/MainBox/StatsList" instance=ExtResource("1_w0m2v")]
+layout_mode = 2
+
+[node name="StatRow2" parent="RightPanel/MainBox/StatsList" instance=ExtResource("1_w0m2v")]
+layout_mode = 2
+stat_name = "Velocidad"
+
+[node name="StatRow3" parent="RightPanel/MainBox/StatsList" instance=ExtResource("1_w0m2v")]
+layout_mode = 2
+stat_name = "Fuerza"
+
+[node name="StatRow4" parent="RightPanel/MainBox/StatsList" instance=ExtResource("1_w0m2v")]
+layout_mode = 2
+stat_name = "Resistencia"
+
+[node name="StatRow5" parent="RightPanel/MainBox/StatsList" instance=ExtResource("1_w0m2v")]
+layout_mode = 2
+stat_name = "Mana"
+
+[node name="StatRow6" parent="RightPanel/MainBox/StatsList" instance=ExtResource("1_w0m2v")]
+layout_mode = 2
+stat_name = "Poder Magico"
+
+[node name="StatRow7" parent="RightPanel/MainBox/StatsList" instance=ExtResource("1_w0m2v")]
+layout_mode = 2
+stat_name = "R. Magica"
