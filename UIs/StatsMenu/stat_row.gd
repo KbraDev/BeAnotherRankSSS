@@ -1,14 +1,19 @@
-@tool
 extends HBoxContainer
 
-@export var stat_name: String = "Salud":
-	set(value):
-		stat_name = value
-		update_stat_label()
+@onready var UpgradeButton: Button = $UpgradeButton
+@export var stat_name: String = "Velocidad"
+
+signal stat_upgrade_requested(stat_name: String)
 
 func _ready():
-	update_stat_label()
+	$StatNameLabel.text = stat_name
+	UpgradeButton.pressed.connect(_on_upgrade_pressed)
 
-func update_stat_label():
-	if has_node("StatNameLabel"):
-		$StatNameLabel.text = stat_name
+
+func _on_upgrade_pressed():
+	emit_signal("stat_upgrade_requested", stat_name)
+
+func set_progress(value: int, max_value: int):
+	var percent = float(value) / float(max_value)
+	$ProgressBar.value = percent * 100
+	$ProgressBar.text = "%d / %d" % [value, max_value]

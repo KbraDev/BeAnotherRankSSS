@@ -22,7 +22,8 @@ var base_stats := {
 	"mana": 10,
 	"resistencia": 0,
 	"resistencia_hechizos": 0,
-	"poder_magico": 0
+	"poder_magico": 0,
+	"lucky": 0
 }
 
 var can_move = true
@@ -74,6 +75,7 @@ signal health_changed(current_health, max_health)
 
 # ───── READY ─────
 func _ready():
+	print("Puntos del jugador: ", stat_points)
 	print("MissionTracker cargado?", MissionTracker)
 	animation.play("idle_" + last_direction)
 
@@ -488,6 +490,9 @@ func gain_experience(amount: int):
 		experience -= experience_to_next_level
 		level_up()
 	
+	var stats_menu = get_tree().get_first_node_in_group("stats_menu") # asegurate que tu menu esté en este grupo
+	if stats_menu:
+		stats_menu._update_all_stats()
 
 func level_up():
 	level += 1
@@ -545,3 +550,7 @@ func upgrade_stat(stat_name: String) -> bool:
 	else:
 		print("❌ No tienes suficientes puntos para mejorar %s (requiere %d)" % [stat_name, cost])
 		return false
+
+func _open_statUI():
+	if Input.is_action_just_pressed("StatsUI"):
+		$StatsMenu.visible = !$StatsMenu.visible

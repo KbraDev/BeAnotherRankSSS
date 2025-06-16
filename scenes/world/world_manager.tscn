@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://xxcf6vh7atqn"]
+[gd_scene load_steps=22 format=3 uid="uid://xxcf6vh7atqn"]
 
 [ext_resource type="Script" path="res://scenes/world/world_manager.gd" id="1_548at"]
 [ext_resource type="PackedScene" uid="uid://be8s6fsuvru6m" path="res://scenes/characters/player/player.tscn" id="1_armst"]
@@ -16,6 +16,7 @@
 [ext_resource type="PackedScene" uid="uid://cqj38508gjs57" path="res://UIs/ActiveMissionsMenu/active_missions_menu.tscn" id="9_7x5vf"]
 [ext_resource type="PackedScene" uid="uid://bhxvv2llsy1ia" path="res://UIs/notificactionManager/floating_notification_manager.tscn" id="10_uql5h"]
 [ext_resource type="PackedScene" uid="uid://j631k64daxbc" path="res://UIs/PauseMenu/pause_menu.tscn" id="15_i1he6"]
+[ext_resource type="PackedScene" uid="uid://2diufhet7676" path="res://UIs/StatsMenu/stats_menu.tscn" id="16_5kwx7"]
 
 [sub_resource type="Animation" id="Animation_hvdyb"]
 length = 0.001
@@ -154,6 +155,8 @@ color = Color(0.0142752, 0.0142752, 0.0142752, 1)
 libraries = {
 "": SubResource("AnimationLibrary_dtgoh")
 }
+
+[node name="StatsMenu" parent="HUD" instance=ExtResource("16_5kwx7")]
 
 [node name="MissionDatabase" type="Node2D" parent="."]
 script = ExtResource("8_0psd8")

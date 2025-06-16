@@ -1,6 +1,7 @@
-[gd_scene load_steps=10 format=3 uid="uid://2diufhet7676"]
+[gd_scene load_steps=11 format=3 uid="uid://2diufhet7676"]
 
 [ext_resource type="Texture2D" uid="uid://8khtur21f4hh" path="res://sprites/characters/player/PlayerWOutColor/idle/idle_front.png" id="1_1qn68"]
+[ext_resource type="Script" path="res://UIs/StatsMenu/stats_menu.gd" id="1_r856u"]
 [ext_resource type="PackedScene" uid="uid://br10nlqajj42s" path="res://UIs/StatsMenu/stat_row.tscn" id="1_w0m2v"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7bocu"]
@@ -50,16 +51,17 @@ animations = [{
 }],
 "loop": true,
 "name": &"default",
-"speed": 12.0
+"speed": 6.0
 }]
 
-[node name="StatsMenu" type="Control"]
+[node name="StatsMenu" type="Control" groups=["stats_menu"]]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_r856u")
 
 [node name="RightPanel" type="Panel" parent="."]
 layout_mode = 1
@@ -81,11 +83,10 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="PlayerPreview" type="AnimatedSprite2D" parent="RightPanel/MainBox"]
-position = Vector2(256, 144)
+position = Vector2(304, 144)
 scale = Vector2(4, 4)
 sprite_frames = SubResource("SpriteFrames_ju04o")
-frame = 3
-frame_progress = 0.071284
+frame_progress = 0.506641
 
 [node name="LevelBarContainer" type="HBoxContainer" parent="RightPanel/MainBox"]
 custom_minimum_size = Vector2(512, 30)
@@ -120,10 +121,10 @@ offset_bottom = 545.0
 
 [node name="StatRow" parent="RightPanel/MainBox/StatsList" instance=ExtResource("1_w0m2v")]
 layout_mode = 2
+stat_name = "Salud"
 
 [node name="StatRow2" parent="RightPanel/MainBox/StatsList" instance=ExtResource("1_w0m2v")]
 layout_mode = 2
-stat_name = "Velocidad"
 
 [node name="StatRow3" parent="RightPanel/MainBox/StatsList" instance=ExtResource("1_w0m2v")]
 layout_mode = 2
@@ -144,3 +145,16 @@ stat_name = "Poder Magico"
 [node name="StatRow7" parent="RightPanel/MainBox/StatsList" instance=ExtResource("1_w0m2v")]
 layout_mode = 2
 stat_name = "R. Magica"
+
+[node name="StatRow8" parent="RightPanel/MainBox/StatsList" instance=ExtResource("1_w0m2v")]
+layout_mode = 2
+stat_name = "Suerte"
+
+[node name="PointsLabel" type="Label" parent="RightPanel/MainBox"]
+layout_mode = 0
+offset_left = 168.0
+offset_top = 592.0
+offset_right = 464.0
+offset_bottom = 615.0
+horizontal_alignment = 1
+vertical_alignment = 1
