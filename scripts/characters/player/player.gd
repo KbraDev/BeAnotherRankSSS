@@ -17,7 +17,7 @@ var stat_points := 0
 # ───── STATS Y VARIABLES ─────
 var base_stats := {
 	"hp": 50,
-	"speed": 80,
+	"speed": 130,
 	"fuerza": 5,
 	"mana": 10,
 	"resistencia": 15,
@@ -105,17 +105,9 @@ func _ready():
 	for i in range(INVENTORY_SIZE):
 		inventory[i] = null
 
-	print(inventory)
+	stat_points = 0
 	emit_signal("health_changed", current_health, max_health)
-	
-	print("💡 Stat actual - velocidad:", base_stats["speed"])
-	print("💡 Puntos disponibles:", stat_points)
 
-# Intentá mejorar velocidad
-	if upgrade_stat("speed"):
-		print("➡️ Nueva velocidad:", base_stats["speed"])
-	else:
-		print("❌ No se pudo mejorar velocidad.")
 
 
 # ───── PROCESO Y ENTRADA ─────
@@ -438,11 +430,16 @@ func get_save_data() -> Dictionary:
 		"max_hp": max_health,
 		"mana": mana,
 		"level": level,
+		"experience": experience,
+		"experience_to_next_level": experience_to_next_level,
+		"stat_points": stat_points,
+		"base_stats": base_stats,
 		"inventory": inv,
 		"player_state": current_state,
 		"last_checkpoint_id": last_checkpoint_id,
 		"last_checkpoint_scene": last_checkpoint_scene
 	}
+
 
 func load_from_save(data: Dictionary) -> void:
 	var pos = data.get("position", [0, 0])
@@ -489,10 +486,10 @@ func gain_experience(amount: int):
 	while experience >= experience_to_next_level:
 		experience -= experience_to_next_level
 		level_up()
-	
-	var stats_menu = get_tree().get_first_node_in_group("stats_menu") # asegurate que tu menu esté en este grupo
+	var stats_menu = get_tree().get_first_node_in_group("stats_menu")
 	if stats_menu:
 		stats_menu._update_all_stats()
+
 
 func level_up():
 	level += 1

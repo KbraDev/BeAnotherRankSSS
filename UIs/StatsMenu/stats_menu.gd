@@ -41,7 +41,7 @@ func _update_all_stats():
 
 	var max_values := {
 		"hp": 300,
-		"speed": 160,
+		"speed": 200,
 		"fuerza": 70,
 		"resistencia": 80,
 		"mana": 100,
@@ -66,8 +66,6 @@ func _update_all_stats():
 		var ui_name = row.stat_name.to_snake_case()
 		var real_stat_name = stat_aliases.get(ui_name, ui_name)
 
-		print("🔍 Procesando stat UI:", ui_name, "→ clave real:", real_stat_name)
-
 		if not player.base_stats.has(real_stat_name):
 			print("❌ Stat no encontrada:", real_stat_name)
 			continue
@@ -75,8 +73,12 @@ func _update_all_stats():
 		var value = player.base_stats[real_stat_name]
 		var max = max_values.get(real_stat_name, 100)
 
-		print("✅ Stat válida:", real_stat_name, "| Valor:", value, "| Máx:", max)
 		row.set_progress(value, max)
 
 		var cost = player.get_upgrade_cost(real_stat_name)
 		row.UpgradeButton.disabled = player.stat_points < cost
+		
+	# 🟦 Actualizar barra de experiencia y etiquetas
+	experience_bar.value = float(player.experience) / float(player.experience_to_next_level) * 100
+	level_label.text = "Nivel: %d" % player.level
+	next_level_label.text = "%d / %d" % [player.experience, player.experience_to_next_level]
