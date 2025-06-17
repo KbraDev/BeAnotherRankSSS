@@ -17,12 +17,12 @@ var stat_points := 0
 # ───── STATS Y VARIABLES ─────
 var base_stats := {
 	"hp": 50,
-	"speed": 160,
-	"fuerza": 3,
+	"speed": 80,
+	"fuerza": 5,
 	"mana": 10,
-	"resistencia": 0,
-	"resistencia_hechizos": 0,
-	"poder_magico": 0,
+	"resistencia": 15,
+	"resistencia_hechizos": 10,
+	"poder_magico": 10,
 	"lucky": 0
 }
 

@@ -113,43 +113,6 @@ text = "2
 "
 vertical_alignment = 1
 
-[node name="StatsList" type="VBoxContainer" parent="RightPanel/MainBox"]
-layout_mode = 2
-offset_top = 304.0
-offset_right = 512.0
-offset_bottom = 545.0
-
-[node name="StatRow" parent="RightPanel/MainBox/StatsList" instance=ExtResource("1_w0m2v")]
-layout_mode = 2
-stat_name = "Salud"
-
-[node name="StatRow2" parent="RightPanel/MainBox/StatsList" instance=ExtResource("1_w0m2v")]
-layout_mode = 2
-
-[node name="StatRow3" parent="RightPanel/MainBox/StatsList" instance=ExtResource("1_w0m2v")]
-layout_mode = 2
-stat_name = "Fuerza"
-
-[node name="StatRow4" parent="RightPanel/MainBox/StatsList" instance=ExtResource("1_w0m2v")]
-layout_mode = 2
-stat_name = "Resistencia"
-
-[node name="StatRow5" parent="RightPanel/MainBox/StatsList" instance=ExtResource("1_w0m2v")]
-layout_mode = 2
-stat_name = "Mana"
-
-[node name="StatRow6" parent="RightPanel/MainBox/StatsList" instance=ExtResource("1_w0m2v")]
-layout_mode = 2
-stat_name = "Poder Magico"
-
-[node name="StatRow7" parent="RightPanel/MainBox/StatsList" instance=ExtResource("1_w0m2v")]
-layout_mode = 2
-stat_name = "R. Magica"
-
-[node name="StatRow8" parent="RightPanel/MainBox/StatsList" instance=ExtResource("1_w0m2v")]
-layout_mode = 2
-stat_name = "Suerte"
-
 [node name="PointsLabel" type="Label" parent="RightPanel/MainBox"]
 layout_mode = 0
 offset_left = 168.0
@@ -158,3 +121,44 @@ offset_right = 464.0
 offset_bottom = 615.0
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="RightPanel/MainBox"]
+custom_minimum_size = Vector2(512, 100)
+layout_mode = 0
+offset_top = 296.0
+offset_right = 512.0
+offset_bottom = 576.0
+
+[node name="StatsList" type="VBoxContainer" parent="RightPanel/MainBox/ScrollContainer"]
+layout_mode = 2
+
+[node name="StatRow" parent="RightPanel/MainBox/ScrollContainer/StatsList" instance=ExtResource("1_w0m2v")]
+layout_mode = 2
+stat_name = "Salud"
+
+[node name="StatRow2" parent="RightPanel/MainBox/ScrollContainer/StatsList" instance=ExtResource("1_w0m2v")]
+layout_mode = 2
+
+[node name="StatRow3" parent="RightPanel/MainBox/ScrollContainer/StatsList" instance=ExtResource("1_w0m2v")]
+layout_mode = 2
+stat_name = "Fuerza"
+
+[node name="StatRow4" parent="RightPanel/MainBox/ScrollContainer/StatsList" instance=ExtResource("1_w0m2v")]
+layout_mode = 2
+stat_name = "Resistencia"
+
+[node name="StatRow5" parent="RightPanel/MainBox/ScrollContainer/StatsList" instance=ExtResource("1_w0m2v")]
+layout_mode = 2
+stat_name = "Mana"
+
+[node name="StatRow6" parent="RightPanel/MainBox/ScrollContainer/StatsList" instance=ExtResource("1_w0m2v")]
+layout_mode = 2
+stat_name = "Poder Magico"
+
+[node name="StatRow7" parent="RightPanel/MainBox/ScrollContainer/StatsList" instance=ExtResource("1_w0m2v")]
+layout_mode = 2
+stat_name = "R. Magica"
+
+[node name="StatRow8" parent="RightPanel/MainBox/ScrollContainer/StatsList" instance=ExtResource("1_w0m2v")]
+layout_mode = 2
+stat_name = "Suerte"
