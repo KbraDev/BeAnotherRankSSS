@@ -1,7 +1,8 @@
 extends Control
 
-@onready var stats_list := $RightPanel/MainBox/ScrollContainer/StatsList
 var player = null
+
+@onready var stats_list := $RightPanel/MainBox/ScrollContainer/StatsList
 @onready var playerAnim = $RightPanel/MainBox/PlayerPreview
 @onready var points_label := $RightPanel/MainBox/PointsLabel
 @onready var level_label = $RightPanel/MainBox/LevelBarContainer/Level
@@ -11,6 +12,8 @@ var player = null
 
 
 func _ready():
+	visible = false
+	
 	await get_tree().process_frame  # Espera un frame para asegurar que el jugador cargue
 	player = get_tree().get_first_node_in_group("player")
 	playerAnim.play("default")
@@ -27,10 +30,16 @@ func _ready():
 
 	_update_all_stats()
 
+func _process(_delta):
+	if Input.is_action_just_pressed("StatsUI"):
+		visible = !visible
+
 
 func _on_stat_upgrade_requested(stat_name: String):
 	if player and player.upgrade_stat(stat_name.to_snake_case()):
 		_update_all_stats()
+		get_tree().paused = visible
+
 
 func _update_all_stats():
 	if player == null:
