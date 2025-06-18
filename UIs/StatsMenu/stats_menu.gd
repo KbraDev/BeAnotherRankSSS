@@ -61,14 +61,15 @@ func _update_all_stats():
 
 	var max_values := {
 		"hp": 300,
-		"speed": 200,
-		"fuerza": 70,
-		"resistencia": 80,
-		"mana": 100,
-		"poder_magico": 100,
-		"resistencia_hechizos": 100,
+		"speed": 180,
+		"fuerza": 40,
+		"resistencia": 60,
+		"mana": 110,
+		"poder_magico": 80,
+		"resistencia_hechizos": 55,
 		"lucky": 25
 	}
+
 
 	# ⚠️ Mapeo visible → real
 	var stat_aliases := {

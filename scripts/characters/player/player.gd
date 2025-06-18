@@ -279,16 +279,19 @@ func take_damage(amount: float, tipo: String = "fisico"):
 	if tipo == "fisico":
 		var resistencia = base_stats.get("resistencia", 15)
 		var reduccion = resistencia * 0.15
-		final_damage = max(amount - reduccion, 0)  # nunca menos de 0
-		print("🪓 Daño recibido del enemigo:", amount)
-		print("🛡️ Reducción por resistencia física (%.1f): %.2f" % [resistencia, reduccion])
-		print("🧍 Daño final aplicado al jugador:", final_damage)
+		final_damage = max(amount - reduccion, 0)
+		print("🪓 Daño físico: %.2f | Reducción: %.2f | Final: %.2f" % [amount, reduccion, final_damage])
+	elif tipo == "magico":
+		var resist_magica = base_stats.get("resistencia_hechizos", 10)
+		var reduccion = resist_magica * 0.15
+		final_damage = max(amount - reduccion, 0)
+		print("✨ Daño mágico: %.2f | Reducción mágica: %.2f | Final: %.2f" % [amount, reduccion, final_damage])
 	else:
-		print("✨ Daño mágico recibido:", amount)
+		print("❔ Tipo de daño desconocido:", tipo)
 
 	current_health = max(current_health - final_damage, 0)
 	emit_signal("health_changed", current_health, max_health)
-	
+
 	if current_health == 0:
 		die()
 
@@ -566,6 +569,14 @@ func upgrade_stat(stat_name: String) -> bool:
 			return _upgrade_fuerza()
 		"resistencia": 
 			return _upgrade_resistencia()
+		"mana":
+			return _upgrade_mana()
+		"poder_magico": 
+			return _upgrade_poder_magico()
+		"resistencia_hechizos": 
+			return _upgrade_resistencia_hechizos()
+		"lucky":
+			return _upgrade_lucky()
 		_:
 			print("⚠️ Stat aún no implementada:", stat_name)
 			return false
@@ -589,6 +600,20 @@ func _get_stat_value(stat_name: String) -> int:
 	elif stat_name == "resistencia":
 		var level = stat_levels.get("resistencia", 1)
 		return int(15 + (level - 1) * 4.5)
+	elif stat_name == "mana":
+		var level = stat_levels.get("mana", 1)
+		return 10 + (level - 1) * 10
+	elif stat_name == "poder_magico":
+		var level = stat_levels.get("poder_magico", 1)
+		return int(10 + (level - 1) * 7)
+	elif stat_name == "resistencia_hechizos":
+		var level = stat_levels.get("resistencia_hechizos", 1)
+		return int(10 + (level - 1) * 5)
+	elif stat_name == "lucky":
+		var level = stat_levels.get("lucky", 1)
+		return float((level - 1) * 2.5)  # 0.0 → 25.0
+
+
 	return base_stats.get(stat_name, 0)
  
 func _get_stat_upgrade_cost(stat_name: String) -> int:
@@ -677,4 +702,85 @@ func _upgrade_resistencia() -> bool:
 	base_stats["resistencia"] = new_resistencia
 
 	#print("🛡️ Resistencia subió a nivel %d → %.1f" % [stat_levels["resistencia"], new_resistencia])
+	return true
+
+func _upgrade_mana() -> bool:
+	var level = stat_levels.get("mana", 1)
+	if level >= 10:
+		print("🛑 Mana ya está al nivel máximo.")
+		return false
+
+	var cost = _get_stat_upgrade_cost("mana")
+	if stat_points < cost:
+		print("❌ No tienes suficientes puntos (necesita %d)" % cost)
+		return false
+
+	stat_points -= cost
+	stat_levels["mana"] += 1
+
+	var new_mana = _get_stat_value("mana")
+	base_stats["mana"] = new_mana
+	mana = min(mana, new_mana)  # si usás mana, esto evita que lo suba mágicamente
+
+	print("🔮 Mana subió a nivel %d → %d" % [stat_levels["mana"], new_mana])
+	return true
+
+func _upgrade_poder_magico() -> bool:
+	var level = stat_levels.get("poder_magico", 1)
+	if level >= 10:
+		print("🛑 Poder mágico ya está al nivel máximo.")
+		return false
+
+	var cost = _get_stat_upgrade_cost("poder_magico")
+	if stat_points < cost:
+		print("❌ No tienes suficientes puntos (necesita %d)" % cost)
+		return false
+
+	stat_points -= cost
+	stat_levels["poder_magico"] += 1
+
+	var new_power = _get_stat_value("poder_magico")
+	base_stats["poder_magico"] = new_power
+
+	print("✨ Poder mágico subió a nivel %d → %d" % [stat_levels["poder_magico"], new_power])
+	return true
+
+func _upgrade_resistencia_hechizos() -> bool:
+	var level = stat_levels.get("resistencia_hechizos", 1)
+	if level >= 10:
+		print("🛑 Resistencia mágica ya está al nivel máximo.")
+		return false
+
+	var cost = _get_stat_upgrade_cost("resistencia_hechizos")
+	if stat_points < cost:
+		print("❌ No tienes suficientes puntos (necesita %d)" % cost)
+		return false
+
+	stat_points -= cost
+	stat_levels["resistencia_hechizos"] += 1
+
+	var new_resist = _get_stat_value("resistencia_hechizos")
+	base_stats["resistencia_hechizos"] = new_resist
+
+	print("🧙‍♂️ Resistencia mágica subió a nivel %d → %d" % [stat_levels["resistencia_hechizos"], new_resist])
+	return true
+
+func _upgrade_lucky() -> bool:
+	var level = stat_levels.get("lucky", 1)
+	if level >= 10:
+		print("🛑 Suerte ya está al nivel máximo.")
+		return false
+
+	var cost = _get_stat_upgrade_cost("lucky")
+	if stat_points < cost:
+		print("❌ No tienes suficientes puntos (necesita %d)" % cost)
+		return false
+
+	stat_points -= cost
+	stat_levels["lucky"] += 1
+
+	var new_lucky = _get_stat_value("lucky")
+	base_stats["lucky"] = new_lucky
+
+	print("🍀 Suerte subió a nivel %d → %.1f%%" % [stat_levels["lucky"], new_lucky])
 	return true
