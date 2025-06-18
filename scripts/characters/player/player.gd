@@ -546,7 +546,8 @@ func upgrade_stat(stat_name: String) -> bool:
 	match stat_name:
 		"hp":
 			return _upgrade_hp()
-		# A futuro podés agregar "speed": return _upgrade_speed(), etc.
+		"speed":
+			return _upgrade_speed()
 		_:
 			print("⚠️ Stat aún no implementada:", stat_name)
 			return false
@@ -561,7 +562,9 @@ func _get_stat_value(stat_name: String) -> int:
 	if stat_name == "hp":
 		var level = stat_levels.get("hp", 1)
 		return 50 + (level - 1) * 28 # 10 niveles -> 50 a 300
-	
+	elif stat_name == "speed":
+		var level = stat_levels.get("speed", 1)
+		return 130 + (level - 1) * 5 # 130 -> 180
 	return base_stats.get(stat_name, 0)
  
 func _get_stat_upgrade_cost(stat_name: String) -> int:
@@ -589,4 +592,24 @@ func _upgrade_hp() -> bool:
 	emit_signal("health_changed", current_health, max_health)
 
 	print("✅ HP subió a nivel %d → %d HP" % [stat_levels["hp"], new_hp])
+	return true
+
+func _upgrade_speed() -> bool:
+	var level = stat_levels.get("speed", 1)
+	if level >= 10:
+		print("🛑 Velocidad ya está al nivel máximo.")
+		return false
+
+	var cost = _get_stat_upgrade_cost("speed")
+	if stat_points < cost:
+		print("❌ No tienes suficientes puntos (necesita %d)" % cost)
+		return false
+
+	stat_points -= cost
+	stat_levels["speed"] += 1
+
+	var new_speed = _get_stat_value("speed")
+	base_stats["speed"] = new_speed
+
+	print("✅ Velocidad subió a nivel %d → %d" % [stat_levels["speed"], new_speed])
 	return true
