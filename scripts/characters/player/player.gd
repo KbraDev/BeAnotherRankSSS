@@ -194,7 +194,9 @@ func perform_attack():
 	can_attack = false
 
 	var animation_name = "attack%d_%s" % [current_attack, last_direction]
-	var damage = 6 if current_attack == 1 else 8
+	var fuerza = base_stats.get("fuerza", 5)
+	var base_damage = DAMAGE if current_attack == 1 else DAMAGE + 1.5
+	var damage = base_damage + (fuerza * 0.25)
 
 	animation.play(animation_name)
 
@@ -212,6 +214,7 @@ func perform_attack():
 	for body in attack_area.get_overlapping_bodies():
 		if body.is_in_group("enemies"):
 			body.take_damage(damage)
+			print("dano echo por jugador: ", damage)
 
 	attack_timer.start()
 	combo_timer.start()
@@ -270,14 +273,24 @@ func _on_dash_cooldown_finished():
 	can_dash = true
 
 # ───── DAÑO Y MUERTE ─────
-func take_damage(amount: float):
-	current_health = max(current_health - amount, 0)
-	emit_signal("health_changed", current_health, max_health)
-	print("🩸 El jugador recibió", amount, "de daño.")
+func take_damage(amount: float, tipo: String = "fisico"):
+	var final_damage = amount
 
+	if tipo == "fisico":
+		var resistencia = base_stats.get("resistencia", 15)
+		var reduccion = resistencia * 0.15
+		final_damage = max(amount - reduccion, 0)  # nunca menos de 0
+		print("🪓 Daño recibido del enemigo:", amount)
+		print("🛡️ Reducción por resistencia física (%.1f): %.2f" % [resistencia, reduccion])
+		print("🧍 Daño final aplicado al jugador:", final_damage)
+	else:
+		print("✨ Daño mágico recibido:", amount)
+
+	current_health = max(current_health - final_damage, 0)
+	emit_signal("health_changed", current_health, max_health)
+	
 	if current_health == 0:
 		die()
-		return
 
 	if not is_attacking and not is_dashing:
 		var prefix := ""
@@ -315,11 +328,11 @@ func die():
 	_on_zoom_finished()
 
 func _on_zoom_finished():
-	print("🔍 Buscando world_manager...")
+	#print("🔍 Buscando world_manager...")
 	var wm := get_tree().get_first_node_in_group("world_manager")
 
 	if wm and last_checkpoint_scene != "":
-		print("✅ WorldManager encontrado, haciendo fade")
+		#print("✅ WorldManager encontrado, haciendo fade")
 		wm.change_world(last_checkpoint_scene, "")
 		await get_tree().process_frame
 
@@ -327,7 +340,7 @@ func _on_zoom_finished():
 		respawn_pending_checkpoint_id = last_checkpoint_id
 		await _wait_for_checkpoint()
 	else:
-		print("⚠️ No se pudo cargar la escena del checkpoint")
+		#print("⚠️ No se pudo cargar la escena del checkpoint")
 		global_position = Vector2.ZERO
 
 	# Restaurar estado del jugador
@@ -376,10 +389,10 @@ func add_item_to_inventory(item_data: ItemData, amount: int = 1) -> bool:
 
 	# 3. Resultado
 	if remaining > 0:
-		print("⚠️ Inventario lleno. No se pudo recoger: ", remaining, " x ", item_data.item_name)
+		#print("⚠️ Inventario lleno. No se pudo recoger: ", remaining, " x ", item_data.item_name)
 		return false
 	else:
-		print("✔️ Agregado: ", amount, " x ", item_data.item_name)
+		#print("✔️ Agregado: ", amount, " x ", item_data.item_name)
 		print(inventory)
 		return true
 
@@ -395,10 +408,11 @@ func update_checkpoint(checkpoint_id: String):
 	if wm and wm.current_world:
 		last_checkpoint_scene = wm.current_world.scene_file_path
 	else:
-		print("⚠️ No se pudo determinar la escena del checkpoint")
+		return
+		#print("⚠️ No se pudo determinar la escena del checkpoint")
 
-	print("📍 Checkpoint actualizado:", checkpoint_id)
-	print("🎬 Escena del checkpoint:", last_checkpoint_scene)
+	#print("📍 Checkpoint actualizado:", checkpoint_id)
+	#print("🎬 Escena del checkpoint:", last_checkpoint_scene)
 
 func find_checkpoint_by_id(id: String) -> Node:
 	var checkpoints = get_tree().get_nodes_in_group("checkpoint")
@@ -416,11 +430,11 @@ func _wait_for_checkpoint():
 		var checkpoint = CheckPointRegistry.get_checkpoint(respawn_pending_checkpoint_id)
 		if checkpoint:
 			global_position = checkpoint.global_position
-			print("✅ Respawneado en checkpoint:", respawn_pending_checkpoint_id)
+			#print("✅ Respawneado en checkpoint:", respawn_pending_checkpoint_id)
 			respawn_pending_checkpoint_id = ""
 			return
 		elapsed += get_process_delta_time()
-	print("❌ Timeout esperando al checkpoint:", respawn_pending_checkpoint_id)
+	#print("❌ Timeout esperando al checkpoint:", respawn_pending_checkpoint_id)
 
 # ----- Save & Load -----
 
@@ -500,7 +514,7 @@ func load_from_save(data: Dictionary) -> void:
 
 func gain_experience(amount: int):
 	experience += amount
-	print("Ganaste %d XP (Total): %d / %d" % [amount, experience, experience_to_next_level])
+	#print("Ganaste %d XP (Total): %d / %d" % [amount, experience, experience_to_next_level])
 	while experience >= experience_to_next_level:
 		experience -= experience_to_next_level
 		level_up()
@@ -519,7 +533,7 @@ func level_up():
 	else:
 		stat_points += 3
 	
-	print(" Nivel %d alcalzado! Puntos para gastar: %d " % [level, stat_points])
+	#print(" Nivel %d alcalzado! Puntos para gastar: %d " % [level, stat_points])
 	
 
 # Retorna el valor base por stat (para calcular el costo)
@@ -548,6 +562,10 @@ func upgrade_stat(stat_name: String) -> bool:
 			return _upgrade_hp()
 		"speed":
 			return _upgrade_speed()
+		"fuerza":
+			return _upgrade_fuerza()
+		"resistencia": 
+			return _upgrade_resistencia()
 		_:
 			print("⚠️ Stat aún no implementada:", stat_name)
 			return false
@@ -564,7 +582,13 @@ func _get_stat_value(stat_name: String) -> int:
 		return 50 + (level - 1) * 28 # 10 niveles -> 50 a 300
 	elif stat_name == "speed":
 		var level = stat_levels.get("speed", 1)
-		return 130 + (level - 1) * 5 # 130 -> 180
+		return 130 + (level - 1) * 7 # 130 -> 180
+	elif stat_name == "fuerza":
+		var level = stat_levels.get("fuerza", 1)
+		return int(5 + (level - 1) * 3.5)
+	elif stat_name == "resistencia":
+		var level = stat_levels.get("resistencia", 1)
+		return int(15 + (level - 1) * 4.5)
 	return base_stats.get(stat_name, 0)
  
 func _get_stat_upgrade_cost(stat_name: String) -> int:
@@ -579,7 +603,7 @@ func _upgrade_hp() -> bool:
 
 	var cost = _get_stat_upgrade_cost("hp")
 	if stat_points < cost:
-		print("❌ No tienes suficientes puntos (necesita %d)" % cost)
+		#print("❌ No tienes suficientes puntos (necesita %d)" % cost)
 		return false
 
 	stat_points -= cost
@@ -591,25 +615,66 @@ func _upgrade_hp() -> bool:
 	current_health = min(current_health, max_health)
 	emit_signal("health_changed", current_health, max_health)
 
-	print("✅ HP subió a nivel %d → %d HP" % [stat_levels["hp"], new_hp])
+	#print("✅ HP subió a nivel %d → %d HP" % [stat_levels["hp"], new_hp])
 	return true
 
 func _upgrade_speed() -> bool:
 	var level = stat_levels.get("speed", 1)
 	if level >= 10:
-		print("🛑 Velocidad ya está al nivel máximo.")
+		#print("🛑 Velocidad ya está al nivel máximo.")
 		return false
 
 	var cost = _get_stat_upgrade_cost("speed")
 	if stat_points < cost:
-		print("❌ No tienes suficientes puntos (necesita %d)" % cost)
+		#print("❌ No tienes suficientes puntos (necesita %d)" % cost)
 		return false
 
 	stat_points -= cost
 	stat_levels["speed"] += 1
+	
 
 	var new_speed = _get_stat_value("speed")
 	base_stats["speed"] = new_speed
 
-	print("✅ Velocidad subió a nivel %d → %d" % [stat_levels["speed"], new_speed])
+	#print("✅ Velocidad subió a nivel %d → %d" % [stat_levels["speed"], new_speed])
+	return true
+
+func _upgrade_fuerza() -> bool:
+	var level = stat_levels.get("fuerza", 1)
+	if level >= 10:
+		#print("🛑 Fuerza ya está al nivel máximo.")
+		return false
+
+	var cost = _get_stat_upgrade_cost("fuerza")
+	if stat_points < cost:
+		#print("❌ No tienes suficientes puntos (necesita %d)" % cost)
+		return false
+
+	stat_points -= cost
+	stat_levels["fuerza"] += 1
+
+	var new_fuerza = _get_stat_value("fuerza")
+	base_stats["fuerza"] = new_fuerza
+
+	#print("✅ Fuerza subió a nivel %d → %d" % [stat_levels["fuerza"], new_fuerza])
+	return true
+
+func _upgrade_resistencia() -> bool:
+	var level = stat_levels.get("resistencia", 1)
+	if level >= 10:
+		#print("🛑 Resistencia ya está al nivel máximo.")
+		return false
+
+	var cost = _get_stat_upgrade_cost("resistencia")
+	if stat_points < cost:
+		#print("❌ No tienes suficientes puntos (necesita %d)" % cost)
+		return false
+
+	stat_points -= cost
+	stat_levels["resistencia"] += 1
+
+	var new_resistencia = _get_stat_value("resistencia")
+	base_stats["resistencia"] = new_resistencia
+
+	#print("🛡️ Resistencia subió a nivel %d → %.1f" % [stat_levels["resistencia"], new_resistencia])
 	return true

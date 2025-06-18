@@ -127,7 +127,8 @@ func start_attack():
 	
 	# Confirmar si el jugador sigue en el área real de ataque
 	if player and attack_area.overlaps_body(player):
-		player.take_damage(12.0)
+		player.take_damage(21, "fisico")
+
 	
 	is_attacking = false
 	
