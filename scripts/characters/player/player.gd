@@ -26,6 +26,17 @@ var base_stats := {
 	"lucky": 0
 }
 
+var stat_levels = {
+	"hp": 1,
+	"speed": 1,
+	"fuerza": 1,
+	"mana": 1,
+	"resistencia": 1,
+	"resistencia_hechizos": 1,
+	"poder_magico": 1,
+	"lucky": 1
+}
+
 var can_move = true
 var current_state: PlayerState = PlayerState.unarmed
 
@@ -434,6 +445,7 @@ func get_save_data() -> Dictionary:
 		"experience_to_next_level": experience_to_next_level,
 		"stat_points": stat_points,
 		"base_stats": base_stats,
+		"stat_levels": stat_levels,
 		"inventory": inv,
 		"player_state": current_state,
 		"last_checkpoint_id": last_checkpoint_id,
@@ -448,6 +460,12 @@ func load_from_save(data: Dictionary) -> void:
 	max_health = data.get("max_hp", 50)
 	mana = data.get("mana", 10)
 	level = data.get("level", 1)
+	experience = data.get("experience", 0)
+	experience_to_next_level = data.get("experience_to_next_level", 100)
+	stat_points = data.get("stat_points", 0)
+	base_stats = data.get("base_stats", base_stats)
+	stat_levels = data.get("stat_levels", stat_levels)
+
 	current_state = data.get("player_state", PlayerState.unarmed)
 	last_checkpoint_id = data.get("last_checkpoint_id", "")
 	last_checkpoint_scene = data.get("last_checkpoint_scene", "")
@@ -525,29 +543,50 @@ func get_upgrade_cost(stat_name: String) -> int:
 
 # Intenta mejorar la stat si hay puntos suficientes
 func upgrade_stat(stat_name: String) -> bool:
-	if not base_stats.has(stat_name):
-		print("⚠️ Stat inválida:", stat_name)
-		return false
-
-	var cost = get_upgrade_cost(stat_name)
-	if stat_points >= cost:
-		base_stats[stat_name] += 10
-		stat_points -= cost
-		print("✅ %s mejorado a %d (costó %d puntos)" % [stat_name, base_stats[stat_name], cost])
-
-		# Si es una stat que afecta al instante, como hp o mana, actualizala
-		if stat_name == "hp":
-			max_health = base_stats["hp"]
-			current_health = min(current_health, max_health)
-			emit_signal("health_changed", current_health, max_health)
-		elif stat_name == "mana":
-			mana = base_stats["mana"]
-
-		return true
-	else:
-		print("❌ No tienes suficientes puntos para mejorar %s (requiere %d)" % [stat_name, cost])
-		return false
+	match stat_name:
+		"hp":
+			return _upgrade_hp()
+		# A futuro podés agregar "speed": return _upgrade_speed(), etc.
+		_:
+			print("⚠️ Stat aún no implementada:", stat_name)
+			return false
 
 func _open_statUI():
 	if Input.is_action_just_pressed("StatsUI"):
 		$StatsMenu.visible = !$StatsMenu.visible
+
+# ------- FUNCIONES PARA MEJORAR DE STADISTICAS ------
+
+func _get_stat_value(stat_name: String) -> int:
+	if stat_name == "hp":
+		var level = stat_levels.get("hp", 1)
+		return 50 + (level - 1) * 28 # 10 niveles -> 50 a 300
+	
+	return base_stats.get(stat_name, 0)
+ 
+func _get_stat_upgrade_cost(stat_name: String) -> int:
+	var level = stat_levels.get(stat_name, 1)
+	return level # nivel 1 = cost 1, nivel 2 = cost 2, ...
+
+func _upgrade_hp() -> bool:
+	var level = stat_levels.get("hp", 1)
+	if level >= 10:
+		print("🛑 HP ya está al nivel máximo.")
+		return false
+
+	var cost = _get_stat_upgrade_cost("hp")
+	if stat_points < cost:
+		print("❌ No tienes suficientes puntos (necesita %d)" % cost)
+		return false
+
+	stat_points -= cost
+	stat_levels["hp"] += 1
+
+	var new_hp = _get_stat_value("hp")
+	base_stats["hp"] = new_hp
+	max_health = new_hp
+	current_health = min(current_health, max_health)
+	emit_signal("health_changed", current_health, max_health)
+
+	print("✅ HP subió a nivel %d → %d HP" % [stat_levels["hp"], new_hp])
+	return true

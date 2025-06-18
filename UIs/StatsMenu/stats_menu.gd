@@ -9,7 +9,16 @@ var player = null
 @onready var next_level_label = $RightPanel/MainBox/LevelBarContainer/NextLevel
 @onready var experience_bar = $RightPanel/MainBox/LevelBarContainer/XpBar
 
-
+var stat_aliases := {
+	"salud": "hp",
+	"velocidad": "speed",
+	"fuerza": "fuerza",
+	"resistencia": "resistencia",
+	"mana": "mana",
+	"poder_magico": "poder_magico",
+	"r._magica": "resistencia_hechizos",
+	"suerte": "lucky"
+}
 
 func _ready():
 	visible = false
@@ -36,9 +45,11 @@ func _process(_delta):
 
 
 func _on_stat_upgrade_requested(stat_name: String):
-	if player and player.upgrade_stat(stat_name.to_snake_case()):
+	var real_stat_name = stat_aliases.get(stat_name.to_snake_case(), stat_name.to_snake_case())
+	if player and player.upgrade_stat(real_stat_name):
 		_update_all_stats()
-		get_tree().paused = visible
+
+
 
 
 func _update_all_stats():
@@ -84,8 +95,9 @@ func _update_all_stats():
 
 		row.set_progress(value, max)
 
-		var cost = player.get_upgrade_cost(real_stat_name)
-		row.UpgradeButton.disabled = player.stat_points < cost
+		var cost = player._get_stat_upgrade_cost(real_stat_name)
+		row.UpgradeButton.disabled = player.stat_points < cost or player.stat_levels.get(real_stat_name, 1) >= 10
+
 		
 	# 🟦 Actualizar barra de experiencia y etiquetas
 	experience_bar.value = float(player.experience) / float(player.experience_to_next_level) * 100

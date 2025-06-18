@@ -6,7 +6,7 @@ extends CharacterBody2D ## GREEN SLIME
 @export var panic_speed = 80 # velocidad en estado de panico
 @export var idle_time: float = 4.0 # Tiempo en reposo
 @export var move_time: float = 5.0 # Tiempo moviendose
-@export var xp_reward_range := Vector2(6, 12)
+@export var xp_reward_range := Vector2(99, 100)
 
 @onready var animation = $AnimatedSprite2D
 @onready var vision_area = $VisionArea
