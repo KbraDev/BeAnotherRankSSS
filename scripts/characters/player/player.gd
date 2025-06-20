@@ -446,7 +446,7 @@ func get_save_data() -> Dictionary:
 	for item in inventory:
 		if item != null:
 			inv.append({
-				"item_name": item.item_data.item_name,
+				"item_id": item.item_data.item_id,
 				"amount": item.amount
 			})
 		else:
@@ -495,19 +495,19 @@ func load_from_save(data: Dictionary) -> void:
 			if item_info == null:
 				inventory[i] = null
 			else:
-				var item_name = item_info.get("item_name", "")
+				var item_id = item_info.get("item_id", "")
 				var amount = item_info.get("amount", 0)
-				var item_data = ItemDataBase.get_item_by_name(item_name)
+				var item_data = ItemDataBase.get_item_by_id(item_id)
 				if item_data:
 					inventory[i] = {
 						"item_data": item_data,
 						"amount": amount
 					}
 				else:
-					print("⚠️ No se encontró el ítem:", item_name)
+					print("⚠️ No se encontró el ítem:", item_id)
 		else:
 			inventory[i] = null
-
+	
 	emit_signal("inventory_updated", inventory)
 	emit_signal("health_changed", current_health, max_health)
 	print("✅ Jugador restaurado desde guardado.")

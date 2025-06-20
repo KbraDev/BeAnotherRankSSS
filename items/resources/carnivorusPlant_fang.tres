@@ -5,7 +5,8 @@
 
 [resource]
 script = ExtResource("1_mtdin")
+item_id = "carnivorousFang"
 item_name = "Colmillo de Planta Cazadora"
-icon = ExtResource("1_ci7ho")
 description = "Un colmillo increiblemente duro usado para hacer herramientas"
+icon = ExtResource("1_ci7ho")
 max_stack = 8
