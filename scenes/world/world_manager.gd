@@ -4,7 +4,6 @@ extends Node2D
 @onready var world_container := $WorldContainer
 @onready var active_mission_menu = $HUD/ActiveMissionsMenu
 @onready var floating_notification = $HUD/FloatingNotiification
-
 @onready var notif := get_node("HUD/FloatingNotiification")
 @onready var transition_overlay := $HUD/TransitionOverlay
 @onready var transition_anim := $HUD/TransitionOverlay/AnimationPlayer
@@ -15,33 +14,24 @@ var _next_scene: PackedScene = null
 var _preloaded_scenes: Dictionary = {}
 
 func _ready():
-	
-	# Set HUD player
-	var player = $player
 	var hud = $HUD
 	hud.set_player(player)
-	
-	
+
 	var inventory_ui = $HUD/InventoryUI
 	player.connect("inventory_updated", inventory_ui.update_ui)
 	inventory_ui.update_ui(player.inventory)
 
 	current_world = world_container.get_child(0)
-
-	# Precargar escenas conectadas desde la escena inicial
 	_preload_connected_scenes(current_world)
 
 func change_world(scene_path: String, target_marker_name: String) -> void:
-	# Fundido a negro
 	transition_anim.play("fade_out")
 	await transition_anim.animation_finished
 
-	# Limpiar escena anterior
 	for child in world_container.get_children():
 		child.queue_free()
 	await get_tree().process_frame
 
-	# Cargar escena desde precarga o en hilo
 	if _preloaded_scenes.has(scene_path):
 		_next_scene = _preloaded_scenes[scene_path]
 	else:
@@ -54,32 +44,33 @@ func change_world(scene_path: String, target_marker_name: String) -> void:
 		return
 
 	var new_world = _next_scene.instantiate()
+	_remove_duplicate_players(new_world) # 🔥 AÑADIDO: prevenir duplicados
 	world_container.add_child(new_world)
 	current_world = new_world
 
-	# Reubicar al jugador
 	var marker = _find_marker_in(current_world, target_marker_name)
 	if marker:
 		player.global_position = marker.global_position
 	else:
 		print("❌ Marker no encontrado:", target_marker_name)
 
-	# Fundido desde negro
 	transition_anim.play("fade_in")
 	await transition_anim.animation_finished
 
-	# Limpiar enemigos antiguos
 	for s in get_tree().get_nodes_in_group("slime"):
 		s.queue_free()
 
-	# Precargar nuevas conexiones
 	_preload_connected_scenes(current_world)
-	
-	# Conectar checkpoints al jugador
+
 	for checkpoint in current_world.get_tree().get_nodes_in_group("checkpoint"):
 		checkpoint.connect("checkpoint_reached", Callable(player, "update_checkpoint"))
 
-
+func _remove_duplicate_players(node: Node):
+	if node.name == "player":
+		print("🧹 Eliminando player duplicado de la escena cargada")
+		node.queue_free()
+	for child in node.get_children():
+		_remove_duplicate_players(child)
 
 func _preload_connected_scenes(world: Node) -> void:
 	var meta = world.get_node_or_null("SceneMeta")
@@ -119,4 +110,50 @@ func _find_marker_in(node: Node, name: String) -> Node:
 
 func fade_to_black():
 	print("🎬 Ejecutando fundido a negro")
-	$HUD/TransitionOverlay/AnimationPlayer.play("fade_out")
+	transition_anim.play("fade_out")
+
+func load_game_state(save_data: Dictionary) -> void:
+	var scene_path = save_data.get("scene_path", "")
+	if scene_path == "":
+		print("❌ No se especificó ninguna escena.")
+		return
+
+	transition_anim.play("fade_out")
+	await transition_anim.animation_finished
+
+	for child in world_container.get_children():
+		child.queue_free()
+	await get_tree().process_frame
+
+	var packed_scene = load(scene_path)
+	if packed_scene == null:
+		print("❌ No se pudo cargar la escena guardada.")
+		return
+
+	var new_world = packed_scene.instantiate()
+	_remove_duplicate_players(new_world) # 🔥 AÑADIDO también aquí
+	world_container.add_child(new_world)
+	current_world = new_world
+
+	var pos = save_data["player"].get("position", [0, 0])
+	player.global_position = Vector2(pos[0], pos[1])
+	player.load_from_save(save_data["player"])
+
+	transition_anim.play("fade_in")
+	await transition_anim.animation_finished
+
+	_preload_connected_scenes(current_world)
+
+	for checkpoint in current_world.get_tree().get_nodes_in_group("checkpoint"):
+		checkpoint.connect("checkpoint_reached", Callable(player, "update_checkpoint"))
+
+	print("📂 Restaurando desde escena:", scene_path)
+	if packed_scene == null:
+		print("❌ No se pudo cargar la escena:", scene_path)
+		return
+
+	print("📂 Restaurando desde escena:", scene_path)
+	print("📍 Posición exacta:", save_data["player"]["position"])
+
+func get_current_world_scene_path() -> String:
+	return current_world.scene_file_path
