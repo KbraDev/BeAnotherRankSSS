@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scenes/world/world_manager.gd" id="1_548at"]
 [ext_resource type="PackedScene" uid="uid://be8s6fsuvru6m" path="res://scenes/characters/player/player.tscn" id="1_armst"]
-[ext_resource type="PackedScene" uid="uid://drfawir77urlq" path="res://scenes/world/location/CityMilis/city_milis.tscn" id="3_tvb08"]
+[ext_resource type="PackedScene" uid="uid://dpah0ljk08blt" path="res://scenes/world/location/olid_town/olid_town.tscn" id="3_yrxvv"]
 [ext_resource type="Script" path="res://scenes/world/hud.gd" id="4_1d48p"]
 [ext_resource type="PackedScene" uid="uid://bi8atwwdsaybi" path="res://UIs/InventoryUI/inventory_ui.tscn" id="4_utxr1"]
 [ext_resource type="Texture2D" uid="uid://xxrofv5fyiec" path="res://sprites/characters/player/healthBar/no health.png" id="5_4uvln"]
@@ -74,12 +74,11 @@ _data = {
 script = ExtResource("1_548at")
 
 [node name="player" parent="." instance=ExtResource("1_armst")]
-position = Vector2(631, 351)
+position = Vector2(1296, 1920)
 
 [node name="WorldContainer" type="Node2D" parent="."]
 
-[node name="CityMilis" parent="WorldContainer" instance=ExtResource("3_tvb08")]
-position = Vector2(-24, -111)
+[node name="OlidTown" parent="WorldContainer" instance=ExtResource("3_yrxvv")]
 
 [node name="HUD" type="CanvasLayer" parent="."]
 script = ExtResource("4_1d48p")

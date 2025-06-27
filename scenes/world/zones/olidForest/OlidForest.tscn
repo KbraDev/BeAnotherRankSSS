@@ -202,6 +202,9 @@ position = Vector2(1138, 3038)
 [node name="FromTemple" type="Marker2D" parent="."]
 position = Vector2(4772, 516)
 
+[node name="FromOlidTown" type="Marker2D" parent="."]
+position = Vector2(530, -14)
+
 [connection signal="body_entered" from="portals/PortalToMilisTrail" to="portals/PortalToMilisTrail" method="_on_body_entered"]
 [connection signal="body_entered" from="portals/PortalFromOlidTown" to="portals/PortalFromOlidTown" method="_on_body_entered"]
 [connection signal="body_entered" from="portals/ToTempleOlid" to="portals/ToTempleOlid" method="_on_body_entered"]
