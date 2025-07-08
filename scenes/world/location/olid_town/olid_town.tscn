@@ -1,10 +1,11 @@
-[gd_scene load_steps=26 format=4 uid="uid://dpah0ljk08blt"]
+[gd_scene load_steps=27 format=4 uid="uid://dpah0ljk08blt"]
 
 [ext_resource type="TileSet" uid="uid://rngchcx3q02t" path="res://assets/tilesets/terrain.tres" id="1_2u8v6"]
 [ext_resource type="TileSet" uid="uid://df2ewgbh7ofxg" path="res://assets/tilesets/houses.tres" id="2_gdhpg"]
 [ext_resource type="TileSet" uid="uid://d4gn5wy6niheu" path="res://assets/builds/builds.tres" id="4_h7low"]
 [ext_resource type="TileSet" uid="uid://dvfkq370f0fmb" path="res://assets/tilesets/props.tres" id="5_vuwml"]
 [ext_resource type="Script" path="res://scenes/world/location/olid_town/scripts/to_olid_forest.gd" id="6_0oxch"]
+[ext_resource type="Texture2D" uid="uid://bk763icgo8w5y" path="res://sprites/particles/leaveParticleGreenYellow.png" id="6_v48ob"]
 [ext_resource type="Texture2D" uid="uid://d4jpb23wi8wom" path="res://sprites/particles/leaveParticleYellow.png" id="8_5axhi"]
 [ext_resource type="Script" path="res://scenes/world/location/CityMilis/script/scene_meta.gd" id="8_ayxqe"]
 [ext_resource type="Script" path="res://scripts/preload/ScenePortalData.gd" id="8_ddhl2"]
@@ -237,6 +238,15 @@ scale = Vector2(15, 15)
 amount = 100
 process_material = SubResource("ParticleProcessMaterial_nagkx")
 texture = ExtResource("8_5axhi")
+visibility_rect = Rect2(-500, -200, 1000, 400)
+
+[node name="leaves2" type="GPUParticles2D" parent="particules"]
+z_index = 11
+position = Vector2(1258, 819)
+scale = Vector2(15, 15)
+amount = 100
+process_material = SubResource("ParticleProcessMaterial_nagkx")
+texture = ExtResource("6_v48ob")
 visibility_rect = Rect2(-500, -200, 1000, 400)
 
 [node name="tools" type="Node" parent="."]
