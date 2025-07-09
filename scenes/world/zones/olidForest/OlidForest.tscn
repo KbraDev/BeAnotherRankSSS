@@ -1,7 +1,8 @@
-[gd_scene load_steps=12 format=4 uid="uid://cy1x2ljkv8lcm"]
+[gd_scene load_steps=16 format=4 uid="uid://cy1x2ljkv8lcm"]
 
 [ext_resource type="TileSet" uid="uid://rngchcx3q02t" path="res://assets/tilesets/terrain.tres" id="1_7whdt"]
 [ext_resource type="Script" path="res://scenes/world/zones/olidForest/gates/to_olid_town.gd" id="2_0o3nh"]
+[ext_resource type="Texture2D" uid="uid://d4jpb23wi8wom" path="res://sprites/particles/leaveParticleYellow.png" id="3_iwhq6"]
 [ext_resource type="PackedScene" uid="uid://be8s6fsuvru6m" path="res://scenes/characters/player/player.tscn" id="4_kds41"]
 [ext_resource type="Script" path="res://scenes/world/zones/olidForest/scene_meta.gd" id="5_0fygx"]
 [ext_resource type="Script" path="res://scenes/tools/greenSlimeSpawner/scripts/green_slime_spawn.gd" id="5_ige34"]
@@ -10,6 +11,27 @@
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q86lh"]
 size = Vector2(464, 20)
+
+[sub_resource type="Gradient" id="Gradient_d1t77"]
+offsets = PackedFloat32Array(0.0275229, 0.197248, 0.775229, 1)
+colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_t53m1"]
+gradient = SubResource("Gradient_d1t77")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_on1u4"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(500, 200, 1)
+direction = Vector3(-1, 0, 0)
+spread = 20.0
+initial_velocity_max = 10.0
+angular_velocity_min = -1.60933e-05
+angular_velocity_max = 50.0
+gravity = Vector3(0, 10, 0)
+scale_min = 0.5
+color_ramp = SubResource("GradientTexture1D_t53m1")
+anim_offset_max = 1.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_36w43"]
 size = Vector2(507.5, 307.75)
@@ -85,11 +107,22 @@ target_marker_name = "FromOlidForest"
 position = Vector2(1, 0)
 shape = SubResource("RectangleShape2D_q86lh")
 
+[node name="particles" type="Node" parent="."]
+
+[node name="leaves" type="GPUParticles2D" parent="particles"]
+z_index = 11
+position = Vector2(1258, 819)
+scale = Vector2(15, 15)
+amount = 700
+process_material = SubResource("ParticleProcessMaterial_on1u4")
+texture = ExtResource("3_iwhq6")
+visibility_rect = Rect2(-500, -200, 1000, 400)
+
 [node name="greenSlimeSpawners" type="Node" parent="."]
 
 [node name="greenSlimeSpawn" type="Area2D" parent="greenSlimeSpawners"]
 z_index = 1
-position = Vector2(2309, 1289)
+position = Vector2(1258, 961)
 script = ExtResource("5_ige34")
 slime_scene = ExtResource("6_2ui01")
 
@@ -107,7 +140,7 @@ wait_time = 12.0
 
 [node name="greenSlimeSpawn2" type="Area2D" parent="greenSlimeSpawners"]
 z_index = 1
-position = Vector2(1496, 2229)
+position = Vector2(1054, 1734)
 script = ExtResource("5_ige34")
 slime_scene = ExtResource("6_2ui01")
 
@@ -126,7 +159,7 @@ wait_time = 12.0
 
 [node name="greenSlimeSpawn3" type="Area2D" parent="greenSlimeSpawners"]
 z_index = 1
-position = Vector2(18, 1294)
+position = Vector2(-472, 961)
 script = ExtResource("5_ige34")
 slime_scene = ExtResource("6_2ui01")
 

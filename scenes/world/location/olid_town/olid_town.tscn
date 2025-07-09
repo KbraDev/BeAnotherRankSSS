@@ -65,7 +65,7 @@ fill_to = Vector2(0, 1)
 offsets = PackedFloat32Array(0.0275229, 0.197248, 0.775229, 1)
 colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0)
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_t53m1"]
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_4yk5o"]
 gradient = SubResource("Gradient_luwsn")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_nagkx"]
@@ -79,7 +79,7 @@ angular_velocity_min = -1.60933e-05
 angular_velocity_max = 50.0
 gravity = Vector3(0, 10, 0)
 scale_min = 0.5
-color_ramp = SubResource("GradientTexture1D_t53m1")
+color_ramp = SubResource("GradientTexture1D_4yk5o")
 anim_offset_max = 1.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cmf84"]
