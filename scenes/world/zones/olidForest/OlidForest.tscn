@@ -1,13 +1,15 @@
-[gd_scene load_steps=16 format=4 uid="uid://cy1x2ljkv8lcm"]
+[gd_scene load_steps=18 format=4 uid="uid://cy1x2ljkv8lcm"]
 
 [ext_resource type="TileSet" uid="uid://rngchcx3q02t" path="res://assets/tilesets/terrain.tres" id="1_7whdt"]
 [ext_resource type="Script" path="res://scenes/world/zones/olidForest/gates/to_olid_town.gd" id="2_0o3nh"]
 [ext_resource type="Texture2D" uid="uid://d4jpb23wi8wom" path="res://sprites/particles/leaveParticleYellow.png" id="3_iwhq6"]
+[ext_resource type="Script" path="res://scenes/world/zones/olidForest/gates/to_temple_olid.gd" id="3_knw2p"]
+[ext_resource type="Script" path="res://scenes/world/zones/olidForest/gates/toMilisTrail.gd" id="4_boibf"]
 [ext_resource type="PackedScene" uid="uid://be8s6fsuvru6m" path="res://scenes/characters/player/player.tscn" id="4_kds41"]
-[ext_resource type="Script" path="res://scenes/world/zones/olidForest/scene_meta.gd" id="5_0fygx"]
 [ext_resource type="Script" path="res://scenes/tools/greenSlimeSpawner/scripts/green_slime_spawn.gd" id="5_ige34"]
 [ext_resource type="PackedScene" uid="uid://34rn42brxq64" path="res://scenes/characters/monsters/greenslime/greenSlime.tscn" id="6_2ui01"]
 [ext_resource type="Script" path="res://scripts/preload/ScenePortalData.gd" id="6_aws5t"]
+[ext_resource type="Script" path="res://scenes/world/zones/olidForest/tools/scene_meta.gd" id="8_7q5si"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q86lh"]
 size = Vector2(464, 20)
@@ -39,7 +41,7 @@ size = Vector2(507.5, 307.75)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_22pe5"]
 size = Vector2(48, 405)
 
-[sub_resource type="Resource" id="Resource_r0di1"]
+[sub_resource type="Resource" id="Resource_qnsgo"]
 script = ExtResource("6_aws5t")
 connected_scenes = Array[String](["res://scenes/world/location/olid_town/olid_town.tscn", "res://scenes/world/zones/milistrail/milis_trail.tscn", "res://scenes/world/zones/OlidRuins/templeOlid.tscn"])
 
@@ -79,6 +81,8 @@ tile_set = ExtResource("1_7whdt")
 
 [node name="ToOlidTown" type="Area2D" parent="Gate"]
 position = Vector2(0, -42)
+collision_layer = 255
+collision_mask = 255
 script = ExtResource("2_0o3nh")
 target_scene = "res://scenes/world/location/olid_town/olid_town.tscn"
 target_marker_name = "FromOlidForest"
@@ -90,8 +94,11 @@ shape = SubResource("RectangleShape2D_q86lh")
 [node name="ToRuinsOlid" type="Area2D" parent="Gate"]
 position = Vector2(3184, 863)
 rotation = 1.5708
-script = ExtResource("2_0o3nh")
+collision_layer = 255
+collision_mask = 255
+script = ExtResource("3_knw2p")
 target_scene = "res://scenes/world/zones/OlidRuins/templeOlid.tscn"
+target_marker_name = "OlidForestToTemple"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Gate/ToRuinsOlid"]
 position = Vector2(1, 0)
@@ -99,7 +106,9 @@ shape = SubResource("RectangleShape2D_q86lh")
 
 [node name="ToMilisTrail" type="Area2D" parent="Gate"]
 position = Vector2(975, 3264)
-script = ExtResource("2_0o3nh")
+collision_layer = 255
+collision_mask = 255
+script = ExtResource("4_boibf")
 target_scene = "res://scenes/world/zones/milistrail/milis_trail.tscn"
 target_marker_name = "FromOlidForest"
 
@@ -175,13 +184,11 @@ wait_time = 12.0
 
 [node name="Marker2D" type="Marker2D" parent="greenSlimeSpawners/greenSlimeSpawn3"]
 
-[node name="player" parent="." instance=ExtResource("4_kds41")]
-position = Vector2(0, 47)
-
 [node name="limits" type="Node" parent="."]
 
 [node name="StaticBody2D" type="StaticBody2D" parent="limits"]
 position = Vector2(-267, 18)
+collision_layer = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="limits/StaticBody2D"]
 position = Vector2(15, -42.5)
@@ -189,6 +196,7 @@ shape = SubResource("RectangleShape2D_22pe5")
 
 [node name="StaticBody2D2" type="StaticBody2D" parent="limits"]
 position = Vector2(231, 0)
+collision_layer = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="limits/StaticBody2D2"]
 position = Vector2(15, -42.5)
@@ -196,6 +204,7 @@ shape = SubResource("RectangleShape2D_22pe5")
 
 [node name="StaticBody2D4" type="StaticBody2D" parent="limits"]
 position = Vector2(231, 0)
+collision_layer = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="limits/StaticBody2D4"]
 position = Vector2(15, -42.5)
@@ -203,6 +212,7 @@ shape = SubResource("RectangleShape2D_22pe5")
 
 [node name="StaticBody2D5" type="StaticBody2D" parent="limits"]
 position = Vector2(3124, 512)
+collision_layer = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="limits/StaticBody2D5"]
 position = Vector2(15, -42.5)
@@ -212,14 +222,15 @@ shape = SubResource("RectangleShape2D_22pe5")
 position = Vector2(586, -87)
 rotation = 1.5708
 scale = Vector2(1, 100)
+collision_layer = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="limits/StaticBody2D3"]
 position = Vector2(89, -201)
 shape = SubResource("RectangleShape2D_22pe5")
 
 [node name="SceneMeta" type="Node2D" parent="."]
-script = ExtResource("5_0fygx")
-portal_data = SubResource("Resource_r0di1")
+script = ExtResource("8_7q5si")
+portal_data = SubResource("Resource_qnsgo")
 
 [node name="FromOlidTown" type="Marker2D" parent="."]
 position = Vector2(-22, 18)
@@ -227,6 +238,9 @@ position = Vector2(-22, 18)
 [node name="FromOlidRuins" type="Marker2D" parent="."]
 
 [node name="FromMilisTrail" type="Marker2D" parent="."]
+position = Vector2(975, 3200)
+
+[node name="player" parent="." instance=ExtResource("4_kds41")]
 
 [connection signal="body_entered" from="Gate/ToOlidTown" to="Gate/ToOlidTown" method="_on_body_entered"]
 [connection signal="body_entered" from="Gate/ToRuinsOlid" to="Gate/ToRuinsOlid" method="_on_body_entered"]

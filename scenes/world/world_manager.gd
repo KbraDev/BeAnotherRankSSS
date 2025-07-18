@@ -40,7 +40,6 @@ func change_world(scene_path: String, target_marker_name: String) -> void:
 		await _thread.wait_to_finish()
 
 	if _next_scene == null:
-		print("❌ No se pudo cargar la escena:", scene_path)
 		return
 
 	var new_world = _next_scene.instantiate()
@@ -67,7 +66,6 @@ func change_world(scene_path: String, target_marker_name: String) -> void:
 
 func _remove_duplicate_players(node: Node):
 	if node.name == "player":
-		print("🧹 Eliminando player duplicado de la escena cargada")
 		node.queue_free()
 	for child in node.get_children():
 		_remove_duplicate_players(child)
@@ -77,7 +75,6 @@ func _preload_connected_scenes(world: Node) -> void:
 	if meta and "portal_data" in meta and meta.portal_data:
 		for path in meta.portal_data.connected_scenes:
 			if not _preloaded_scenes.has(path):
-				print("📦 Precargando escena vecina:", path)
 				_preload_scene_async(path)
 
 func _preload_scene_async(path: String) -> void:
@@ -88,6 +85,8 @@ func _threaded_preload(path: String) -> void:
 	var scene = load(path)
 	if scene:
 		_preloaded_scenes[path] = scene
+	else:
+		return
 
 func _load_scene_threaded(scene_path: String) -> void:
 	_next_scene = load(scene_path)
@@ -109,13 +108,11 @@ func _find_marker_in(node: Node, name: String) -> Node:
 	return null
 
 func fade_to_black():
-	print("🎬 Ejecutando fundido a negro")
 	transition_anim.play("fade_out")
 
 func load_game_state(save_data: Dictionary) -> void:
 	var scene_path = save_data.get("scene_path", "")
 	if scene_path == "":
-		print("❌ No se especificó ninguna escena.")
 		return
 
 	transition_anim.play("fade_out")
@@ -127,7 +124,6 @@ func load_game_state(save_data: Dictionary) -> void:
 
 	var packed_scene = load(scene_path)
 	if packed_scene == null:
-		print("❌ No se pudo cargar la escena guardada.")
 		return
 
 	var new_world = packed_scene.instantiate()
@@ -147,13 +143,8 @@ func load_game_state(save_data: Dictionary) -> void:
 	for checkpoint in current_world.get_tree().get_nodes_in_group("checkpoint"):
 		checkpoint.connect("checkpoint_reached", Callable(player, "update_checkpoint"))
 
-	print("📂 Restaurando desde escena:", scene_path)
 	if packed_scene == null:
-		print("❌ No se pudo cargar la escena:", scene_path)
 		return
-
-	print("📂 Restaurando desde escena:", scene_path)
-	print("📍 Posición exacta:", save_data["player"]["position"])
 
 func get_current_world_scene_path() -> String:
 	return current_world.scene_file_path

@@ -1,11 +1,10 @@
-[gd_scene load_steps=9 format=4 uid="uid://bauhtmw7m2e8n"]
+[gd_scene load_steps=8 format=4 uid="uid://bauhtmw7m2e8n"]
 
 [ext_resource type="TileSet" uid="uid://rngchcx3q02t" path="res://assets/tilesets/terrain.tres" id="1_ljlar"]
 [ext_resource type="TileSet" uid="uid://dvfkq370f0fmb" path="res://assets/tilesets/props.tres" id="2_sehhq"]
 [ext_resource type="PackedScene" uid="uid://cudte76l40r4q" path="res://scenes/tools/portal/portal.tscn" id="4_kpdwc"]
 [ext_resource type="PackedScene" uid="uid://bxxyvnfime8io" path="res://scenes/tools/portal/obelisc.tscn" id="5_x8rf1"]
 [ext_resource type="PackedScene" uid="uid://bldo5esebxrmt" path="res://scenes/tools/portal/ritual.tscn" id="6_b2k3a"]
-[ext_resource type="Script" path="res://scenes/world/zones/OlidRuins/script/gateToOlidForest.gd" id="7_ebk1y"]
 
 [sub_resource type="SegmentShape2D" id="SegmentShape2D_jn01b"]
 a = Vector2(-0.00012207, -3304)
@@ -126,9 +125,6 @@ position = Vector2(568, -64)
 
 [node name="Area2D" type="Area2D" parent="gates"]
 position = Vector2(504, -80)
-script = ExtResource("7_ebk1y")
-target_scene = "res://scenes/world/zones/olidForest/OlidForest.tscn"
-target_marker_name = "FromTemple"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="gates/Area2D"]
 position = Vector2(0, 4)

@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scenes/world/world_manager.gd" id="1_548at"]
 [ext_resource type="PackedScene" uid="uid://be8s6fsuvru6m" path="res://scenes/characters/player/player.tscn" id="1_armst"]
-[ext_resource type="PackedScene" uid="uid://dpah0ljk08blt" path="res://scenes/world/location/olid_town/olid_town.tscn" id="3_yrxvv"]
+[ext_resource type="PackedScene" uid="uid://uccdoa08jthp" path="res://scenes/world/location/olid_town/InOlidTownScenes/fathers_home.tscn" id="3_mbj3w"]
 [ext_resource type="Script" path="res://scenes/world/hud.gd" id="4_1d48p"]
 [ext_resource type="PackedScene" uid="uid://bi8atwwdsaybi" path="res://UIs/InventoryUI/inventory_ui.tscn" id="4_utxr1"]
 [ext_resource type="Texture2D" uid="uid://xxrofv5fyiec" path="res://sprites/characters/player/healthBar/no health.png" id="5_4uvln"]
@@ -74,11 +74,11 @@ _data = {
 script = ExtResource("1_548at")
 
 [node name="player" parent="." instance=ExtResource("1_armst")]
-position = Vector2(1296, 1920)
+position = Vector2(693, 460)
 
 [node name="WorldContainer" type="Node2D" parent="."]
 
-[node name="OlidTown" parent="WorldContainer" instance=ExtResource("3_yrxvv")]
+[node name="FathersHome" parent="WorldContainer" instance=ExtResource("3_mbj3w")]
 
 [node name="HUD" type="CanvasLayer" parent="."]
 script = ExtResource("4_1d48p")
@@ -156,6 +156,10 @@ libraries = {
 }
 
 [node name="StatsMenu" parent="HUD" instance=ExtResource("16_5kwx7")]
+offset_left = 255.0
+offset_top = -18.0
+offset_right = 255.0
+offset_bottom = -18.0
 
 [node name="MissionDatabase" type="Node2D" parent="."]
 script = ExtResource("8_0psd8")

@@ -1,15 +1,16 @@
-[gd_scene load_steps=27 format=4 uid="uid://dpah0ljk08blt"]
+[gd_scene load_steps=28 format=4 uid="uid://dpah0ljk08blt"]
 
 [ext_resource type="TileSet" uid="uid://rngchcx3q02t" path="res://assets/tilesets/terrain.tres" id="1_2u8v6"]
 [ext_resource type="TileSet" uid="uid://df2ewgbh7ofxg" path="res://assets/tilesets/houses.tres" id="2_gdhpg"]
 [ext_resource type="TileSet" uid="uid://d4gn5wy6niheu" path="res://assets/builds/builds.tres" id="4_h7low"]
 [ext_resource type="TileSet" uid="uid://dvfkq370f0fmb" path="res://assets/tilesets/props.tres" id="5_vuwml"]
-[ext_resource type="Script" path="res://scenes/world/location/olid_town/scripts/to_olid_forest.gd" id="6_0oxch"]
 [ext_resource type="Texture2D" uid="uid://bk763icgo8w5y" path="res://sprites/particles/leaveParticleGreenYellow.png" id="6_v48ob"]
+[ext_resource type="Script" path="res://scenes/world/location/olid_town/gates/to_olid_forest.gd" id="7_uj1t0"]
 [ext_resource type="Texture2D" uid="uid://d4jpb23wi8wom" path="res://sprites/particles/leaveParticleYellow.png" id="8_5axhi"]
-[ext_resource type="Script" path="res://scenes/world/location/CityMilis/script/scene_meta.gd" id="8_ayxqe"]
+[ext_resource type="Script" path="res://scenes/world/location/olid_town/tools/scene_meta.gd" id="8_8ujmm"]
 [ext_resource type="Script" path="res://scripts/preload/ScenePortalData.gd" id="8_ddhl2"]
-[ext_resource type="Script" path="res://scenes/world/location/olid_town/scripts/to_fathers_home.gd" id="9_2qxss"]
+[ext_resource type="Script" path="res://scenes/world/location/olid_town/gates/to_fathers_home.gd" id="9_2qxss"]
+[ext_resource type="PackedScene" uid="uid://be8s6fsuvru6m" path="res://scenes/characters/player/player.tscn" id="11_ey3cu"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qjx10"]
 size = Vector2(3278, 20)
@@ -18,14 +19,14 @@ size = Vector2(3278, 20)
 offsets = PackedFloat32Array(0, 0.533597, 0.992509)
 colors = PackedColorArray(0, 0, 0, 0, 0.682353, 0.819608, 0.470588, 1, 0, 0, 0, 0)
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_6ifwt"]
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_1xyjs"]
 gradient = SubResource("Gradient_dx5jp")
 
 [sub_resource type="Gradient" id="Gradient_ol1q2"]
 offsets = PackedFloat32Array(0, 0.494382, 1)
 colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0)
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_2cjqf"]
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_wa1ir"]
 gradient = SubResource("Gradient_ol1q2")
 
 [sub_resource type="Curve" id="Curve_tcelh"]
@@ -34,7 +35,7 @@ max_value = 200.0
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.14152, -59.8922), 0.0, 0.0, 0, 0, Vector2(0.249123, 80.2986), 0.0, 0.0, 0, 0, Vector2(0.366082, -56.657), 0.0, 0.0, 0, 0, Vector2(0.500585, 74.9067), 0.0, 0.0, 0, 0, Vector2(0.625731, -53.4218), 0.0, 0.0, 0, 0, Vector2(0.753216, 69.5147), 0.0, 0.0, 0, 0, Vector2(0.88655, -62.0489), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
 point_count = 9
 
-[sub_resource type="CurveTexture" id="CurveTexture_11k2s"]
+[sub_resource type="CurveTexture" id="CurveTexture_k01u2"]
 curve = SubResource("Curve_tcelh")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_sit37"]
@@ -44,19 +45,19 @@ emission_box_extents = Vector3(200, 200, 1)
 gravity = Vector3(-100, -20, 0)
 tangential_accel_min = -2.23517e-06
 tangential_accel_max = 6.0
-tangential_accel_curve = SubResource("CurveTexture_11k2s")
+tangential_accel_curve = SubResource("CurveTexture_k01u2")
 damping_max = 100.0
 scale_min = 1.5
 scale_max = 1.8
-color_ramp = SubResource("GradientTexture1D_2cjqf")
-color_initial_ramp = SubResource("GradientTexture1D_6ifwt")
+color_ramp = SubResource("GradientTexture1D_wa1ir")
+color_initial_ramp = SubResource("GradientTexture1D_1xyjs")
 
-[sub_resource type="Gradient" id="Gradient_rqlm8"]
+[sub_resource type="Gradient" id="Gradient_0fvsj"]
 offsets = PackedFloat32Array(0, 0.494737, 1)
 colors = PackedColorArray(0.529412, 0.654902, 0.32549, 0, 0.682388, 0.820564, 0.468836, 1, 0.529412, 0.654902, 0.32549, 0)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_pcdxh"]
-gradient = SubResource("Gradient_rqlm8")
+gradient = SubResource("Gradient_0fvsj")
 width = 1
 height = 32
 fill_to = Vector2(0, 1)
@@ -65,7 +66,7 @@ fill_to = Vector2(0, 1)
 offsets = PackedFloat32Array(0.0275229, 0.197248, 0.775229, 1)
 colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0)
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_4yk5o"]
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_eqt8q"]
 gradient = SubResource("Gradient_luwsn")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_nagkx"]
@@ -79,7 +80,7 @@ angular_velocity_min = -1.60933e-05
 angular_velocity_max = 50.0
 gravity = Vector3(0, 10, 0)
 scale_min = 0.5
-color_ramp = SubResource("GradientTexture1D_4yk5o")
+color_ramp = SubResource("GradientTexture1D_eqt8q")
 anim_offset_max = 1.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cmf84"]
@@ -88,7 +89,7 @@ size = Vector2(499, 20)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6c2g1"]
 size = Vector2(21, 34)
 
-[sub_resource type="Resource" id="Resource_3qglt"]
+[sub_resource type="Resource" id="Resource_3enkw"]
 script = ExtResource("8_ddhl2")
 connected_scenes = Array[String](["res://scenes/world/location/olid_town/InOlidTownScenes/fathers_home.tscn", "res://scenes/world/zones/olidForest/OlidForest.tscn"])
 
@@ -187,7 +188,7 @@ tile_set = ExtResource("1_2u8v6")
 [node name="Limit" type="StaticBody2D" parent="limits"]
 z_index = 1
 position = Vector2(1319, 2454)
-collision_layer = 6
+collision_layer = 7
 collision_mask = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="limits/Limit"]
@@ -197,7 +198,7 @@ shape = SubResource("RectangleShape2D_qjx10")
 [node name="Limit2" type="StaticBody2D" parent="limits"]
 z_index = 1
 position = Vector2(2858, 811)
-collision_layer = 6
+collision_layer = 7
 collision_mask = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="limits/Limit2"]
@@ -208,7 +209,7 @@ shape = SubResource("RectangleShape2D_qjx10")
 [node name="Limit3" type="StaticBody2D" parent="limits"]
 z_index = 1
 position = Vector2(-318, 839)
-collision_layer = 6
+collision_layer = 7
 collision_mask = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="limits/Limit3"]
@@ -255,7 +256,9 @@ visibility_rect = Rect2(-500, -200, 1000, 400)
 
 [node name="ToOlidForest" type="Area2D" parent="tools/gates"]
 z_index = 2
-script = ExtResource("6_0oxch")
+collision_layer = 255
+collision_mask = 255
+script = ExtResource("7_uj1t0")
 target_scene = "res://scenes/world/zones/olidForest/OlidForest.tscn"
 target_marker_name = "FromOlidTown"
 
@@ -266,6 +269,8 @@ debug_color = Color(0.73285, 0.470015, 0.0914091, 0.42)
 
 [node name="ToFathersHome" type="Area2D" parent="tools/gates"]
 position = Vector2(611, 369)
+collision_layer = 255
+collision_mask = 255
 script = ExtResource("9_2qxss")
 target_scene = "res://scenes/world/location/olid_town/InOlidTownScenes/fathers_home.tscn"
 target_marker_name = "OlidTownToFatherHouse"
@@ -278,13 +283,15 @@ shape = SubResource("RectangleShape2D_6c2g1")
 z_index = 1
 position = Vector2(1319, 2393)
 
-[node name="SceneMeta" type="Node2D" parent="."]
-script = ExtResource("8_ayxqe")
-portal_data = SubResource("Resource_3qglt")
-
 [node name="FromHouse" type="Marker2D" parent="."]
 z_index = 2
 position = Vector2(615, 390)
+
+[node name="SceneMeta" type="Node2D" parent="."]
+script = ExtResource("8_8ujmm")
+portal_data = SubResource("Resource_3enkw")
+
+[node name="player" parent="." instance=ExtResource("11_ey3cu")]
 
 [connection signal="body_entered" from="tools/gates/ToOlidForest" to="tools/gates/ToOlidForest" method="_on_body_entered"]
 [connection signal="body_entered" from="tools/gates/ToFathersHome" to="tools/gates/ToFathersHome" method="_on_body_entered"]
