@@ -1,6 +1,6 @@
 [gd_scene load_steps=24 format=3 uid="uid://dvhl7s1qwgas3"]
 
-[ext_resource type="Script" path="res://scenes/characters/NCP/recepcionist/recepcionist.gd" id="1_4nuhm"]
+[ext_resource type="Script" uid="uid://30fr7xyj8aap" path="res://scenes/characters/NCP/recepcionist/recepcionist.gd" id="1_4nuhm"]
 [ext_resource type="Texture2D" uid="uid://nuqm8dtudp3n" path="res://sprites/characters/NPC/recepcionist/NpcFemale_base-Sheet.png" id="1_cemhf"]
 [ext_resource type="Texture2D" uid="uid://doaqjqqpk6400" path="res://sprites/UIS/InteractUI/interactUI.png" id="3_uri5h"]
 

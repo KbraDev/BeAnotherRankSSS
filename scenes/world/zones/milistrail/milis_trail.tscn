@@ -1,11 +1,11 @@
 [gd_scene load_steps=10 format=4 uid="uid://fc0amgg3okou"]
 
-[ext_resource type="Script" path="res://scenes/world/zones/milistrail/gates/to_milis_city.gd" id="2_11g8x"]
+[ext_resource type="Script" uid="uid://c4tovrp06glem" path="res://scenes/world/zones/milistrail/gates/to_milis_city.gd" id="2_11g8x"]
 [ext_resource type="TileSet" uid="uid://rngchcx3q02t" path="res://assets/tilesets/terrain.tres" id="2_usr3p"]
-[ext_resource type="Script" path="res://scenes/world/zones/milistrail/gates/from_olid_forest.gd" id="3_4d23h"]
-[ext_resource type="Script" path="res://scenes/world/zones/milistrail/tools/scene_meta.gd" id="4_wmji6"]
+[ext_resource type="Script" uid="uid://dn3xrn3rmhpa5" path="res://scenes/world/zones/milistrail/gates/from_olid_forest.gd" id="3_4d23h"]
+[ext_resource type="Script" uid="uid://dnqemjrkih1db" path="res://scenes/world/zones/milistrail/tools/scene_meta.gd" id="4_wmji6"]
 [ext_resource type="PackedScene" uid="uid://be8s6fsuvru6m" path="res://scenes/characters/player/player.tscn" id="9_t8ubn"]
-[ext_resource type="Script" path="res://scripts/preload/ScenePortalData.gd" id="9_xavse"]
+[ext_resource type="Script" uid="uid://83qtco7d4r46" path="res://scripts/preload/ScenePortalData.gd" id="9_xavse"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_el5a4"]
 size = Vector2(1146, 17)

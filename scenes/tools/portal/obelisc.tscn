@@ -1,6 +1,6 @@
 [gd_scene load_steps=21 format=3 uid="uid://bxxyvnfime8io"]
 
-[ext_resource type="Script" path="res://scenes/tools/portal/obelisc.gd" id="1_j0e8e"]
+[ext_resource type="Script" uid="uid://ul226wurqvln" path="res://scenes/tools/portal/obelisc.gd" id="1_j0e8e"]
 [ext_resource type="Texture2D" uid="uid://dh2xtsm3p1fl0" path="res://assets/ERW - Ancient Ruins V 1.9.1/Props/animated/Obelisk4-animation2-activated-110x180.png" id="1_phne1"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jfysg"]

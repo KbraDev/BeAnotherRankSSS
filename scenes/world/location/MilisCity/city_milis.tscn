@@ -3,9 +3,9 @@
 [ext_resource type="TileSet" uid="uid://rngchcx3q02t" path="res://assets/tilesets/terrain.tres" id="1_1ipq0"]
 [ext_resource type="TileSet" uid="uid://djlewavt2wkli" path="res://assets/tilesets/theVillage.tres" id="2_0mlct"]
 [ext_resource type="TileSet" uid="uid://dvfkq370f0fmb" path="res://assets/tilesets/props.tres" id="3_hxhn5"]
-[ext_resource type="Script" path="res://scenes/world/location/MilisCity/gates/area_2d.gd" id="4_fyoj7"]
-[ext_resource type="Script" path="res://scenes/world/location/MilisCity/tools/scene_meta.gd" id="5_lhr7h"]
-[ext_resource type="Script" path="res://scripts/preload/ScenePortalData.gd" id="6_3jqq1"]
+[ext_resource type="Script" uid="uid://cmsa7vgmhjw1x" path="res://scenes/world/location/MilisCity/gates/area_2d.gd" id="4_fyoj7"]
+[ext_resource type="Script" uid="uid://bxx6nm1sh1hhx" path="res://scenes/world/location/MilisCity/tools/scene_meta.gd" id="5_lhr7h"]
+[ext_resource type="Script" uid="uid://83qtco7d4r46" path="res://scripts/preload/ScenePortalData.gd" id="6_3jqq1"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2dftv"]
 size = Vector2(272, 10)

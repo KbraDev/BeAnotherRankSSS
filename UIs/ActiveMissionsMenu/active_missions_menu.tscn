@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://cqj38508gjs57"]
 
-[ext_resource type="Script" path="res://UIs/ActiveMissionsMenu/active_missions_menu.gd" id="1_6ipjr"]
+[ext_resource type="Script" uid="uid://yw43liqsyxup" path="res://UIs/ActiveMissionsMenu/active_missions_menu.gd" id="1_6ipjr"]
 [ext_resource type="PackedScene" uid="uid://dvgth3wrte133" path="res://UIs/DeliveryMisionMenu/delivery_mission_card.tscn" id="2_r542c"]
 
 [node name="ActiveMissionsMenu" type="Control"]

@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://jiovenp0b04v"]
 
-[ext_resource type="Script" path="res://UIs/MissionSelecteMenu/mission_selected_menu.gd" id="1_5sowg"]
+[ext_resource type="Script" uid="uid://doyywbkyswoi8" path="res://UIs/MissionSelecteMenu/mission_selected_menu.gd" id="1_5sowg"]
 [ext_resource type="PackedScene" uid="uid://xo32p22vhwqu" path="res://UIs/MissionSelecteMenu/missionCard/mission_card.tscn" id="2_e4t7d"]
 
 [node name="MissionSelectedMenu" type="Control"]

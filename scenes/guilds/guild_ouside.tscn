@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=4 uid="uid://dtx1cf8t6sflo"]
 
 [ext_resource type="Texture2D" uid="uid://dyfvkejp2wdhc" path="res://sprites/houses/guild.png" id="1_3303u"]
-[ext_resource type="Script" path="res://scenes/guilds/guildportal.gd" id="2_ptrns"]
+[ext_resource type="Script" uid="uid://7k3234stw11s" path="res://scenes/guilds/guildportal.gd" id="2_ptrns"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5bab6"]
 texture = ExtResource("1_3303u")

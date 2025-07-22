@@ -5,11 +5,11 @@
 [ext_resource type="TileSet" uid="uid://d4gn5wy6niheu" path="res://assets/builds/builds.tres" id="4_h7low"]
 [ext_resource type="TileSet" uid="uid://dvfkq370f0fmb" path="res://assets/tilesets/props.tres" id="5_vuwml"]
 [ext_resource type="Texture2D" uid="uid://bk763icgo8w5y" path="res://sprites/particles/leaveParticleGreenYellow.png" id="6_v48ob"]
-[ext_resource type="Script" path="res://scenes/world/location/olid_town/gates/to_olid_forest.gd" id="7_uj1t0"]
+[ext_resource type="Script" uid="uid://cxl85hedoyrjc" path="res://scenes/world/location/olid_town/gates/to_olid_forest.gd" id="7_uj1t0"]
 [ext_resource type="Texture2D" uid="uid://d4jpb23wi8wom" path="res://sprites/particles/leaveParticleYellow.png" id="8_5axhi"]
-[ext_resource type="Script" path="res://scenes/world/location/olid_town/tools/scene_meta.gd" id="8_8ujmm"]
-[ext_resource type="Script" path="res://scripts/preload/ScenePortalData.gd" id="8_ddhl2"]
-[ext_resource type="Script" path="res://scenes/world/location/olid_town/gates/to_fathers_home.gd" id="9_2qxss"]
+[ext_resource type="Script" uid="uid://bo3i2puerq4o" path="res://scenes/world/location/olid_town/tools/scene_meta.gd" id="8_8ujmm"]
+[ext_resource type="Script" uid="uid://83qtco7d4r46" path="res://scripts/preload/ScenePortalData.gd" id="8_ddhl2"]
+[ext_resource type="Script" uid="uid://boovqphu3m0d5" path="res://scenes/world/location/olid_town/gates/to_fathers_home.gd" id="9_2qxss"]
 [ext_resource type="PackedScene" uid="uid://be8s6fsuvru6m" path="res://scenes/characters/player/player.tscn" id="11_ey3cu"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qjx10"]
@@ -30,8 +30,7 @@ colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0)
 gradient = SubResource("Gradient_ol1q2")
 
 [sub_resource type="Curve" id="Curve_tcelh"]
-min_value = -200.0
-max_value = 200.0
+_limits = [-200.0, 200.0, 0.0, 1.0]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.14152, -59.8922), 0.0, 0.0, 0, 0, Vector2(0.249123, 80.2986), 0.0, 0.0, 0, 0, Vector2(0.366082, -56.657), 0.0, 0.0, 0, 0, Vector2(0.500585, 74.9067), 0.0, 0.0, 0, 0, Vector2(0.625731, -53.4218), 0.0, 0.0, 0, 0, Vector2(0.753216, 69.5147), 0.0, 0.0, 0, 0, Vector2(0.88655, -62.0489), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
 point_count = 9
 

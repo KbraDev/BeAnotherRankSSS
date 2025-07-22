@@ -1,6 +1,6 @@
 [gd_scene load_steps=175 format=3 uid="uid://cohdelthugg5h"]
 
-[ext_resource type="Script" path="res://scenes/characters/monsters/PlantHunter/3/script/plant_3.gd" id="1_er6db"]
+[ext_resource type="Script" uid="uid://bu3s0gy0fae7f" path="res://scenes/characters/monsters/PlantHunter/3/script/plant_3.gd" id="1_er6db"]
 [ext_resource type="Texture2D" uid="uid://cot4vattlyiow" path="res://sprites/characters/PlantHunter/3/Plant3_Attack_full.png" id="1_vr44v"]
 [ext_resource type="Texture2D" uid="uid://cvjhwh4bwbdke" path="res://sprites/characters/PlantHunter/3/Plant3_Death_full.png" id="2_ie82g"]
 [ext_resource type="Texture2D" uid="uid://dap8ha5e0usvn" path="res://sprites/characters/PlantHunter/3/Plant3_Hurt_full.png" id="3_v2rbn"]

@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bhxvv2llsy1ia"]
 
-[ext_resource type="Script" path="res://UIs/notificactionManager/floating_notification_manager.gd" id="1_2cfuf"]
+[ext_resource type="Script" uid="uid://cm8ydoqfb4rhi" path="res://UIs/notificactionManager/floating_notification_manager.gd" id="1_2cfuf"]
 
 [node name="FloatingNotificationManager" type="Control"]
 layout_mode = 3

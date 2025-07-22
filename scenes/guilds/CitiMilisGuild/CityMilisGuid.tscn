@@ -1,10 +1,10 @@
 [gd_scene load_steps=9 format=4 uid="uid://yp86sao00y5j"]
 
 [ext_resource type="TileSet" uid="uid://deyvxljh6vbg7" path="res://assets/tilesets/Interrior/interiors.tres" id="1_hmkhl"]
-[ext_resource type="Script" path="res://scenes/guilds/portaltoOutside.gd" id="2_ns7ed"]
+[ext_resource type="Script" uid="uid://drd0odm408f88" path="res://scenes/guilds/portaltoOutside.gd" id="2_ns7ed"]
 [ext_resource type="PackedScene" uid="uid://dvhl7s1qwgas3" path="res://scenes/characters/NCP/recepcionist/recepcionist.tscn" id="3_duqof"]
-[ext_resource type="Script" path="res://scenes/guilds/scene_meta.gd" id="4_a0oq4"]
-[ext_resource type="Script" path="res://scripts/preload/ScenePortalData.gd" id="5_v6w2y"]
+[ext_resource type="Script" uid="uid://denlchldq5ww4" path="res://scenes/guilds/scene_meta.gd" id="4_a0oq4"]
+[ext_resource type="Script" uid="uid://83qtco7d4r46" path="res://scripts/preload/ScenePortalData.gd" id="5_v6w2y"]
 [ext_resource type="PackedScene" uid="uid://dirfg688w7m5k" path="res://scenes/tools/checkPoint/checkPoint.tscn" id="6_8y5gq"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xcd4i"]

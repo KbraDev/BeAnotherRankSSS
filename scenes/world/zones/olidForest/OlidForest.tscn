@@ -1,15 +1,15 @@
 [gd_scene load_steps=18 format=4 uid="uid://cy1x2ljkv8lcm"]
 
 [ext_resource type="TileSet" uid="uid://rngchcx3q02t" path="res://assets/tilesets/terrain.tres" id="1_7whdt"]
-[ext_resource type="Script" path="res://scenes/world/zones/olidForest/gates/to_olid_town.gd" id="2_0o3nh"]
+[ext_resource type="Script" uid="uid://c7j7dplqnsm3i" path="res://scenes/world/zones/olidForest/gates/to_olid_town.gd" id="2_0o3nh"]
 [ext_resource type="Texture2D" uid="uid://d4jpb23wi8wom" path="res://sprites/particles/leaveParticleYellow.png" id="3_iwhq6"]
-[ext_resource type="Script" path="res://scenes/world/zones/olidForest/gates/to_temple_olid.gd" id="3_knw2p"]
-[ext_resource type="Script" path="res://scenes/world/zones/olidForest/gates/toMilisTrail.gd" id="4_boibf"]
+[ext_resource type="Script" uid="uid://bye7owjoo8t1w" path="res://scenes/world/zones/olidForest/gates/to_temple_olid.gd" id="3_knw2p"]
+[ext_resource type="Script" uid="uid://e6nc15r1tfpe" path="res://scenes/world/zones/olidForest/gates/toMilisTrail.gd" id="4_boibf"]
 [ext_resource type="PackedScene" uid="uid://be8s6fsuvru6m" path="res://scenes/characters/player/player.tscn" id="4_kds41"]
-[ext_resource type="Script" path="res://scenes/tools/greenSlimeSpawner/scripts/green_slime_spawn.gd" id="5_ige34"]
+[ext_resource type="Script" uid="uid://daypgdq0wuaxl" path="res://scenes/tools/greenSlimeSpawner/scripts/green_slime_spawn.gd" id="5_ige34"]
 [ext_resource type="PackedScene" uid="uid://34rn42brxq64" path="res://scenes/characters/monsters/greenslime/greenSlime.tscn" id="6_2ui01"]
-[ext_resource type="Script" path="res://scripts/preload/ScenePortalData.gd" id="6_aws5t"]
-[ext_resource type="Script" path="res://scenes/world/zones/olidForest/tools/scene_meta.gd" id="8_7q5si"]
+[ext_resource type="Script" uid="uid://83qtco7d4r46" path="res://scripts/preload/ScenePortalData.gd" id="6_aws5t"]
+[ext_resource type="Script" uid="uid://crnrs643jo4s4" path="res://scenes/world/zones/olidForest/tools/scene_meta.gd" id="8_7q5si"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q86lh"]
 size = Vector2(464, 20)

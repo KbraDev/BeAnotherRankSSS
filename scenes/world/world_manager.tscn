@@ -1,9 +1,9 @@
 [gd_scene load_steps=22 format=3 uid="uid://xxcf6vh7atqn"]
 
-[ext_resource type="Script" path="res://scenes/world/world_manager.gd" id="1_548at"]
+[ext_resource type="Script" uid="uid://co0lf7i6emfn8" path="res://scenes/world/world_manager.gd" id="1_548at"]
 [ext_resource type="PackedScene" uid="uid://be8s6fsuvru6m" path="res://scenes/characters/player/player.tscn" id="1_armst"]
 [ext_resource type="PackedScene" uid="uid://uccdoa08jthp" path="res://scenes/world/location/olid_town/InOlidTownScenes/fathers_home.tscn" id="3_mbj3w"]
-[ext_resource type="Script" path="res://scenes/world/hud.gd" id="4_1d48p"]
+[ext_resource type="Script" uid="uid://w4lewyfyeb1g" path="res://scenes/world/hud.gd" id="4_1d48p"]
 [ext_resource type="PackedScene" uid="uid://bi8atwwdsaybi" path="res://UIs/InventoryUI/inventory_ui.tscn" id="4_utxr1"]
 [ext_resource type="Texture2D" uid="uid://xxrofv5fyiec" path="res://sprites/characters/player/healthBar/no health.png" id="5_4uvln"]
 [ext_resource type="PackedScene" uid="uid://d325q8f2ceybl" path="res://UIs/DialogBox/dialog_box.tscn" id="5_67olm"]
@@ -11,7 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://kdv432qrlflv" path="res://sprites/characters/player/healthBar/empty health bar.png" id="6_yubee"]
 [ext_resource type="PackedScene" uid="uid://jiovenp0b04v" path="res://UIs/MissionSelecteMenu/mission_selected_menu.tscn" id="7_2ymlc"]
 [ext_resource type="Texture2D" uid="uid://d1modbwestr2j" path="res://sprites/characters/player/healthBar/health.png" id="7_f3jnn"]
-[ext_resource type="Script" path="res://scripts/missions/MissionDataBase.gd" id="8_0psd8"]
+[ext_resource type="Script" uid="uid://d4b5enoam2al2" path="res://scripts/missions/MissionDataBase.gd" id="8_0psd8"]
 [ext_resource type="PackedScene" uid="uid://bfqk3fos52cx5" path="res://UIs/DeliveryMisionMenu/mission_delivery_menu.tscn" id="8_va3kj"]
 [ext_resource type="PackedScene" uid="uid://cqj38508gjs57" path="res://UIs/ActiveMissionsMenu/active_missions_menu.tscn" id="9_7x5vf"]
 [ext_resource type="PackedScene" uid="uid://bhxvv2llsy1ia" path="res://UIs/notificactionManager/floating_notification_manager.tscn" id="10_uql5h"]
@@ -65,9 +65,9 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_dtgoh"]
 _data = {
-"RESET": SubResource("Animation_hvdyb"),
-"fade_in": SubResource("Animation_bhp75"),
-"fade_out": SubResource("Animation_wihia")
+&"RESET": SubResource("Animation_hvdyb"),
+&"fade_in": SubResource("Animation_bhp75"),
+&"fade_out": SubResource("Animation_wihia")
 }
 
 [node name="WorldManager" type="Node2D" groups=["world_manager"]]
@@ -152,14 +152,10 @@ color = Color(0.0142752, 0.0142752, 0.0142752, 1)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="HUD/TransitionOverlay"]
 libraries = {
-"": SubResource("AnimationLibrary_dtgoh")
+&"": SubResource("AnimationLibrary_dtgoh")
 }
 
 [node name="StatsMenu" parent="HUD" instance=ExtResource("16_5kwx7")]
-offset_left = 255.0
-offset_top = -18.0
-offset_right = 255.0
-offset_bottom = -18.0
 
 [node name="MissionDatabase" type="Node2D" parent="."]
 script = ExtResource("8_0psd8")

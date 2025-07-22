@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://dvgth3wrte133"]
 
 [ext_resource type="FontFile" uid="uid://bpv342cmnccd3" path="res://assets/fonts/MedievalSharp-Bold.ttf" id="1_rqasa"]
-[ext_resource type="Script" path="res://UIs/DeliveryMisionMenu/delivery_mission_card.gd" id="1_xtpfj"]
+[ext_resource type="Script" uid="uid://jgab7cvb4bc" path="res://UIs/DeliveryMisionMenu/delivery_mission_card.gd" id="1_xtpfj"]
 [ext_resource type="FontFile" uid="uid://chu6eiqfwrqhx" path="res://assets/fonts/MedievalSharp-Book.ttf" id="2_rfhyy"]
 
 [node name="DeliveryMissionCard" type="Control"]

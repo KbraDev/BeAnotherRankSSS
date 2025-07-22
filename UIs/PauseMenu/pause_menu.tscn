@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://j631k64daxbc"]
 
 [ext_resource type="FontFile" uid="uid://bpv342cmnccd3" path="res://assets/fonts/MedievalSharp-Bold.ttf" id="1_gcfgs"]
-[ext_resource type="Script" path="res://UIs/PauseMenu/script/pause_menu.gd" id="1_vlbrm"]
+[ext_resource type="Script" uid="uid://cjxjyuklir5ve" path="res://UIs/PauseMenu/script/pause_menu.gd" id="1_vlbrm"]
 
 [node name="CanvasLayer" type="CanvasLayer"]
 visible = false

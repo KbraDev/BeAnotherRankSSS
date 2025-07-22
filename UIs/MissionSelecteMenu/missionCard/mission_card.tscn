@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://xo32p22vhwqu"]
 
-[ext_resource type="Script" path="res://UIs/MissionSelecteMenu/missionCard/mission_card.gd" id="1_qc2n4"]
+[ext_resource type="Script" uid="uid://l0tt2f2qmkkl" path="res://UIs/MissionSelecteMenu/missionCard/mission_card.gd" id="1_qc2n4"]
 [ext_resource type="FontFile" uid="uid://bpv342cmnccd3" path="res://assets/fonts/MedievalSharp-Bold.ttf" id="2_6abek"]
 [ext_resource type="FontFile" uid="uid://chu6eiqfwrqhx" path="res://assets/fonts/MedievalSharp-Book.ttf" id="3_lsyg6"]
 [ext_resource type="FontFile" uid="uid://bi6gva0kh4cdj" path="res://assets/fonts/MedievalSharp-BoldOblique.ttf" id="4_6crxe"]

@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://bfqk3fos52cx5"]
 
-[ext_resource type="Script" path="res://UIs/DeliveryMisionMenu/mission_delivery_menu.gd" id="1_1c3n3"]
+[ext_resource type="Script" uid="uid://c15wfhb14crbb" path="res://UIs/DeliveryMisionMenu/mission_delivery_menu.gd" id="1_1c3n3"]
 [ext_resource type="PackedScene" uid="uid://dvgth3wrte133" path="res://UIs/DeliveryMisionMenu/delivery_mission_card.tscn" id="1_jpea0"]
 
 [node name="MissionDeliveryMenu" type="Control"]

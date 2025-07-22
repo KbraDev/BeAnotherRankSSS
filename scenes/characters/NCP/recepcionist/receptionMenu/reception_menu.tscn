@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://cr4yeo3h2jnqi"]
 
-[ext_resource type="Script" path="res://scenes/characters/NCP/recepcionist/receptionMenu/reception_menu.gd" id="1_jeehf"]
+[ext_resource type="Script" uid="uid://b2x15tkq2tv88" path="res://scenes/characters/NCP/recepcionist/receptionMenu/reception_menu.gd" id="1_jeehf"]
 [ext_resource type="FontFile" uid="uid://bpv342cmnccd3" path="res://assets/fonts/MedievalSharp-Bold.ttf" id="1_xx3jh"]
 
 [node name="ReceptionMenu" type="Control"]

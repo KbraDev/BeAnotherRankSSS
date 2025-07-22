@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://cfugx7irjix46"]
 
-[ext_resource type="Script" path="res://UIs/Notificaction/floating_notiification.gd" id="1_5nfep"]
+[ext_resource type="Script" uid="uid://dcikfs3h6od6o" path="res://UIs/Notificaction/floating_notiification.gd" id="1_5nfep"]
 [ext_resource type="FontFile" uid="uid://bpv342cmnccd3" path="res://assets/fonts/MedievalSharp-Bold.ttf" id="2_ub57a"]
 
 [node name="FloatingNotiification" type="Control"]

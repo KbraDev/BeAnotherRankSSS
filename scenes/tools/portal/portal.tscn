@@ -1,6 +1,6 @@
 [gd_scene load_steps=31 format=3 uid="uid://cudte76l40r4q"]
 
-[ext_resource type="Script" path="res://scenes/tools/portal/portal.gd" id="1_f7nxo"]
+[ext_resource type="Script" uid="uid://c2blfh7e0c8ps" path="res://scenes/tools/portal/portal.gd" id="1_f7nxo"]
 [ext_resource type="Texture2D" uid="uid://du0s0w3413pbw" path="res://assets/ERW - Ancient Ruins V 1.9.1/Props/animated/portal.png" id="1_vnobf"]
 [ext_resource type="Texture2D" uid="uid://bucpt08i38shk" path="res://assets/ERW - Ancient Ruins V 1.9.1/Props/animated/portal-anim1.png" id="2_o7slw"]
 [ext_resource type="Texture2D" uid="uid://clv2wbfnwyf86" path="res://assets/ERW - Ancient Ruins V 1.9.1/Props/animated/portal-anim3-to be used on top of the masked image.png" id="3_cwc48"]

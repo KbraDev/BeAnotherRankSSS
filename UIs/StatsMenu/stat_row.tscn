@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://br10nlqajj42s"]
 
-[ext_resource type="Script" path="res://UIs/StatsMenu/stat_row.gd" id="1_al8j5"]
+[ext_resource type="Script" uid="uid://douyhm57vjct0" path="res://UIs/StatsMenu/stat_row.gd" id="1_al8j5"]
 
 [node name="StatRow" type="HBoxContainer"]
 custom_minimum_size = Vector2(512, 30)
