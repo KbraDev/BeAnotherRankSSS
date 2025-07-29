@@ -200,12 +200,6 @@ func perform_attack():
 
 	animation.play(animation_name)
 
-	match last_direction:
-		"front": attack_area.position = Vector2(0, 16)
-		"back": attack_area.position = Vector2(-16, -32)
-		"left_side": attack_area.position = Vector2(-32, -16)
-		"right_side": attack_area.position = Vector2(32, -16)
-
 	attack_area.monitoring = true
 	attack_area.set_deferred("collision_layer", 1)
 
