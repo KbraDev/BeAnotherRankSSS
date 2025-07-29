@@ -49,6 +49,8 @@ portal_data = SubResource("Resource_6l6pc")
 [node name="ToOlidTownFromHouse" type="Area2D" parent="."]
 z_index = 2
 position = Vector2(438, 566)
+collision_layer = 15
+collision_mask = 15
 script = ExtResource("3_s0t8i")
 target_scene = "res://scenes/world/location/olid_town/olid_town.tscn"
 target_marker_name = "FromHouse"
