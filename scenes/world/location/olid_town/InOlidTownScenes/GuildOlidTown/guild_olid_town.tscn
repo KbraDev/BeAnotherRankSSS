@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=4 uid="uid://nfm4nxfjd702"]
+[gd_scene load_steps=10 format=4 uid="uid://nfm4nxfjd702"]
 
 [ext_resource type="TileSet" uid="uid://deyvxljh6vbg7" path="res://assets/tilesets/Interrior/interiors.tres" id="1_sq1uj"]
 [ext_resource type="PackedScene" uid="uid://be8s6fsuvru6m" path="res://scenes/characters/player/player.tscn" id="2_hwqui"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://b4t7vw3ekavgq" path="res://scenes/world/location/olid_town/InOlidTownScenes/GuildOlidTown/Scripts/scene_meta.gd" id="4_v3jtf"]
 [ext_resource type="Script" uid="uid://83qtco7d4r46" path="res://scripts/preload/ScenePortalData.gd" id="5_ape2x"]
 [ext_resource type="Script" uid="uid://bvesshjxcvf73" path="res://scenes/world/location/olid_town/InOlidTownScenes/GuildOlidTown/Scripts/to_olid_town_from_olid_guild.gd" id="6_ape2x"]
+[ext_resource type="PackedScene" uid="uid://dirfg688w7m5k" path="res://scenes/tools/checkPoint/checkPoint.tscn" id="7_he3pk"]
 
 [sub_resource type="Resource" id="Resource_he3pk"]
 script = ExtResource("5_ape2x")
@@ -75,5 +76,9 @@ target_marker_name = "FromOlidGuild"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="tools/gates/ToOlidTownFromOlidGuild"]
 position = Vector2(0, 2)
 shape = SubResource("RectangleShape2D_he3pk")
+
+[node name="CheckPoint" parent="." instance=ExtResource("7_he3pk")]
+z_index = 2
+position = Vector2(489, 326)
 
 [connection signal="body_entered" from="tools/gates/ToOlidTownFromOlidGuild" to="tools/gates/ToOlidTownFromOlidGuild" method="_on_body_entered"]

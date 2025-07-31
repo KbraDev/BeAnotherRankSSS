@@ -127,7 +127,7 @@ func load_game_state(save_data: Dictionary) -> void:
 		return
 
 	var new_world = packed_scene.instantiate()
-	_remove_duplicate_players(new_world) # 🔥 AÑADIDO también aquí
+	_remove_duplicate_players(new_world) 
 	world_container.add_child(new_world)
 	current_world = new_world
 
