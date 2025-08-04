@@ -1,12 +1,12 @@
 [gd_scene load_steps=175 format=3 uid="uid://cs3uf42nyqw0y"]
 
-[ext_resource type="Texture2D" uid="uid://dio3rce2asiho" path="res://sprites/characters/PlantHunter/1/Idle.png" id="1_bungc"]
+[ext_resource type="Texture2D" uid="uid://dio3rce2asiho" path="res://sprites/characters/mobs/PlantHunter/1/Idle.png" id="1_bungc"]
 [ext_resource type="Script" uid="uid://dkq4qfkr25sf6" path="res://scenes/characters/monsters/PlantHunter/1/script/plant_1.gd" id="1_c4id0"]
-[ext_resource type="Texture2D" uid="uid://cjl7daas7yxd5" path="res://sprites/characters/PlantHunter/1/Attack.png" id="2_ycsex"]
-[ext_resource type="Texture2D" uid="uid://8njudkagl261" path="res://sprites/characters/PlantHunter/1/Death.png" id="3_d524k"]
-[ext_resource type="Texture2D" uid="uid://bqndtooxeggok" path="res://sprites/characters/PlantHunter/1/Hurt.png" id="4_eb0bn"]
-[ext_resource type="Texture2D" uid="uid://d2pbs57ac7oru" path="res://sprites/characters/PlantHunter/1/Run.png" id="4_ikd26"]
-[ext_resource type="Texture2D" uid="uid://0fonnukmfih1" path="res://sprites/characters/PlantHunter/1/Walk.png" id="5_oyndb"]
+[ext_resource type="Texture2D" uid="uid://cjl7daas7yxd5" path="res://sprites/characters/mobs/PlantHunter/1/Attack.png" id="2_ycsex"]
+[ext_resource type="Texture2D" uid="uid://8njudkagl261" path="res://sprites/characters/mobs/PlantHunter/1/Death.png" id="3_d524k"]
+[ext_resource type="Texture2D" uid="uid://bqndtooxeggok" path="res://sprites/characters/mobs/PlantHunter/1/Hurt.png" id="4_eb0bn"]
+[ext_resource type="Texture2D" uid="uid://d2pbs57ac7oru" path="res://sprites/characters/mobs/PlantHunter/1/Run.png" id="4_ikd26"]
+[ext_resource type="Texture2D" uid="uid://0fonnukmfih1" path="res://sprites/characters/mobs/PlantHunter/1/Walk.png" id="5_oyndb"]
 [ext_resource type="Texture2D" uid="uid://7jj4m1llmyec" path="res://sprites/UIS/healthBar/marco.png" id="8_ou6qf"]
 [ext_resource type="Texture2D" uid="uid://d1nrndp7wviwo" path="res://sprites/UIS/healthBar/progress.png" id="9_01omn"]
 

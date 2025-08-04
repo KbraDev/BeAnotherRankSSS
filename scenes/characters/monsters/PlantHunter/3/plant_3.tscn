@@ -1,12 +1,12 @@
 [gd_scene load_steps=175 format=3 uid="uid://cohdelthugg5h"]
 
 [ext_resource type="Script" uid="uid://bu3s0gy0fae7f" path="res://scenes/characters/monsters/PlantHunter/3/script/plant_3.gd" id="1_er6db"]
-[ext_resource type="Texture2D" uid="uid://cot4vattlyiow" path="res://sprites/characters/PlantHunter/3/Plant3_Attack_full.png" id="1_vr44v"]
-[ext_resource type="Texture2D" uid="uid://cvjhwh4bwbdke" path="res://sprites/characters/PlantHunter/3/Plant3_Death_full.png" id="2_ie82g"]
-[ext_resource type="Texture2D" uid="uid://dap8ha5e0usvn" path="res://sprites/characters/PlantHunter/3/Plant3_Hurt_full.png" id="3_v2rbn"]
-[ext_resource type="Texture2D" uid="uid://dpfnhbrhkrh7e" path="res://sprites/characters/PlantHunter/3/Plant3_Idle_full.png" id="4_rv4qe"]
-[ext_resource type="Texture2D" uid="uid://dfwa65bfacql6" path="res://sprites/characters/PlantHunter/3/Plant3_Run_full.png" id="5_xaky0"]
-[ext_resource type="Texture2D" uid="uid://bs8k8idgqqyg6" path="res://sprites/characters/PlantHunter/3/Plant3_Walk_full.png" id="6_7vncb"]
+[ext_resource type="Texture2D" uid="uid://cot4vattlyiow" path="res://sprites/characters/mobs/PlantHunter/3/Plant3_Attack_full.png" id="1_vr44v"]
+[ext_resource type="Texture2D" uid="uid://cvjhwh4bwbdke" path="res://sprites/characters/mobs/PlantHunter/3/Plant3_Death_full.png" id="2_ie82g"]
+[ext_resource type="Texture2D" uid="uid://dap8ha5e0usvn" path="res://sprites/characters/mobs/PlantHunter/3/Plant3_Hurt_full.png" id="3_v2rbn"]
+[ext_resource type="Texture2D" uid="uid://dpfnhbrhkrh7e" path="res://sprites/characters/mobs/PlantHunter/3/Plant3_Idle_full.png" id="4_rv4qe"]
+[ext_resource type="Texture2D" uid="uid://dfwa65bfacql6" path="res://sprites/characters/mobs/PlantHunter/3/Plant3_Run_full.png" id="5_xaky0"]
+[ext_resource type="Texture2D" uid="uid://bs8k8idgqqyg6" path="res://sprites/characters/mobs/PlantHunter/3/Plant3_Walk_full.png" id="6_7vncb"]
 [ext_resource type="Texture2D" uid="uid://7jj4m1llmyec" path="res://sprites/UIS/healthBar/marco.png" id="8_565wi"]
 [ext_resource type="Texture2D" uid="uid://d1nrndp7wviwo" path="res://sprites/UIS/healthBar/progress.png" id="9_bmy37"]
 

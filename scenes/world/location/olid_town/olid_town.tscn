@@ -318,6 +318,8 @@ portal_data = SubResource("Resource_3enkw")
 z_index = 1
 position = Vector2(2304, 984)
 
+[node name="spawns" type="Node" parent="."]
+
 [connection signal="body_entered" from="tools/gates/ToOlidForest" to="tools/gates/ToOlidForest" method="_on_body_entered"]
 [connection signal="body_entered" from="tools/gates/ToOlidGuild" to="tools/gates/ToOlidGuild" method="_on_body_entered"]
 [connection signal="body_entered" from="tools/gates/ToFathersHome" to="tools/gates/ToFathersHome" method="_on_body_entered"]

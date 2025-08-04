@@ -47,6 +47,7 @@ enemies=""
 world_manager=""
 checkpoint=""
 stats_menu=""
+pigeon=""
 
 [input]
 

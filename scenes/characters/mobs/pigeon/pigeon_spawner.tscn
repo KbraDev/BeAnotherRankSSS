@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://d4llywuum8rh0"]
+
+[ext_resource type="Script" uid="uid://k8idr62m73dd" path="res://scenes/characters/mobs/pigeon/script/pigeon_spawner.gd" id="1_54g4q"]
+[ext_resource type="PackedScene" uid="uid://rwc2xyojpxrn" path="res://scenes/characters/mobs/pigeon/pigeon.tscn" id="2_hm0qq"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_54g4q"]
+size = Vector2(1288, 729)
+
+[node name="PigeonSpawner" type="Area2D"]
+script = ExtResource("1_54g4q")
+pigeon_scene = ExtResource("2_hm0qq")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(634, 354.5)
+shape = SubResource("RectangleShape2D_54g4q")
