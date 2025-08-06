@@ -1,0 +1,35 @@
+[gd_scene load_steps=5 format=3 uid="uid://djrrdu7yarsjh"]
+
+[ext_resource type="Script" uid="uid://dnvhv4lomjwin" path="res://scenes/characters/NCP/BaseNPC/script/npc_scene.gd" id="1_wrl5n"]
+[ext_resource type="SpriteFrames" uid="uid://d4doksbh58dn6" path="res://sprites/characters/NPC/NPCs/NpcVariationFemale/female_base_frames.tres" id="2_w6qgs"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_8o44u"]
+radius = 48.0416
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_wrl5n"]
+radius = 11.0
+height = 46.0
+
+[node name="NPC" type="CharacterBody2D"]
+z_index = 2
+script = ExtResource("1_wrl5n")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.645833, 0.645833)
+sprite_frames = ExtResource("2_w6qgs")
+animation = &"walk_back"
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 6
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_8o44u")
+
+[node name="Label" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 6)
+shape = SubResource("CapsuleShape2D_wrl5n")
