@@ -1,13 +1,23 @@
-extends CharacterBody2D
+extends CharacterBody2D ## NPC BASE
 
-@export var new_spritesheet: Texture2D
-@export var speed: float = 100.0
+# --- Variables exportadas ---
+# --- Asignables en el editor ---
+@export var new_spritesheet: Texture2D   # La hoja de sprites que este NPC usará.
+@export var path_follow: PathFollow2D    # El nodo PathFollow2D que marca su ruta.
 
-@onready var anim := $AnimatedSprite2D
-@onready var path_follow := get_parent() as PathFollow2D
+# --- Referencias a nodos ---
+@onready var anim := $AnimatedSprite2D    # Referencia al sprite animado del NPC.
 
-const FRAME_SIZE = Vector2(48, 96)
+# --- Estado interno ---
+var previous_position: Vector2            # Posición del NPC en el frame anterior.
 
+# --- Constantes ---
+const speed = 25.0                        # Velocidad con la que avanza por el path.
+
+# --- Puede variar segun el tamano, forma o frames del spritesheet ---
+const FRAME_SIZE = Vector2(48, 96)        # Tamaño de cada frame en la hoja de sprites.
+
+# Lista de animaciones en el orden en que están en el spritesheet.
 const ANIM_NAMES = [
 	"idle_front",
 	"idle_left_side",
@@ -19,49 +29,80 @@ const ANIM_NAMES = [
 	"walk_back",
 ]
 
-var last_position: Vector2
-var last_direction: String = "front"
-var can_move := true
+var last_direction: String = "front"      # Última dirección del NPC para mantener idle correcto.
+var can_move := true                      # Controla si el NPC se mueve o no.
 
+# --- Función _ready() ---
 func _ready():
+	# Guardamos la posición inicial para poder medir movimiento en el primer frame.
+	previous_position = global_position
+
+	# Generamos las animaciones según el spritesheet asignado.
 	_generate_animations()
-	last_position = global_position
+
+	# Reproducimos la animación inicial (idle mirando al frente).
 	anim.play("idle_" + last_direction)
 
 
-func _process(delta):
-	if path_follow and can_move:
-		path_follow.progress += speed * delta
-	_update_animation()
+# --- Función _physics_process(delta) ---
+func _physics_process(delta: float) -> void:
+	# Si el NPC no puede moverse o no hay path_follow asignado, salimos.
+	if not can_move or path_follow == null: 
+		return
+	
+	# Avanza sobre el path aumentando su 'progress'.
+	# Esto mueve al PathFollow2D y, como el NPC está dentro de él, también se mueve.
+	path_follow.progress += speed * delta
+	
+	# Calculamos el desplazamiento REAL del NPC comparando posiciones:
+	var movement = global_position - previous_position
 
+	# Actualizamos la animación en base a la dirección real del movimiento.
+	_update_animation(movement.normalized())
+	
+	# Guardamos la posición actual para el siguiente frame.
+	previous_position = global_position
+
+
+# --- Función _update_animation(direction) ---
+func _update_animation(direction: Vector2):
+	# Si casi no hay movimiento, reproducimos idle en la última dirección registrada.
+	if direction.length() < 0.01:
+		var idle_anim = "idle_" + last_direction
+		if anim.animation != idle_anim:
+			anim.play(idle_anim)
+		return
+
+	# Determinar la dirección en la que se mueve para elegir animación de caminar.
+	if abs(direction.x) > abs(direction.y):
+		last_direction = "right_side" if direction.x > 0 else "left_side"
+	else:
+		last_direction = "front" if direction.y > 0 else "back"
+
+	# Reproducir la animación de caminar correspondiente.
+	var walk_anim = "walk_" + last_direction
+	if anim.animation != walk_anim:
+		anim.play(walk_anim)
+
+# --- Función _generate_animations() ---
 func _generate_animations():
+	# Creamos un nuevo contenedor de frames para AnimatedSprite2D.
 	var frames = SpriteFrames.new()
 
-	for row in ANIM_NAMES.size():
+	# Recorremos cada animación (fila del spritesheet).
+	for row in range(ANIM_NAMES.size()):
 		var anim_name = ANIM_NAMES[row]
 		frames.add_animation(anim_name)
 		frames.set_animation_loop(anim_name, true)
-		frames.set_animation_speed(anim_name, 7)  # Walk animación rápida
+		frames.set_animation_speed(anim_name, 7)
 
-		for i in range(4):  # 4 frames por animación
+		# Cada animación tiene 4 frames en horizontal.
+		for i in range(4):
 			var atlas := AtlasTexture.new()
 			atlas.atlas = new_spritesheet
+			# Calculamos la región correspondiente a este frame.
 			atlas.region = Rect2(Vector2(i, row) * FRAME_SIZE, FRAME_SIZE)
 			frames.add_frame(anim_name, atlas)
 
+	# Asignamos este conjunto de frames al AnimatedSprite2D.
 	anim.sprite_frames = frames
-
-func _update_animation():
-	var movement = global_position - last_position
-
-	if not can_move or movement.length_squared() < 0.01:
-		anim.play("idle_" + last_direction)
-	else:
-		if abs(movement.x) > abs(movement.y):
-			last_direction = "right_side" if movement.x > 0 else "left_side"
-		else:
-			last_direction = "front" if movement.y > 0 else "back"
-
-		anim.play("walk_" + last_direction)
-
-	last_position = global_position

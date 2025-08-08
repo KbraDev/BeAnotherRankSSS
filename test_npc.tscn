@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://duigofdto5aqv"]
+
+[ext_resource type="PackedScene" uid="uid://djrrdu7yarsjh" path="res://scenes/characters/NCP/BaseNPC/npcScene.tscn" id="1_4jcmo"]
+[ext_resource type="Texture2D" uid="uid://8v87rport83p" path="res://sprites/characters/NPC/NPCs/NpcVariationFemale/NpcFemaleVariation01_003..png" id="2_6oyph"]
+
+[sub_resource type="Curve2D" id="Curve2D_6oyph"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 104, 64, 0, 0, 0, 0, 208, 64, 0, 0, 0, 0, 240, 64, 0, 0, 0, 0, 408, 64, 0, 0, 0, 0, 544, 64, 0, 0, 0, 0, 624, 64, 0, 0, 0, 0, 624, 128, 0, 0, 0, 0, 616, 232, 0, 0, 0, 0, 552, 256, 0, 0, 0, 0, 344, 256)
+}
+point_count = 10
+
+[node name="test NPC" type="Node2D"]
+
+[node name="Path2D" type="Path2D" parent="."]
+curve = SubResource("Curve2D_6oyph")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
+position = Vector2(104, 64)
+rotates = false
+loop = false
+
+[node name="NPC" parent="Path2D/PathFollow2D" node_paths=PackedStringArray("path_follow") instance=ExtResource("1_4jcmo")]
+new_spritesheet = ExtResource("2_6oyph")
+path_follow = NodePath("..")
