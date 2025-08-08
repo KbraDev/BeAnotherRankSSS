@@ -10,10 +10,9 @@ extends CharacterBody2D ## NPC BASE
 
 # --- Estado interno ---
 var previous_position: Vector2            # Posición del NPC en el frame anterior.
+var speed = 25.0                          # Velocidad con la que se mueve por el path
 
 # --- Constantes ---
-const speed = 25.0                        # Velocidad con la que avanza por el path.
-
 # --- Puede variar segun el tamano, forma o frames del spritesheet ---
 const FRAME_SIZE = Vector2(48, 96)        # Tamaño de cada frame en la hoja de sprites.
 
@@ -106,3 +105,18 @@ func _generate_animations():
 
 	# Asignamos este conjunto de frames al AnimatedSprite2D.
 	anim.sprite_frames = frames
+
+
+# --- SECCION PARA DETECTAR CUANDO DEBE FRENAR EL NCP ---
+# --- Aplica cuando el Jugador entre en el area del NPC ---
+# --- Su variable "speed" debera ser igual a 0, cuando el jugador salga debera resutaurarse. ---
+
+# --- Fun para detener al NPC ---
+func _on_break_area_body_entered(body: Node2D) -> void:
+	if body.is_in_group("player"):
+		speed = 0.0
+
+# --- func para reanudar recorrido ---
+func _on_break_area_body_exited(body: Node2D) -> void:
+	if body.is_in_group("player"):
+		speed = 25.0

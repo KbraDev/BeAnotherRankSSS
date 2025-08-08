@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://duigofdto5aqv"]
+[gd_scene load_steps=5 format=3 uid="uid://duigofdto5aqv"]
 
 [ext_resource type="PackedScene" uid="uid://djrrdu7yarsjh" path="res://scenes/characters/NCP/BaseNPC/npcScene.tscn" id="1_4jcmo"]
 [ext_resource type="Texture2D" uid="uid://8v87rport83p" path="res://sprites/characters/NPC/NPCs/NpcVariationFemale/NpcFemaleVariation01_003..png" id="2_6oyph"]
+[ext_resource type="PackedScene" uid="uid://be8s6fsuvru6m" path="res://scenes/characters/player/player.tscn" id="3_c5de4"]
 
 [sub_resource type="Curve2D" id="Curve2D_6oyph"]
 _data = {
@@ -22,3 +23,6 @@ loop = false
 [node name="NPC" parent="Path2D/PathFollow2D" node_paths=PackedStringArray("path_follow") instance=ExtResource("1_4jcmo")]
 new_spritesheet = ExtResource("2_6oyph")
 path_follow = NodePath("..")
+
+[node name="player" parent="." instance=ExtResource("3_c5de4")]
+position = Vector2(264, 224)

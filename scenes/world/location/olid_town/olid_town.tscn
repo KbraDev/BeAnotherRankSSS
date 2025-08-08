@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=4 uid="uid://dpah0ljk08blt"]
+[gd_scene load_steps=36 format=4 uid="uid://dpah0ljk08blt"]
 
 [ext_resource type="TileSet" uid="uid://rngchcx3q02t" path="res://assets/tilesets/terrain.tres" id="1_2u8v6"]
 [ext_resource type="TileSet" uid="uid://df2ewgbh7ofxg" path="res://assets/tilesets/houses.tres" id="2_gdhpg"]
@@ -13,7 +13,7 @@
 [ext_resource type="Script" uid="uid://boovqphu3m0d5" path="res://scenes/world/location/olid_town/gates/to_fathers_home.gd" id="9_2qxss"]
 [ext_resource type="PackedScene" uid="uid://djrrdu7yarsjh" path="res://scenes/characters/NCP/BaseNPC/npcScene.tscn" id="10_iljt4"]
 [ext_resource type="PackedScene" uid="uid://be8s6fsuvru6m" path="res://scenes/characters/player/player.tscn" id="11_ey3cu"]
-[ext_resource type="Texture2D" uid="uid://dksjdxalt7re1" path="res://sprites/characters/NPC/NPCs/NpcVariationFemale/NpcFemaleVariation01_000..png" id="11_q4nh0"]
+[ext_resource type="Texture2D" uid="uid://gunyxjyy0ixx" path="res://sprites/characters/NPC/NPCs/NpcVariationFemale/NpcFemaleVariation01_004..png" id="12_gtjd6"]
 [ext_resource type="Texture2D" uid="uid://cfvoyxvr3fijn" path="res://sprites/characters/NPC/NPCs/NpcVariationFemale/NpcFemaleVariation01_001..png" id="12_q4nh0"]
 [ext_resource type="Texture2D" uid="uid://dry1hh78uxfm8" path="res://sprites/characters/NPC/NPCs/NpcVariationFemale/NpcFemaleVariation01_01_000..png" id="13_gtjd6"]
 
@@ -101,6 +101,12 @@ _data = {
 "points": PackedVector2Array(0, 0, 0, 0, 1152, 256, 0, 0, 0, 0, 1152, 384, 0, 0, 0, 0, 1152, 448, 0, 0, 0, 0, 1152, 512, 0, 0, 0, 0, 1152, 576, 0, 0, 0, 0, 1152, 640, 0, 0, 0, 0, 1152, 832, 0, 0, 0, 0, 1024, 856, 0, 0, 0, 0, 896, 856, 0, 0, 0, 0, 832, 832, 0, 0, 0, 0, 768, 832, 0, 0, 0, 0, 768, 832, 0, 0, 0, 0, 744, 768, 0, 0, 0, 0, 736, 704, 0, 0, 0, 0, 736, 640, 0, 0, 0, 0, 736, 448, 0, 0, 0, 0, 512, 448, 0, 0, 0, 0, 448, 448, 0, 0, 0, 0, 448, 320, 0, 0, 0, 0, 448, 40, 0, 0, 0, 0, 768, 40, 0, 0, 0, 0, 896, 152, 0, 0, 0, 0, 1024, 152, 0, 0, 0, 0, 1088, 192, 0, 0, 0, 0, 1088, 256, 0, 0, 0, 0, 1216, 272, 0, 0, 0, 0, 1408, 272, 0, 0, 0, 0, 1536, 272, 0, 0, 0, 0, 1728, 272, 0, 0, 0, 0, 1752, 384, 0, 0, 0, 0, 1752, 512, 0, 0, 0, 0, 1752, 832, 0, 0, 0, 0, 1664, 960, 0, 0, 0, 0, 1536, 992, 0, 0, 0, 0, 1504, 1152, 0, 0, 0, 0, 1504, 1472, 0, 0, 0, 0, 1664, 1472, 0, 0, 0, 0, 1856, 1600, 0, 0, 0, 0, 2176, 1600, 0, 0, 0, 0, 2560, 1608, 0, 0, 0, 0, 2688, 1472, 0, 0, 0, 0, 2944, 1472)
 }
 point_count = 42
+
+[sub_resource type="Curve2D" id="Curve2D_gtjd6"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 480, 72, 0, 0, 0, 0, 480, 488, 0, 0, 0, 0, 792, 488, 0, 0, 0, 0, 792, 384, 0, 0, 0, 0, 960, 256, 0, 0, 0, 0, 1344, 256, 0, 0, 0, 0, 1344, 304, 0, 0, 0, 0, 1152, 304, 0, 0, 0, 0, 1152, 640, 0, 0, 0, 0, 1112, 680, 0, 0, 0, 0, 1112, 912, 0, 0, 0, 0, 1152, 1152, 0, 0, 0, 0, 1192, 1280, 0, 0, 0, 0, 1216, 1408, 0, 0, 0, 0, 1216, 1536, 0, 0, 0, 0, 1152, 1600, 0, 0, 0, 0, 928, 1600, 0, 0, 0, 0, 928, 1600, 0, 0, 0, 0, 640, 1640, 0, 0, 0, 0, 640, 1640, 0, 0, 0, 0, 320, 1640)
+}
+point_count = 21
 
 [sub_resource type="Resource" id="Resource_3enkw"]
 script = ExtResource("8_ddhl2")
@@ -328,6 +334,7 @@ shape = SubResource("RectangleShape2D_6c2g1")
 [node name="NPC1" type="Node" parent="NPCs"]
 
 [node name="Path2D" type="Path2D" parent="NPCs/NPC1"]
+z_index = 1
 curve = SubResource("Curve2D_q4nh0")
 
 [node name="PathFollow2D" type="PathFollow2D" parent="NPCs/NPC1/Path2D"]
@@ -336,15 +343,29 @@ rotates = false
 loop = false
 
 [node name="NPC" parent="NPCs/NPC1/Path2D/PathFollow2D" node_paths=PackedStringArray("path_follow") instance=ExtResource("10_iljt4")]
+z_index = 1
 new_spritesheet = ExtResource("12_q4nh0")
 path_follow = NodePath("..")
 
-[node name="NPC2" parent="NPCs" instance=ExtResource("10_iljt4")]
-position = Vector2(1048, 720)
-new_spritesheet = ExtResource("11_q4nh0")
+[node name="NPC2" type="Node" parent="NPCs"]
+
+[node name="Path2D" type="Path2D" parent="NPCs/NPC2"]
+z_index = 1
+curve = SubResource("Curve2D_gtjd6")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="NPCs/NPC2/Path2D"]
+position = Vector2(480, 72)
+rotates = false
+loop = false
+
+[node name="NPC" parent="NPCs/NPC2/Path2D/PathFollow2D" node_paths=PackedStringArray("path_follow") instance=ExtResource("10_iljt4")]
+z_index = 1
+new_spritesheet = ExtResource("12_gtjd6")
+path_follow = NodePath("..")
 
 [node name="NPC3" parent="NPCs" instance=ExtResource("10_iljt4")]
-position = Vector2(1120, 744)
+z_index = 1
+position = Vector2(1000, 64)
 new_spritesheet = ExtResource("13_gtjd6")
 
 [node name="FromOlidForest" type="Marker2D" parent="."]
