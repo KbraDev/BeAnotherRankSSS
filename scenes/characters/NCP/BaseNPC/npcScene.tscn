@@ -7,7 +7,7 @@
 size = Vector2(33, 60)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_w6qgs"]
-size = Vector2(19, 32)
+size = Vector2(19, 29)
 
 [node name="NPC" type="CharacterBody2D"]
 z_index = 2
@@ -33,7 +33,7 @@ offset_right = 40.0
 offset_bottom = 23.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -7)
+position = Vector2(0, -8.5)
 shape = SubResource("RectangleShape2D_w6qgs")
 debug_color = Color(0.249372, 0.285124, 0.977254, 0.42)
 
