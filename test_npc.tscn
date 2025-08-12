@@ -23,6 +23,7 @@ loop = false
 [node name="NPC" parent="Path2D/PathFollow2D" node_paths=PackedStringArray("path_follow") instance=ExtResource("1_4jcmo")]
 new_spritesheet = ExtResource("2_6oyph")
 path_follow = NodePath("..")
+dialog_library = Array[String](["Esta escena es de prueba por que carga rapido", "Ahora dejame pasar"])
 
 [node name="player" parent="." instance=ExtResource("3_c5de4")]
 position = Vector2(264, 224)

@@ -389,6 +389,7 @@ path_follow = NodePath("..")
 z_index = 1
 position = Vector2(1152, 40)
 new_spritesheet = ExtResource("13_gtjd6")
+dialog_library = Array[String](["Buen Dia! hace un gran clima."])
 
 [node name="NPC4" type="Node" parent="NPCs"]
 
@@ -419,7 +420,7 @@ path_follow = NodePath("..")
 curve = SubResource("Curve2D_lcesl")
 
 [node name="PathFollow2D" type="PathFollow2D" parent="NPCs/NPC7/Path2D"]
-position = Vector2(768, -168)
+position = Vector2(768, -144)
 rotates = false
 loop = false
 

@@ -5,12 +5,25 @@ extends CharacterBody2D ## NPC BASE
 @export var new_spritesheet: Texture2D   # La hoja de sprites que este NPC usará.
 @export var path_follow: PathFollow2D    # El nodo PathFollow2D que marca su ruta.
 
+# Biblioteca de dialogos
+@export var dialog_library: Array[String] = []
+
 # --- Referencias a nodos ---
-@onready var anim := $AnimatedSprite2D    # Referencia al sprite animado del NPC.
+@onready var anim := $AnimatedSprite2D              # Referencia al sprite animado del NPC.
+@onready var textBox := $Panel                      # Referencia al panel
+@onready var label := $Panel/Label                  # Referencia al Label
+@onready var interactBTN := $Panel/AnimatedSprite2D # Referencia al Sprite del BTN
 
 # --- Estado interno ---
 var previous_position: Vector2            # Posición del NPC en el frame anterior.
 var speed = 25.0                          # Velocidad con la que se mueve por el path
+
+# --- Estado interno adicional (jugador) ---
+var player_in_area = false                # Para saber si esta dentro del area
+var can_advance = true
+
+# --- Indice del dialogo actual ---
+var dialog_index: int = 0
 
 # --- Constantes ---
 # --- Puede variar segun el tamano, forma o frames del spritesheet ---
@@ -41,6 +54,10 @@ func _ready():
 
 	# Reproducimos la animación inicial (idle mirando al frente).
 	anim.play("idle_" + last_direction)
+	
+	label.visible = false
+	textBox.visible = false
+	interactBTN.play("default")
 
 
 # --- Función _physics_process(delta) ---
@@ -109,14 +126,58 @@ func _generate_animations():
 
 # --- SECCION PARA DETECTAR CUANDO DEBE FRENAR EL NCP ---
 # --- Aplica cuando el Jugador entre en el area del NPC ---
-# --- Su variable "speed" debera ser igual a 0, cuando el jugador salga debera resutaurarse. ---
+# --- Su variable "speed" debera ser igual a 0, cuando el jugador salga debera restaurarse. ---
+# --- Control de continuidad en dialogos ---
 
-# --- Fun para detener al NPC ---
+# --- Interaccion y dialogos en orden ---
+# --- Func para detener al NPC y mostrar dialogos en orden ---
 func _on_break_area_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
+		player_in_area = true
 		speed = 0.0
+		# Entrada de dialogos (1s despues del frenado)
+		await get_tree().create_timer(0.2).timeout
+		# Llamada a la funcion para mosntrar el dialogo.
+		textBox.visible = true # Se muestra label para mostrar dialogo
+		label.visible = true    # Se muestra label para mostrar dialogo
+		_show_next_dialog()     # Llamada a la funcion para recorrer el array de dialogo
 
 # --- func para reanudar recorrido ---
 func _on_break_area_body_exited(body: Node2D) -> void:
 	if body.is_in_group("player"):
+		player_in_area = false
 		speed = 25.0
+		textBox.visible = false # Se deja de mostrar el dialogo
+		label.visible = false   # Se deja de mostrar el dialogo
+	
+	# Reiniciar dialogs al salir
+	dialog_index = 0
+
+# --- Func para detectar tecla "interact" ---
+func _input(event: InputEvent) -> void:
+	if player_in_area and event.is_action_pressed("interact"): # Escuchar tecla "interact" del jugador en el NPC
+		can_advance = false
+		_show_next_dialog()
+		# Delay para evitar spam
+		await get_tree().create_timer(0.2).timeout
+		can_advance = true
+
+# --- Func para mostrar dialogos ---
+func _show_next_dialog():
+	if dialog_library.is_empty():
+		return
+	# Salimos si no existen dialogos.
+	
+	# Asegurar indice valido
+	if dialog_index < 0: 
+		dialog_index = 0
+	if dialog_index >= dialog_library.size():
+		dialog_index = dialog_library.size() - 1
+	
+	# Mostrar el dialogo actual
+	label.text = dialog_library[dialog_index]
+	
+	# Avanzar al siguiente dialogo SOLO si no es el ultimo
+	if dialog_index < dialog_library.size() - 1: 
+		dialog_index += 1
+	# si es el ultimo no se reinicia

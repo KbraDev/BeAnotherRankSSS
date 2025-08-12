@@ -1,13 +1,107 @@
-[gd_scene load_steps=5 format=3 uid="uid://djrrdu7yarsjh"]
+[gd_scene load_steps=20 format=3 uid="uid://djrrdu7yarsjh"]
 
 [ext_resource type="Script" uid="uid://dnvhv4lomjwin" path="res://scenes/characters/NCP/BaseNPC/script/npc_scene.gd" id="1_wrl5n"]
 [ext_resource type="SpriteFrames" uid="uid://d4doksbh58dn6" path="res://sprites/characters/NPC/NPCs/NpcVariationFemale/female_base_frames.tres" id="2_w6qgs"]
+[ext_resource type="FontFile" uid="uid://bpv342cmnccd3" path="res://assets/fonts/MedievalSharp-Bold.ttf" id="3_w6qgs"]
+[ext_resource type="Texture2D" uid="uid://doaqjqqpk6400" path="res://sprites/UIS/InteractUI/interactUI.png" id="4_jsx4o"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wrl5n"]
 size = Vector2(33, 60)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_w6qgs"]
 size = Vector2(19, 29)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3af8h"]
+atlas = ExtResource("4_jsx4o")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s5rtf"]
+atlas = ExtResource("4_jsx4o")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_egn48"]
+atlas = ExtResource("4_jsx4o")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4veeq"]
+atlas = ExtResource("4_jsx4o")
+region = Rect2(0, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_quv15"]
+atlas = ExtResource("4_jsx4o")
+region = Rect2(64, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k5t10"]
+atlas = ExtResource("4_jsx4o")
+region = Rect2(128, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l88ck"]
+atlas = ExtResource("4_jsx4o")
+region = Rect2(0, 128, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bkejw"]
+atlas = ExtResource("4_jsx4o")
+region = Rect2(64, 128, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_du28i"]
+atlas = ExtResource("4_jsx4o")
+region = Rect2(128, 128, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o5mgq"]
+atlas = ExtResource("4_jsx4o")
+region = Rect2(0, 192, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tq5p3"]
+atlas = ExtResource("4_jsx4o")
+region = Rect2(64, 192, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mc5ok"]
+atlas = ExtResource("4_jsx4o")
+region = Rect2(128, 192, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_cl75p"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3af8h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s5rtf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_egn48")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4veeq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_quv15")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k5t10")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l88ck")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bkejw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_du28i")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o5mgq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tq5p3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mc5ok")
+}],
+"loop": true,
+"name": &"default",
+"speed": 18.0
+}]
 
 [node name="NPC" type="CharacterBody2D"]
 z_index = 2
@@ -28,14 +122,36 @@ position = Vector2(0, 3)
 shape = SubResource("RectangleShape2D_wrl5n")
 debug_color = Color(0.617043, 0.191665, 0.131343, 0.42)
 
-[node name="Label" type="Label" parent="."]
-offset_right = 40.0
-offset_bottom = 23.0
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -8.5)
 shape = SubResource("RectangleShape2D_w6qgs")
 debug_color = Color(0.249372, 0.285124, 0.977254, 0.42)
+
+[node name="Panel" type="Panel" parent="."]
+self_modulate = Color(0.990515, 0.983759, 0.99723, 1)
+custom_minimum_size = Vector2(100, 0)
+offset_left = -75.0
+offset_top = -69.0
+offset_right = 75.0
+offset_bottom = -26.0
+
+[node name="Label" type="Label" parent="Panel"]
+offset_left = 1.0
+offset_top = 2.0
+offset_right = 149.0
+offset_bottom = 32.0
+theme_override_fonts/font = ExtResource("3_w6qgs")
+theme_override_font_sizes/font_size = 12
+text = "Texto prueba"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Panel"]
+position = Vector2(143, 35)
+scale = Vector2(0.414063, 0.414063)
+sprite_frames = SubResource("SpriteFrames_cl75p")
+frame_progress = 0.591084
 
 [connection signal="body_entered" from="BreakArea" to="." method="_on_break_area_body_entered"]
 [connection signal="body_exited" from="BreakArea" to="." method="_on_break_area_body_exited"]
