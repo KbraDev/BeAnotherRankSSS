@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://bi8atwwdsaybi"]
+[gd_scene load_steps=6 format=3 uid="uid://bi8atwwdsaybi"]
 
 [ext_resource type="PackedScene" uid="uid://bwbwbn64u5hob" path="res://UIs/InventoryUI/InventorySlotUI/inventorySlotUI.tscn" id="1_ewr2i"]
 [ext_resource type="Script" uid="uid://chodrfotw14ys" path="res://UIs/InventoryUI/inventory_ui.gd" id="1_trdmu"]
 [ext_resource type="Texture2D" uid="uid://dd8atw78xfwms" path="res://sprites/UIS/inventoryASSET.png" id="2_hgc33"]
+[ext_resource type="FontFile" uid="uid://10o8fn1b5jsk" path="res://assets/fonts/DungeonFont.ttf" id="4_a6gyx"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_pgytd"]
 font_size = 14
@@ -96,5 +97,6 @@ offset_left = 6.0
 offset_top = 3.0
 offset_right = 193.0
 offset_bottom = 209.0
+theme_override_fonts/font = ExtResource("4_a6gyx")
 label_settings = SubResource("LabelSettings_pgytd")
 autowrap_mode = 3

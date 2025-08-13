@@ -10,8 +10,8 @@ extends CharacterBody2D ## NPC BASE
 
 # --- Referencias a nodos ---
 @onready var anim := $AnimatedSprite2D              # Referencia al sprite animado del NPC.
-@onready var textBox := $Panel                      # Referencia al panel
-@onready var label := $Panel/Label                  # Referencia al Label
+@onready var textBox := $Panel          # Referencia al panel
+@onready var label := $Panel/Label      # Referencia al Label
 @onready var interactBTN := $Panel/AnimatedSprite2D # Referencia al Sprite del BTN
 
 # --- Estado interno ---

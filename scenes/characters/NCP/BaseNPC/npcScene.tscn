@@ -1,8 +1,7 @@
-[gd_scene load_steps=20 format=3 uid="uid://djrrdu7yarsjh"]
+[gd_scene load_steps=19 format=3 uid="uid://djrrdu7yarsjh"]
 
 [ext_resource type="Script" uid="uid://dnvhv4lomjwin" path="res://scenes/characters/NCP/BaseNPC/script/npc_scene.gd" id="1_wrl5n"]
 [ext_resource type="SpriteFrames" uid="uid://d4doksbh58dn6" path="res://sprites/characters/NPC/NPCs/NpcVariationFemale/female_base_frames.tres" id="2_w6qgs"]
-[ext_resource type="FontFile" uid="uid://bpv342cmnccd3" path="res://assets/fonts/MedievalSharp-Bold.ttf" id="3_w6qgs"]
 [ext_resource type="Texture2D" uid="uid://doaqjqqpk6400" path="res://sprites/UIS/InteractUI/interactUI.png" id="4_jsx4o"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wrl5n"]
@@ -129,29 +128,29 @@ debug_color = Color(0.249372, 0.285124, 0.977254, 0.42)
 
 [node name="Panel" type="Panel" parent="."]
 self_modulate = Color(0.990515, 0.983759, 0.99723, 1)
+z_index = 10
 custom_minimum_size = Vector2(100, 0)
-offset_left = -75.0
-offset_top = -69.0
-offset_right = 75.0
-offset_bottom = -26.0
+offset_left = -99.0
+offset_top = -90.0
+offset_right = 99.0
+offset_bottom = -33.0
 
 [node name="Label" type="Label" parent="Panel"]
+layout_mode = 0
 offset_left = 1.0
 offset_top = 2.0
-offset_right = 149.0
-offset_bottom = 32.0
-theme_override_fonts/font = ExtResource("3_w6qgs")
-theme_override_font_sizes/font_size = 12
+offset_right = 197.0
+offset_bottom = 50.0
 text = "Texto prueba"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Panel"]
-position = Vector2(143, 35)
+position = Vector2(191, 49)
 scale = Vector2(0.414063, 0.414063)
 sprite_frames = SubResource("SpriteFrames_cl75p")
-frame_progress = 0.591084
+frame_progress = 0.0392898
 
 [connection signal="body_entered" from="BreakArea" to="." method="_on_break_area_body_entered"]
 [connection signal="body_exited" from="BreakArea" to="." method="_on_break_area_body_exited"]

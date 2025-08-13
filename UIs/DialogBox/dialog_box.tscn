@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://b3gps2xe8ss2e" path="res://sprites/UIS/dialogBoxUI/nextButtonDialog.png" id="1_7028w"]
 [ext_resource type="Script" uid="uid://c1t6g71dks4kx" path="res://UIs/DialogBox/dialog_box.gd" id="1_roq7x"]
-[ext_resource type="FontFile" uid="uid://bpv342cmnccd3" path="res://assets/fonts/MedievalSharp-Bold.ttf" id="2_47gak"]
+[ext_resource type="FontFile" uid="uid://10o8fn1b5jsk" path="res://assets/fonts/DungeonFont.ttf" id="2_jf7r1"]
 
 [node name="DialogBox" type="Control"]
 layout_mode = 3
@@ -40,7 +40,7 @@ offset_right = 595.0
 offset_bottom = 45.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_fonts/font = ExtResource("2_47gak")
+theme_override_fonts/font = ExtResource("2_jf7r1")
 theme_override_font_sizes/font_size = 35
 
 [node name="Button" type="Button" parent="Panel"]
