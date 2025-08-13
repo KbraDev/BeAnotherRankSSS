@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=4 uid="uid://dpah0ljk08blt"]
+[gd_scene load_steps=46 format=4 uid="uid://dpah0ljk08blt"]
 
 [ext_resource type="TileSet" uid="uid://rngchcx3q02t" path="res://assets/tilesets/terrain.tres" id="1_2u8v6"]
 [ext_resource type="TileSet" uid="uid://df2ewgbh7ofxg" path="res://assets/tilesets/houses.tres" id="2_gdhpg"]
@@ -21,6 +21,7 @@
 [ext_resource type="Texture2D" uid="uid://dvv6ji708mkpj" path="res://sprites/characters/NPC/NPCs/NpcVariationsMale/NPCVariation003.png" id="17_6458d"]
 [ext_resource type="Texture2D" uid="uid://bcfh6irq1t713" path="res://sprites/characters/NPC/NPCs/NpcVariationsMale/NPCVariation002.png" id="17_lcesl"]
 [ext_resource type="Texture2D" uid="uid://cltss8ru7jdox" path="res://sprites/characters/NPC/NPCs/NpcVariationsMale/NPCVariation007.png" id="18_m864j"]
+[ext_resource type="Texture2D" uid="uid://eyr1bhtxrx32" path="res://sprites/characters/NPC/NPCs/NpcVariationFemale/NpcFemaleVariation03_01_002..png" id="19_m864j"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qjx10"]
 size = Vector2(3278, 20)
@@ -113,12 +114,6 @@ _data = {
 }
 point_count = 21
 
-[sub_resource type="Curve2D" id="Curve2D_7wv2b"]
-_data = {
-"points": PackedVector2Array(0, 0, 0, 0, 776, 696, 0, 0, 0, 0, 896, 696, 0, 0, 0, 0, 952, 696, 0, 0, 0, 0, 1088, 696, 0, 0, 0, 0, 1112, 640, 0, 0, 0, 0, 1112, 576, 0, 0, 0, 0, 1128, 448, 0, 0, 0, 0, 1128, 320, 0, 0, 0, 0, 1216, 288, 0, 0, 0, 0, 1408, 288, 0, 0, 0, 0, 1696, 296, 0, 0, 0, 0, 1728, 352, 0, 0, 0, 0, 1760, 448, 0, 0, 0, 0, 1768, 576, 0, 0, 0, 0, 1768, 640, 0, 0, 0, 0, 1760, 912, 0, 0, 0, 0, 1704, 1008, 0, 0, 0, 0, 1664, 1088, 0, 0, 0, 0, 1632, 1152, 0, 0, 0, 0, 1600, 1192, 0, 0, 0, 0, 1536, 1216, 0, 0, 0, 0, 1488, 1232, 0, 0, 0, 0, 1488, 1288, 0, 0, 0, 0, 1488, 1384, 0, 0, 0, 0, 1600, 1384, 0, 0, 0, 0, 1768, 1368, 0, 0, 0, 0, 1856, 1344, 0, 0, 0, 0, 2048, 1304, 0, 0, 0, 0, 2112, 1280, 0, 0, 0, 0, 2176, 1264, 0, 0, 0, 0, 2240, 1216, 0, 0, 0, 0, 2368, 1192, 0, 0, 0, 0, 2496, 1152, 0, 0, 0, 0, 2624, 1120, 0, 0, 0, 0, 2752, 1112, 0, 0, 0, 0, 2880, 1088, 0, 0, 0, 0, 2944, 1088)
-}
-point_count = 37
-
 [sub_resource type="Curve2D" id="Curve2D_lcesl"]
 _data = {
 "points": PackedVector2Array(0, 0, 0, 0, 768, -144, 0, 0, 0, 0, 728, -144)
@@ -136,6 +131,12 @@ _data = {
 "points": PackedVector2Array(0, 0, 0, 0, 768, 368, 0, 0, 0, 0, 768, 768, 0, 0, 0, 0, 832, 768, 0, 0, 0, 0, 856, 832, 0, 0, 0, 0, 896, 832, 0, 0, 0, 0, 1032, 832, 0, 0, 0, 0, 1072, 768, 0, 0, 0, 0, 1216, 768, 0, 0, 0, 0, 1344, 832, 0, 0, 0, 0, 1376, 896, 0, 0, 0, 0, 1448, 1024, 0, 0, 0, 0, 1600, 1024, 0, 0, 0, 0, 1664, 840, 0, 0, 0, 0, 1696, 704, 0, 0, 0, 0, 1712, 576, 0, 0, 0, 0, 1712, 448, 0, 0, 0, 0, 1624, 392)
 }
 point_count = 17
+
+[sub_resource type="Curve2D" id="Curve2D_ww5af"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 944, 824, 0, 0, 0, 0, 944, 792)
+}
+point_count = 2
 
 [sub_resource type="Resource" id="Resource_3enkw"]
 script = ExtResource("8_ddhl2")
@@ -409,20 +410,11 @@ dialog_library = Array[String](["¡Desde aqui puedo ver el bosque Olid!", "Dicen
 
 [node name="NPC6" type="Node" parent="NPCs"]
 
-[node name="Path2D" type="Path2D" parent="NPCs/NPC6"]
+[node name="NPC" parent="NPCs/NPC6" node_paths=PackedStringArray("path_follow") instance=ExtResource("10_iljt4")]
 z_index = 1
-curve = SubResource("Curve2D_7wv2b")
-
-[node name="PathFollow2D" type="PathFollow2D" parent="NPCs/NPC6/Path2D"]
-position = Vector2(776, 696)
-rotates = false
-loop = false
-
-[node name="NPC" parent="NPCs/NPC6/Path2D/PathFollow2D" node_paths=PackedStringArray("path_follow") instance=ExtResource("10_iljt4")]
-z_index = 1
-position = Vector2(0, -16)
+position = Vector2(1008, 648)
 new_spritesheet = ExtResource("15_7wv2b")
-path_follow = NodePath("..")
+path_follow = NodePath("")
 dialog_library = Array[String](["¿Buscas el gremio?..", "Lo encontrarás si te dirijes al este...", "Cerca de la costa."])
 
 [node name="NPC7" type="Node" parent="NPCs"]
@@ -471,7 +463,23 @@ loop = false
 z_index = 1
 new_spritesheet = ExtResource("18_m864j")
 path_follow = NodePath("..")
-dialog_library = Array[String](["¿Seguiras los pasos de tus padres?..", "Ellos como aventureros han sido de gran ayuda para todos."])
+dialog_library = Array[String](["¿Seguiras los pasos de tus padres?..", "Son unos grandes aventureros...", "¡Siempre ayudan al pueblo!"])
+
+[node name="NPC10" type="Node" parent="NPCs"]
+
+[node name="Path2D" type="Path2D" parent="NPCs/NPC10"]
+curve = SubResource("Curve2D_ww5af")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="NPCs/NPC10/Path2D"]
+position = Vector2(944, 824)
+rotates = false
+loop = false
+
+[node name="NPC" parent="NPCs/NPC10/Path2D/PathFollow2D" node_paths=PackedStringArray("path_follow") instance=ExtResource("10_iljt4")]
+z_index = 1
+new_spritesheet = ExtResource("19_m864j")
+path_follow = NodePath("..")
+dialog_library = Array[String](["Esa estatua fue echa en honor a Olid", "Fue el fundador del pueblo...", "y el mejor aventurero de estas tierrs."])
 
 [node name="FromOlidForest" type="Marker2D" parent="."]
 z_index = 1
