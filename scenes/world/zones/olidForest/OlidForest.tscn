@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=4 uid="uid://cy1x2ljkv8lcm"]
+[gd_scene load_steps=20 format=4 uid="uid://cy1x2ljkv8lcm"]
 
 [ext_resource type="TileSet" uid="uid://rngchcx3q02t" path="res://assets/tilesets/terrain.tres" id="1_7whdt"]
 [ext_resource type="Script" uid="uid://c7j7dplqnsm3i" path="res://scenes/world/zones/olidForest/gates/to_olid_town.gd" id="2_0o3nh"]
@@ -10,6 +10,8 @@
 [ext_resource type="PackedScene" uid="uid://34rn42brxq64" path="res://scenes/characters/monsters/greenslime/greenSlime.tscn" id="6_2ui01"]
 [ext_resource type="Script" uid="uid://83qtco7d4r46" path="res://scripts/preload/ScenePortalData.gd" id="6_aws5t"]
 [ext_resource type="Script" uid="uid://crnrs643jo4s4" path="res://scenes/world/zones/olidForest/tools/scene_meta.gd" id="8_7q5si"]
+[ext_resource type="PackedScene" uid="uid://djrrdu7yarsjh" path="res://scenes/characters/NCP/BaseNPC/npcScene.tscn" id="11_ufgj1"]
+[ext_resource type="Texture2D" uid="uid://d3yx7ddgbs5aa" path="res://sprites/characters/NPC/NPCs/NpcVariationsMale/NPCVariationLowHair004_00.png" id="12_bnh4o"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q86lh"]
 size = Vector2(464, 20)
@@ -242,6 +244,15 @@ position = Vector2(3088, 856)
 position = Vector2(975, 3200)
 
 [node name="player" parent="." instance=ExtResource("4_kds41")]
+
+[node name="NPCs" type="Node" parent="."]
+
+[node name="NPC1" type="Node" parent="NPCs"]
+
+[node name="NPC" parent="NPCs/NPC1" instance=ExtResource("11_ufgj1")]
+position = Vector2(-104, 152)
+new_spritesheet = ExtResource("12_bnh4o")
+dialog_library = Array[String](["En este bosque suelen haber muchos animales..", "Pero todos son dosiles."])
 
 [connection signal="body_entered" from="Gate/ToOlidTown" to="Gate/ToOlidTown" method="_on_body_entered"]
 [connection signal="body_entered" from="Gate/ToRuinsOlid" to="Gate/ToRuinsOlid" method="_on_body_entered"]

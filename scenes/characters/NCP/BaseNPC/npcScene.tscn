@@ -5,10 +5,10 @@
 [ext_resource type="Texture2D" uid="uid://doaqjqqpk6400" path="res://sprites/UIS/InteractUI/interactUI.png" id="4_jsx4o"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wrl5n"]
-size = Vector2(33, 60)
+size = Vector2(33, 63)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_w6qgs"]
-size = Vector2(19, 29)
+size = Vector2(19, 35)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3af8h"]
 atlas = ExtResource("4_jsx4o")
@@ -103,7 +103,7 @@ animations = [{
 }]
 
 [node name="NPC" type="CharacterBody2D"]
-z_index = 2
+z_index = 1
 script = ExtResource("1_wrl5n")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -117,12 +117,12 @@ collision_layer = 6
 collision_mask = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BreakArea"]
-position = Vector2(0, 3)
+position = Vector2(0, 1.5)
 shape = SubResource("RectangleShape2D_wrl5n")
 debug_color = Color(0.617043, 0.191665, 0.131343, 0.42)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -8.5)
+position = Vector2(0, -11.5)
 shape = SubResource("RectangleShape2D_w6qgs")
 debug_color = Color(0.249372, 0.285124, 0.977254, 0.42)
 
@@ -141,6 +141,7 @@ offset_left = 1.0
 offset_top = 2.0
 offset_right = 197.0
 offset_bottom = 50.0
+theme_override_font_sizes/font_size = 12
 text = "Texto prueba"
 horizontal_alignment = 1
 vertical_alignment = 1
