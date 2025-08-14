@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://rbq41mbdukst"
-path="res://.godot/imported/Pidgeon Sprite Sheet.png-783cd60f4672c775685f47d86dfe43c3.ctex"
+uid="uid://c40enuyy88kxc"
+path="res://.godot/imported/RACCOONSPRITESHEET.png-1d455d1ee29fc0a37b6b5b7b412f2a41.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/characters/mobs/pigeon/Pidgeon Sprite Sheet.png"
-dest_files=["res://.godot/imported/Pidgeon Sprite Sheet.png-783cd60f4672c775685f47d86dfe43c3.ctex"]
+source_file="res://scenes/World_pick-Ups/bipedeRacoon/RACCOONSPRITESHEET.png"
+dest_files=["res://.godot/imported/RACCOONSPRITESHEET.png-1d455d1ee29fc0a37b6b5b7b412f2a41.ctex"]
 
 [params]
 

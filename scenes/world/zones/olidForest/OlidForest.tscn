@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=4 uid="uid://cy1x2ljkv8lcm"]
+[gd_scene load_steps=21 format=4 uid="uid://cy1x2ljkv8lcm"]
 
 [ext_resource type="TileSet" uid="uid://rngchcx3q02t" path="res://assets/tilesets/terrain.tres" id="1_7whdt"]
 [ext_resource type="Script" uid="uid://c7j7dplqnsm3i" path="res://scenes/world/zones/olidForest/gates/to_olid_town.gd" id="2_0o3nh"]
@@ -12,6 +12,7 @@
 [ext_resource type="Script" uid="uid://crnrs643jo4s4" path="res://scenes/world/zones/olidForest/tools/scene_meta.gd" id="8_7q5si"]
 [ext_resource type="PackedScene" uid="uid://djrrdu7yarsjh" path="res://scenes/characters/NCP/BaseNPC/npcScene.tscn" id="11_ufgj1"]
 [ext_resource type="Texture2D" uid="uid://d3yx7ddgbs5aa" path="res://sprites/characters/NPC/NPCs/NpcVariationsMale/NPCVariationLowHair004_00.png" id="12_bnh4o"]
+[ext_resource type="PackedScene" uid="uid://b0kx8i6vbw26e" path="res://scenes/characters/mobs/porcopine/porco_pine.tscn" id="13_bnh4o"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_q86lh"]
 size = Vector2(464, 20)
@@ -253,6 +254,46 @@ position = Vector2(975, 3200)
 position = Vector2(-104, 152)
 new_spritesheet = ExtResource("12_bnh4o")
 dialog_library = Array[String](["En este bosque suelen haber muchos animales..", "Pero todos son dosiles."])
+
+[node name="Fauna" type="Node" parent="."]
+
+[node name="porcopine" type="Node" parent="Fauna"]
+
+[node name="porcoPine" parent="Fauna/porcopine" instance=ExtResource("13_bnh4o")]
+position = Vector2(-344, 512)
+
+[node name="porcoPine2" parent="Fauna/porcopine" instance=ExtResource("13_bnh4o")]
+position = Vector2(-128, 648)
+
+[node name="porcoPine3" parent="Fauna/porcopine" instance=ExtResource("13_bnh4o")]
+position = Vector2(584, 392)
+
+[node name="porcoPine4" parent="Fauna/porcopine" instance=ExtResource("13_bnh4o")]
+position = Vector2(976, 424)
+
+[node name="porcoPine5" parent="Fauna/porcopine" instance=ExtResource("13_bnh4o")]
+position = Vector2(1264, 632)
+
+[node name="porcoPine6" parent="Fauna/porcopine" instance=ExtResource("13_bnh4o")]
+position = Vector2(928, 1120)
+
+[node name="porcoPine7" parent="Fauna/porcopine" instance=ExtResource("13_bnh4o")]
+position = Vector2(1864, 672)
+
+[node name="porcoPine8" parent="Fauna/porcopine" instance=ExtResource("13_bnh4o")]
+position = Vector2(1656, 1328)
+
+[node name="porcoPine9" parent="Fauna/porcopine" instance=ExtResource("13_bnh4o")]
+position = Vector2(624, 1464)
+
+[node name="porcoPine10" parent="Fauna/porcopine" instance=ExtResource("13_bnh4o")]
+position = Vector2(-616, 1712)
+
+[node name="porcoPine11" parent="Fauna/porcopine" instance=ExtResource("13_bnh4o")]
+position = Vector2(-544, 1320)
+
+[node name="porcoPine12" parent="Fauna/porcopine" instance=ExtResource("13_bnh4o")]
+position = Vector2(-960, 1288)
 
 [connection signal="body_entered" from="Gate/ToOlidTown" to="Gate/ToOlidTown" method="_on_body_entered"]
 [connection signal="body_entered" from="Gate/ToRuinsOlid" to="Gate/ToRuinsOlid" method="_on_body_entered"]
