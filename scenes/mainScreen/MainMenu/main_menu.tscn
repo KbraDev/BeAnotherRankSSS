@@ -1,0 +1,104 @@
+[gd_scene load_steps=12 format=3 uid="uid://cjd1ti0jn2min"]
+
+[ext_resource type="Script" uid="uid://c7ixaylsdf1wd" path="res://scenes/mainScreen/MainMenu/main_menu.gd" id="1_4rj8v"]
+[ext_resource type="Texture2D" uid="uid://cgsf4mwfjytlc" path="res://sprites/UIS/buttons/panel-transparent-border-000.png" id="2_uk83t"]
+[ext_resource type="Texture2D" uid="uid://h8au4bywivqy" path="res://sprites/UIS/buttons/panel-transparent-center-000.png" id="3_2mpo1"]
+[ext_resource type="Texture2D" uid="uid://djrj0j5drfytx" path="res://sprites/UIS/buttons/panel-000.png" id="3_np07d"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2mpo1"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_np07d"]
+texture = ExtResource("2_uk83t")
+texture_margin_left = 20.0
+texture_margin_top = 20.0
+texture_margin_right = 20.0
+texture_margin_bottom = 20.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_bj21d"]
+texture = ExtResource("3_np07d")
+texture_margin_left = 20.0
+texture_margin_top = 20.0
+texture_margin_right = 20.0
+texture_margin_bottom = 20.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_eqdel"]
+texture = ExtResource("3_2mpo1")
+texture_margin_left = 20.0
+texture_margin_right = 20.0
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_np07d"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_eqdel"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bj21d"]
+
+[node name="MainMenu" type="Control"]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1080.0
+offset_bottom = -520.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_4rj8v")
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+
+[node name="NewGame" type="Button" parent="CenterContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 45)
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 5
+theme_override_styles/focus = SubResource("StyleBoxEmpty_2mpo1")
+theme_override_styles/hover = SubResource("StyleBoxTexture_np07d")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_bj21d")
+theme_override_styles/normal = SubResource("StyleBoxTexture_eqdel")
+text = "Nueva partida"
+
+[node name="LoadGame" type="Button" parent="CenterContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 45)
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 5
+theme_override_styles/focus = SubResource("StyleBoxEmpty_np07d")
+theme_override_styles/hover = SubResource("StyleBoxTexture_np07d")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_bj21d")
+theme_override_styles/normal = SubResource("StyleBoxTexture_eqdel")
+text = "Cargar partida"
+
+[node name="Settings" type="Button" parent="CenterContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 45)
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 5
+theme_override_styles/focus = SubResource("StyleBoxEmpty_eqdel")
+theme_override_styles/hover = SubResource("StyleBoxTexture_np07d")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_bj21d")
+theme_override_styles/normal = SubResource("StyleBoxTexture_eqdel")
+text = "Ajustes"
+
+[node name="Leave" type="Button" parent="CenterContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 45)
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 5
+theme_override_styles/focus = SubResource("StyleBoxEmpty_bj21d")
+theme_override_styles/hover = SubResource("StyleBoxTexture_np07d")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_bj21d")
+theme_override_styles/normal = SubResource("StyleBoxTexture_eqdel")
+text = "Salir
+"
