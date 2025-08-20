@@ -186,7 +186,7 @@ visibility_rect = Rect2(0, 0, 100, 70)
 process_material = SubResource("ParticleProcessMaterial_a46j4")
 
 [node name="Sun" type="PointLight2D" parent="."]
-position = Vector2(80, -16)
+position = Vector2(40, -8)
 scale = Vector2(28.7578, 28.0859)
 color = Color(0.727128, 0.470342, 0.0420519, 1)
 energy = 0.4

@@ -1,9 +1,10 @@
-[gd_scene load_steps=12 format=3 uid="uid://cjd1ti0jn2min"]
+[gd_scene load_steps=14 format=3 uid="uid://cjd1ti0jn2min"]
 
 [ext_resource type="Script" uid="uid://c7ixaylsdf1wd" path="res://scenes/mainScreen/MainMenu/main_menu.gd" id="1_4rj8v"]
 [ext_resource type="Texture2D" uid="uid://cgsf4mwfjytlc" path="res://sprites/UIS/buttons/panel-transparent-border-000.png" id="2_uk83t"]
 [ext_resource type="Texture2D" uid="uid://h8au4bywivqy" path="res://sprites/UIS/buttons/panel-transparent-center-000.png" id="3_2mpo1"]
 [ext_resource type="Texture2D" uid="uid://djrj0j5drfytx" path="res://sprites/UIS/buttons/panel-000.png" id="3_np07d"]
+[ext_resource type="Texture2D" uid="uid://bwgpfkhid4ph0" path="res://sprites/UIS/buttons/panel-border-000.png" id="5_np07d"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2mpo1"]
 
@@ -31,6 +32,13 @@ texture_margin_right = 20.0
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_eqdel"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bj21d"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_b1m8q"]
+texture = ExtResource("5_np07d")
+texture_margin_left = 20.0
+texture_margin_top = 20.0
+texture_margin_right = 20.0
+texture_margin_bottom = 20.0
 
 [node name="MainMenu" type="Control"]
 custom_minimum_size = Vector2(200, 200)
@@ -102,3 +110,10 @@ theme_override_styles/pressed = SubResource("StyleBoxTexture_bj21d")
 theme_override_styles/normal = SubResource("StyleBoxTexture_eqdel")
 text = "Salir
 "
+
+[node name="ConfirmationDialog" type="AcceptDialog" parent="."]
+title = ""
+size = Vector2i(163, 104)
+theme_override_styles/panel = SubResource("StyleBoxTexture_b1m8q")
+ok_button_text = "Salir"
+dialog_text = "¿Salir del juego?"
