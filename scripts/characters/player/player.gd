@@ -7,8 +7,6 @@ const INVENTORY_ROWS := 3
 const INVENTORY_COLS := 5
 const INVENTORY_SIZE := INVENTORY_COLS * INVENTORY_ROWS
 
-enum PlayerState { unarmed, armed, bow }
-
 # ----- XP vars -----
 var experience := 0
 var experience_to_next_level := 100
@@ -37,8 +35,11 @@ var stat_levels = {
 	"lucky": 1
 }
 
+var walk_speed = 80.0
+var run_speed = 160.0
+var is_running = false
+
 var can_move = true
-var current_state: PlayerState = PlayerState.unarmed
 
 var mana = 10
 var level = 1
@@ -123,28 +124,19 @@ func _ready():
 
 # ───── PROCESO Y ENTRADA ─────
 func _physics_process(delta: float) -> void:
-	handle_state_input()
 	directional_movement()
 	move_and_slide()
-
-	if Input.is_action_just_pressed("attack") and can_attack and current_state == PlayerState.armed:
+	
+	if Input.is_action_just_pressed("attack") and can_attack:
 		attack_click_count += 1
 
-	if attack_click_count > 0 and not is_attacking and can_attack and current_state == PlayerState.armed:
+	if attack_click_count > 0 and not is_attacking and can_attack:
 		velocity = Vector2.ZERO
 		perform_attack()
 
-	if Input.is_action_just_pressed("dash_action") and can_dash and not is_dashing:
-		start_dash()
 
-func handle_state_input():
-	if Input.is_action_just_pressed("1"):
-		current_state = PlayerState.unarmed
-	elif Input.is_action_just_pressed("2"):
-		current_state = PlayerState.armed
-	elif Input.is_action_just_pressed("3"):
-		current_state = PlayerState.bow
-		print("🔄 Estado cambiado a: Arco (WIP)")
+	if Input.is_action_just_pressed("shiftIZQ") and can_dash and not is_dashing:
+		start_dash()
 
 func directional_movement():
 	if not can_move or is_attacking or is_dashing:
@@ -159,37 +151,37 @@ func directional_movement():
 
 	if direction.length() > 0:
 		direction = direction.normalized()
-		velocity = direction * base_stats["speed"]
+
+		# Detectar si corre (Ctrl) o camina
+		is_running = Input.is_action_pressed("ctrl") # run_action = ctrl izq
+		velocity = direction * (run_speed if is_running else walk_speed)
+
+		handle_Animations(direction)
 	else:
 		velocity = Vector2.ZERO
+		handle_Animations(Vector2.ZERO)
 
-	handle_Animations(direction)
 
 # ───── COMBATE Y ANIMACIÓN ─────
 func handle_Animations(direction: Vector2):
 	if is_attacking:
 		return
 
-	var state_prefix := ""
-	match current_state:
-		PlayerState.unarmed: state_prefix = ""
-		PlayerState.armed: state_prefix = "Sword_"
-		PlayerState.bow: state_prefix = "Bow_"
-
 	if direction == Vector2.ZERO:
-		animation.play("idle_" + state_prefix + last_direction)
+		animation.play("idle_" + last_direction)
 	else:
 		last_direction = (
 			"right_side" if direction.x > 0 else "left_side"
 			if abs(direction.x) > abs(direction.y)
 			else "front" if direction.y > 0 else "back"
 		)
-		animation.play("run_" + state_prefix + last_direction)
+
+		if is_running:
+			animation.play("run_" + last_direction)
+		else:
+			animation.play("walk_" + last_direction)
 
 func perform_attack():
-	if current_state != PlayerState.armed:
-		return
-
 	is_attacking = true
 	can_attack = false
 
@@ -290,13 +282,8 @@ func take_damage(amount: float, tipo: String = "fisico"):
 		die()
 
 	if not is_attacking and not is_dashing:
-		var prefix := ""
-		match current_state:
-			PlayerState.armed: prefix = "sword_"
-			PlayerState.bow: prefix = "bow_"
-			PlayerState.unarmed: prefix = ""
-
-		var anim_name = prefix + "take_damage_" + last_direction
+		var prefix := ""  # ya no depende de estado
+		var anim_name = "take_damage_" + last_direction
 		if animation.sprite_frames.has_animation(anim_name):
 			animation.play(anim_name)
 
@@ -310,11 +297,6 @@ func die():
 	set_collision_mask(0)
 
 	var prefix := ""
-	match current_state:
-		PlayerState.armed: prefix = "sword_"
-		PlayerState.bow: prefix = "bow_"
-		PlayerState.unarmed: prefix = ""
-
 	var anim_name = prefix + "death_" + last_direction
 	if animation.sprite_frames.has_animation(anim_name):
 		animation.play(anim_name)
@@ -458,7 +440,6 @@ func get_save_data() -> Dictionary:
 		"base_stats": base_stats,
 		"stat_levels": stat_levels,
 		"inventory": inv,
-		"player_state": current_state,
 		"last_checkpoint_id": last_checkpoint_id,
 		"last_checkpoint_scene": last_checkpoint_scene
 	}
@@ -477,7 +458,6 @@ func load_from_save(data: Dictionary) -> void:
 	base_stats = data.get("base_stats", base_stats)
 	stat_levels = data.get("stat_levels", stat_levels)
 
-	current_state = data.get("player_state", PlayerState.unarmed)
 	last_checkpoint_id = data.get("last_checkpoint_id", "")
 	last_checkpoint_scene = data.get("last_checkpoint_scene", "")
 
