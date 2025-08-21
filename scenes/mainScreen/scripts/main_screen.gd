@@ -3,10 +3,11 @@ extends Node2D
 @onready var label = $CanvasLayer/Label
 @onready var path_follow = $CanvasLayer/Path2D/PathFollow2D
 @onready var main_menu = $CanvasLayer/MainMenu
-
+@onready var music = $AudioStreamPlayer2D
 var speed := 200.0
 
 func _ready():
+	music.play() # reproduce el audio
 	blink_label()
 	set_process(false)
 	main_menu.visible = false

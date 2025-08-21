@@ -32,6 +32,7 @@ window/stretch/mode="viewport"
 [file_customization]
 
 folder_colors={
+"res://SFX/": "purple",
 "res://UIs/": "blue",
 "res://assets/": "red",
 "res://items/": "teal",
