@@ -16,3 +16,4 @@ func _exit_tree():
 func _on_body_entered(body):
 	if body.is_in_group("player"):
 		emit_signal("checkpoint_reached", checkpoint_id)
+		print("jugador paso por un chekpoint")
