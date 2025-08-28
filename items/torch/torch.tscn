@@ -84,7 +84,7 @@ sprite_frames = SubResource("SpriteFrames_lhjah")
 frame_progress = 0.408814
 
 [node name="PointLight2D" type="PointLight2D" parent="."]
-scale = Vector2(2.35156, 2.35156)
+scale = Vector2(3.26953, 3.26953)
 color = Color(0.608461, 0.323072, 0.205454, 1)
 shadow_enabled = true
 texture = SubResource("GradientTexture2D_d5t6c")

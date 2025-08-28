@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://djrrdu7yarsjh"]
+[gd_scene load_steps=20 format=3 uid="uid://djrrdu7yarsjh"]
 
 [ext_resource type="Script" uid="uid://dnvhv4lomjwin" path="res://scenes/characters/NCP/BaseNPC/script/npc_scene.gd" id="1_wrl5n"]
 [ext_resource type="SpriteFrames" uid="uid://d4doksbh58dn6" path="res://sprites/characters/NPC/NPCs/NpcVariationFemale/female_base_frames.tres" id="2_w6qgs"]
@@ -102,6 +102,9 @@ animations = [{
 "speed": 18.0
 }]
 
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_w6qgs"]
+polygon = PackedVector2Array(0, -14, 5, -14, 6, -11, 7, -4, 12, 8, 9, 11, 6, 12, 4, 22, 1, 22, 0, 21, -2, 22, -4, 22, -6, 12, -9, 11, -13, 9, -9, -1, -7, -5, -6, -13)
+
 [node name="NPC" type="CharacterBody2D"]
 z_index = 1
 script = ExtResource("1_wrl5n")
@@ -113,6 +116,7 @@ animation = &"idle_front"
 frame_progress = 0.305611
 
 [node name="BreakArea" type="Area2D" parent="."]
+visible = false
 collision_layer = 6
 collision_mask = 3
 
@@ -122,6 +126,7 @@ shape = SubResource("RectangleShape2D_wrl5n")
 debug_color = Color(0.617043, 0.191665, 0.131343, 0.42)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(0, -11.5)
 shape = SubResource("RectangleShape2D_w6qgs")
 debug_color = Color(0.249372, 0.285124, 0.977254, 0.42)
@@ -152,6 +157,9 @@ position = Vector2(191, 49)
 scale = Vector2(0.414063, 0.414063)
 sprite_frames = SubResource("SpriteFrames_cl75p")
 frame_progress = 0.0392898
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="."]
+occluder = SubResource("OccluderPolygon2D_w6qgs")
 
 [connection signal="body_entered" from="BreakArea" to="." method="_on_break_area_body_entered"]
 [connection signal="body_exited" from="BreakArea" to="." method="_on_break_area_body_exited"]

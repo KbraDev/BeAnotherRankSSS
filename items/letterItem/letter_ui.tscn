@@ -1,0 +1,69 @@
+[gd_scene load_steps=6 format=3 uid="uid://dfmtvhdu7sgvj"]
+
+[ext_resource type="Script" uid="uid://dfruv68k4r2kj" path="res://items/letterItem/letter_ui.gd" id="1_8phla"]
+[ext_resource type="FontFile" uid="uid://cwkvty6qgpjhg" path="res://assets/fonts/smallburg-Italic.otf" id="2_8phla"]
+[ext_resource type="Texture2D" uid="uid://t2s26sxu1g3w" path="res://sprites/UIS/buttons/BOOKS/UI_TravelBook_BookPageLeft01a.png" id="2_adfm2"]
+[ext_resource type="Texture2D" uid="uid://bvwvuagqlu1xg" path="res://sprites/UIS/buttons/BOOKS/UI_TravelBook_IconCross01a.png" id="4_ogxqc"]
+[ext_resource type="Texture2D" uid="uid://bm17hosuxnhbh" path="res://sprites/UIS/buttons/BOOKS/UI_TravelBook_IconArrow01a.png" id="5_gulrk"]
+
+[node name="LetterUI" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_8phla")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(640, 350)
+scale = Vector2(4.28606, 4.28606)
+texture = ExtResource("2_adfm2")
+
+[node name="Label" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 457.0
+offset_top = 108.0
+offset_right = 821.0
+offset_bottom = 605.0
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_fonts/normal_font = ExtResource("2_8phla")
+theme_override_font_sizes/normal_font_size = 22
+
+[node name="Close" type="Button" parent="."]
+layout_mode = 0
+offset_left = 831.0
+offset_top = 23.0
+offset_right = 877.0
+offset_bottom = 69.0
+icon = ExtResource("4_ogxqc")
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[node name="next" type="Button" parent="."]
+layout_mode = 0
+offset_left = 791.0
+offset_top = 593.0
+offset_right = 863.0
+offset_bottom = 665.0
+icon = ExtResource("5_gulrk")
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[node name="prev" type="Button" parent="."]
+layout_mode = 0
+offset_left = 489.0
+offset_top = 666.0
+offset_right = 561.0
+offset_bottom = 738.0
+rotation = -3.14159
+icon = ExtResource("5_gulrk")
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[connection signal="pressed" from="Close" to="." method="_on_close_pressed"]
+[connection signal="pressed" from="next" to="." method="_on_next_pressed"]
+[connection signal="pressed" from="prev" to="." method="_on_prev_pressed"]
