@@ -9,8 +9,7 @@ func _on_letter_opened(pages: Array[String]) -> void:
 	var letter_ui = letter_ui_scene.instantiate()
 	$CanvasLayer.add_child(letter_ui)
 	letter_ui.call_deferred("set_pages", pages)
-	
-	print(letter_ui)                 
-	print(letter_ui.get_class())     
-	print(letter_ui.get_script())    
-	print(letter_ui.has_node("RichTextLabel"))  # 👈 ahora checa RichTextLabel en vez de Label
+
+	# Pausa el juego (excepto nodos marcados como "Process when paused")
+	get_tree().paused = true
+	letter_ui.process_mode = Node.PROCESS_MODE_ALWAYS  # para que la UI sí funcione

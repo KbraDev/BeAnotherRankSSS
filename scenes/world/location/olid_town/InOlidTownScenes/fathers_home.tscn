@@ -75,7 +75,7 @@ position = Vector2(562, 143)
 
 [node name="letterItem" parent="Items" instance=ExtResource("3_3k73n")]
 z_index = 13
-position = Vector2(271, 294)
+position = Vector2(260, 287)
 pages = Array[String](["Querido Auren:
 
 recibi la noticia de que has sido nombrado aventurero, mi corazón se llena de un orgullo difícil de describir. Desde niño soñabas con recorrer el mundo, y ahora ese día ha llegado. Has dado tu primer paso en un sendero que es tan duro como glorioso.

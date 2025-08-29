@@ -33,6 +33,6 @@ func _on_prev_pressed() -> void:
 		current_page -= 1
 		update_page()
 
-
 func _on_close_pressed() -> void:
-	
+	queue_free()
+	get_tree().paused = false
