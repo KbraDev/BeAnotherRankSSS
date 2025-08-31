@@ -9,6 +9,8 @@ func _on_letter_opened(pages: Array[String]) -> void:
 	var letter_ui = letter_ui_scene.instantiate()
 	$CanvasLayer.add_child(letter_ui)
 	letter_ui.call_deferred("set_pages", pages)
+	
+	GameState.add_badge("read_letter")
 
 	# Pausa el juego (excepto nodos marcados como "Process when paused")
 	get_tree().paused = true

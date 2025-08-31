@@ -22,6 +22,8 @@ MissionTracker="*res://scripts/missions/missionTracker.gd"
 CheckPointRegistry="*res://scripts/globals/CheckPointRegistry.gd"
 SaveManager="*res://scripts/globals/SaveManager.gd"
 ItemDataBase="*res://scripts/globals/ItemDataBase.gd"
+GameState="*res://scripts/globals/GameState.gd"
+NotificationManager="*res://scripts/globals/NotificationManager.gd"
 
 [display]
 

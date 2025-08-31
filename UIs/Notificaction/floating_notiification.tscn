@@ -1,7 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://cfugx7irjix46"]
+[gd_scene load_steps=2 format=3 uid="uid://cfugx7irjix46"]
 
 [ext_resource type="Script" uid="uid://dcikfs3h6od6o" path="res://UIs/Notificaction/floating_notiification.gd" id="1_5nfep"]
-[ext_resource type="FontFile" uid="uid://bpv342cmnccd3" path="res://assets/fonts/MedievalSharp-Bold.ttf" id="2_ub57a"]
 
 [node name="FloatingNotiification" type="Control"]
 custom_minimum_size = Vector2(448, 40)
@@ -26,7 +25,6 @@ layout_mode = 0
 offset_left = 8.0
 offset_right = 440.0
 offset_bottom = 40.0
-theme_override_fonts/font = ExtResource("2_ub57a")
 theme_override_font_sizes/font_size = 22
 horizontal_alignment = 1
 vertical_alignment = 1
