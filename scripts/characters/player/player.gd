@@ -71,10 +71,21 @@ var last_checkpoint_id: String = ""
 var last_checkpoint_scene: String = ""
 var respawn_pending_checkpoint_id: String = ""
 
+# SFX
+
+# manejo de pisadas
+var current_surface = "wood"
+var step_timer := 0.0
+var walk_interval := 0.7
+var run_interval := 0.5
+
+
 # ───── NODOS Y TIMERS ─────
 @onready var attack_area = $attack_area
 @onready var animation = $AnimatedSprite2D
 @onready var camera = $Camera2D
+@onready var footstep_player : AudioStreamPlayer = $FootstepPlayer
+@onready var tilemap: TileMapLayer = get_tree().get_first_node_in_group("ground")
 
 @onready var attack_timer = Timer.new()
 @onready var combo_timer = Timer.new()
@@ -134,6 +145,14 @@ func _physics_process(delta: float) -> void:
 		velocity = Vector2.ZERO
 		perform_attack()
 
+	# Detectar superficie bajo el jugador
+	if tilemap:
+		var cell: Vector2i = tilemap.local_to_map(global_position)
+		var tile_data = tilemap.get_cell_tile_data(cell) # ✅ Ahora funciona en Godot 4
+		if tile_data:
+			var surface_type = tile_data.get_custom_data("surface_type")
+			if surface_type:
+				current_surface = surface_type
 
 	if Input.is_action_just_pressed("shiftIZQ") and can_dash and not is_dashing:
 		start_dash()
@@ -160,7 +179,15 @@ func directional_movement():
 	else:
 		velocity = Vector2.ZERO
 		handle_Animations(Vector2.ZERO)
-
+		
+	if  direction != Vector2.ZERO:
+		step_timer -= get_physics_process_delta_time()
+		if step_timer <= 0.0:
+			play_footstep()
+			step_timer = run_interval if is_running else walk_interval
+	else:
+		step_timer = 0.0
+ 
 
 # ───── COMBATE Y ANIMACIÓN ─────
 func handle_Animations(direction: Vector2):
@@ -758,3 +785,33 @@ func _upgrade_lucky() -> bool:
 
 	print("🍀 Suerte subió a nivel %d → %.1f%%" % [stat_levels["lucky"], new_lucky])
 	return true
+
+
+# --- Funciones para manejo de sonidos ---
+
+func play_footstep():
+	print("👣 Paso en superficie:", current_surface, " modo:" )
+	var sounds = {
+		"wood" : {
+			"walk" : preload("res://SFX/Effects/FootSteps/Wood/Footsteps_Wood_Walk_01.wav"),
+			"run" : preload("res://SFX/Effects/FootSteps/Wood/Footsteps_Wood_Run_01.wav")
+		}
+	}
+	
+	var mode := "walk"
+	if is_running:
+		mode = "run"
+
+	if current_surface in sounds:
+		footstep_player.stream = sounds[current_surface][mode]
+		footstep_player.play()
+
+# --- Sincronizacion de animacion y sonido ---
+
+func _on_animated_sprite_2d_frame_changed() -> void:
+	var anim = animation.animation
+	var f = animation.frame
+	
+	if anim.begins_with("walk") or anim.begins_with("run"):
+		if f in [3]:
+			play_footstep()
