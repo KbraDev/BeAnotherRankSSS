@@ -337,6 +337,9 @@ position = Vector2(1664, 552)
 [node name="peacock13" parent="Fauna/peacock" instance=ExtResource("14_fvc1a")]
 position = Vector2(1512, 584)
 
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+color = Color(0.977938, 0.923207, 0.776447, 1)
+
 [connection signal="body_entered" from="Gate/ToOlidTown" to="Gate/ToOlidTown" method="_on_body_entered"]
 [connection signal="body_entered" from="Gate/ToRuinsOlid" to="Gate/ToRuinsOlid" method="_on_body_entered"]
 [connection signal="body_entered" from="Gate/ToMilisTrail" to="Gate/ToMilisTrail" method="_on_body_entered"]

@@ -101,5 +101,8 @@ portal_data = SubResource("Resource_xlhyg")
 [node name="player" parent="." instance=ExtResource("9_t8ubn")]
 position = Vector2(9, 190)
 
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+color = Color(0.977938, 0.923207, 0.776447, 1)
+
 [connection signal="body_entered" from="portals/ToMilisCity" to="portals/ToMilisCity" method="_on_body_entered"]
 [connection signal="body_entered" from="portals/ToOlidForest" to="portals/ToOlidForest" method="_on_body_entered"]

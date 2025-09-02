@@ -474,4 +474,7 @@ position = Vector2(2677, -159)
 scale = Vector2(0.027832, 0.027832)
 texture = ExtResource("21_4qygc")
 
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+color = Color(0.977938, 0.923207, 0.776447, 1)
+
 [connection signal="body_entered" from="ToMilisTrail" to="ToMilisTrail" method="_on_body_entered"]

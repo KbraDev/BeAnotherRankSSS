@@ -100,4 +100,7 @@ target_marker_name = "FromRuinsToOlidForest"
 position = Vector2(91, -1.5)
 shape = SubResource("RectangleShape2D_cjuw6")
 
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+color = Color(0.977938, 0.923207, 0.776447, 1)
+
 [connection signal="body_entered" from="ToOlidForest" to="ToOlidForest" method="_on_body_entered"]

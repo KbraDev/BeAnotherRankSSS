@@ -27,7 +27,7 @@ func _ready():
 func change_world(scene_path: String, target_marker_name: String) -> void:
 	transition_anim.play("fade_out")
 	await transition_anim.animation_finished
-
+	
 	for child in world_container.get_children():
 		child.queue_free()
 	await get_tree().process_frame
@@ -43,10 +43,12 @@ func change_world(scene_path: String, target_marker_name: String) -> void:
 		return
 
 	var new_world = _next_scene.instantiate()
-	_remove_duplicate_players(new_world) # 🔥 AÑADIDO: prevenir duplicados
+	_remove_duplicate_players(new_world) 
 	world_container.add_child(new_world)
 	current_world = new_world
-
+	
+	player.update_tilemap_reference()
+	
 	var marker = _find_marker_in(current_world, target_marker_name)
 	if marker:
 		player.global_position = marker.global_position

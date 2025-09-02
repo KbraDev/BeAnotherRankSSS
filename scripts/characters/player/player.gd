@@ -789,6 +789,10 @@ func _upgrade_lucky() -> bool:
 
 # --- Funciones para manejo de sonidos ---
 
+func update_tilemap_reference():
+	tilemap = get_tree().get_first_node_in_group("ground")
+
+
 func play_footstep():
 	print("👣 Paso en superficie:", current_surface, " modo:" )
 	var sounds = {

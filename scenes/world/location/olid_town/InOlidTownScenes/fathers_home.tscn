@@ -1,7 +1,6 @@
-[gd_scene load_steps=16 format=4 uid="uid://uccdoa08jthp"]
+[gd_scene load_steps=15 format=4 uid="uid://uccdoa08jthp"]
 
 [ext_resource type="TileSet" uid="uid://deyvxljh6vbg7" path="res://assets/tilesets/Interrior/interiors.tres" id="1_33b3u"]
-[ext_resource type="PackedScene" uid="uid://be8s6fsuvru6m" path="res://scenes/characters/player/player.tscn" id="1_pid6a"]
 [ext_resource type="Script" uid="uid://d0885ejaq4vkp" path="res://scenes/world/location/olid_town/InOlidTownScenes/fathers_home.gd" id="1_q3kpt"]
 [ext_resource type="Script" uid="uid://c7s5iosoc0gqc" path="res://scenes/world/location/olid_town/InOlidTownScenes/tools/scene_meta.gd" id="2_mkv4d"]
 [ext_resource type="PackedScene" uid="uid://be3mlwejsvh48" path="res://items/letterItem/letter_item.tscn" id="3_3k73n"]
@@ -117,9 +116,6 @@ z_index = 2
 position = Vector2(223, 499)
 checkpoint_id = "0000"
 checkpoint_name = "House"
-
-[node name="player" parent="." instance=ExtResource("1_pid6a")]
-position = Vector2(736, 328)
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 color = Color(0.775063, 0.775063, 0.775063, 1)

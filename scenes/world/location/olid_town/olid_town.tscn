@@ -495,7 +495,7 @@ z_index = 1
 position = Vector2(2304, 984)
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
-color = Color(0.911241, 0.853904, 0.805483, 1)
+color = Color(0.977938, 0.923207, 0.776447, 1)
 
 [node name="CartelGremio" type="Sprite2D" parent="."]
 z_index = 8
