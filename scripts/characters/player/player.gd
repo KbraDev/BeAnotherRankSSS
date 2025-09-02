@@ -795,6 +795,10 @@ func play_footstep():
 		"wood" : {
 			"walk" : preload("res://SFX/Effects/FootSteps/Wood/Footsteps_Wood_Walk_01.wav"),
 			"run" : preload("res://SFX/Effects/FootSteps/Wood/Footsteps_Wood_Run_01.wav")
+		},
+		"grass": {
+			"walk" : preload("res://SFX/Effects/FootSteps/grass/Footsteps_Walk_Grass_Mono_01.wav"),
+			"run" : preload("res://SFX/Effects/FootSteps/grass/Footsteps_Grass_Run_01.wav")
 		}
 	}
 	
