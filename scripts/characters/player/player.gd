@@ -584,6 +584,7 @@ func upgrade_stat(stat_name: String) -> bool:
 
 func _open_statUI():
 	if Input.is_action_just_pressed("StatsUI"):
+		print("menu de stats")
 		$StatsMenu.visible = !$StatsMenu.visible
 
 # ------- FUNCIONES PARA MEJORAR DE STADISTICAS ------
@@ -794,7 +795,6 @@ func update_tilemap_reference():
 
 
 func play_footstep():
-	print("👣 Paso en superficie:", current_surface, " modo:" )
 	var sounds = {
 		"wood" : {
 			"walk" : preload("res://SFX/Effects/FootSteps/Wood/Footsteps_Wood_Walk_01.wav"),
