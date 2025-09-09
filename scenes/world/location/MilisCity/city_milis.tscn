@@ -1,4 +1,4 @@
-[gd_scene load_steps=48 format=4 uid="uid://ds2wq8nhg5wvu"]
+[gd_scene load_steps=50 format=4 uid="uid://ds2wq8nhg5wvu"]
 
 [ext_resource type="TileSet" uid="uid://rngchcx3q02t" path="res://assets/tilesets/terrain.tres" id="1_1ipq0"]
 [ext_resource type="Script" uid="uid://ypvhqjwloem" path="res://scenes/world/location/MilisCity/city_milis.gd" id="1_8n3rw"]
@@ -26,6 +26,7 @@
 [ext_resource type="Texture2D" uid="uid://bk763icgo8w5y" path="res://sprites/particles/leaveParticleGreenYellow.png" id="20_4qygc"]
 [ext_resource type="Texture2D" uid="uid://bcv44vw5m7e3b" path="res://sprites/houses/cartelGremio.png" id="21_4qygc"]
 [ext_resource type="AudioStream" uid="uid://bmwocro8mvb8e" path="res://SFX/Music/MilisTown/31 16 airship LOOP.mp3" id="26_art45"]
+[ext_resource type="Script" uid="uid://gbl7x7dpqkln" path="res://scenes/world/location/MilisCity/tools/area_2d.gd" id="27_art45"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2dftv"]
 size = Vector2(272, 10)
@@ -142,6 +143,9 @@ gravity = Vector3(0, 10, 0)
 scale_min = 0.5
 color_ramp = SubResource("GradientTexture1D_eqt8q")
 anim_offset_max = 1.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_viedm"]
+size = Vector2(28, 35)
 
 [node name="CityMilis" type="Node2D"]
 script = ExtResource("1_8n3rw")
@@ -483,8 +487,28 @@ color = Color(0.977938, 0.923207, 0.776447, 1)
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 position = Vector2(1945, -180)
 stream = ExtResource("26_art45")
-volume_db = -15.0
+volume_db = -20.0
 max_distance = 10000.0
 parameters/looping = true
 
+[node name="FromGuild" type="Marker2D" parent="."]
+position = Vector2(2677, -98)
+
+[node name="tools" type="Node" parent="."]
+
+[node name="gates" type="Node" parent="tools"]
+
+[node name="Area2D" type="Area2D" parent="tools/gates"]
+position = Vector2(2677, -125)
+collision_layer = 6
+collision_mask = 3
+script = ExtResource("27_art45")
+target_scene = "res://scenes/world/location/MilisCity/milis_guild.tscn"
+target_marker_name = "FromMilisCityToGuild"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="tools/gates/Area2D"]
+position = Vector2(0, -7.5)
+shape = SubResource("RectangleShape2D_viedm")
+
 [connection signal="body_entered" from="ToMilisTrail" to="ToMilisTrail" method="_on_body_entered"]
+[connection signal="body_entered" from="tools/gates/Area2D" to="tools/gates/Area2D" method="_on_body_entered"]

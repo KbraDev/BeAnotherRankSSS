@@ -510,7 +510,7 @@ texture = ExtResource("23_a4jh4")
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 position = Vector2(1296, 806)
 stream = ExtResource("24_ww5af")
-volume_db = -15.0
+volume_db = -20.0
 max_distance = 100000.0
 parameters/looping = true
 

@@ -110,7 +110,7 @@ color = Color(0.977938, 0.923207, 0.776447, 1)
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 position = Vector2(1638, 1110)
 stream = ExtResource("9_m7qi2")
-volume_db = -15.0
+volume_db = -20.0
 max_distance = 10000.0
 parameters/looping = true
 

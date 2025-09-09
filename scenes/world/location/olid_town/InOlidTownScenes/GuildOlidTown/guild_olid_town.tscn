@@ -82,4 +82,7 @@ shape = SubResource("RectangleShape2D_he3pk")
 z_index = 2
 position = Vector2(489, 326)
 
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+color = Color(0.775063, 0.775063, 0.775063, 1)
+
 [connection signal="body_entered" from="tools/gates/ToOlidTownFromOlidGuild" to="tools/gates/ToOlidTownFromOlidGuild" method="_on_body_entered"]
