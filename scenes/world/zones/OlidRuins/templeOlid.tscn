@@ -1,5 +1,6 @@
-[gd_scene load_steps=11 format=4 uid="uid://bauhtmw7m2e8n"]
+[gd_scene load_steps=13 format=4 uid="uid://bauhtmw7m2e8n"]
 
+[ext_resource type="Script" uid="uid://c0nahuxm1vce2" path="res://scenes/world/zones/OlidRuins/temple_olid.gd" id="1_51fdc"]
 [ext_resource type="TileSet" uid="uid://rngchcx3q02t" path="res://assets/tilesets/terrain.tres" id="1_ljlar"]
 [ext_resource type="TileSet" uid="uid://dvfkq370f0fmb" path="res://assets/tilesets/props.tres" id="2_pthks"]
 [ext_resource type="PackedScene" uid="uid://cudte76l40r4q" path="res://scenes/tools/portal/portal.tscn" id="4_kpdwc"]
@@ -8,6 +9,7 @@
 [ext_resource type="Script" uid="uid://dnqemjrkih1db" path="res://scenes/world/zones/milistrail/tools/scene_meta.gd" id="6_pthks"]
 [ext_resource type="Script" uid="uid://83qtco7d4r46" path="res://scripts/preload/ScenePortalData.gd" id="7_qg82m"]
 [ext_resource type="Script" uid="uid://c4tovrp06glem" path="res://scenes/world/zones/milistrail/gates/to_milis_city.gd" id="8_m3jlf"]
+[ext_resource type="AudioStream" uid="uid://cqxp5sfl27md5" path="res://SFX/Music/OlidTemple/33 17 nectar LOOP.mp3" id="10_fowxs"]
 
 [sub_resource type="Resource" id="Resource_m3jlf"]
 script = ExtResource("7_qg82m")
@@ -18,6 +20,7 @@ metadata/_custom_type_script = "uid://83qtco7d4r46"
 size = Vector2(1146, 17)
 
 [node name="OlidRuins" type="Node2D"]
+script = ExtResource("1_51fdc")
 
 [node name="tiles" type="Node" parent="."]
 
@@ -102,5 +105,12 @@ shape = SubResource("RectangleShape2D_cjuw6")
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 color = Color(0.977938, 0.923207, 0.776447, 1)
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+position = Vector2(1048, -24)
+stream = ExtResource("10_fowxs")
+volume_db = -15.0
+max_distance = 10000.0
+parameters/looping = true
 
 [connection signal="body_entered" from="ToOlidForest" to="ToOlidForest" method="_on_body_entered"]

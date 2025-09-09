@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://clssw3ky77adf"
+path="res://.godot/imported/21 11 forest LOOP.mp3-96a75099d495c772e756011aeedc5acf.mp3str"
+
+[deps]
+
+source_file="res://SFX/Music/Paths/OlidForest_&_MilisTrail/21 11 forest LOOP.mp3"
+dest_files=["res://.godot/imported/21 11 forest LOOP.mp3-96a75099d495c772e756011aeedc5acf.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

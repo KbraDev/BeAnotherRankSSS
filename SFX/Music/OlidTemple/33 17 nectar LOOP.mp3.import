@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://cqxp5sfl27md5"
+path="res://.godot/imported/33 17 nectar LOOP.mp3-023cad7e12934287cbd16190dcf42fba.mp3str"
+
+[deps]
+
+source_file="res://SFX/Music/OlidTemple/33 17 nectar LOOP.mp3"
+dest_files=["res://.godot/imported/33 17 nectar LOOP.mp3-023cad7e12934287cbd16190dcf42fba.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
