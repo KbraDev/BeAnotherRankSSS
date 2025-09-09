@@ -337,7 +337,7 @@ debug_color = Color(0.73285, 0.470015, 0.0914091, 0.42)
 
 [node name="ToOlidGuild" type="Area2D" parent="tools/gates"]
 z_index = 2
-position = Vector2(2304, 928)
+position = Vector2(2304, 937)
 collision_layer = 255
 collision_mask = 255
 script = ExtResource("7_uj1t0")

@@ -74,7 +74,7 @@ _data = {
 script = ExtResource("1_548at")
 
 [node name="player" parent="." instance=ExtResource("1_armst")]
-position = Vector2(765, 246)
+position = Vector2(493, 338)
 
 [node name="WorldContainer" type="Node2D" parent="."]
 
