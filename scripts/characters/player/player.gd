@@ -3,8 +3,8 @@ extends CharacterBody2D
 # ───── CONST Y ENUMS ─────
 const SPEED = 160.0
 const DAMAGE = 3.0
-const INVENTORY_ROWS := 3
-const INVENTORY_COLS := 5
+const INVENTORY_ROWS := 5
+const INVENTORY_COLS := 6
 const INVENTORY_SIZE := INVENTORY_COLS * INVENTORY_ROWS
 
 # ----- XP vars -----
@@ -154,8 +154,10 @@ func _physics_process(delta: float) -> void:
 			if surface_type:
 				current_surface = surface_type
 
-	if Input.is_action_just_pressed("shiftIZQ") and can_dash and not is_dashing:
+	if Input.is_action_just_pressed("dash") and can_dash and not is_dashing:
 		start_dash()
+	
+	_open_statUI()
 
 func directional_movement():
 	if not can_move or is_attacking or is_dashing:
@@ -370,7 +372,7 @@ func _on_zoom_finished():
 func add_item_to_inventory(item_data: ItemData, amount: int = 1) -> bool:
 	var remaining := amount
 
-	# 1. Apilar en slots existentes
+	# 1) Apilar
 	for slot in inventory:
 		if slot != null and slot.item_data == item_data:
 			var space_left = item_data.max_stack - slot.amount
@@ -378,7 +380,23 @@ func add_item_to_inventory(item_data: ItemData, amount: int = 1) -> bool:
 			slot.amount += to_add
 			remaining -= to_add
 			if remaining <= 0:
-				break
+				emit_signal("inventory_updated", inventory)
+				return true
+
+	# 2) Slots vacíos
+	if remaining > 0:
+		for i in inventory.size():
+			if inventory[i] == null:
+				var to_add = min(item_data.max_stack, remaining)
+				inventory[i] = {"item_data": item_data, "amount": to_add}
+				remaining -= to_add
+				if remaining <= 0:
+					emit_signal("inventory_updated", inventory)
+					return true
+
+	emit_signal("inventory_updated", inventory)
+	return false
+
 
 	# 2. Usar slots vacíos
 	if remaining > 0:
@@ -585,7 +603,18 @@ func upgrade_stat(stat_name: String) -> bool:
 func _open_statUI():
 	if Input.is_action_just_pressed("StatsUI"):
 		print("menu de stats")
-		$StatsMenu.visible = !$StatsMenu.visible
+
+		var stats_menu = get_tree().get_first_node_in_group("stats_menu")
+		if stats_menu:
+			stats_menu.visible = not stats_menu.visible
+
+			# Bloquear/permitir ataque y movimiento
+			if stats_menu.visible:
+				can_attack = false
+				can_move = false
+			else:
+				can_attack = true
+				can_move = true
 
 # ------- FUNCIONES PARA MEJORAR DE STADISTICAS ------
 

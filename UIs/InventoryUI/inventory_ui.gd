@@ -14,6 +14,11 @@ func _ready() -> void:
 		slot.connect("hover_started", Callable(self, "_on_slot_hover_started"))
 		slot.connect("hover_ended", Callable(self, "_on_slot_hover_ended"))
 
+	# Si asignas player por export, conecta aquí:
+	if player:
+		player.inventory_updated.connect(update_ui)
+
+
  
 
 func _unhandled_input(event):
@@ -45,13 +50,21 @@ func start_cooldown():
 	inventory_cooldown = false
 
 func update_ui(inventory_data: Array):
-	for i in range(slots.size()):
+	# Rellena hasta el mínimo común
+	var n: int = min(slots.size(), inventory_data.size())
+	for i in range(n):
 		var slot = slots[i]
 		var data = inventory_data[i]
 		if data != null:
 			slot.set_item(data["item_data"], data["amount"])
 		else:
 			slot.set_item(null, 0)
+
+	# Si hay más slots que datos, vacía los extras
+	for i in range(n, slots.size()):
+		var slot = slots[i]
+		slot.set_item(null, 0)
+
 
 
 func _on_slot_hover_started(item_data: ItemData, global_pos: Vector2):

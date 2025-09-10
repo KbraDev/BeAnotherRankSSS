@@ -2341,7 +2341,7 @@ radius = 9.0
 height = 34.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_s4se6"]
-radius = 47.0664
+radius = 43.0029
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_ieypo"]
 polygon = PackedVector2Array(5, -4, 8, 0, 8, 9, 5, 17, 5, 21, 3, 21, 3, 17, 0, 14, -3, 17, -3, 21, -5, 21, -5, 17, -9, 9, -9, 0, -5, -4, -4, -9, 0, -11, 4, -9)
@@ -2363,6 +2363,7 @@ position = Vector2(0, 5)
 shape = SubResource("CapsuleShape2D_ejou4")
 
 [node name="attack_area" type="Area2D" parent="."]
+position = Vector2(0, 7)
 collision_layer = 8
 collision_mask = 4
 monitoring = false

@@ -1,9 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://bi8atwwdsaybi"]
+[gd_scene load_steps=5 format=3 uid="uid://bi8atwwdsaybi"]
 
 [ext_resource type="PackedScene" uid="uid://bwbwbn64u5hob" path="res://UIs/InventoryUI/InventorySlotUI/inventorySlotUI.tscn" id="1_ewr2i"]
 [ext_resource type="Script" uid="uid://chodrfotw14ys" path="res://UIs/InventoryUI/inventory_ui.gd" id="1_trdmu"]
-[ext_resource type="Texture2D" uid="uid://dd8atw78xfwms" path="res://sprites/UIS/inventoryASSET.png" id="2_hgc33"]
-[ext_resource type="FontFile" uid="uid://10o8fn1b5jsk" path="res://assets/fonts/DungeonFont.ttf" id="4_a6gyx"]
+[ext_resource type="Texture2D" uid="uid://d1sq4ptfjg00s" path="res://sprites/UIS/inventory/inventory.png" id="2_gnat5"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_pgytd"]
 font_size = 14
@@ -15,68 +14,186 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("1_trdmu")
 
-[node name="InventoryAsset" type="Sprite2D" parent="."]
-position = Vector2(100, 148)
-scale = Vector2(2.6875, 2.5375)
-texture = ExtResource("2_hgc33")
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(640, 310)
+scale = Vector2(1.34867, 1.4043)
+texture = ExtResource("2_gnat5")
 
 [node name="NinePatchRect" type="NinePatchRect" parent="."]
 layout_mode = 0
-offset_right = 221.0
-offset_bottom = 344.0
+offset_left = 443.0
+offset_top = 116.0
+offset_right = 923.0
+offset_bottom = 520.0
 
 [node name="GridContainer" type="GridContainer" parent="NinePatchRect"]
-layout_mode = 0
-offset_right = 200.0
-offset_bottom = 336.0
-columns = 3
+custom_minimum_size = Vector2(480, 404)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -240.0
+offset_top = -201.0
+offset_right = 239.0
+offset_bottom = 203.0
+grow_horizontal = 2
+grow_vertical = 2
+columns = 6
 
 [node name="InventorySlotUI" parent="NinePatchRect/GridContainer" instance=ExtResource("1_ewr2i")]
+self_modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(77, 77)
 layout_mode = 2
 
 [node name="InventorySlotUI2" parent="NinePatchRect/GridContainer" instance=ExtResource("1_ewr2i")]
+self_modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(77, 77)
 layout_mode = 2
 
 [node name="InventorySlotUI3" parent="NinePatchRect/GridContainer" instance=ExtResource("1_ewr2i")]
+self_modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(77, 77)
 layout_mode = 2
 
 [node name="InventorySlotUI4" parent="NinePatchRect/GridContainer" instance=ExtResource("1_ewr2i")]
+self_modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(77, 77)
 layout_mode = 2
 
 [node name="InventorySlotUI5" parent="NinePatchRect/GridContainer" instance=ExtResource("1_ewr2i")]
+self_modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(77, 77)
 layout_mode = 2
 
 [node name="InventorySlotUI6" parent="NinePatchRect/GridContainer" instance=ExtResource("1_ewr2i")]
+self_modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(77, 77)
 layout_mode = 2
 
 [node name="InventorySlotUI7" parent="NinePatchRect/GridContainer" instance=ExtResource("1_ewr2i")]
+self_modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(77, 77)
 layout_mode = 2
 
 [node name="InventorySlotUI8" parent="NinePatchRect/GridContainer" instance=ExtResource("1_ewr2i")]
+self_modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(77, 77)
 layout_mode = 2
 
 [node name="InventorySlotUI9" parent="NinePatchRect/GridContainer" instance=ExtResource("1_ewr2i")]
+self_modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(77, 77)
 layout_mode = 2
 
 [node name="InventorySlotUI10" parent="NinePatchRect/GridContainer" instance=ExtResource("1_ewr2i")]
+self_modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(77, 77)
 layout_mode = 2
 
 [node name="InventorySlotUI11" parent="NinePatchRect/GridContainer" instance=ExtResource("1_ewr2i")]
+self_modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(77, 77)
 layout_mode = 2
 
 [node name="InventorySlotUI12" parent="NinePatchRect/GridContainer" instance=ExtResource("1_ewr2i")]
+self_modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(77, 77)
 layout_mode = 2
 
 [node name="InventorySlotUI13" parent="NinePatchRect/GridContainer" instance=ExtResource("1_ewr2i")]
+self_modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(77, 77)
 layout_mode = 2
 
 [node name="InventorySlotUI14" parent="NinePatchRect/GridContainer" instance=ExtResource("1_ewr2i")]
+self_modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(77, 77)
 layout_mode = 2
 
 [node name="InventorySlotUI15" parent="NinePatchRect/GridContainer" instance=ExtResource("1_ewr2i")]
+self_modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(77, 77)
+layout_mode = 2
+
+[node name="InventorySlotUI16" parent="NinePatchRect/GridContainer" instance=ExtResource("1_ewr2i")]
+self_modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(77, 77)
+layout_mode = 2
+
+[node name="InventorySlotUI17" parent="NinePatchRect/GridContainer" instance=ExtResource("1_ewr2i")]
+self_modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(77, 77)
+layout_mode = 2
+
+[node name="InventorySlotUI18" parent="NinePatchRect/GridContainer" instance=ExtResource("1_ewr2i")]
+self_modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(77, 77)
+layout_mode = 2
+
+[node name="InventorySlotUI19" parent="NinePatchRect/GridContainer" instance=ExtResource("1_ewr2i")]
+self_modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(77, 77)
+layout_mode = 2
+
+[node name="InventorySlotUI20" parent="NinePatchRect/GridContainer" instance=ExtResource("1_ewr2i")]
+self_modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(77, 77)
+layout_mode = 2
+
+[node name="InventorySlotUI21" parent="NinePatchRect/GridContainer" instance=ExtResource("1_ewr2i")]
+self_modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(77, 77)
+layout_mode = 2
+
+[node name="InventorySlotUI22" parent="NinePatchRect/GridContainer" instance=ExtResource("1_ewr2i")]
+self_modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(77, 77)
+layout_mode = 2
+
+[node name="InventorySlotUI23" parent="NinePatchRect/GridContainer" instance=ExtResource("1_ewr2i")]
+self_modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(77, 77)
+layout_mode = 2
+
+[node name="InventorySlotUI24" parent="NinePatchRect/GridContainer" instance=ExtResource("1_ewr2i")]
+self_modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(77, 77)
+layout_mode = 2
+
+[node name="InventorySlotUI25" parent="NinePatchRect/GridContainer" instance=ExtResource("1_ewr2i")]
+self_modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(77, 77)
+layout_mode = 2
+
+[node name="InventorySlotUI26" parent="NinePatchRect/GridContainer" instance=ExtResource("1_ewr2i")]
+self_modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(77, 77)
+layout_mode = 2
+
+[node name="InventorySlotUI27" parent="NinePatchRect/GridContainer" instance=ExtResource("1_ewr2i")]
+self_modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(77, 77)
+layout_mode = 2
+
+[node name="InventorySlotUI28" parent="NinePatchRect/GridContainer" instance=ExtResource("1_ewr2i")]
+self_modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(77, 77)
+layout_mode = 2
+
+[node name="InventorySlotUI29" parent="NinePatchRect/GridContainer" instance=ExtResource("1_ewr2i")]
+self_modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(77, 77)
+layout_mode = 2
+
+[node name="InventorySlotUI30" parent="NinePatchRect/GridContainer" instance=ExtResource("1_ewr2i")]
+self_modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(77, 77)
 layout_mode = 2
 
 [node name="ItemTooltip" type="Panel" parent="."]
+self_modulate = Color(1, 1, 1, 0)
 custom_minimum_size = Vector2(200, 100)
 layout_mode = 1
 anchors_preset = 8
@@ -84,19 +201,18 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 227.0
-offset_top = -9.0
-offset_right = 427.0
-offset_bottom = 203.0
+offset_left = 174.0
+offset_top = 158.0
+offset_right = 418.0
+offset_bottom = 501.0
 grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Label" type="Label" parent="ItemTooltip"]
 layout_mode = 2
-offset_left = 6.0
-offset_top = 3.0
-offset_right = 193.0
-offset_bottom = 209.0
-theme_override_fonts/font = ExtResource("4_a6gyx")
+offset_left = 8.0
+offset_top = 9.0
+offset_right = 238.0
+offset_bottom = 337.0
 label_settings = SubResource("LabelSettings_pgytd")
 autowrap_mode = 3
