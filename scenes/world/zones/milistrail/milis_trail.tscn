@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=4 uid="uid://fc0amgg3okou"]
+[gd_scene load_steps=14 format=4 uid="uid://fc0amgg3okou"]
 
 [ext_resource type="Script" uid="uid://bcmf2wo72hdft" path="res://scenes/world/zones/milistrail/milis_trail.gd" id="1_r36om"]
 [ext_resource type="TileSet" uid="uid://dvfkq370f0fmb" path="res://assets/tilesets/props.tres" id="2_6fla1"]
@@ -9,6 +9,7 @@
 [ext_resource type="AudioStream" uid="uid://clssw3ky77adf" path="res://SFX/Music/Paths/OlidForest_&_MilisTrail/21 11 forest LOOP.mp3" id="9_m7qi2"]
 [ext_resource type="PackedScene" uid="uid://be8s6fsuvru6m" path="res://scenes/characters/player/player.tscn" id="9_t8ubn"]
 [ext_resource type="Script" uid="uid://83qtco7d4r46" path="res://scripts/preload/ScenePortalData.gd" id="9_xavse"]
+[ext_resource type="PackedScene" uid="uid://b25fhdx87168t" path="res://scenes/characters/monsters/Spider/spider.tscn" id="10_cfl1s"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_el5a4"]
 size = Vector2(1146, 17)
@@ -113,6 +114,14 @@ stream = ExtResource("9_m7qi2")
 volume_db = -20.0
 max_distance = 10000.0
 parameters/looping = true
+
+[node name="Mobs" type="Node" parent="."]
+
+[node name="Spider" type="Node" parent="Mobs"]
+
+[node name="Spider" parent="Mobs/Spider" instance=ExtResource("10_cfl1s")]
+position = Vector2(2250, 258)
+change_dir_time = 3.0
 
 [connection signal="body_entered" from="portals/ToMilisCity" to="portals/ToMilisCity" method="_on_body_entered"]
 [connection signal="body_entered" from="portals/ToOlidForest" to="portals/ToOlidForest" method="_on_body_entered"]
