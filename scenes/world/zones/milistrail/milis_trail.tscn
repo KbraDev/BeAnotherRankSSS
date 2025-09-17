@@ -120,7 +120,7 @@ parameters/looping = true
 [node name="Spider" type="Node" parent="Mobs"]
 
 [node name="Spider" parent="Mobs/Spider" instance=ExtResource("10_cfl1s")]
-position = Vector2(2250, 258)
+position = Vector2(535, 654)
 change_dir_time = 3.0
 
 [connection signal="body_entered" from="portals/ToMilisCity" to="portals/ToMilisCity" method="_on_body_entered"]

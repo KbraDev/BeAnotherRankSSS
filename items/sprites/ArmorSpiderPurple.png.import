@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c40enuyy88kxc"
-path="res://.godot/imported/RACCOONSPRITESHEET.png-1d455d1ee29fc0a37b6b5b7b412f2a41.ctex"
+uid="uid://4jiyx1cba3ii"
+path="res://.godot/imported/ArmorSpiderPurple.png-9ee6a1326792915402eae26c1f536631.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenes/World_pick-Ups/bipedeRacoon/RACCOONSPRITESHEET.png"
-dest_files=["res://.godot/imported/RACCOONSPRITESHEET.png-1d455d1ee29fc0a37b6b5b7b412f2a41.ctex"]
+source_file="res://items/sprites/ArmorSpiderPurple.png"
+dest_files=["res://.godot/imported/ArmorSpiderPurple.png-9ee6a1326792915402eae26c1f536631.ctex"]
 
 [params]
 

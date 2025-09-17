@@ -228,7 +228,7 @@ func perform_attack():
 
 	for body in attack_area.get_overlapping_bodies():
 		if body.is_in_group("enemies"):
-			body.take_damage(damage)
+			body._take_damage(damage)
 			print("dano echo por jugador: ", damage)
 
 	attack_timer.start()

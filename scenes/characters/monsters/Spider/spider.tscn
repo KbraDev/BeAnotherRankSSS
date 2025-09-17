@@ -1,8 +1,11 @@
-[gd_scene load_steps=51 format=3 uid="uid://b25fhdx87168t"]
+[gd_scene load_steps=56 format=3 uid="uid://b25fhdx87168t"]
 
 [ext_resource type="Script" uid="uid://cgej6dnfp0ru4" path="res://scenes/characters/monsters/Spider/Script/spider.gd" id="1_ed41w"]
 [ext_resource type="Texture2D" uid="uid://di55rf2ba2qru" path="res://sprites/characters/mobs/Spiders/spider02.png" id="1_hnlec"]
 [ext_resource type="AudioStream" uid="uid://bc1swu3dglg31" path="res://SFX/Effects/HittinMetal/metal-whoosh-hit.mp3" id="2_menvr"]
+[ext_resource type="Texture2D" uid="uid://7jj4m1llmyec" path="res://sprites/UIS/healthBar/marco.png" id="4_kcuij"]
+[ext_resource type="Texture2D" uid="uid://d1nrndp7wviwo" path="res://sprites/UIS/healthBar/progress.png" id="5_8agfk"]
+[ext_resource type="Script" uid="uid://c8luqh8ewax4r" path="res://scenes/characters/monsters/greenslime/scripts/health_bar.gd" id="6_8agfk"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_menvr"]
 atlas = ExtResource("1_hnlec")
@@ -361,10 +364,16 @@ animations = [{
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_04csj"]
-radius = 8.0
+radius = 11.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ed41w"]
 radius = 115.017
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_lby5r"]
+radius = 51.0882
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_kcuij"]
+radius = 14.0
 
 [node name="Spider" type="CharacterBody2D" groups=["enemies"]]
 position = Vector2(565, 337)
@@ -373,14 +382,13 @@ script = ExtResource("1_ed41w")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.4375, 0.4375)
 sprite_frames = SubResource("SpriteFrames_5h5ni")
-animation = &"attack_right_side"
-frame = 3
-frame_progress = 1.0
+animation = &"dying"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_04csj")
 
 [node name="Area2D_Detect" type="Area2D" parent="."]
+visible = false
 collision_layer = 6
 collision_mask = 3
 
@@ -389,12 +397,20 @@ shape = SubResource("CircleShape2D_ed41w")
 debug_color = Color(0.159489, 0.612785, 5.77569e-07, 0.42)
 
 [node name="Area2D_Chase" type="Area2D" parent="."]
+visible = false
+collision_layer = 6
+collision_mask = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D_Chase"]
+shape = SubResource("CircleShape2D_lby5r")
+debug_color = Color(0.742948, 0.589263, 3.85046e-07, 0.42)
 
 [node name="Area2_Attack" type="Area2D" parent="."]
+visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2_Attack"]
+shape = SubResource("CircleShape2D_kcuij")
+debug_color = Color(0.751537, 0.0930297, 0, 0.42)
 
 [node name="Timer_AttackCooldown" type="Timer" parent="."]
 
@@ -402,5 +418,21 @@ debug_color = Color(0.159489, 0.612785, 5.77569e-07, 0.42)
 stream = ExtResource("2_menvr")
 max_distance = 1000.0
 
+[node name="TextureProgressBar" type="TextureProgressBar" parent="."]
+offset_left = -10.0
+offset_top = -15.0
+offset_right = 10.0
+offset_bottom = -10.0
+max_value = 25.0
+texture_over = ExtResource("4_kcuij")
+texture_progress = ExtResource("5_8agfk")
+script = ExtResource("6_8agfk")
+
+[connection signal="animation_changed" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_changed"]
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
 [connection signal="body_entered" from="Area2D_Detect" to="." method="_on_area_2d_detect_body_entered"]
 [connection signal="body_exited" from="Area2D_Detect" to="." method="_on_area_2d_detect_body_exited"]
+[connection signal="body_entered" from="Area2D_Chase" to="." method="_on_area_2d_chase_body_entered"]
+[connection signal="body_exited" from="Area2D_Chase" to="." method="_on_area_2d_chase_body_exited"]
+[connection signal="body_entered" from="Area2_Attack" to="." method="_on_area_2_attack_body_entered"]
+[connection signal="body_exited" from="Area2_Attack" to="." method="_on_area_2_attack_body_exited"]
