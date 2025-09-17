@@ -12,6 +12,7 @@ var has_died: bool = false
 @export var move_speed: float = 40.0
 @export var change_dir_time: float = 7.0
 @export var damage: float = 6.0
+@export var enemy_scale: float = 1.0
 
 var direction: Vector2 = Vector2.ZERO
 
@@ -31,6 +32,7 @@ var player_ref = null
 var is_attacking = false
 
 func _ready() -> void:
+	scale = Vector2.ONE * enemy_scale
 	current_health = max_health
 	health_bar.max_value = max_health
 	health_bar.value = current_health
