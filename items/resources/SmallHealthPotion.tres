@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ItemData" load_steps=3 format=3 uid="uid://bnlv2dqcswrxy"]
+
+[ext_resource type="Texture2D" uid="uid://cfwvuycwooloa" path="res://items/sprites/SmallHealthPotion.png" id="1_ud2a1"]
+[ext_resource type="Script" uid="uid://be38543ni7iqu" path="res://items/items_date.gd" id="2_rbxob"]
+
+[resource]
+script = ExtResource("2_rbxob")
+item_id = "HealthPotion"
+item_name = "Poción de salud pequeña"
+description = "Poción de salud que restaura 25 puntos de vida al usuario"
+icon = ExtResource("1_ud2a1")
+max_stack = 10

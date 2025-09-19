@@ -42,7 +42,7 @@ var is_running = false
 var can_move = true
 
 var mana = 10
-var level = 1
+var level: int = 1
 
 var current_health = 50
 var max_health = 50
@@ -230,6 +230,8 @@ func perform_attack():
 		if body.is_in_group("enemies"):
 			body._take_damage(damage)
 			print("dano echo por jugador: ", damage)
+		elif body.is_in_group("chests"):
+			body.hit()
 
 	attack_timer.start()
 	combo_timer.start()
@@ -478,7 +480,7 @@ func get_save_data() -> Dictionary:
 		"hp": current_health,
 		"max_hp": max_health,
 		"mana": mana,
-		"level": level,
+		"level": int(level),
 		"experience": experience,
 		"experience_to_next_level": experience_to_next_level,
 		"stat_points": stat_points,
@@ -496,7 +498,7 @@ func load_from_save(data: Dictionary) -> void:
 	current_health = data.get("hp", 50)
 	max_health = data.get("max_hp", 50)
 	mana = data.get("mana", 10)
-	level = data.get("level", 1)
+	level = int(data.get("level", 1))
 	experience = data.get("experience", 0)
 	experience_to_next_level = data.get("experience_to_next_level", 100)
 	stat_points = data.get("stat_points", 0)
@@ -546,7 +548,7 @@ func gain_experience(amount: int):
 
 
 func level_up():
-	level += 1
+	level = int(level) + 1
 	experience_to_next_level = int(experience_to_next_level * 1.2)
 	
 	# reparto de puntos segundo multiplo de 5

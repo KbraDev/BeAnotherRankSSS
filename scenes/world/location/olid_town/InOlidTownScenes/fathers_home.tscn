@@ -7,7 +7,7 @@
 [ext_resource type="Script" uid="uid://clb3fkv1geqyp" path="res://scenes/world/location/olid_town/InOlidTownScenes/gates/to_olid_town_from_house.gd" id="3_s0t8i"]
 [ext_resource type="Script" uid="uid://83qtco7d4r46" path="res://scripts/preload/ScenePortalData.gd" id="4_udoqe"]
 [ext_resource type="PackedScene" uid="uid://dirfg688w7m5k" path="res://scenes/tools/checkPoint/checkPoint.tscn" id="6_qk76y"]
-[ext_resource type="PackedScene" uid="uid://57rubx6uk4h6" path="res://items/torch/torch.tscn" id="7_m2dk5"]
+[ext_resource type="PackedScene" uid="uid://57rubx6uk4h6" path="res://items/_Torch/torch.tscn" id="7_m2dk5"]
 [ext_resource type="Script" uid="uid://de08hpq4tewq2" path="res://scenes/world/location/olid_town/InOlidTownScenes/tools/blockers.gd" id="10_5jk0l"]
 
 [sub_resource type="Gradient" id="Gradient_tp5lr"]

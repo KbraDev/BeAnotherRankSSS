@@ -23,7 +23,7 @@ var direction: Vector2 = Vector2.ZERO
 @onready var attack_area = $Area2_Attack
 @onready var attack_timer = $Timer_AttackCooldown
 @onready var health_bar = $TextureProgressBar
-
+@onready var sfx_hit = $AudioStreamPlayer2D
 
 # Controles con el jugador
 var is_player_near: bool = false
@@ -218,6 +218,8 @@ func _apply_attack_damage() -> void:
 # === Control de dano a la arana ===
 
 func _take_damage(amount: float) -> void:
+	sfx_hit.play()
+	
 	if has_died:
 		return
 

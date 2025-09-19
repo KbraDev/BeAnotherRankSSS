@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=4 uid="uid://cy1x2ljkv8lcm"]
+[gd_scene load_steps=28 format=4 uid="uid://cy1x2ljkv8lcm"]
 
 [ext_resource type="TileSet" uid="uid://rngchcx3q02t" path="res://assets/tilesets/terrain.tres" id="1_7whdt"]
 [ext_resource type="Script" uid="uid://p3kpal0fvwd3" path="res://scenes/world/zones/olidForest/olid_forest.gd" id="1_f3niq"]
@@ -17,6 +17,7 @@
 [ext_resource type="PackedScene" uid="uid://b0kx8i6vbw26e" path="res://scenes/characters/mobs/porcopine/porco_pine.tscn" id="15_pjy0g"]
 [ext_resource type="PackedScene" uid="uid://dfeu74odpt4a" path="res://scenes/characters/mobs/peacock/peacock.tscn" id="16_ofb13"]
 [ext_resource type="AudioStream" uid="uid://clssw3ky77adf" path="res://SFX/Music/Paths/OlidForest_&_MilisTrail/21 11 forest LOOP.mp3" id="16_pjy0g"]
+[ext_resource type="PackedScene" uid="uid://dllvjwqfn3upd" path="res://items/_Chests/WoodChests/wood_chest.tscn" id="18_ofb13"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_f3niq"]
 texture = ExtResource("3_sb6um")
@@ -330,6 +331,7 @@ position = Vector2(3088, 856)
 position = Vector2(975, 3200)
 
 [node name="player" parent="." instance=ExtResource("4_kds41")]
+position = Vector2(-624, 384)
 
 [node name="NPCs" type="Node" parent="."]
 
@@ -424,6 +426,23 @@ stream = ExtResource("16_pjy0g")
 volume_db = -20.0
 max_distance = 10000.0
 parameters/looping = true
+
+[node name="Chests" type="Node" parent="."]
+
+[node name="WoodChest" parent="Chests" instance=ExtResource("18_ofb13")]
+position = Vector2(-720, 336)
+hits_to_open = 3
+loot_table = Array[Dictionary]([{
+"chance": 1.0,
+"id": "Coin",
+"max": 3,
+"min": 1
+}, {
+"chance": 1.0,
+"id": "SmallHealthPotion",
+"max": 3,
+"min": 1
+}])
 
 [connection signal="body_entered" from="Gate/ToOlidTown" to="Gate/ToOlidTown" method="_on_body_entered"]
 [connection signal="body_entered" from="Gate/ToRuinsOlid" to="Gate/ToRuinsOlid" method="_on_body_entered"]

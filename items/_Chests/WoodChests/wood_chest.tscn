@@ -1,0 +1,124 @@
+[gd_scene load_steps=18 format=3 uid="uid://dllvjwqfn3upd"]
+
+[ext_resource type="Texture2D" uid="uid://djkcnm63kv3al" path="res://items/sprites/Chests.png" id="1_2sxvi"]
+[ext_resource type="Script" uid="uid://dntl6o0stqn8" path="res://items/_Chests/WoodChests/wood_chest.gd" id="1_a4p0h"]
+[ext_resource type="AudioStream" uid="uid://csy6boqameyfe" path="res://SFX/Effects/Hitting_WoodChest/Hitting_woodChest.mp3" id="2_a4p0h"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hk14k"]
+atlas = ExtResource("1_2sxvi")
+region = Rect2(96, 128, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hieqy"]
+atlas = ExtResource("1_2sxvi")
+region = Rect2(128, 128, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vjatf"]
+atlas = ExtResource("1_2sxvi")
+region = Rect2(160, 128, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uk22p"]
+atlas = ExtResource("1_2sxvi")
+region = Rect2(96, 160, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t36tf"]
+atlas = ExtResource("1_2sxvi")
+region = Rect2(128, 160, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ssm6d"]
+atlas = ExtResource("1_2sxvi")
+region = Rect2(160, 160, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_50u70"]
+atlas = ExtResource("1_2sxvi")
+region = Rect2(96, 192, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pp4aj"]
+atlas = ExtResource("1_2sxvi")
+region = Rect2(128, 192, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l34ip"]
+atlas = ExtResource("1_2sxvi")
+region = Rect2(160, 192, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nehc1"]
+atlas = ExtResource("1_2sxvi")
+region = Rect2(96, 224, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jcyv0"]
+atlas = ExtResource("1_2sxvi")
+region = Rect2(128, 224, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ssexp"]
+atlas = ExtResource("1_2sxvi")
+region = Rect2(160, 224, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_vp5xy"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hk14k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hieqy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vjatf")
+}],
+"loop": true,
+"name": &"close",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uk22p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t36tf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ssm6d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_50u70")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pp4aj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_l34ip")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nehc1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jcyv0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ssexp")
+}],
+"loop": false,
+"name": &"open",
+"speed": 20.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_j2t7o"]
+size = Vector2(27, 11.5)
+
+[node name="WoodChest" type="StaticBody2D" groups=["chests"]]
+collision_layer = 7
+collision_mask = 7
+script = ExtResource("1_a4p0h")
+hits_to_open = 2
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_vp5xy")
+animation = &"open"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -2.75)
+shape = SubResource("RectangleShape2D_j2t7o")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_a4p0h")
+volume_db = -20.0
+attenuation = 2.37841

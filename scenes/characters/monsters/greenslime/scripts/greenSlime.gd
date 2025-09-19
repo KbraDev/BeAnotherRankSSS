@@ -100,7 +100,7 @@ func _on_vision_area_body_exited(body: Node2D) -> void:
 		start_idle()
 		
 
-func take_damage(amount: float) -> void:
+func _take_damage(amount: float) -> void:
 	if has_died:
 		return
 	
