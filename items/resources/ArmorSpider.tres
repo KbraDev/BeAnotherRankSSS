@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="ItemData" load_steps=3 format=3 uid="uid://2xm6fmt56rwo"]
 
-[ext_resource type="Texture2D" uid="uid://4jiyx1cba3ii" path="res://items/sprites/ArmorSpiderPurple.png" id="1_84pha"]
+[ext_resource type="Texture2D" uid="uid://4jiyx1cba3ii" path="res://items/sprites/FaunaDrops/ArmorSpiderPurple.png" id="1_84pha"]
 [ext_resource type="Script" uid="uid://be38543ni7iqu" path="res://items/items_date.gd" id="2_y3c61"]
 
 [resource]

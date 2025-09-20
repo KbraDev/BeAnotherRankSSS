@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dxpx2qaf1473p"
-path="res://.godot/imported/SlimeTear.png-971f686131699f41efbef7c80a454b91.ctex"
+uid="uid://c02wki4u2uivx"
+path="res://.godot/imported/fang.png-bd3ae55613904760cc50c59bf75d96ab.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://items/sprites/SlimeTear.png"
-dest_files=["res://.godot/imported/SlimeTear.png-971f686131699f41efbef7c80a454b91.ctex"]
+source_file="res://items/sprites/FaunaDrops/fang.png"
+dest_files=["res://.godot/imported/fang.png-bd3ae55613904760cc50c59bf75d96ab.ctex"]
 
 [params]
 

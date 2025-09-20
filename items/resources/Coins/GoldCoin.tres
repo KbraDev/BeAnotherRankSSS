@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="CoinData" load_steps=3 format=3 uid="uid://c404py3ytbcn2"]
+
+[ext_resource type="Texture2D" uid="uid://gpnsa6l2wa3e" path="res://items/sprites/Coins/G3.png" id="1_71pge"]
+[ext_resource type="Script" uid="uid://c8br1rxh8elrw" path="res://items/CoinData.gd" id="2_8virq"]
+
+[resource]
+script = ExtResource("2_8virq")
+coin_id = "GoldCoin"
+coin_name = "Moneda de Oro"
+icon = ExtResource("1_71pge")

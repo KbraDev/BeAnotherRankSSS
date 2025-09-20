@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c02wki4u2uivx"
-path="res://.godot/imported/fang.png-fa81df1bf3ddb409c1ad8dacef35c191.ctex"
+uid="uid://4jiyx1cba3ii"
+path="res://.godot/imported/ArmorSpiderPurple.png-10cf5256915c80e57c3a8ba6d1a2b888.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://items/sprites/fang.png"
-dest_files=["res://.godot/imported/fang.png-fa81df1bf3ddb409c1ad8dacef35c191.ctex"]
+source_file="res://items/sprites/FaunaDrops/ArmorSpiderPurple.png"
+dest_files=["res://.godot/imported/ArmorSpiderPurple.png-10cf5256915c80e57c3a8ba6d1a2b888.ctex"]
 
 [params]
 

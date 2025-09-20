@@ -1,12 +1,12 @@
 [gd_resource type="Resource" script_class="ItemData" load_steps=3 format=3 uid="uid://bfey4ghmpoo6o"]
 
-[ext_resource type="Texture2D" uid="uid://dxpx2qaf1473p" path="res://items/sprites/SlimeTear.png" id="1_04ov5"]
+[ext_resource type="Texture2D" uid="uid://cmqp0u34es6ac" path="res://items/sprites/FaunaDrops/SlimeDrop.png" id="1_6mnv5"]
 [ext_resource type="Script" uid="uid://be38543ni7iqu" path="res://items/items_date.gd" id="2_fhge1"]
 
 [resource]
 script = ExtResource("2_fhge1")
 item_id = "slimeTear"
-item_name = "Lagrima de Slime"
+item_name = "Gota de Slime"
 description = "Lagrima con buen sazon para Alquimia"
-icon = ExtResource("1_04ov5")
+icon = ExtResource("1_6mnv5")
 max_stack = 12

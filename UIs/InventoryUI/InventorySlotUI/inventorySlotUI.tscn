@@ -30,6 +30,7 @@ offset_right = 24.0
 offset_bottom = 24.0
 grow_horizontal = 2
 grow_vertical = 2
+stretch_mode = 3
 
 [node name="amount" type="Label" parent="."]
 layout_mode = 1

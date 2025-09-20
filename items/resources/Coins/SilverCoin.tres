@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="CoinData" load_steps=3 format=3 uid="uid://fndl7pyqh0u"]
+
+[ext_resource type="Texture2D" uid="uid://dmk30ou1qkxng" path="res://items/sprites/Coins/S3.png" id="1_h7oqk"]
+[ext_resource type="Script" uid="uid://c8br1rxh8elrw" path="res://items/CoinData.gd" id="2_uaits"]
+
+[resource]
+script = ExtResource("2_uaits")
+coin_id = "SilverCoin"
+coin_name = "Tablilla de Plata"
+icon = ExtResource("1_h7oqk")

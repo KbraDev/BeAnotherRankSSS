@@ -318,6 +318,17 @@ func take_damage(amount: float, tipo: String = "fisico"):
 		if animation.sprite_frames.has_animation(anim_name):
 			animation.play(anim_name)
 
+func heal(amount: int):
+	if current_health <= 0:
+		return # no curar si ya está muerto
+
+	var old_health = current_health
+	current_health = min(current_health + amount, max_health)
+
+	print("❤️ Curado: +%d (de %d → %d)" % [amount, old_health, current_health])
+	emit_signal("health_changed", current_health, max_health)
+
+ 
 func die():
 	can_move = false
 	can_attack = false
@@ -424,6 +435,19 @@ func add_item_to_inventory(item_data: ItemData, amount: int = 1) -> bool:
 
 	emit_signal("inventory_updated", inventory)
 	
+
+func _remove_item_from_inventory(item_data: ItemData, amount: int = 1) -> void:
+	for i in range(inventory.size()):
+		var slot = inventory[i]
+		if slot != null and slot.item_data == item_data:
+			if slot.amount > amount:
+				slot.amount -= amount
+			else:
+				inventory[i] = null # si queda en 0, limpiar slot
+			break
+
+	emit_signal("inventory_updated", inventory)
+
 
 
 # ----- CheckPoints -----

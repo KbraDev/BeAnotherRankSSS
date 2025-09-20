@@ -8,7 +8,9 @@ var is_open: bool = false
 
 # Loot table: cada entrada define un ítem, cantidad mínima/máxima y chance
 @export var loot_table: Array[Dictionary] = [
-	{"id": "coin", "min": 1, "max": 3, "chance": 1.0},
+	{"id": "BronzeCoin", "min": 3, "max": 8, "chance": 1.0},
+	{"id": "SilverCoin", "min": 1, "max": 3, "chance": 0.2},
+	{"id": "GoldCoin", "min": 1, "max": 1, "chance": 0.05},
 	{"id": "SmallHealthPotion", "min": 1, "max": 2, "chance": 1.0}
 ]
 
@@ -60,4 +62,11 @@ func spawn_item(item_name: String, amount: int = 1):
 		var offset = Vector2(randf_range(-12, 12), randf_range(-12, 12))
 		pickup.global_position = global_position + offset
 
-		print("✔️ Cofre dropeó:", item_data.item_name, " en ", pickup.global_position, " offset=", offset)
+		# 👇 Diferenciar entre ItemData y CoinData
+		var name_to_print = ""
+		if item_data is ItemData:
+			name_to_print = item_data.item_name
+		elif item_data is CoinData:
+			name_to_print = item_data.coin_name
+
+		print("✔️ Cofre dropeó:", name_to_print, " en ", pickup.global_position, " offset=", offset)

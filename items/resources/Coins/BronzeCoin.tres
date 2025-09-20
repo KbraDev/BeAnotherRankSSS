@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="CoinData" load_steps=3 format=3 uid="uid://bk2ptkdis3vpw"]
+
+[ext_resource type="Texture2D" uid="uid://be8hlbf5hgeho" path="res://items/sprites/Coins/B3.png" id="1_atepd"]
+[ext_resource type="Script" uid="uid://c8br1rxh8elrw" path="res://items/CoinData.gd" id="2_xpav8"]
+
+[resource]
+script = ExtResource("2_xpav8")
+coin_id = "BronzeCoin"
+coin_name = "Moneda de Bronze"
+icon = ExtResource("1_atepd")

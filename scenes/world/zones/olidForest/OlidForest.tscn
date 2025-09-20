@@ -434,9 +434,19 @@ position = Vector2(-720, 336)
 hits_to_open = 3
 loot_table = Array[Dictionary]([{
 "chance": 1.0,
-"id": "Coin",
+"id": "BronzeCoin",
 "max": 3,
-"min": 1
+"min": 2
+}, {
+"chance": 0.5,
+"id": "SilverCoin",
+"max": 2,
+"min": 0
+}, {
+"chance": 0.1,
+"id": "GolCoin",
+"max": 1,
+"min": 0
 }, {
 "chance": 1.0,
 "id": "SmallHealthPotion",

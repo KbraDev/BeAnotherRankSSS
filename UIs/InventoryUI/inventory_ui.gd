@@ -13,13 +13,10 @@ func _ready() -> void:
 	for slot in slots:
 		slot.connect("hover_started", Callable(self, "_on_slot_hover_started"))
 		slot.connect("hover_ended", Callable(self, "_on_slot_hover_ended"))
+		slot.connect("item_used", Callable(self, "_on_slot_item_used"))
 
-	# Si asignas player por export, conecta aquí:
 	if player:
 		player.inventory_updated.connect(update_ui)
-
-
- 
 
 func _unhandled_input(event):
 	if event.is_action_pressed("Inventory") and not inventory_cooldown:
@@ -82,3 +79,10 @@ func _on_slot_hover_started(item_data: ItemData, global_pos: Vector2):
 
 func _on_slot_hover_ended():
 	$ItemTooltip.visible = false
+
+
+func _on_slot_item_used(item_data: ItemData):
+	if item_data is UsableItemData:
+		item_data.use(player)  # ✅ aplica el efecto
+		player._remove_item_from_inventory(item_data, 1)  # 👈 consumir 1 del stack
+		update_ui(player.inventory)  # refrescar UI
