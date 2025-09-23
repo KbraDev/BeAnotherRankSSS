@@ -9,6 +9,16 @@ var player = null
 @onready var next_level_label = $RightPanel/MainBox/LevelBarContainer/NextLevel
 @onready var experience_bar = $RightPanel/MainBox/LevelBarContainer/XpBar
 
+
+@onready var coins_container = $RightPanel/MainBox/CoinsContainer
+@onready var bronze_icon = $RightPanel/MainBox/CoinsContainer/BronzeRow/BronzeIcon
+@onready var bronze_label = $RightPanel/MainBox/CoinsContainer/BronzeRow/BronzeLabel
+@onready var silver_icon = $RightPanel/MainBox/CoinsContainer/SilverRow/SilverIcon
+@onready var silver_label = $RightPanel/MainBox/CoinsContainer/SilverRow/SilverLabel
+@onready var gold_icon = $RightPanel/MainBox/CoinsContainer/GoldRow/GoldIcon
+@onready var gold_label = $RightPanel/MainBox/CoinsContainer/GoldRow/GoldLabel
+
+
 var stat_aliases := {
 	"salud": "hp",
 	"velocidad": "speed",
@@ -36,18 +46,17 @@ func _ready():
 	for row in stats_list.get_children():
 		if row.has_signal("stat_upgrade_requested"):
 			row.connect("stat_upgrade_requested", _on_stat_upgrade_requested)
+			
+	Playerwallet.connect("coins_changed", Callable(self, "_update_coins"))
+	_setup_coin_icons()
+	_update_coins()
 
 	_update_all_stats()
-
-
 
 func _on_stat_upgrade_requested(stat_name: String):
 	var real_stat_name = stat_aliases.get(stat_name.to_snake_case(), stat_name.to_snake_case())
 	if player and player.upgrade_stat(real_stat_name):
 		_update_all_stats()
-
-
-
 
 func _update_all_stats():
 	if player == null:
@@ -101,3 +110,14 @@ func _update_all_stats():
 	experience_bar.value = float(player.experience) / float(player.experience_to_next_level) * 100
 	level_label.text = "Nivel: %d" % player.level
 	next_level_label.text = "%d / %d" % [player.experience, player.experience_to_next_level]
+
+
+func _setup_coin_icons():
+	bronze_icon.texture = ItemDataBase.get_item_by_id("BronzeCoin").icon
+	silver_icon.texture = ItemDataBase.get_item_by_id("SilverCoin").icon
+	gold_icon.texture = ItemDataBase.get_item_by_id("GoldCoin").icon
+
+func _update_coins():
+	bronze_label.text = str(Playerwallet.get_coin_amount("BronzeCoin"))
+	silver_label.text = str(Playerwallet.get_coin_amount("SilverCoin"))
+	gold_label.text = str(Playerwallet.get_coin_amount("GoldCoin"))

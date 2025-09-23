@@ -1,8 +1,11 @@
-[gd_scene load_steps=13 format=3 uid="uid://2diufhet7676"]
+[gd_scene load_steps=16 format=3 uid="uid://2diufhet7676"]
 
 [ext_resource type="Texture2D" uid="uid://ca6gb7pqj453s" path="res://sprites/characters/player/IDLE/idle_down.png" id="1_1qn68"]
 [ext_resource type="Script" uid="uid://c31elhfddif3g" path="res://UIs/StatsMenu/stats_menu.gd" id="1_r856u"]
 [ext_resource type="PackedScene" uid="uid://br10nlqajj42s" path="res://UIs/StatsMenu/stat_row.tscn" id="1_w0m2v"]
+[ext_resource type="Texture2D" uid="uid://be8hlbf5hgeho" path="res://items/sprites/Coins/B3.png" id="4_aacyf"]
+[ext_resource type="Texture2D" uid="uid://dmk30ou1qkxng" path="res://items/sprites/Coins/S3.png" id="5_0ptx8"]
+[ext_resource type="Texture2D" uid="uid://gpnsa6l2wa3e" path="res://items/sprites/Coins/G3.png" id="6_npwbc"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_b2gkt"]
 atlas = ExtResource("1_1qn68")
@@ -177,3 +180,79 @@ stat_name = "R. Magica"
 [node name="StatRow8" parent="RightPanel/MainBox/ScrollContainer/StatsList" instance=ExtResource("1_w0m2v")]
 layout_mode = 2
 stat_name = "Suerte"
+
+[node name="CoinsContainer" type="Control" parent="RightPanel/MainBox"]
+layout_mode = 1
+anchors_preset = 0
+offset_left = 40.0
+offset_top = 128.0
+offset_right = 168.0
+offset_bottom = 246.0
+
+[node name="GoldRow" type="Control" parent="RightPanel/MainBox/CoinsContainer"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+anchors_preset = 0
+offset_right = 128.0
+offset_bottom = 31.0
+
+[node name="GoldIcon" type="TextureRect" parent="RightPanel/MainBox/CoinsContainer/GoldRow"]
+layout_mode = 2
+offset_left = -8.0
+offset_top = -17.0
+offset_right = 56.0
+offset_bottom = 47.0
+texture = ExtResource("6_npwbc")
+
+[node name="GoldLabel" type="Label" parent="RightPanel/MainBox/CoinsContainer/GoldRow"]
+layout_mode = 2
+offset_left = 48.0
+offset_top = 8.0
+offset_right = 124.0
+offset_bottom = 31.0
+
+[node name="SilverRow" type="Control" parent="RightPanel/MainBox/CoinsContainer"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+anchors_preset = 0
+offset_top = 40.0
+offset_right = 128.0
+offset_bottom = 71.0
+
+[node name="SilverIcon" type="TextureRect" parent="RightPanel/MainBox/CoinsContainer/SilverRow"]
+layout_mode = 2
+offset_left = -8.0
+offset_top = -17.0
+offset_right = 56.0
+offset_bottom = 47.0
+texture = ExtResource("5_0ptx8")
+
+[node name="SilverLabel" type="Label" parent="RightPanel/MainBox/CoinsContainer/SilverRow"]
+layout_mode = 2
+offset_left = 48.0
+offset_top = 8.0
+offset_right = 124.0
+offset_bottom = 31.0
+
+[node name="BronzeRow" type="Control" parent="RightPanel/MainBox/CoinsContainer"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+anchors_preset = 0
+offset_top = 80.0
+offset_right = 128.0
+offset_bottom = 111.0
+
+[node name="BronzeIcon" type="TextureRect" parent="RightPanel/MainBox/CoinsContainer/BronzeRow"]
+layout_mode = 2
+offset_left = -8.0
+offset_top = -17.0
+offset_right = 56.0
+offset_bottom = 47.0
+texture = ExtResource("4_aacyf")
+
+[node name="BronzeLabel" type="Label" parent="RightPanel/MainBox/CoinsContainer/BronzeRow"]
+layout_mode = 2
+offset_left = 48.0
+offset_top = 8.0
+offset_right = 124.0
+offset_bottom = 31.0

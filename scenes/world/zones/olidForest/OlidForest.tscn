@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=4 uid="uid://cy1x2ljkv8lcm"]
+[gd_scene load_steps=27 format=4 uid="uid://cy1x2ljkv8lcm"]
 
 [ext_resource type="TileSet" uid="uid://rngchcx3q02t" path="res://assets/tilesets/terrain.tres" id="1_7whdt"]
 [ext_resource type="Script" uid="uid://p3kpal0fvwd3" path="res://scenes/world/zones/olidForest/olid_forest.gd" id="1_f3niq"]
@@ -14,7 +14,6 @@
 [ext_resource type="Script" uid="uid://crnrs643jo4s4" path="res://scenes/world/zones/olidForest/tools/scene_meta.gd" id="8_7q5si"]
 [ext_resource type="PackedScene" uid="uid://djrrdu7yarsjh" path="res://scenes/characters/NCP/BaseNPC/npcScene.tscn" id="11_ufgj1"]
 [ext_resource type="Texture2D" uid="uid://d3yx7ddgbs5aa" path="res://sprites/characters/NPC/NPCs/NpcVariationsMale/NPCVariationLowHair004_00.png" id="12_bnh4o"]
-[ext_resource type="PackedScene" uid="uid://b0kx8i6vbw26e" path="res://scenes/characters/mobs/porcopine/porco_pine.tscn" id="15_pjy0g"]
 [ext_resource type="PackedScene" uid="uid://dfeu74odpt4a" path="res://scenes/characters/mobs/peacock/peacock.tscn" id="16_ofb13"]
 [ext_resource type="AudioStream" uid="uid://clssw3ky77adf" path="res://SFX/Music/Paths/OlidForest_&_MilisTrail/21 11 forest LOOP.mp3" id="16_pjy0g"]
 [ext_resource type="PackedScene" uid="uid://dllvjwqfn3upd" path="res://items/_Chests/WoodChests/wood_chest.tscn" id="18_ofb13"]
@@ -343,32 +342,6 @@ new_spritesheet = ExtResource("12_bnh4o")
 dialog_library = Array[String](["En este bosque suelen haber muchos animales..", "Pero todos son dosiles."])
 
 [node name="Fauna" type="Node" parent="."]
-
-[node name="porcopine" type="Node" parent="Fauna"]
-
-[node name="porcoPine" parent="Fauna/porcopine" instance=ExtResource("15_pjy0g")]
-position = Vector2(-1072, 600)
-
-[node name="porcoPine2" parent="Fauna/porcopine" instance=ExtResource("15_pjy0g")]
-position = Vector2(-984, 584)
-
-[node name="porcoPine3" parent="Fauna/porcopine" instance=ExtResource("15_pjy0g")]
-position = Vector2(-1032, 632)
-
-[node name="porcoPine4" parent="Fauna/porcopine" instance=ExtResource("15_pjy0g")]
-position = Vector2(-1088, 464)
-
-[node name="porcoPine5" parent="Fauna/porcopine" instance=ExtResource("15_pjy0g")]
-position = Vector2(-880, 288)
-
-[node name="porcoPine6" parent="Fauna/porcopine" instance=ExtResource("15_pjy0g")]
-position = Vector2(-1088, 296)
-
-[node name="porcoPine7" parent="Fauna/porcopine" instance=ExtResource("15_pjy0g")]
-position = Vector2(-832, 456)
-
-[node name="porcoPine8" parent="Fauna/porcopine" instance=ExtResource("15_pjy0g")]
-position = Vector2(-1200, 400)
 
 [node name="peacock" type="Node" parent="Fauna"]
 

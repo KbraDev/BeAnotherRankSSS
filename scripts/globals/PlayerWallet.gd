@@ -6,9 +6,9 @@ signal coins_changed
 
 # Diccionario dinámico, inicializado con 0
 var coins: Dictionary = {
-	"coin_bronze": 0,
-	"coin_silver": 0,
-	"coin_gold": 0
+	"BronzeCoin": 0,
+	"SilverCoin": 0,
+	"GoldCoin": 0
 }
 
 func add_coins(coin_id: String, amount: int) -> void:
