@@ -1,5 +1,6 @@
 extends StaticBody2D
 
+@export var chest_id: String = "" # variable asignable unica para cada cofre
 @export var hits_to_open: int = 3
 var hit_count: int = 0
 var is_open: bool = false
@@ -15,14 +16,17 @@ var is_open: bool = false
 ]
 
 func _ready():
-	$AnimatedSprite2D.play("close")
+	if chest_id != "" and ChestRegistry.is_opened(chest_id):
+		is_open = true
+		$AnimatedSprite2D.play("open")
+	else: 
+		$AnimatedSprite2D.play("close")
 
 func hit():
 	if is_open:
 		return
 	hit_count += 1
 	sfx_hit.play()
-	print("Cofre golpeado: ", hit_count, "/", hits_to_open)
 
 	if hit_count >= hits_to_open:
 		open_chest()
@@ -31,6 +35,10 @@ func open_chest():
 	is_open = true
 	$AnimatedSprite2D.play("open")
 	drop_items()
+	
+	# Guardad la KEY del cofre abierto
+	if chest_id != "":
+		ChestRegistry.set_opened(chest_id)
 
 func drop_items():
 	var rng = RandomNumberGenerator.new()

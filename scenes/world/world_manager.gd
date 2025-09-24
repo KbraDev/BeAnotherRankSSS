@@ -133,9 +133,17 @@ func load_game_state(save_data: Dictionary) -> void:
 	world_container.add_child(new_world)
 	current_world = new_world
 
+	# 👇 Esperamos a que la escena nueva procese un frame completo
+	await get_tree().process_frame
+
+	# Ahora sí: actualizamos tilemap antes de poner la posición
+	player.update_tilemap_reference()
+
+	# Restauramos datos del jugador
+	player.load_from_save(save_data["player"])
+
 	var pos = save_data["player"].get("position", [0, 0])
 	player.global_position = Vector2(pos[0], pos[1])
-	player.load_from_save(save_data["player"])
 
 	transition_anim.play("fade_in")
 	await transition_anim.animation_finished
@@ -144,9 +152,6 @@ func load_game_state(save_data: Dictionary) -> void:
 
 	for checkpoint in current_world.get_tree().get_nodes_in_group("checkpoint"):
 		checkpoint.connect("checkpoint_reached", Callable(player, "update_checkpoint"))
-
-	if packed_scene == null:
-		return
 
 func get_current_world_scene_path() -> String:
 	return current_world.scene_file_path

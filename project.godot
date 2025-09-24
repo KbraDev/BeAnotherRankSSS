@@ -26,6 +26,7 @@ GameState="*res://scripts/globals/GameState.gd"
 NotificationManager="*res://scripts/globals/NotificationManager.gd"
 MissionDataBase="*res://scripts/missions/MissionDataBase.gd"
 Playerwallet="*res://scripts/globals/PlayerWallet.gd"
+ChestRegistry="*res://scripts/globals/ChestRegistry.gd"
 
 [display]
 

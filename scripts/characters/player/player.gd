@@ -98,6 +98,7 @@ signal health_changed(current_health, max_health)
 
 # ───── READY ─────
 func _ready():
+	update_tilemap_reference()
 	print("Puntos del jugador: ", stat_points)
 	print("MissionTracker cargado?", MissionTracker)
 	animation.play("idle_" + last_direction)
@@ -847,27 +848,52 @@ func _upgrade_lucky() -> bool:
 
 func update_tilemap_reference():
 	tilemap = get_tree().get_first_node_in_group("ground")
+	if tilemap:
+		print("✅ Tilemap encontrado:", tilemap.name)
+	else:
+		print("❌ No se encontró ningún TileMap en el grupo 'ground'")
+
 
 
 func play_footstep():
+	var surface = get_surface_type_at(global_position)
+
 	var sounds = {
-		"wood" : {
-			"walk" : preload("res://SFX/Effects/FootSteps/Wood/Footsteps_Wood_Walk_01.wav"),
-			"run" : preload("res://SFX/Effects/FootSteps/Wood/Footsteps_Wood_Run_01.wav")
+		"wood": {
+			"walk": preload("res://SFX/Effects/FootSteps/Wood/Footsteps_Wood_Walk_01.wav"),
+			"run": preload("res://SFX/Effects/FootSteps/Wood/Footsteps_Wood_Run_01.wav")
 		},
 		"grass": {
-			"walk" : preload("res://SFX/Effects/FootSteps/grass/Footsteps_Walk_Grass_Mono_01.wav"),
-			"run" : preload("res://SFX/Effects/FootSteps/grass/Footsteps_Grass_Run_01.wav")
+			"walk": preload("res://SFX/Effects/FootSteps/grass/Footsteps_Walk_Grass_Mono_01.wav"),
+			"run": preload("res://SFX/Effects/FootSteps/grass/Footsteps_Grass_Run_01.wav")
 		}
 	}
-	
+
 	var mode := "walk"
 	if is_running:
 		mode = "run"
 
-	if current_surface in sounds:
-		footstep_player.stream = sounds[current_surface][mode]
+	if surface in sounds:
+		print("👣 Reproduciendo paso en superficie:", surface, "| modo:", mode)
+		footstep_player.stream = sounds[surface][mode]
 		footstep_player.play()
+	else:
+		print("❌ No hay sonidos definidos para la superficie:", surface)
+
+
+
+func get_surface_type_at(pos: Vector2) -> String:
+	if tilemap:
+		var cell: Vector2i = tilemap.local_to_map(pos)
+		var tile_data = tilemap.get_cell_tile_data(cell)
+		if tile_data:
+			var surface_type = tile_data.get_custom_data("surface_type")
+			if surface_type:
+				print("🌍 Superficie detectada en ", pos, " → ", surface_type)
+				return surface_type
+	print("⚠️ No se encontró superficie, fallback a grass")
+	return "grass" # fallback por defecto
+
 
 # --- Sincronizacion de animacion y sonido ---
 
