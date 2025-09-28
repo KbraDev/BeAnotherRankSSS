@@ -1,0 +1,39 @@
+[gd_scene load_steps=2 format=3 uid="uid://0y56wwfw1p7t"]
+
+[ext_resource type="Script" uid="uid://dpmx0xd6hf6vj" path="res://UIs/InventoryUI/dnd_slot.gd" id="2_ws3h8"]
+
+[node name="DnDSlot" type="TextureRect"]
+custom_minimum_size = Vector2(75, 75)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -640.0
+offset_top = -360.0
+offset_right = -565.0
+offset_bottom = -285.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 0
+mouse_default_cursor_shape = 6
+expand_mode = 1
+stretch_mode = 3
+script = ExtResource("2_ws3h8")
+
+[node name="Panel" type="Panel" parent="."]
+self_modulate = Color(1, 1, 1, 0)
+show_behind_parent = true
+custom_minimum_size = Vector2(77, 77)
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+
+[node name="Amount" type="Label" parent="."]
+custom_minimum_size = Vector2(24, 12)
+layout_mode = 0
+offset_left = 52.5
+offset_top = 52.5
+offset_right = 76.5
+offset_bottom = 76.5

@@ -1,17 +1,20 @@
 [gd_scene load_steps=5 format=3 uid="uid://bi8atwwdsaybi"]
 
-[ext_resource type="PackedScene" uid="uid://bwbwbn64u5hob" path="res://UIs/InventoryUI/InventorySlotUI/inventorySlotUI.tscn" id="1_ewr2i"]
 [ext_resource type="Script" uid="uid://chodrfotw14ys" path="res://UIs/InventoryUI/inventory_ui.gd" id="1_trdmu"]
 [ext_resource type="Texture2D" uid="uid://d1sq4ptfjg00s" path="res://sprites/UIS/inventory/inventory.png" id="2_gnat5"]
+[ext_resource type="PackedScene" uid="uid://0y56wwfw1p7t" path="res://UIs/InventoryUI/DnDSlot.tscn" id="3_gnat5"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_pgytd"]
-font_size = 14
+font_size = 20
+outline_size = 2
+outline_color = Color(0, 0, 0, 1)
 
 [node name="InventoryUI" type="Control"]
 layout_mode = 3
 anchors_preset = 0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+mouse_filter = 2
 script = ExtResource("1_trdmu")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -35,161 +38,102 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -240.0
-offset_top = -201.0
-offset_right = 239.0
-offset_bottom = 203.0
+offset_top = -202.0
+offset_right = 240.0
+offset_bottom = 202.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 columns = 6
 
-[node name="InventorySlotUI" parent="NinePatchRect/GridContainer" instance=ExtResource("1_ewr2i")]
-self_modulate = Color(1, 1, 1, 0)
-custom_minimum_size = Vector2(77, 77)
+[node name="DnDSlot" parent="NinePatchRect/GridContainer" instance=ExtResource("3_gnat5")]
 layout_mode = 2
 
-[node name="InventorySlotUI2" parent="NinePatchRect/GridContainer" instance=ExtResource("1_ewr2i")]
-self_modulate = Color(1, 1, 1, 0)
-custom_minimum_size = Vector2(77, 77)
+[node name="DnDSlot2" parent="NinePatchRect/GridContainer" instance=ExtResource("3_gnat5")]
 layout_mode = 2
 
-[node name="InventorySlotUI3" parent="NinePatchRect/GridContainer" instance=ExtResource("1_ewr2i")]
-self_modulate = Color(1, 1, 1, 0)
-custom_minimum_size = Vector2(77, 77)
+[node name="DnDSlot3" parent="NinePatchRect/GridContainer" instance=ExtResource("3_gnat5")]
 layout_mode = 2
 
-[node name="InventorySlotUI4" parent="NinePatchRect/GridContainer" instance=ExtResource("1_ewr2i")]
-self_modulate = Color(1, 1, 1, 0)
-custom_minimum_size = Vector2(77, 77)
+[node name="DnDSlot4" parent="NinePatchRect/GridContainer" instance=ExtResource("3_gnat5")]
 layout_mode = 2
 
-[node name="InventorySlotUI5" parent="NinePatchRect/GridContainer" instance=ExtResource("1_ewr2i")]
-self_modulate = Color(1, 1, 1, 0)
-custom_minimum_size = Vector2(77, 77)
+[node name="DnDSlot5" parent="NinePatchRect/GridContainer" instance=ExtResource("3_gnat5")]
 layout_mode = 2
 
-[node name="InventorySlotUI6" parent="NinePatchRect/GridContainer" instance=ExtResource("1_ewr2i")]
-self_modulate = Color(1, 1, 1, 0)
-custom_minimum_size = Vector2(77, 77)
+[node name="DnDSlot6" parent="NinePatchRect/GridContainer" instance=ExtResource("3_gnat5")]
 layout_mode = 2
 
-[node name="InventorySlotUI7" parent="NinePatchRect/GridContainer" instance=ExtResource("1_ewr2i")]
-self_modulate = Color(1, 1, 1, 0)
-custom_minimum_size = Vector2(77, 77)
+[node name="DnDSlot7" parent="NinePatchRect/GridContainer" instance=ExtResource("3_gnat5")]
 layout_mode = 2
 
-[node name="InventorySlotUI8" parent="NinePatchRect/GridContainer" instance=ExtResource("1_ewr2i")]
-self_modulate = Color(1, 1, 1, 0)
-custom_minimum_size = Vector2(77, 77)
+[node name="DnDSlot8" parent="NinePatchRect/GridContainer" instance=ExtResource("3_gnat5")]
 layout_mode = 2
 
-[node name="InventorySlotUI9" parent="NinePatchRect/GridContainer" instance=ExtResource("1_ewr2i")]
-self_modulate = Color(1, 1, 1, 0)
-custom_minimum_size = Vector2(77, 77)
+[node name="DnDSlot9" parent="NinePatchRect/GridContainer" instance=ExtResource("3_gnat5")]
 layout_mode = 2
 
-[node name="InventorySlotUI10" parent="NinePatchRect/GridContainer" instance=ExtResource("1_ewr2i")]
-self_modulate = Color(1, 1, 1, 0)
-custom_minimum_size = Vector2(77, 77)
+[node name="DnDSlot10" parent="NinePatchRect/GridContainer" instance=ExtResource("3_gnat5")]
 layout_mode = 2
 
-[node name="InventorySlotUI11" parent="NinePatchRect/GridContainer" instance=ExtResource("1_ewr2i")]
-self_modulate = Color(1, 1, 1, 0)
-custom_minimum_size = Vector2(77, 77)
+[node name="DnDSlot11" parent="NinePatchRect/GridContainer" instance=ExtResource("3_gnat5")]
 layout_mode = 2
 
-[node name="InventorySlotUI12" parent="NinePatchRect/GridContainer" instance=ExtResource("1_ewr2i")]
-self_modulate = Color(1, 1, 1, 0)
-custom_minimum_size = Vector2(77, 77)
+[node name="DnDSlot12" parent="NinePatchRect/GridContainer" instance=ExtResource("3_gnat5")]
 layout_mode = 2
 
-[node name="InventorySlotUI13" parent="NinePatchRect/GridContainer" instance=ExtResource("1_ewr2i")]
-self_modulate = Color(1, 1, 1, 0)
-custom_minimum_size = Vector2(77, 77)
+[node name="DnDSlot13" parent="NinePatchRect/GridContainer" instance=ExtResource("3_gnat5")]
 layout_mode = 2
 
-[node name="InventorySlotUI14" parent="NinePatchRect/GridContainer" instance=ExtResource("1_ewr2i")]
-self_modulate = Color(1, 1, 1, 0)
-custom_minimum_size = Vector2(77, 77)
+[node name="DnDSlot14" parent="NinePatchRect/GridContainer" instance=ExtResource("3_gnat5")]
 layout_mode = 2
 
-[node name="InventorySlotUI15" parent="NinePatchRect/GridContainer" instance=ExtResource("1_ewr2i")]
-self_modulate = Color(1, 1, 1, 0)
-custom_minimum_size = Vector2(77, 77)
+[node name="DnDSlot15" parent="NinePatchRect/GridContainer" instance=ExtResource("3_gnat5")]
 layout_mode = 2
 
-[node name="InventorySlotUI16" parent="NinePatchRect/GridContainer" instance=ExtResource("1_ewr2i")]
-self_modulate = Color(1, 1, 1, 0)
-custom_minimum_size = Vector2(77, 77)
+[node name="DnDSlot16" parent="NinePatchRect/GridContainer" instance=ExtResource("3_gnat5")]
 layout_mode = 2
 
-[node name="InventorySlotUI17" parent="NinePatchRect/GridContainer" instance=ExtResource("1_ewr2i")]
-self_modulate = Color(1, 1, 1, 0)
-custom_minimum_size = Vector2(77, 77)
+[node name="DnDSlot17" parent="NinePatchRect/GridContainer" instance=ExtResource("3_gnat5")]
 layout_mode = 2
 
-[node name="InventorySlotUI18" parent="NinePatchRect/GridContainer" instance=ExtResource("1_ewr2i")]
-self_modulate = Color(1, 1, 1, 0)
-custom_minimum_size = Vector2(77, 77)
+[node name="DnDSlot18" parent="NinePatchRect/GridContainer" instance=ExtResource("3_gnat5")]
 layout_mode = 2
 
-[node name="InventorySlotUI19" parent="NinePatchRect/GridContainer" instance=ExtResource("1_ewr2i")]
-self_modulate = Color(1, 1, 1, 0)
-custom_minimum_size = Vector2(77, 77)
+[node name="DnDSlot19" parent="NinePatchRect/GridContainer" instance=ExtResource("3_gnat5")]
 layout_mode = 2
 
-[node name="InventorySlotUI20" parent="NinePatchRect/GridContainer" instance=ExtResource("1_ewr2i")]
-self_modulate = Color(1, 1, 1, 0)
-custom_minimum_size = Vector2(77, 77)
+[node name="DnDSlot20" parent="NinePatchRect/GridContainer" instance=ExtResource("3_gnat5")]
 layout_mode = 2
 
-[node name="InventorySlotUI21" parent="NinePatchRect/GridContainer" instance=ExtResource("1_ewr2i")]
-self_modulate = Color(1, 1, 1, 0)
-custom_minimum_size = Vector2(77, 77)
+[node name="DnDSlot21" parent="NinePatchRect/GridContainer" instance=ExtResource("3_gnat5")]
 layout_mode = 2
 
-[node name="InventorySlotUI22" parent="NinePatchRect/GridContainer" instance=ExtResource("1_ewr2i")]
-self_modulate = Color(1, 1, 1, 0)
-custom_minimum_size = Vector2(77, 77)
+[node name="DnDSlot22" parent="NinePatchRect/GridContainer" instance=ExtResource("3_gnat5")]
 layout_mode = 2
 
-[node name="InventorySlotUI23" parent="NinePatchRect/GridContainer" instance=ExtResource("1_ewr2i")]
-self_modulate = Color(1, 1, 1, 0)
-custom_minimum_size = Vector2(77, 77)
+[node name="DnDSlot23" parent="NinePatchRect/GridContainer" instance=ExtResource("3_gnat5")]
 layout_mode = 2
 
-[node name="InventorySlotUI24" parent="NinePatchRect/GridContainer" instance=ExtResource("1_ewr2i")]
-self_modulate = Color(1, 1, 1, 0)
-custom_minimum_size = Vector2(77, 77)
+[node name="DnDSlot24" parent="NinePatchRect/GridContainer" instance=ExtResource("3_gnat5")]
 layout_mode = 2
 
-[node name="InventorySlotUI25" parent="NinePatchRect/GridContainer" instance=ExtResource("1_ewr2i")]
-self_modulate = Color(1, 1, 1, 0)
-custom_minimum_size = Vector2(77, 77)
+[node name="DnDSlot25" parent="NinePatchRect/GridContainer" instance=ExtResource("3_gnat5")]
 layout_mode = 2
 
-[node name="InventorySlotUI26" parent="NinePatchRect/GridContainer" instance=ExtResource("1_ewr2i")]
-self_modulate = Color(1, 1, 1, 0)
-custom_minimum_size = Vector2(77, 77)
+[node name="DnDSlot26" parent="NinePatchRect/GridContainer" instance=ExtResource("3_gnat5")]
 layout_mode = 2
 
-[node name="InventorySlotUI27" parent="NinePatchRect/GridContainer" instance=ExtResource("1_ewr2i")]
-self_modulate = Color(1, 1, 1, 0)
-custom_minimum_size = Vector2(77, 77)
+[node name="DnDSlot27" parent="NinePatchRect/GridContainer" instance=ExtResource("3_gnat5")]
 layout_mode = 2
 
-[node name="InventorySlotUI28" parent="NinePatchRect/GridContainer" instance=ExtResource("1_ewr2i")]
-self_modulate = Color(1, 1, 1, 0)
-custom_minimum_size = Vector2(77, 77)
+[node name="DnDSlot28" parent="NinePatchRect/GridContainer" instance=ExtResource("3_gnat5")]
 layout_mode = 2
 
-[node name="InventorySlotUI29" parent="NinePatchRect/GridContainer" instance=ExtResource("1_ewr2i")]
-self_modulate = Color(1, 1, 1, 0)
-custom_minimum_size = Vector2(77, 77)
+[node name="DnDSlot29" parent="NinePatchRect/GridContainer" instance=ExtResource("3_gnat5")]
 layout_mode = 2
 
-[node name="InventorySlotUI30" parent="NinePatchRect/GridContainer" instance=ExtResource("1_ewr2i")]
-self_modulate = Color(1, 1, 1, 0)
-custom_minimum_size = Vector2(77, 77)
+[node name="DnDSlot30" parent="NinePatchRect/GridContainer" instance=ExtResource("3_gnat5")]
 layout_mode = 2
 
 [node name="ItemTooltip" type="Panel" parent="."]

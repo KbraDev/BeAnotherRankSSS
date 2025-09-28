@@ -386,20 +386,21 @@ func _on_zoom_finished():
 func add_item_to_inventory(item_data: ItemData, amount: int = 1) -> bool:
 	var remaining := amount
 
-	# 1) Apilar
-	for slot in inventory:
-		if slot != null and slot.item_data == item_data:
-			var space_left = item_data.max_stack - slot.amount
+	# 1) Apilar en slots existentes
+	for i in range(inventory.size()):
+		var slot = inventory[i]
+		if slot != null and slot["item_data"] == item_data:
+			var space_left = item_data.max_stack - slot["amount"]
 			var to_add = min(space_left, remaining)
-			slot.amount += to_add
+			slot["amount"] += to_add
 			remaining -= to_add
 			if remaining <= 0:
 				emit_signal("inventory_updated", inventory)
 				return true
 
-	# 2) Slots vacíos
+	# 2) Buscar slots vacíos
 	if remaining > 0:
-		for i in inventory.size():
+		for i in range(inventory.size()):
 			if inventory[i] == null:
 				var to_add = min(item_data.max_stack, remaining)
 				inventory[i] = {"item_data": item_data, "amount": to_add}
@@ -410,7 +411,6 @@ func add_item_to_inventory(item_data: ItemData, amount: int = 1) -> bool:
 
 	emit_signal("inventory_updated", inventory)
 	return false
-
 
 	# 2. Usar slots vacíos
 	if remaining > 0:
@@ -437,12 +437,13 @@ func add_item_to_inventory(item_data: ItemData, amount: int = 1) -> bool:
 	emit_signal("inventory_updated", inventory)
 	
 
+
 func _remove_item_from_inventory(item_data: ItemData, amount: int = 1) -> void:
 	for i in range(inventory.size()):
 		var slot = inventory[i]
-		if slot != null and slot.item_data == item_data:
-			if slot.amount > amount:
-				slot.amount -= amount
+		if slot != null and slot["item_data"] == item_data:
+			if slot["amount"] > amount:
+				slot["amount"] -= amount
 			else:
 				inventory[i] = null # si queda en 0, limpiar slot
 			break
@@ -874,7 +875,6 @@ func play_footstep():
 		mode = "run"
 
 	if surface in sounds:
-		print("👣 Reproduciendo paso en superficie:", surface, "| modo:", mode)
 		footstep_player.stream = sounds[surface][mode]
 		footstep_player.play()
 	else:
@@ -889,9 +889,7 @@ func get_surface_type_at(pos: Vector2) -> String:
 		if tile_data:
 			var surface_type = tile_data.get_custom_data("surface_type")
 			if surface_type:
-				print("🌍 Superficie detectada en ", pos, " → ", surface_type)
 				return surface_type
-	print("⚠️ No se encontró superficie, fallback a grass")
 	return "grass" # fallback por defecto
 
 

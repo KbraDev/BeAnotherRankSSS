@@ -7,7 +7,7 @@
 script = ExtResource("1_mp4r5")
 effect_amount = 25
 effect_type = "heal"
-item_id = "HealthPotion"
+item_id = "SmallHealthPotion"
 item_name = "Poción de salud pequeña"
 description = "Poción de salud que restaura 25 puntos de vida al usuario"
 icon = ExtResource("1_ud2a1")
