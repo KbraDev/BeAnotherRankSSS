@@ -16,11 +16,8 @@ var is_open: bool = false
 ]
 
 func _ready():
-	if chest_id != "" and ChestRegistry.is_opened(chest_id):
-		is_open = true
-		$AnimatedSprite2D.play("open")
-	else: 
-		$AnimatedSprite2D.play("close")
+	refresh_state()
+
 
 func hit():
 	if is_open:
@@ -78,3 +75,12 @@ func spawn_item(item_name: String, amount: int = 1):
 			name_to_print = item_data.coin_name
 
 		print("✔️ Cofre dropeó:", name_to_print, " en ", pickup.global_position, " offset=", offset)
+		
+
+func refresh_state():
+	if chest_id != "" and ChestRegistry.is_opened(chest_id):
+		is_open = true
+		$AnimatedSprite2D.play("open")
+	else:
+		is_open = false
+		$AnimatedSprite2D.play("close")

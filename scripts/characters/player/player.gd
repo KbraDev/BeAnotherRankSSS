@@ -514,7 +514,13 @@ func get_save_data() -> Dictionary:
 		"stat_levels": stat_levels,
 		"inventory": inv,
 		"last_checkpoint_id": last_checkpoint_id,
-		"last_checkpoint_scene": last_checkpoint_scene
+		"last_checkpoint_scene": last_checkpoint_scene,
+		
+		# guardar monedas
+		"coins": Playerwallet.coins,
+		
+		# guardar chests
+		"opened_chests": ChestRegistry.opened_chests
 	}
 
 
@@ -533,6 +539,17 @@ func load_from_save(data: Dictionary) -> void:
 
 	last_checkpoint_id = data.get("last_checkpoint_id", "")
 	last_checkpoint_scene = data.get("last_checkpoint_scene", "")
+
+	if data.has("coins"):
+		Playerwallet.coins = data["coins"]
+		Playerwallet.emit_signal("coins_changed") # refrecar UId
+	
+	if data.has("opened_chests"):
+		ChestRegistry.opened_chests = data["opened_chests"].duplicate()
+
+		# 🟢 Refrescar todos los cofres activos en la escena
+		for chest in get_tree().get_nodes_in_group("chests"):
+			chest.refresh_state()
 
 	var inv_data = data.get("inventory", [])
 	inventory.resize(INVENTORY_SIZE)
