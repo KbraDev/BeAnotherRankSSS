@@ -136,14 +136,16 @@ func load_game_state(save_data: Dictionary) -> void:
 	# 👇 Esperamos a que la escena nueva procese un frame completo
 	await get_tree().process_frame
 
-	# Ahora sí: actualizamos tilemap antes de poner la posición
+	# Actualizamos tilemap antes de restaurar datos
 	player.update_tilemap_reference()
 
-	# Restauramos datos del jugador
-	player.load_from_save(save_data["player"])
+	# ✅ Restauramos datos del jugador usando SaveManager
+	if save_data.has("player"):
+		SaveManager.restore_player_data(player, save_data["player"])
 
-	var pos = save_data["player"].get("position", [0, 0])
-	player.global_position = Vector2(pos[0], pos[1])
+	# La posición ya la maneja restore_player_data, así que esto sobra:
+	# var pos = save_data["player"].get("position", [0, 0])
+	# player.global_position = Vector2(pos[0], pos[1])
 
 	transition_anim.play("fade_in")
 	await transition_anim.animation_finished

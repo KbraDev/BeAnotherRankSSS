@@ -19,8 +19,6 @@ var display_timer := 0.0
 var last_dir := Vector2.DOWN  # dirección inicial por defecto (hacia abajo)
 
 func _ready():
-	detection_area.body_entered.connect(_on_area_2d_body_entered)
-	detection_area.body_exited.connect(_on_area_2d_body_exited)
 	_set_new_direction()
 
 func _physics_process(delta: float):
