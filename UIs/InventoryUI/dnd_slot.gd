@@ -8,7 +8,7 @@ var amount: int = 0              # Cantidad (stack)
 # --- Señales ---
 signal hover_started(item_data, global_position)  # Al pasar el mouse sobre el slot
 signal hover_ended()                              # Al quitar el mouse
-signal hover_used(item_data)                      # Al usar un ítem (clic derecho)
+signal item_used(item_data)                       # Al usar un ítem (clic derecho)
 
 # --- Referencias a nodos ---
 @onready var amount_label : Label = $Amount       # Label que muestra la cantidad
@@ -37,7 +37,6 @@ func set_item(item: ItemData, count: int):
 
 # --- Drag & Drop API ---
 func _get_drag_data(_at_position: Vector2) -> Variant:
-	# Si el slot está vacío, no arrastra nada
 	if item_data == null:
 		return null
 
@@ -67,7 +66,6 @@ func _get_drag_data(_at_position: Vector2) -> Variant:
 
 
 func _can_drop_data(_at_position: Vector2, data: Variant) -> bool:
-	# Solo acepta paquetes válidos con item_data
 	return data is Dictionary and data.has("item_data")
 
 
@@ -102,6 +100,6 @@ func _on_mouse_exited() -> void:
 
 # --- Usar ítem con clic derecho ---
 func _gui_input(event: InputEvent) -> void:
-	if event is InputEventMouseButton and event.pressed:
-		if event.button_index == MOUSE_BUTTON_RIGHT and item_data is UsableItemData:
+	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_RIGHT:
+		if item_data != null and item_data is UsableItemData:
 			emit_signal("item_used", item_data)

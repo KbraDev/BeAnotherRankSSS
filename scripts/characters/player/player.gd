@@ -312,6 +312,7 @@ func take_damage(amount: float, tipo: String = "fisico"):
 
 	if current_health == 0:
 		die()
+		return
 
 	if not is_attacking and not is_dashing:
 		var prefix := ""  # ya no depende de estado
@@ -343,6 +344,11 @@ func die():
 	var anim_name = prefix + "death_" + last_direction
 	if animation.sprite_frames.has_animation(anim_name):
 		animation.play(anim_name)
+
+	# 🔹 VACIAR INVENTARIO AL MORIR
+	for i in range(inventory.size()):
+		inventory[i] = null
+	emit_signal("inventory_updated", inventory)
 
 	var tween := get_tree().create_tween()
 	tween.tween_property(camera, "zoom", Vector2(2.7, 2.7), 1.5).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
@@ -486,96 +492,6 @@ func _wait_for_checkpoint():
 			respawn_pending_checkpoint_id = ""
 			return
 		elapsed += get_process_delta_time()
-	#print("❌ Timeout esperando al checkpoint:", respawn_pending_checkpoint_id)
-
-# ----- Save & Load -----
-#
-#func get_save_data() -> Dictionary:
-	#var inv := []
-	#for item in inventory:
-		#if item != null:
-			#inv.append({
-				#"item_id": item.item_data.item_id,
-				#"amount": item.amount
-			#})
-		#else:
-			#inv.append(null)
-#
-	#return {
-		#"position": [global_position.x, global_position.y],
-		#"hp": current_health,
-		#"max_hp": max_health,
-		#"mana": mana,
-		#"level": int(level),
-		#"experience": experience,
-		#"experience_to_next_level": experience_to_next_level,
-		#"stat_points": stat_points,
-		#"base_stats": base_stats,
-		#"stat_levels": stat_levels,
-		#"inventory": inv,
-		#"last_checkpoint_id": last_checkpoint_id,
-		#"last_checkpoint_scene": last_checkpoint_scene,
-		#
-		## guardar monedas
-		#"coins": Playerwallet.coins,
-		#
-		## guardar chests
-		#"opened_chests": ChestRegistry.opened_chests
-	#}
-#
-#
-#func load_from_save(data: Dictionary) -> void:
-	#var pos = data.get("position", [0, 0])
-	#global_position = Vector2(pos[0], pos[1])
-	#current_health = data.get("hp", 50)
-	#max_health = data.get("max_hp", 50)
-	#mana = data.get("mana", 10)
-	#level = int(data.get("level", 1))
-	#experience = data.get("experience", 0)
-	#experience_to_next_level = data.get("experience_to_next_level", 100)
-	#stat_points = data.get("stat_points", 0)
-	#base_stats = data.get("base_stats", base_stats)
-	#stat_levels = data.get("stat_levels", stat_levels)
-#
-	#last_checkpoint_id = data.get("last_checkpoint_id", "")
-	#last_checkpoint_scene = data.get("last_checkpoint_scene", "")
-#
-	#if data.has("coins"):
-		#Playerwallet.coins = data["coins"]
-		#Playerwallet.emit_signal("coins_changed") # refrecar UId
-	#
-	#if data.has("opened_chests"):
-		#ChestRegistry.opened_chests = data["opened_chests"].duplicate()
-#
-		## 🟢 Refrescar todos los cofres activos en la escena
-		#for chest in get_tree().get_nodes_in_group("chests"):
-			#chest.refresh_state()
-#
-	#var inv_data = data.get("inventory", [])
-	#inventory.resize(INVENTORY_SIZE)
-	#for i in range(INVENTORY_SIZE):
-		#if i < inv_data.size():
-			#var item_info = inv_data[i]
-			#if item_info == null:
-				#inventory[i] = null
-			#else:
-				#var item_id = item_info.get("item_id", "")
-				#var amount = item_info.get("amount", 0)
-				#var item_data = ItemDataBase.get_item_by_id(item_id)
-				#if item_data:
-					#inventory[i] = {
-						#"item_data": item_data,
-						#"amount": amount
-					#}
-				#else:
-					#print("⚠️ No se encontró el ítem:", item_id)
-		#else:
-			#inventory[i] = null
-	#
-	#emit_signal("inventory_updated", inventory)
-	#emit_signal("health_changed", current_health, max_health)
-	#print("✅ Jugador restaurado desde guardado.")
-
 
 # ----- XP & StatPoints Gains -----
 

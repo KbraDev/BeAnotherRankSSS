@@ -1,6 +1,5 @@
-[gd_scene load_steps=3 format=3 uid="uid://j631k64daxbc"]
+[gd_scene load_steps=2 format=3 uid="uid://j631k64daxbc"]
 
-[ext_resource type="FontFile" uid="uid://bpv342cmnccd3" path="res://assets/fonts/MedievalSharp-Bold.ttf" id="1_gcfgs"]
 [ext_resource type="Script" uid="uid://cjxjyuklir5ve" path="res://UIs/PauseMenu/script/pause_menu.gd" id="1_vlbrm"]
 
 [node name="CanvasLayer" type="CanvasLayer"]
@@ -30,7 +29,6 @@ grow_vertical = 2
 [node name="Label" type="Label" parent="Panel/VBoxContainer"]
 custom_minimum_size = Vector2(180, 40)
 layout_mode = 2
-theme_override_fonts/font = ExtResource("1_gcfgs")
 theme_override_font_sizes/font_size = 20
 text = "Pause"
 horizontal_alignment = 1
@@ -40,42 +38,36 @@ vertical_alignment = 1
 texture_filter = 1
 custom_minimum_size = Vector2(180, 50)
 layout_mode = 2
-theme_override_fonts/font = ExtResource("1_gcfgs")
 theme_override_font_sizes/font_size = 20
 text = "Guardar"
 
 [node name="Save2" type="Button" parent="Panel/VBoxContainer"]
 custom_minimum_size = Vector2(180, 50)
 layout_mode = 2
-theme_override_fonts/font = ExtResource("1_gcfgs")
 theme_override_font_sizes/font_size = 20
 text = "Guardar (slot 2)"
 
 [node name="Save3" type="Button" parent="Panel/VBoxContainer"]
 custom_minimum_size = Vector2(180, 50)
 layout_mode = 2
-theme_override_fonts/font = ExtResource("1_gcfgs")
 theme_override_font_sizes/font_size = 20
 text = "Guardar (slot 3)"
 
 [node name="LoadSlot1" type="Button" parent="Panel/VBoxContainer"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
-theme_override_fonts/font = ExtResource("1_gcfgs")
 theme_override_font_sizes/font_size = 20
 text = "Cargar"
 
 [node name="LoadSlot2" type="Button" parent="Panel/VBoxContainer"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
-theme_override_fonts/font = ExtResource("1_gcfgs")
 theme_override_font_sizes/font_size = 20
 text = "Cargar (slot2)"
 
 [node name="LoadSlot3" type="Button" parent="Panel/VBoxContainer"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
-theme_override_fonts/font = ExtResource("1_gcfgs")
 theme_override_font_sizes/font_size = 20
 text = "Cargar (slot 3)"
 
@@ -83,21 +75,18 @@ text = "Cargar (slot 3)"
 texture_filter = 1
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
-theme_override_fonts/font = ExtResource("1_gcfgs")
 theme_override_font_sizes/font_size = 20
 text = "Salir al menu"
 
 [node name="Settings" type="Button" parent="Panel/VBoxContainer"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
-theme_override_fonts/font = ExtResource("1_gcfgs")
 theme_override_font_sizes/font_size = 20
 text = "Configuracion"
 
 [node name="Close" type="Button" parent="Panel/VBoxContainer"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
-theme_override_fonts/font = ExtResource("1_gcfgs")
 theme_override_font_sizes/font_size = 20
 text = "Cerrar
 "

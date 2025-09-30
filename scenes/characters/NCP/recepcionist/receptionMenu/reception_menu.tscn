@@ -1,7 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://cr4yeo3h2jnqi"]
+[gd_scene load_steps=2 format=3 uid="uid://cr4yeo3h2jnqi"]
 
 [ext_resource type="Script" uid="uid://b2x15tkq2tv88" path="res://scenes/characters/NCP/recepcionist/receptionMenu/reception_menu.gd" id="1_jeehf"]
-[ext_resource type="FontFile" uid="uid://bpv342cmnccd3" path="res://assets/fonts/MedievalSharp-Bold.ttf" id="1_xx3jh"]
 
 [node name="ReceptionMenu" type="Control"]
 layout_mode = 3
@@ -33,16 +32,13 @@ grow_vertical = 2
 
 [node name="Button(SelectMIsion)" type="Button" parent="Panel/VBoxContainer"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("1_xx3jh")
 text = "Seleccionar Mision"
 
 [node name="Button(EnterMision)" type="Button" parent="Panel/VBoxContainer"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("1_xx3jh")
 text = "Entregar Mision"
 
 [node name="Button(Salir)" type="Button" parent="Panel/VBoxContainer"]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("1_xx3jh")
 text = "Salir
 "

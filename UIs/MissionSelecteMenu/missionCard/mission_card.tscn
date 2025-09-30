@@ -1,9 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://xo32p22vhwqu"]
+[gd_scene load_steps=2 format=3 uid="uid://xo32p22vhwqu"]
 
 [ext_resource type="Script" uid="uid://l0tt2f2qmkkl" path="res://UIs/MissionSelecteMenu/missionCard/mission_card.gd" id="1_qc2n4"]
-[ext_resource type="FontFile" uid="uid://bpv342cmnccd3" path="res://assets/fonts/MedievalSharp-Bold.ttf" id="2_6abek"]
-[ext_resource type="FontFile" uid="uid://chu6eiqfwrqhx" path="res://assets/fonts/MedievalSharp-Book.ttf" id="3_lsyg6"]
-[ext_resource type="FontFile" uid="uid://bi6gva0kh4cdj" path="res://assets/fonts/MedievalSharp-BoldOblique.ttf" id="4_6crxe"]
 
 [node name="MissionCard" type="Control"]
 custom_minimum_size = Vector2(500, 180)
@@ -23,7 +20,6 @@ offset_left = 16.0
 offset_top = 8.0
 offset_right = 476.0
 offset_bottom = 39.0
-theme_override_fonts/font = ExtResource("2_6abek")
 theme_override_font_sizes/font_size = 25
 text = "Titulo de Mision"
 
@@ -34,7 +30,6 @@ offset_left = 16.0
 offset_top = 40.0
 offset_right = 296.0
 offset_bottom = 140.0
-theme_override_fonts/font = ExtResource("3_lsyg6")
 theme_override_font_sizes/font_size = 18
 text = "DESCRIPCION DE MISION"
 autowrap_mode = 3
@@ -46,7 +41,6 @@ offset_left = 304.0
 offset_top = 39.0
 offset_right = 494.0
 offset_bottom = 62.0
-theme_override_fonts/font = ExtResource("4_6crxe")
 text = "recompensa
 "
 
@@ -57,7 +51,6 @@ offset_left = 304.0
 offset_top = 64.0
 offset_right = 494.0
 offset_bottom = 87.0
-theme_override_fonts/font = ExtResource("4_6crxe")
 text = "Rango: "
 
 [node name="Button" type="Button" parent="Panel"]
@@ -67,6 +60,5 @@ offset_left = 16.0
 offset_top = 144.0
 offset_right = 486.0
 offset_bottom = 177.0
-theme_override_fonts/font = ExtResource("2_6abek")
 theme_override_font_sizes/font_size = 20
 text = "Aceptar mision"
