@@ -428,6 +428,15 @@ loot_table = Array[Dictionary]([{
 "min": 1
 }])
 
+[node name="WoodChest2" parent="Chests" instance=ExtResource("18_ofb13")]
+position = Vector2(-1080, 192)
+chest_id = "0002"
+hits_to_open = 3
+
+[node name="WoodChest3" parent="Chests" instance=ExtResource("18_ofb13")]
+position = Vector2(-640, 1760)
+chest_id = "0003"
+
 [connection signal="body_entered" from="Gate/ToOlidTown" to="Gate/ToOlidTown" method="_on_body_entered"]
 [connection signal="body_entered" from="Gate/ToRuinsOlid" to="Gate/ToRuinsOlid" method="_on_body_entered"]
 [connection signal="body_entered" from="Gate/ToMilisTrail" to="Gate/ToMilisTrail" method="_on_body_entered"]

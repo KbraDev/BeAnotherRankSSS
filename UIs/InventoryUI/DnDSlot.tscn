@@ -3,16 +3,16 @@
 [ext_resource type="Script" uid="uid://dpmx0xd6hf6vj" path="res://UIs/InventoryUI/dnd_slot.gd" id="2_ws3h8"]
 
 [node name="DnDSlot" type="TextureRect"]
-custom_minimum_size = Vector2(75, 75)
+custom_minimum_size = Vector2(77, 77)
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -640.0
+offset_left = -640.5
 offset_top = -360.0
-offset_right = -565.0
-offset_bottom = -285.0
+offset_right = -563.5
+offset_bottom = -281.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 0
@@ -24,10 +24,11 @@ script = ExtResource("2_ws3h8")
 [node name="Panel" type="Panel" parent="."]
 self_modulate = Color(1, 1, 1, 0)
 show_behind_parent = true
+z_index = 21
 custom_minimum_size = Vector2(77, 77)
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 76.0
+offset_bottom = 79.0
 mouse_filter = 2
 
 [node name="Amount" type="Label" parent="."]

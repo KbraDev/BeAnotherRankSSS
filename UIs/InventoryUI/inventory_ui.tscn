@@ -22,120 +22,6 @@ position = Vector2(640, 310)
 scale = Vector2(1.34867, 1.4043)
 texture = ExtResource("2_gnat5")
 
-[node name="NinePatchRect" type="NinePatchRect" parent="."]
-layout_mode = 0
-offset_left = 443.0
-offset_top = 116.0
-offset_right = 923.0
-offset_bottom = 520.0
-
-[node name="GridContainer" type="GridContainer" parent="NinePatchRect"]
-custom_minimum_size = Vector2(480, 404)
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -240.0
-offset_top = -202.0
-offset_right = 240.0
-offset_bottom = 202.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-columns = 6
-
-[node name="DnDSlot" parent="NinePatchRect/GridContainer" instance=ExtResource("3_gnat5")]
-layout_mode = 2
-
-[node name="DnDSlot2" parent="NinePatchRect/GridContainer" instance=ExtResource("3_gnat5")]
-layout_mode = 2
-
-[node name="DnDSlot3" parent="NinePatchRect/GridContainer" instance=ExtResource("3_gnat5")]
-layout_mode = 2
-
-[node name="DnDSlot4" parent="NinePatchRect/GridContainer" instance=ExtResource("3_gnat5")]
-layout_mode = 2
-
-[node name="DnDSlot5" parent="NinePatchRect/GridContainer" instance=ExtResource("3_gnat5")]
-layout_mode = 2
-
-[node name="DnDSlot6" parent="NinePatchRect/GridContainer" instance=ExtResource("3_gnat5")]
-layout_mode = 2
-
-[node name="DnDSlot7" parent="NinePatchRect/GridContainer" instance=ExtResource("3_gnat5")]
-layout_mode = 2
-
-[node name="DnDSlot8" parent="NinePatchRect/GridContainer" instance=ExtResource("3_gnat5")]
-layout_mode = 2
-
-[node name="DnDSlot9" parent="NinePatchRect/GridContainer" instance=ExtResource("3_gnat5")]
-layout_mode = 2
-
-[node name="DnDSlot10" parent="NinePatchRect/GridContainer" instance=ExtResource("3_gnat5")]
-layout_mode = 2
-
-[node name="DnDSlot11" parent="NinePatchRect/GridContainer" instance=ExtResource("3_gnat5")]
-layout_mode = 2
-
-[node name="DnDSlot12" parent="NinePatchRect/GridContainer" instance=ExtResource("3_gnat5")]
-layout_mode = 2
-
-[node name="DnDSlot13" parent="NinePatchRect/GridContainer" instance=ExtResource("3_gnat5")]
-layout_mode = 2
-
-[node name="DnDSlot14" parent="NinePatchRect/GridContainer" instance=ExtResource("3_gnat5")]
-layout_mode = 2
-
-[node name="DnDSlot15" parent="NinePatchRect/GridContainer" instance=ExtResource("3_gnat5")]
-layout_mode = 2
-
-[node name="DnDSlot16" parent="NinePatchRect/GridContainer" instance=ExtResource("3_gnat5")]
-layout_mode = 2
-
-[node name="DnDSlot17" parent="NinePatchRect/GridContainer" instance=ExtResource("3_gnat5")]
-layout_mode = 2
-
-[node name="DnDSlot18" parent="NinePatchRect/GridContainer" instance=ExtResource("3_gnat5")]
-layout_mode = 2
-
-[node name="DnDSlot19" parent="NinePatchRect/GridContainer" instance=ExtResource("3_gnat5")]
-layout_mode = 2
-
-[node name="DnDSlot20" parent="NinePatchRect/GridContainer" instance=ExtResource("3_gnat5")]
-layout_mode = 2
-
-[node name="DnDSlot21" parent="NinePatchRect/GridContainer" instance=ExtResource("3_gnat5")]
-layout_mode = 2
-
-[node name="DnDSlot22" parent="NinePatchRect/GridContainer" instance=ExtResource("3_gnat5")]
-layout_mode = 2
-
-[node name="DnDSlot23" parent="NinePatchRect/GridContainer" instance=ExtResource("3_gnat5")]
-layout_mode = 2
-
-[node name="DnDSlot24" parent="NinePatchRect/GridContainer" instance=ExtResource("3_gnat5")]
-layout_mode = 2
-
-[node name="DnDSlot25" parent="NinePatchRect/GridContainer" instance=ExtResource("3_gnat5")]
-layout_mode = 2
-
-[node name="DnDSlot26" parent="NinePatchRect/GridContainer" instance=ExtResource("3_gnat5")]
-layout_mode = 2
-
-[node name="DnDSlot27" parent="NinePatchRect/GridContainer" instance=ExtResource("3_gnat5")]
-layout_mode = 2
-
-[node name="DnDSlot28" parent="NinePatchRect/GridContainer" instance=ExtResource("3_gnat5")]
-layout_mode = 2
-
-[node name="DnDSlot29" parent="NinePatchRect/GridContainer" instance=ExtResource("3_gnat5")]
-layout_mode = 2
-
-[node name="DnDSlot30" parent="NinePatchRect/GridContainer" instance=ExtResource("3_gnat5")]
-layout_mode = 2
-
 [node name="ItemTooltip" type="Panel" parent="."]
 self_modulate = Color(1, 1, 1, 0)
 custom_minimum_size = Vector2(200, 100)
@@ -160,3 +46,108 @@ offset_right = 238.0
 offset_bottom = 337.0
 label_settings = SubResource("LabelSettings_pgytd")
 autowrap_mode = 3
+
+[node name="GridContainer" type="GridContainer" parent="."]
+layout_mode = 0
+offset_left = 443.0
+offset_top = 114.0
+offset_right = 924.0
+offset_bottom = 518.0
+mouse_filter = 2
+columns = 6
+
+[node name="DnDSlot" parent="GridContainer" instance=ExtResource("3_gnat5")]
+layout_mode = 2
+
+[node name="DnDSlot2" parent="GridContainer" instance=ExtResource("3_gnat5")]
+layout_mode = 2
+
+[node name="DnDSlot3" parent="GridContainer" instance=ExtResource("3_gnat5")]
+layout_mode = 2
+
+[node name="DnDSlot4" parent="GridContainer" instance=ExtResource("3_gnat5")]
+layout_mode = 2
+
+[node name="DnDSlot5" parent="GridContainer" instance=ExtResource("3_gnat5")]
+layout_mode = 2
+
+[node name="DnDSlot6" parent="GridContainer" instance=ExtResource("3_gnat5")]
+layout_mode = 2
+
+[node name="DnDSlot7" parent="GridContainer" instance=ExtResource("3_gnat5")]
+layout_mode = 2
+
+[node name="DnDSlot8" parent="GridContainer" instance=ExtResource("3_gnat5")]
+layout_mode = 2
+
+[node name="DnDSlot9" parent="GridContainer" instance=ExtResource("3_gnat5")]
+layout_mode = 2
+
+[node name="DnDSlot10" parent="GridContainer" instance=ExtResource("3_gnat5")]
+layout_mode = 2
+
+[node name="DnDSlot11" parent="GridContainer" instance=ExtResource("3_gnat5")]
+layout_mode = 2
+
+[node name="DnDSlot12" parent="GridContainer" instance=ExtResource("3_gnat5")]
+layout_mode = 2
+
+[node name="DnDSlot13" parent="GridContainer" instance=ExtResource("3_gnat5")]
+layout_mode = 2
+
+[node name="DnDSlot14" parent="GridContainer" instance=ExtResource("3_gnat5")]
+layout_mode = 2
+
+[node name="DnDSlot15" parent="GridContainer" instance=ExtResource("3_gnat5")]
+layout_mode = 2
+
+[node name="DnDSlot16" parent="GridContainer" instance=ExtResource("3_gnat5")]
+layout_mode = 2
+
+[node name="DnDSlot17" parent="GridContainer" instance=ExtResource("3_gnat5")]
+layout_mode = 2
+
+[node name="DnDSlot18" parent="GridContainer" instance=ExtResource("3_gnat5")]
+layout_mode = 2
+
+[node name="DnDSlot19" parent="GridContainer" instance=ExtResource("3_gnat5")]
+layout_mode = 2
+
+[node name="DnDSlot20" parent="GridContainer" instance=ExtResource("3_gnat5")]
+layout_mode = 2
+
+[node name="DnDSlot21" parent="GridContainer" instance=ExtResource("3_gnat5")]
+layout_mode = 2
+
+[node name="DnDSlot22" parent="GridContainer" instance=ExtResource("3_gnat5")]
+layout_mode = 2
+
+[node name="DnDSlot23" parent="GridContainer" instance=ExtResource("3_gnat5")]
+layout_mode = 2
+
+[node name="DnDSlot24" parent="GridContainer" instance=ExtResource("3_gnat5")]
+layout_mode = 2
+
+[node name="DnDSlot25" parent="GridContainer" instance=ExtResource("3_gnat5")]
+layout_mode = 2
+
+[node name="DnDSlot26" parent="GridContainer" instance=ExtResource("3_gnat5")]
+layout_mode = 2
+
+[node name="DnDSlot27" parent="GridContainer" instance=ExtResource("3_gnat5")]
+layout_mode = 2
+
+[node name="DnDSlot28" parent="GridContainer" instance=ExtResource("3_gnat5")]
+layout_mode = 2
+
+[node name="DnDSlot29" parent="GridContainer" instance=ExtResource("3_gnat5")]
+layout_mode = 2
+
+[node name="DnDSlot30" parent="GridContainer" instance=ExtResource("3_gnat5")]
+layout_mode = 2
+
+[node name="UseButton" type="Button" parent="."]
+layout_mode = 0
+offset_right = 44.0
+offset_bottom = 31.0
+text = "Usar"

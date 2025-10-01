@@ -1,4 +1,4 @@
-[gd_scene load_steps=50 format=4 uid="uid://ds2wq8nhg5wvu"]
+[gd_scene load_steps=51 format=4 uid="uid://ds2wq8nhg5wvu"]
 
 [ext_resource type="TileSet" uid="uid://rngchcx3q02t" path="res://assets/tilesets/terrain.tres" id="1_1ipq0"]
 [ext_resource type="Script" uid="uid://ypvhqjwloem" path="res://scenes/world/location/MilisCity/city_milis.gd" id="1_8n3rw"]
@@ -27,6 +27,7 @@
 [ext_resource type="Texture2D" uid="uid://bcv44vw5m7e3b" path="res://sprites/houses/cartelGremio.png" id="21_4qygc"]
 [ext_resource type="AudioStream" uid="uid://bmwocro8mvb8e" path="res://SFX/Music/MilisTown/31 16 airship LOOP.mp3" id="26_art45"]
 [ext_resource type="Script" uid="uid://gbl7x7dpqkln" path="res://scenes/world/location/MilisCity/tools/area_2d.gd" id="27_art45"]
+[ext_resource type="PackedScene" uid="uid://dllvjwqfn3upd" path="res://items/_Chests/WoodChests/wood_chest.tscn" id="28_viedm"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2dftv"]
 size = Vector2(272, 10)
@@ -355,7 +356,6 @@ rotates = false
 loop = false
 
 [node name="NPC" parent="NPCs/NPC6/Path2D/PathFollow2D" node_paths=PackedStringArray("path_follow") instance=ExtResource("7_i1jo7")]
-position = Vector2(1655, -101)
 new_spritesheet = ExtResource("13_t0ovs")
 path_follow = NodePath("..")
 dialog_library = Array[String](["....", "Dejame pasar."])
@@ -511,6 +511,18 @@ target_marker_name = "FromMilisCityToGuild"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="tools/gates/Area2D"]
 position = Vector2(0, -7.5)
 shape = SubResource("RectangleShape2D_viedm")
+
+[node name="chests" type="Node" parent="."]
+
+[node name="WoodChest" parent="chests" instance=ExtResource("28_viedm")]
+position = Vector2(-76, 41)
+chest_id = "0004"
+hits_to_open = 3
+
+[node name="WoodChest2" parent="chests" instance=ExtResource("28_viedm")]
+position = Vector2(2386, 580)
+chest_id = "0005"
+hits_to_open = 3
 
 [connection signal="body_entered" from="ToMilisTrail" to="ToMilisTrail" method="_on_body_entered"]
 [connection signal="body_entered" from="tools/gates/Area2D" to="tools/gates/Area2D" method="_on_body_entered"]
