@@ -230,12 +230,25 @@ func perform_attack():
 	for body in attack_area.get_overlapping_bodies():
 		if body.is_in_group("enemies"):
 			body._take_damage(damage)
-			print("dano echo por jugador: ", damage)
+			var dir = (body.global_position - global_position).normalized()
+			
+			print("[Ataque] golpeado: ", body.name, " direction: ", dir)
+			
+			if body.has_method("apply_knockback"):
+				body.apply_knockback(dir, 800.0) # fuerza base para enemigos
+
+			# 🔹 Empuje al jugador en dirección contraria
+			apply_knockback(-dir, 100.0)
+
 		elif body.is_in_group("chests"):
 			body.hit()
 
 	attack_timer.start()
 	combo_timer.start()
+
+
+func apply_knockback(direction: Vector2, force: float):
+	velocity += direction * force
 
 func _on_attack_cooldown_timeout():
 	can_attack = true
