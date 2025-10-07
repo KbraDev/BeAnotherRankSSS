@@ -1,9 +1,10 @@
-[gd_scene load_steps=161 format=3 uid="uid://34rn42brxq64"]
+[gd_scene load_steps=162 format=3 uid="uid://34rn42brxq64"]
 
 [ext_resource type="Script" uid="uid://duu5wm3j88wm1" path="res://scenes/characters/monsters/greenslime/scripts/greenSlime.gd" id="1_6ycib"]
 [ext_resource type="Texture2D" uid="uid://dxpa8n63cji6i" path="res://sprites/characters/mobs/slimes/greenSlime/Slime1_Idle_full.png" id="1_q8ht5"]
 [ext_resource type="Texture2D" uid="uid://cq77v2a023kbm" path="res://sprites/characters/mobs/slimes/greenSlime/Slime1_Death_full.png" id="2_fu5cl"]
 [ext_resource type="Texture2D" uid="uid://cyhga7xxidg4n" path="res://sprites/characters/mobs/slimes/greenSlime/Slime1_Walk_full.png" id="2_kljaa"]
+[ext_resource type="Resource" uid="uid://bfey4ghmpoo6o" path="res://items/resources/slime_teardrop.tres" id="2_lilwl"]
 [ext_resource type="Texture2D" uid="uid://c6dr3m4l3m1fr" path="res://sprites/characters/mobs/slimes/greenSlime/Slime1_Hurt_full.png" id="2_nwtab"]
 [ext_resource type="Texture2D" uid="uid://cj8kld8nfqcy2" path="res://sprites/characters/mobs/slimes/greenSlime/Slime1_Run_full.png" id="3_0td8s"]
 [ext_resource type="Texture2D" uid="uid://7jj4m1llmyec" path="res://sprites/UIS/healthBar/marco.png" id="7_peki2"]
@@ -1161,6 +1162,13 @@ position = Vector2(146, 71)
 collision_layer = 6
 collision_mask = 3
 script = ExtResource("1_6ycib")
+speed = 30.0
+panic_speed = 55.0
+extra_escape_distance = 50.0
+drop_item = ExtResource("2_lilwl")
+mass = 1.0
+knockback_scale = 0.25
+knockback_friction = 800.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.92969, 0.92969)

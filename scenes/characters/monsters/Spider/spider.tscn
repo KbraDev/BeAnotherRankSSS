@@ -1,7 +1,8 @@
-[gd_scene load_steps=56 format=3 uid="uid://b25fhdx87168t"]
+[gd_scene load_steps=57 format=3 uid="uid://b25fhdx87168t"]
 
 [ext_resource type="Script" uid="uid://cgej6dnfp0ru4" path="res://scenes/characters/monsters/Spider/Script/spider.gd" id="1_ed41w"]
 [ext_resource type="Texture2D" uid="uid://di55rf2ba2qru" path="res://sprites/characters/mobs/Spiders/spider02.png" id="1_hnlec"]
+[ext_resource type="Resource" uid="uid://2xm6fmt56rwo" path="res://items/resources/ArmorSpider.tres" id="2_06f2s"]
 [ext_resource type="AudioStream" uid="uid://bc1swu3dglg31" path="res://SFX/Effects/HittinMetal/metal-whoosh-hit.mp3" id="2_menvr"]
 [ext_resource type="Texture2D" uid="uid://7jj4m1llmyec" path="res://sprites/UIS/healthBar/marco.png" id="4_kcuij"]
 [ext_resource type="Texture2D" uid="uid://d1nrndp7wviwo" path="res://sprites/UIS/healthBar/progress.png" id="5_8agfk"]
@@ -378,6 +379,7 @@ radius = 14.0
 [node name="Spider" type="CharacterBody2D" groups=["enemies"]]
 position = Vector2(565, 337)
 script = ExtResource("1_ed41w")
+drop_item = ExtResource("2_06f2s")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.4375, 0.4375)
@@ -414,12 +416,12 @@ debug_color = Color(0.751537, 0.0930297, 0, 0.42)
 
 [node name="Timer_AttackCooldown" type="Timer" parent="."]
 
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+[node name="Audio_Hit" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("2_menvr")
 volume_db = -30.0
 max_distance = 1000.0
 
-[node name="TextureProgressBar" type="TextureProgressBar" parent="."]
+[node name="HealthBar" type="TextureProgressBar" parent="."]
 offset_left = -10.0
 offset_top = -15.0
 offset_right = 10.0

@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=4 uid="uid://fc0amgg3okou"]
+[gd_scene load_steps=15 format=4 uid="uid://fc0amgg3okou"]
 
 [ext_resource type="Script" uid="uid://bcmf2wo72hdft" path="res://scenes/world/zones/milistrail/milis_trail.gd" id="1_r36om"]
 [ext_resource type="TileSet" uid="uid://dvfkq370f0fmb" path="res://assets/tilesets/props.tres" id="2_6fla1"]
@@ -10,6 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://be8s6fsuvru6m" path="res://scenes/characters/player/player.tscn" id="9_t8ubn"]
 [ext_resource type="Script" uid="uid://83qtco7d4r46" path="res://scripts/preload/ScenePortalData.gd" id="9_xavse"]
 [ext_resource type="PackedScene" uid="uid://b25fhdx87168t" path="res://scenes/characters/monsters/Spider/spider.tscn" id="10_cfl1s"]
+[ext_resource type="PackedScene" uid="uid://dllvjwqfn3upd" path="res://items/_Chests/WoodChests/wood_chest.tscn" id="11_4p4bu"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_el5a4"]
 size = Vector2(1146, 17)
@@ -121,56 +122,61 @@ parameters/looping = true
 
 [node name="Spider" parent="Mobs/Spider" instance=ExtResource("10_cfl1s")]
 position = Vector2(535, 654)
-max_health = 17.0
-armor = 0.5
-xp_reward_range = Vector2i(10, 17)
 change_dir_time = 3.0
 enemy_scale = 1.2
+max_health = 17.0
+xp_reward_range = Vector2i(14, 18)
+armor = 0.5
 mass = 1.0
 knockback_scale = 0.25
 
 [node name="Spider2" parent="Mobs/Spider" instance=ExtResource("10_cfl1s")]
 position = Vector2(1179, 537)
-max_health = 17.0
-armor = 1.0
 change_dir_time = 3.0
 enemy_scale = 0.7
+max_health = 17.0
+armor = 1.0
 mass = 0.3
 knockback_scale = 0.075
 knockback_friction = 800.0
 
 [node name="Spider3" parent="Mobs/Spider" instance=ExtResource("10_cfl1s")]
 position = Vector2(2126, 524)
-max_health = 22.0
-armor = 1.3
-xp_reward_range = Vector2i(14, 23)
 change_dir_time = 3.0
 enemy_scale = 1.4
+max_health = 22.0
+xp_reward_range = Vector2i(14, 23)
+armor = 1.3
 mass = 1.4
 knockback_scale = 0.75
 knockback_friction = 800.0
 
 [node name="Spider4" parent="Mobs/Spider" instance=ExtResource("10_cfl1s")]
 position = Vector2(2466, 1088)
-max_health = 22.0
-armor = 1.4
-xp_reward_range = Vector2i(15, 23)
 change_dir_time = 3.0
 enemy_scale = 0.9
+max_health = 22.0
+xp_reward_range = Vector2i(15, 23)
+armor = 1.4
 mass = 0.8
 knockback_scale = 0.2
 knockback_friction = 500.0
 
 [node name="Spider5" parent="Mobs/Spider" instance=ExtResource("10_cfl1s")]
 position = Vector2(2141, 1864)
-max_health = 18.0
-armor = 2.1
-xp_reward_range = Vector2i(16, 25)
 change_dir_time = 3.0
 enemy_scale = 1.6
+max_health = 18.0
+xp_reward_range = Vector2i(16, 25)
+armor = 2.1
 mass = 2.4
 knockback_scale = 0.6
 knockback_friction = 800.0
+
+[node name="chests" type="Node" parent="."]
+
+[node name="WoodChest" parent="chests" instance=ExtResource("11_4p4bu")]
+position = Vector2(968, 424)
 
 [connection signal="body_entered" from="portals/ToMilisCity" to="portals/ToMilisCity" method="_on_body_entered"]
 [connection signal="body_entered" from="portals/ToOlidForest" to="portals/ToOlidForest" method="_on_body_entered"]
