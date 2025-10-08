@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://dlhligdd2twvb"]
+
+[ext_resource type="SpriteFrames" uid="uid://dnefqpy13h0sy" path="res://scenes/characters/monsters/GlobbinRockie/globbin_rockie.tres" id="1_os86r"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_os86r"]
+radius = 8.0
+height = 18.0
+
+[node name="GlobbinRockie" type="CharacterBody2D"]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = ExtResource("1_os86r")
+animation = &"run_attack_right_side"
+frame_progress = 0.779764
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_os86r")
