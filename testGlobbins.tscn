@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://bempniwcnpq8e"]
+
+[ext_resource type="PackedScene" uid="uid://be8s6fsuvru6m" path="res://scenes/characters/player/player.tscn" id="1_gyi8q"]
+[ext_resource type="PackedScene" uid="uid://dlhligdd2twvb" path="res://scenes/characters/monsters/GlobbinRockie/globbin_rockie.tscn" id="2_3wcx5"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="player" parent="." instance=ExtResource("1_gyi8q")]
+position = Vector2(355, 122)
+
+[node name="GlobbinRockie" parent="." instance=ExtResource("2_3wcx5")]
+position = Vector2(626, 201)
