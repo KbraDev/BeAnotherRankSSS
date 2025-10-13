@@ -1017,7 +1017,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_ov0kh")
 }],
 "loop": false,
-"name": &"die_back",
+"name": &"dying_back",
 "speed": 12.0
 }, {
 "frames": [{
@@ -1046,7 +1046,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_kcs8i")
 }],
 "loop": false,
-"name": &"die_front",
+"name": &"dying_front",
 "speed": 12.0
 }, {
 "frames": [{
@@ -1075,7 +1075,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_p38i6")
 }],
 "loop": false,
-"name": &"die_left_side",
+"name": &"dying_left_side",
 "speed": 12.0
 }, {
 "frames": [{
@@ -1104,7 +1104,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_vh87p")
 }],
 "loop": false,
-"name": &"die_right_side",
+"name": &"dying_right_side",
 "speed": 12.0
 }, {
 "frames": [{

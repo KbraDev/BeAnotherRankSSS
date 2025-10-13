@@ -65,7 +65,7 @@ func _physics_process(delta: float) -> void:
 # === SISTEMA DE DAÑO ===
 # =========================
 
-func _take_damage(amount: float) -> void:
+func _take_damage(amount: float, last_direction: String = "front") -> void:
 	if has_died:
 		return
 
@@ -79,8 +79,12 @@ func _take_damage(amount: float) -> void:
 	# 🔊 Sonido de golpe
 	play_sound("hit")
 
-	if animation and animation.sprite_frames.has_animation("hurt_front"):
+	# 🩸 Animación de daño direccional
+	if animation and animation.sprite_frames.has_animation("hurt_" + last_direction):
+		animation.play("hurt_" + last_direction)
+	elif animation and animation.sprite_frames.has_animation("hurt_front"):
 		animation.play("hurt_front")
+
 
 	if current_health <= 0:
 		die()
@@ -89,7 +93,7 @@ func _take_damage(amount: float) -> void:
 # === MUERTE Y DROPS ===
 # =========================
 
-func die() -> void:
+func die(dir: String = "front") -> void:
 	if has_died:
 		return
 
@@ -100,10 +104,24 @@ func die() -> void:
 	# 🔊 Sonido de muerte
 	play_sound("death")
 
-	if animation and animation.sprite_frames.has_animation("dying"):
+	# 🧱 Desactivar colisiones y áreas
+	for child in get_children():
+		if child is CollisionShape2D or child is CollisionPolygon2D or child is Area2D:
+			child.set_deferred("monitoring", false)
+			child.set_deferred("disabled", true)
+
+	# ⚰️ Animación de muerte direccional
+	if animation and animation.sprite_frames.has_animation("dying_" + dir):
+		animation.play("dying_" + dir)
+		await animation.animation_finished
+	elif animation and animation.sprite_frames.has_animation("dying"):
 		animation.play("dying")
-	else:
-		_on_enemy_died()
+		await animation.animation_finished
+
+	# 🌫️ Efecto de desvanecimiento antes de desaparecer
+	var tween = get_tree().create_tween()
+	tween.tween_property(self, "modulate:a", 0.0, 3.0)
+	tween.tween_callback(Callable(self, "_on_enemy_died"))
 
 func _on_enemy_died() -> void:
 	if drop_item:
