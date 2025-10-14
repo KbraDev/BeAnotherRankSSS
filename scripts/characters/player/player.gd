@@ -55,6 +55,10 @@ var is_attacking := false
 var attack_click_count := 0
 var current_attack := 1
 
+var last_attack_time := 0.0
+var double_click_threshold := 0.50
+var combo_queued := false
+
 # Dash
 var is_dashing: bool = false
 var dash_speed := 400.0
@@ -85,6 +89,8 @@ var run_interval := 0.5
 @onready var animation = $AnimatedSprite2D
 @onready var camera = $Camera2D
 @onready var footstep_player : AudioStreamPlayer = $FootstepPlayer
+@onready var sword_hit = $SFX/sword/SwordHit
+@onready var attack0_voice = $SFX/Voices/Attack0
 @onready var tilemap: TileMapLayer = get_tree().get_first_node_in_group("ground")
 
 @onready var attack_timer = Timer.new()
@@ -138,27 +144,47 @@ func _ready():
 func _physics_process(delta: float) -> void:
 	directional_movement()
 	move_and_slide()
-	
-	if Input.is_action_just_pressed("attack") and can_attack:
-		attack_click_count += 1
 
-	if attack_click_count > 0 and not is_attacking and can_attack:
-		velocity = Vector2.ZERO
-		perform_attack()
-
-	# Detectar superficie bajo el jugador
+	# --- Detección de superficie bajo el jugador ---
 	if tilemap:
 		var cell: Vector2i = tilemap.local_to_map(global_position)
-		var tile_data = tilemap.get_cell_tile_data(cell) # ✅ Ahora funciona en Godot 4
+		var tile_data = tilemap.get_cell_tile_data(cell)
 		if tile_data:
 			var surface_type = tile_data.get_custom_data("surface_type")
 			if surface_type:
 				current_surface = surface_type
 
+	# --- Dash ---
 	if Input.is_action_just_pressed("dash") and can_dash and not is_dashing:
 		start_dash()
-	
+
+	# --- Menú de estadísticas ---
 	_open_statUI()
+
+func _input(event):
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+		if event.double_click:
+			_on_double_attack_input()
+		else:
+			_on_single_attack_input()
+
+func _on_single_attack_input():
+	if not can_attack or is_attacking:
+		return
+	current_attack = 1
+	velocity = Vector2.ZERO
+	perform_attack()
+
+func _on_double_attack_input():
+	# Si el primer ataque está activo, marca combo
+	if is_attacking and current_attack == 1:
+		combo_queued = true
+	# Si no está atacando, lanza combo directamente
+	elif not is_attacking:
+		current_attack = 2
+		velocity = Vector2.ZERO
+		perform_attack()
+
 
 func directional_movement():
 	if not can_move or is_attacking or is_dashing:
@@ -222,6 +248,10 @@ func perform_attack():
 
 	animation.play(animation_name)
 
+	# 🔊 Reproduce el sonido de espadazo
+	sword_hit.play()
+	attack0_voice.play()
+
 	attack_area.monitoring = true
 	attack_area.set_deferred("collision_layer", 1)
 
@@ -264,14 +294,14 @@ func _on_animation_finished():
 		attack_area.set_deferred("collision_layer", 0)
 		animation.flip_h = false
 
-		if attack_click_count > 1 and current_attack == 1:
+		if combo_queued and current_attack == 1:
+			combo_queued = false
 			current_attack = 2
-			attack_click_count = 1
 			perform_attack()
 			return
 
 		current_attack = 1
-		attack_click_count = 0
+		combo_queued = false
 		handle_Animations(Vector2.ZERO)
 
 # ───── DASH ─────
