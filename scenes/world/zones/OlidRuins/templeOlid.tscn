@@ -116,6 +116,7 @@ parameters/looping = true
 
 [node name="GlobbinRockie" parent="." instance=ExtResource("11_fowxs")]
 z_index = 1
-position = Vector2(-1136, 864)
+position = Vector2(-888, 840)
+damage = 18.0
 
 [connection signal="body_entered" from="ToOlidForest" to="ToOlidForest" method="_on_body_entered"]

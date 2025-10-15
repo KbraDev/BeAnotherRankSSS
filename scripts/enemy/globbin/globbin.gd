@@ -8,6 +8,7 @@ class_name Globbin
 @onready var brake_area = $BrakeArea  # 🚦 área de frenado
 
 @export var damage: float = 4.0  # 💥 daño base del Globbin
+@export var rush_damage: float = 0.0
 
 var can_move: bool = true
 var direction: Vector2 = Vector2.ZERO
@@ -18,7 +19,6 @@ var player_target: Node2D = null
 var is_attacking: bool = false
 var player_in_attack_range: bool = false
 var player_in_brake_range: bool = false
-
 
 func _ready() -> void:
 	super()
@@ -39,14 +39,29 @@ func _ready() -> void:
 	if brake_area:
 		brake_area.body_entered.connect(_on_brake_area_body_entered)
 		brake_area.body_exited.connect(_on_brake_area_body_exited)
-
+		
+	# Si no configuraste rush_damage en el inspector, le damos un valor por defecto:
+	if rush_damage <= 0.0:
+		rush_damage = damage * 1.75  # ejemplo: 175% del daño normal
+	
+	rush_check_timer = Timer.new()
+	rush_check_timer.wait_time = 2.5
+	rush_check_timer.autostart = true
+	rush_check_timer.one_shot = false
+	rush_check_timer.timeout.connect(_on_rush_check_timeout)
+	add_child(rush_check_timer)
 
 func _physics_process(delta: float) -> void:
 	if has_died:
 		return
 
+	# ✅ Si está en rush, mueve aquí (no usar timers)
+	if is_rushing:
+		_process_rush(delta)
+		return
+
 	if not can_move:
-		return  # ⛔ Detenido por animación de ataque o daño
+		return
 
 	if player_detected and player_target:
 		_chase_player(delta)
@@ -183,15 +198,28 @@ func _perform_attack(body: Node) -> void:
 # =============================
 # == Aplicar daño al jugador ==
 # =============================
-
-func _damage_player(body: Node) -> void:
+func _damage_player(body: Node, use_rush_damage: bool = false) -> void:
 	if not body or not body.is_in_group("player"):
 		return
-	if body.has_method("take_damage"):
-		body.take_damage(damage)
-		print("🩸 Daño infligido al jugador:", damage)
+
+	if not body.has_method("take_damage"):
+		print("⚠️ El jugador no tiene método take_damage()")
+		return
+
+	var applied_damage: float = damage
+	if use_rush_damage:
+		if rush_damage <= 0.0:
+			applied_damage = damage * 1.5  # fallback: 150% si no se definió rush_damage
+		else:
+			applied_damage = rush_damage
+
+	body.take_damage(applied_damage)
+
+	# Log claro sin operador ternario
+	if use_rush_damage:
+		print("🩸 Daño infligido al jugador:", applied_damage, "(RUSH)")
 	else:
-		print("⚠️ El jugador no tiene método _take_damage()")
+		print("🩸 Daño infligido al jugador:", applied_damage, "(normal)")
 
 # ================
 # == Colisiones ==
@@ -239,6 +267,14 @@ func _play_attack_animation() -> void:
 		print("🎬 Reproduciendo animación:", anim_name)
 		sprite.play(anim_name)
 
+func _play_rush_animation() -> void:
+	if not sprite:
+		return
+	var anim_name = "rush_" + last_direction
+	if sprite.sprite_frames.has_animation(anim_name):
+		print("🏃‍♂️ Reproduciendo animación:", anim_name)
+		sprite.play(anim_name)
+
 
 # ==================
 # == Recibir daño ==
@@ -256,3 +292,97 @@ func die(dir: String = "") -> void:
 	if dir == "":
 		dir = last_direction
 	super.die(dir)
+
+
+# ===========================
+# == RUSH DESESPERADO ==
+# ===========================
+
+var rush_attempts: int = 0
+var is_rushing: bool = false
+var rush_check_timer: Timer
+var rush_target: Vector2 = Vector2.ZERO
+var rush_speed: float = 0.0
+var rush_cooldown_active: bool = false
+
+func _on_rush_check_timeout() -> void:
+	if has_died or is_attacking or is_rushing or rush_attempts >= 3:
+		return
+	if current_health > max_health * 0.4:
+		return
+
+	rush_attempts += 1
+	var chance = 0.0
+
+	match rush_attempts:
+		1:
+			chance = 0.33
+		2:
+			chance = 0.66
+		3:
+			chance = 0.999
+		_:
+			chance = 0.0
+
+	if randf() < chance:
+		print("💨 Rush activado! Intento:", rush_attempts, "Probabilidad:", chance)
+		_start_rush()
+	else:
+		print("😤 Rush fallido. Intento:", rush_attempts, "Probabilidad:", chance)
+
+func _start_rush() -> void:
+	if not player_target or has_died:
+		return
+
+	is_rushing = true
+	is_attacking = false
+	can_move = false
+	velocity = Vector2.ZERO
+
+	var to_player = (player_target.global_position - global_position).normalized()
+	last_direction = _get_cardinal_direction(to_player)
+
+	rush_target = player_target.global_position + (to_player * 50.0)
+	rush_speed = move_speed * 4.0
+
+	_play_rush_animation()
+	print("💢 Globbin inicia RUSH hacia", rush_target)
+
+# =========================
+# == Procesamiento RUSH ==
+# =========================
+func _process_rush(delta: float) -> void:
+	var to_target: Vector2 = rush_target - global_position
+
+	# llegó al objetivo sin impacto
+	if to_target.length() < 10.0:
+		print("🛑 Rush terminado sin impacto.")
+		_end_rush()
+		return
+
+	# moverse hacia el objetivo
+	direction = to_target.normalized()
+	velocity = direction * rush_speed
+	move_and_slide()
+
+	# Colisión real con jugador (distancia de impacto)
+	if player_target and global_position.distance_to(player_target.global_position) < 24.0:
+		print("💥 Rush impacta al jugador!")
+		_damage_player(player_target, true)  # usa daño de rush
+		_end_rush()
+
+func _end_rush() -> void:
+	is_rushing = false
+	velocity = Vector2.ZERO
+
+	await get_tree().create_timer(0.8).timeout
+	can_move = true
+	print("😮‍💨 Globbin se recupera del rush.")
+
+	# 🔁 Reinicia el ciclo del rush después de 6s
+	rush_attempts = 0
+	rush_cooldown_active = true
+	print("⏳ Iniciando cooldown de rush (6s)")
+	await get_tree().create_timer(6.0).timeout
+	rush_cooldown_active = false
+	print("🎯 Rush listo para intentar de nuevo")

@@ -13,8 +13,8 @@ height = 24.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_mcwmj"]
 radius = 29.0
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_2a2nm"]
-size = Vector2(321, 236.5)
+[sub_resource type="CircleShape2D" id="CircleShape2D_2a2nm"]
+radius = 350.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_fkoyn"]
 radius = 26.0192
@@ -24,10 +24,9 @@ radius = 22.0
 
 [node name="GlobbinRockie" type="CharacterBody2D"]
 script = ExtResource("1_2a2nm")
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-sprite_frames = ExtResource("1_os86r")
-animation = &"dying_front"
+max_health = 24.0
+move_speed = 40.0
+xp_reward_range = Vector2i(15, 22)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -4)
@@ -43,7 +42,7 @@ collision_layer = 6
 collision_mask = 3
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
-shape = SubResource("RectangleShape2D_2a2nm")
+shape = SubResource("CircleShape2D_2a2nm")
 debug_color = Color(0.67296, 0.507706, 0, 0.42)
 
 [node name="AttackArea" type="Area2D" parent="."]
@@ -76,3 +75,8 @@ script = ExtResource("4_r1bri")
 [node name="Audio_Attack" type="AudioStreamPlayer2D" parent="."]
 
 [node name="Audio_death" type="AudioStreamPlayer2D" parent="."]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = ExtResource("1_os86r")
+animation = &"rush_front"
+frame_progress = 0.410372
