@@ -1,6 +1,6 @@
 extends Control ## selected Menu
 
-signal mission_selected(mission: Mission)
+signal mission_selected(mission: MissionResource)
 signal menu_closed
 
 @onready var btn_close = $btnClose
@@ -31,7 +31,7 @@ func _clear_list():
 	for child in mission_list.get_children():
 		child.queue_free()
 
-func _on_mission_accepted(mission: Mission):
+func _on_mission_accepted(mission: MissionResource):
 	var floating = get_tree().get_root().get_node_or_null("WorldManager/HUD/FloatingNotificationManager")
 	# Agregar al tracker
 	var succes := MissionTracker.add_mission(mission)
@@ -40,7 +40,6 @@ func _on_mission_accepted(mission: Mission):
 		emit_signal("mission_selected", mission)
 		floating.show_message("🎉 Misión aceptada: %s" % mission.name, Color.WHITE)
 	else: 
-		print("no se pudo agregar la mision")
 		floating.show_message("⚠️ Límite de misiones activas alcanzado", Color.ORANGE)
 
 	close()

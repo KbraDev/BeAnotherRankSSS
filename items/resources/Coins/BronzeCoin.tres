@@ -8,3 +8,4 @@ script = ExtResource("2_xpav8")
 coin_id = "BronzeCoin"
 coin_name = "Moneda de Bronze"
 icon = ExtResource("1_atepd")
+item_name = "Moneda de Bronze"

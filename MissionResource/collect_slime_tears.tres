@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="CollectMission" load_steps=2 format=3 uid="uid://diafxwdn7i5wr"]
+
+[ext_resource type="Script" uid="uid://c8qgluqn1kg5p" path="res://scripts/missions/collectMission.gd" id="1_0qhtt"]
+
+[resource]
+script = ExtResource("1_0qhtt")
+item_required = "slimeTear"
+amount_required = 3
+track_progress = true
+id = "collect_slime_tears"
+name = "Caza de Slimes"
+description = "Caza slimes y consigue 5 gotas provenientes de Slimes."
+rank = "E"
+mission_type = "base"
+required_rank = "E"
+rewards_xp = 50
+rewards_items = [{
+"amount": 10,
+"id": "BronzeCoin"
+}]
+metadata/_custom_type_script = "uid://c8qgluqn1kg5p"

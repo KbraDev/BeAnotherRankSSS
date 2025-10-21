@@ -20,7 +20,6 @@ func _ready() -> void:
 
 	# Conectar señales de cada slot
 	for slot in slots:
-		print_debug("Conectando señales de slot:", slot.name)
 		slot.connect("hover_started", Callable(self, "_on_slot_hover_started"))
 		slot.connect("hover_ended", Callable(self, "_on_slot_hover_ended"))
 		slot.connect("item_used", Callable(self, "_on_slot_item_used"))

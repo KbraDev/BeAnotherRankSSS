@@ -29,7 +29,9 @@ class_name Enemy
 # =========================
 
 @onready var health_bar: Node = $HealthBar if has_node("HealthBar") else null
-@onready var animation: AnimatedSprite2D = $AnimatedSprite2D if has_node("AnimatedSprite2D") else null
+@onready var animation: AnimatedSprite2D = (
+	$AnimatedSprite2D if has_node("AnimatedSprite2D") else null
+)
 
 # 🎧 Audio opcional (detecta automáticamente si existen)
 @onready var audio_hit: AudioStreamPlayer2D = $Audio_Hit if has_node("Audio_Hit") else null
@@ -42,6 +44,7 @@ class_name Enemy
 
 var current_health: float
 var has_died: bool = false
+var _death_failsafe_timer: Timer = null
 
 # =========================
 # === CICLO DE VIDA ===
@@ -53,6 +56,16 @@ func _ready() -> void:
 		health_bar.max_value = max_health
 		health_bar.value = current_health
 		health_bar.visible = false
+
+	if animation == null:
+		for n in get_children():
+			if n is AnimatedSprite2D:
+				animation = n
+				break
+
+	if animation:
+		if not animation.is_connected("animation_finished", Callable(self, "_on_animation_finished_internal")):
+			animation.animation_finished.connect(_on_animation_finished_internal)
 
 	add_to_group("enemies")
 
@@ -74,17 +87,19 @@ func _take_damage(amount: float, last_direction: String = "front") -> void:
 
 	if health_bar:
 		health_bar.value = current_health
-		health_bar.show_for_a_while()
+		if health_bar.has_method("show_for_a_while"):
+			health_bar.show_for_a_while()
+		else:
+			health_bar.visible = true
 
-	# 🔊 Sonido de golpe
 	play_sound("hit")
 
-	# 🩸 Animación de daño direccional
-	if animation and animation.sprite_frames.has_animation("hurt_" + last_direction):
-		animation.play("hurt_" + last_direction)
-	elif animation and animation.sprite_frames.has_animation("hurt_front"):
-		animation.play("hurt_front")
-
+	if animation:
+		var hurt_dir = "hurt_" + last_direction
+		if animation.sprite_frames.has_animation(hurt_dir):
+			animation.play(hurt_dir)
+		elif animation.sprite_frames.has_animation("hurt_front"):
+			animation.play("hurt_front")
 
 	if current_health <= 0:
 		die()
@@ -100,28 +115,57 @@ func die(dir: String = "front") -> void:
 	has_died = true
 	velocity = Vector2.ZERO
 	set_physics_process(false)
+	set_process(false)
 
-	# 🔊 Sonido de muerte
 	play_sound("death")
 
-	# 🧱 Desactivar colisiones y áreas
 	for child in get_children():
 		if child is CollisionShape2D or child is CollisionPolygon2D or child is Area2D:
 			child.set_deferred("monitoring", false)
 			child.set_deferred("disabled", true)
 
-	# ⚰️ Animación de muerte direccional
-	if animation and animation.sprite_frames.has_animation("dying_" + dir):
-		animation.play("dying_" + dir)
-		await animation.animation_finished
-	elif animation and animation.sprite_frames.has_animation("dying"):
-		animation.play("dying")
-		await animation.animation_finished
+	set_deferred("collision_layer", 0)
+	set_deferred("collision_mask", 0)
 
-	# 🌫️ Efecto de desvanecimiento antes de desaparecer
+	if animation:
+		var anim_name_dir = "dying_" + dir
+		var has_dir_anim = animation.sprite_frames.has_animation(anim_name_dir)
+		var has_default_anim = animation.sprite_frames.has_animation("dying")
+
+		_death_failsafe_timer = Timer.new()
+		_death_failsafe_timer.one_shot = true
+		_death_failsafe_timer.wait_time = 4.0
+		_death_failsafe_timer.timeout.connect(Callable(self, "_on_death_failsafe_timeout"))
+		add_child(_death_failsafe_timer)
+		_death_failsafe_timer.start()
+
+		if has_dir_anim:
+			animation.play(anim_name_dir)
+			await animation.animation_finished
+		elif has_default_anim:
+			animation.play("dying")
+			await animation.animation_finished
+		else:
+			_on_enemy_died()
+			return
+	else:
+		_on_enemy_died()
+		return
+
+	if _death_failsafe_timer:
+		_death_failsafe_timer.stop()
+		_death_failsafe_timer.queue_free()
+		_death_failsafe_timer = null
+
 	var tween = get_tree().create_tween()
-	tween.tween_property(self, "modulate:a", 0.0, 3.0)
+	tween.tween_property(self, "modulate:a", 0.0, 1.5)
 	tween.tween_callback(Callable(self, "_on_enemy_died"))
+
+func _on_death_failsafe_timeout() -> void:
+	_on_enemy_died()
+
+func _on_animation_finished_internal(_anim_name: String) -> void:
+	pass # Solo se usa para los awaits del flujo de muerte
 
 func _on_enemy_died() -> void:
 	if drop_item:
@@ -130,13 +174,23 @@ func _on_enemy_died() -> void:
 		pickup.item_data = drop_item
 		pickup.amount = 1
 		pickup.global_position = global_position
-		get_tree().current_scene.add_child(pickup)
+		var cs = get_tree().current_scene
+		if cs:
+			cs.add_child(pickup)
 
 	var player = get_tree().get_first_node_in_group("player")
 	if player and player.has_method("gain_experience"):
 		var xp = randi_range(xp_reward_range.x, xp_reward_range.y)
 		player.gain_experience(xp)
-		print("🎁", player.name, "ganó", xp, "XP por matar a", enemy_name)
+
+	set_deferred("collision_layer", 0)
+	set_deferred("collision_mask", 0)
+
+	if _death_failsafe_timer:
+		if not _death_failsafe_timer.is_stopped():
+			_death_failsafe_timer.stop()
+		_death_failsafe_timer.queue_free()
+		_death_failsafe_timer = null
 
 	queue_free()
 
@@ -145,20 +199,19 @@ func _on_enemy_died() -> void:
 # =========================
 
 func apply_knockback(direction: Vector2, force: float):
+	if has_died:
+		return
+
 	if mass <= 0.0:
 		mass = 1.0
 
 	var acceleration = force / mass
 	var target_velocity = direction * (acceleration * knockback_scale)
-
-	# Cancelar tweens anteriores para evitar acumulación
 	get_tree().create_tween().kill()
 
 	var tween = get_tree().create_tween()
 	tween.tween_property(self, "velocity", target_velocity, 0.08).set_ease(Tween.EASE_OUT)
 	tween.tween_property(self, "velocity", Vector2.ZERO, 0.35).set_ease(Tween.EASE_OUT)
-
-	print("[Knockback] →", enemy_name, "dir:", direction, "vel:", target_velocity)
 
 # =========================
 # === SONIDOS ===
@@ -174,5 +227,5 @@ func play_sound(type: String) -> void:
 		"death":
 			player = audio_death
 	if player:
-		player.pitch_scale = randf_range(0.95, 1.05) # variación natural
+		player.pitch_scale = randf_range(0.95, 1.05)
 		player.play()

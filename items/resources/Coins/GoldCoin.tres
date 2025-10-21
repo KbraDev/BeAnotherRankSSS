@@ -8,3 +8,4 @@ script = ExtResource("2_8virq")
 coin_id = "GoldCoin"
 coin_name = "Moneda de Oro"
 icon = ExtResource("1_71pge")
+item_name = "Medallon de Oro"

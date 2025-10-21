@@ -37,6 +37,7 @@ window/stretch/mode="viewport"
 [file_customization]
 
 folder_colors={
+"res://MissionResource/": "teal",
 "res://SFX/": "purple",
 "res://UIs/": "blue",
 "res://assets/": "red",

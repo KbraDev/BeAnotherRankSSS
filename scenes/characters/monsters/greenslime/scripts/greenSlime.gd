@@ -100,6 +100,6 @@ func _on_vision_area_body_exited(body: Node2D) -> void:
 
 # === Muerte ===
 func _on_animated_sprite_2d_animation_finished():
-	if has_died and animation.animation == "die_" + last_direction:
+	if has_died and animation.animation == "dying_" + last_direction:
 		super._on_enemy_died()  # usa el sistema de drops y xp del padre
 		emit_signal("slime_died")

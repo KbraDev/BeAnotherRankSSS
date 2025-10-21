@@ -21,20 +21,18 @@ offset_right = 500.0
 offset_bottom = 180.0
 
 [node name="title" type="Label" parent="Panel"]
-custom_minimum_size = Vector2(480, 0)
 layout_mode = 0
 offset_left = 8.0
-offset_right = 488.0
-offset_bottom = 23.0
+offset_right = 314.0
+offset_bottom = 31.0
 text = "Titulo de mision"
-horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="description" type="Label" parent="Panel"]
-custom_minimum_size = Vector2(300, 100)
 layout_mode = 0
 offset_left = 8.0
-offset_top = 32.0
-offset_right = 288.0
+offset_top = 38.0
+offset_right = 308.0
 offset_bottom = 132.0
 text = "Descripcion de mision
 "
@@ -44,18 +42,17 @@ autowrap_mode = 3
 custom_minimum_size = Vector2(170, 50)
 layout_mode = 0
 offset_left = 320.0
-offset_top = 32.0
-offset_right = 425.0
-offset_bottom = 55.0
+offset_top = 7.0
+offset_right = 490.0
+offset_bottom = 82.0
 text = "recompensa: "
 
 [node name="rank" type="Label" parent="Panel"]
-custom_minimum_size = Vector2(170, 50)
 layout_mode = 0
 offset_left = 320.0
-offset_top = 88.0
-offset_right = 369.0
-offset_bottom = 111.0
+offset_top = 91.0
+offset_right = 486.0
+offset_bottom = 140.0
 text = "Rango
 "
 

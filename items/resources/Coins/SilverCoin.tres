@@ -8,3 +8,4 @@ script = ExtResource("2_uaits")
 coin_id = "SilverCoin"
 coin_name = "Tablilla de Plata"
 icon = ExtResource("1_h7oqk")
+item_name = "Tablilla de Plata"

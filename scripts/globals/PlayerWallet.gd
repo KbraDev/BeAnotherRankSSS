@@ -1,6 +1,5 @@
 # PlayerWallet.gd
 extends Node
-class_name PlayerWallet
 
 signal coins_changed
 

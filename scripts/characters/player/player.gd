@@ -89,8 +89,8 @@ var run_interval := 0.5
 @onready var animation = $AnimatedSprite2D
 @onready var camera = $Camera2D
 @onready var footstep_player : AudioStreamPlayer = $FootstepPlayer
-@onready var sword_hit = $SFX/sword/SwordHit
-@onready var attack0_voice = $SFX/Voices/Attack0
+@onready var sword_hit = $SwordHit
+@onready var attack0_voice = $Attack0
 @onready var tilemap: TileMapLayer = get_tree().get_first_node_in_group("ground")
 
 @onready var attack_timer = Timer.new()
@@ -261,8 +261,6 @@ func perform_attack():
 		if body.is_in_group("enemies"):
 			body._take_damage(damage)
 			var dir = (body.global_position - global_position).normalized()
-			
-			print("[Ataque] golpeado: ", body.name, " direction: ", dir)
 			
 			if body.has_method("apply_knockback"):
 				body.apply_knockback(dir, 800.0) # fuerza base para enemigos
@@ -826,7 +824,7 @@ func _upgrade_lucky() -> bool:
 func update_tilemap_reference():
 	tilemap = get_tree().get_first_node_in_group("ground")
 	if tilemap:
-		print("✅ Tilemap encontrado:", tilemap.name)
+		return
 	else:
 		print("❌ No se encontró ningún TileMap en el grupo 'ground'")
 

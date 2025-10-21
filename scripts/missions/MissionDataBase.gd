@@ -2,10 +2,10 @@ extends Node
 
 class_name MissionDatabase
 
-var all_missions: Array[Mission] = []
+var all_missions: Array[MissionResource] = []
 
 func _ready() -> void:
-	load_all_missions("res://UIs/MissionSelecteMenu/Resources/mission/missions/")
+	load_all_missions("res://MissionResource/")
 
 func load_all_missions(path: String):
 	all_missions.clear()
@@ -18,7 +18,7 @@ func load_all_missions(path: String):
 			if file_name.ends_with(".tres"):
 				var full_path = path + "/" + file_name
 				var mission = load(full_path)
-				if mission is Mission:
+				if mission is MissionResource:
 					all_missions.append(mission)
 			file_name = dir.get_next()
 		dir.list_dir_end()

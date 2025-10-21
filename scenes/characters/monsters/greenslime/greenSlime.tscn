@@ -637,7 +637,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_rbw2c")
 }],
 "loop": false,
-"name": &"die_back",
+"name": &"dying_back",
 "speed": 12.0
 }, {
 "frames": [{
@@ -672,7 +672,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_2kx1r")
 }],
 "loop": false,
-"name": &"die_front",
+"name": &"dying_front",
 "speed": 12.0
 }, {
 "frames": [{
@@ -707,7 +707,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_hwo8d")
 }],
 "loop": false,
-"name": &"die_left_side",
+"name": &"dying_left_side",
 "speed": 12.0
 }, {
 "frames": [{
@@ -742,7 +742,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_i3v18")
 }],
 "loop": false,
-"name": &"die_right_side",
+"name": &"dying_right_side",
 "speed": 12.0
 }, {
 "frames": [{
@@ -1173,7 +1173,7 @@ knockback_friction = 800.0
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.92969, 0.92969)
 sprite_frames = SubResource("SpriteFrames_8botf")
-animation = &"die_right_side"
+animation = &"dying_back"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_gf0xv")

@@ -21,6 +21,8 @@ var is_attacking := false
 
 func _ready() -> void:
 	super._ready()
+	animation = anim
+
 	enemy_name = "Araña Coraza"
 	max_health = 25.0
 	armor = 2.0
@@ -39,27 +41,27 @@ func _ready() -> void:
 	add_child(dir_timer)
 	dir_timer.start()
 
-	# Conectar áreas
 	detect_area.body_entered.connect(_on_area_2d_detect_body_entered)
 	detect_area.body_exited.connect(_on_area_2d_detect_body_exited)
 	chase_area.body_entered.connect(_on_area_2d_chase_body_entered)
 	chase_area.body_exited.connect(_on_area_2d_chase_body_exited)
 	attack_area.body_entered.connect(_on_area_2_attack_body_entered)
 	attack_area.body_exited.connect(_on_area_2_attack_body_exited)
+
 	attack_timer.wait_time = 3.0
 	attack_timer.one_shot = true
 	attack_timer.timeout.connect(_on_attack_cooldown_finished)
+
 	anim.frame_changed.connect(_on_animated_sprite_2d_animation_changed)
+	anim.animation_finished.connect(_on_animated_sprite_2d_animation_finished)
 
 	_on_change_direction()
 
 func _physics_process(delta: float) -> void:
 	if has_died:
 		velocity = Vector2.ZERO
-		move_and_slide()
 		return
 
-	# Si hay knockback activo, dejar que Enemy lo maneje
 	if velocity.length() > 0.1:
 		super._physics_process(delta)
 		return
@@ -83,19 +85,20 @@ func _physics_process(delta: float) -> void:
 		velocity = Vector2.ZERO
 		move_and_slide()
 
-# === Movimiento / IA ===
 func _on_change_direction():
 	var dirs = [Vector2.LEFT, Vector2.RIGHT, Vector2.UP, Vector2.DOWN]
 	direction = dirs.pick_random()
 	_update_animation()
 
 func _update_animation():
+	if has_died:
+		return
+
 	if abs(direction.x) > abs(direction.y):
 		anim.play("walk_right_side" if direction.x > 0 else "walk_left_side")
 	else:
 		anim.play("walk_front" if direction.y > 0 else "walk_back")
 
-# === Detección del jugador ===
 func _on_area_2d_detect_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
 		is_player_near = true
@@ -122,14 +125,12 @@ func _on_area_2d_chase_body_exited(body: Node2D) -> void:
 			dir_timer.start()
 			_on_change_direction()
 
-# === Ataque ===
 func _on_area_2_attack_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player") and not is_attacking:
 		_start_attack()
-		
+
 func _on_area_2_attack_body_exited(body: Node2D) -> void:
 	if body.is_in_group("player"):
-		# Aquí podrías poner algo como "cancelar ataque si el jugador sale del rango"
 		pass
 
 func _start_attack():
@@ -156,10 +157,8 @@ func _apply_attack_damage():
 	for body in attack_area.get_overlapping_bodies():
 		if body.is_in_group("player") and body.has_method("take_damage"):
 			body.take_damage(damage, "fisico")
-			print("🕷️ Araña hizo daño:", damage)
 			return
 
-# === Muerte ===
 func _on_animated_sprite_2d_animation_finished():
-	if has_died and anim.animation == "dying":
+	if has_died:
 		super._on_enemy_died()

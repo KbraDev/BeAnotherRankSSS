@@ -8,6 +8,9 @@
 [ext_resource type="Texture2D" uid="uid://xvicw5h88bwx" path="res://sprites/characters/mobs/GobblinKing/orc3_run_full.png" id="6_3444d"]
 [ext_resource type="Texture2D" uid="uid://buhxt0rc3dewi" path="res://sprites/characters/mobs/GobblinKing/orc3_walk_full.png" id="7_iake8"]
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_gx25b"]
+height = 42.0
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_wuacg"]
 atlas = ExtResource("1_4rbns")
 region = Rect2(0, 64, 64, 64)
@@ -1495,17 +1498,14 @@ animations = [{
 "speed": 7.0
 }]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_gx25b"]
-height = 42.0
-
 [node name="GlobbinKing" type="CharacterBody2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -7)
+shape = SubResource("CapsuleShape2D_gx25b")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, 1)
 scale = Vector2(1.48438, 1.48438)
 sprite_frames = SubResource("SpriteFrames_k061o")
 animation = &"die_front"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -7)
-shape = SubResource("CapsuleShape2D_gx25b")
