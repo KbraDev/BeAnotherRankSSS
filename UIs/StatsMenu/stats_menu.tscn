@@ -256,3 +256,17 @@ offset_left = 48.0
 offset_top = 8.0
 offset_right = 124.0
 offset_bottom = 31.0
+
+[node name="LeftPanel" type="Panel" parent="."]
+self_modulate = Color(1, 1, 1, 0)
+layout_mode = 0
+offset_right = 440.0
+offset_bottom = 592.0
+
+[node name="ActiveMissionBox" type="VBoxContainer" parent="LeftPanel"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 112.0
+offset_right = 448.0
+offset_bottom = 704.0
+alignment = 2

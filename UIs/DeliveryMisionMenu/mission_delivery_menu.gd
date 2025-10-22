@@ -20,14 +20,18 @@ func open(missions: Array):
 		card.mission_delivered.connect(_on_mission_delivered)
 		mission_list.add_child(card)
 
-
-
 func _on_mission_delivered(state: MissionState):
 	print("🎉 Misión entregada:", state.mission.name)
+
+	# 1) marcar como completada
 	MissionTracker.complete_mission(state)
+
+	# 2) eliminamos la misión del tracker (emite mission_removed)
+	MissionTracker.remove_mission(state)
+
+	# 3) refrescar visual del menú de entrega
 	_clear_list()
 	open(MissionTracker.get_active_mission()) # refresca el menú
-
 
 func _on_close_pressed():
 	close()

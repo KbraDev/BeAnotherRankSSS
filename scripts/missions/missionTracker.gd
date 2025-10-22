@@ -1,5 +1,9 @@
 extends Node ## MissionTracker
 
+signal mission_progress_updated(mission_state: MissionState)
+signal mission_added(mission_state)
+signal mission_removed(mission_state)  # nueva señal
+
 var active_mission: Array[MissionState] = []
 
 func _ready() -> void:
@@ -36,14 +40,15 @@ func _check_collect_progress(state: MissionState, inventory_data: Array) -> void
 			if item_res and item_data.resource_path == item_res.resource_path:
 				current_amount += slot["amount"]
 
-	# 🔹 Mensaje de depuración: progreso en tiempo real
-	print("📦 Progreso misión '%s': %d / %d" % [mission.name, current_amount, mission.amount_required])
-
+	# actualizar el estado primero
 	state.progress = current_amount
+	emit_signal("mission_progress_updated", state)
+	print("📦 Progreso misión '%s': %d / %d" % [mission.name, current_amount, mission.amount_required])
 
 	if current_amount >= mission.amount_required and state.status == "active":
 		state.status = "ready"
 		print("✅ Misión lista para entregar:", mission.name)
+
 
 # --- AGREGAR MISION ---
 func add_mission(mission: Resource) -> bool:
@@ -62,6 +67,8 @@ func add_mission(mission: Resource) -> bool:
 	print("📜 Misión agregada al tracker: ", mission.name)
 	print("   → Tipo:", mission.mission_type, "| Requiere:", mission.amount_required, mission.item_required)
 
+	emit_signal("mission_added", state)
+
 	var player = get_tree().get_first_node_in_group("player")
 	if player:
 		_on_inventory_updated(player.inventory)
@@ -78,8 +85,13 @@ func fail_mission(state: MissionState) -> void:
 
 
 func complete_mission(state: MissionState) -> void:
+	# marcar completada (por si necesitas registrar logs)
 	state.status = "completed"
 
 
 func remove_mission(state: MissionState) -> void:
-	active_mission.erase(state)
+	if state in active_mission:
+		# emitimos señal antes de eliminar para que la UI se actualice
+		emit_signal("mission_removed", state)
+		active_mission.erase(state)
+		print("🗑️ Misión removida del tracker:", state.mission.name)
