@@ -1,0 +1,53 @@
+[gd_scene load_steps=3 format=3 uid="uid://nklkamblhxqr"]
+
+[ext_resource type="PackedScene" uid="uid://c18bq8id50x34" path="res://UIs/Save_Load_popup/Slot.tscn" id="1_lsjfk"]
+[ext_resource type="Script" uid="uid://dcq4bb4hih5by" path="res://UIs/Save_Load_popup/SaveMenu/popup_save_menu.gd" id="1_q2yf7"]
+
+[node name="Popup_save_menu" type="Panel"]
+process_mode = 3
+offset_right = 478.0
+offset_bottom = 200.0
+script = ExtResource("1_q2yf7")
+
+[node name="VBoxContainer" type="Panel" parent="."]
+self_modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(470, 150)
+layout_mode = 0
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 474.0
+offset_bottom = 196.0
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+offset_top = 2.0
+offset_right = 470.0
+offset_bottom = 25.0
+text = "Guardar Partida"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+offset_left = -4.0
+offset_top = 33.0
+offset_right = 474.0
+offset_bottom = 156.0
+alignment = 1
+
+[node name="Slot" parent="VBoxContainer/HBoxContainer" instance=ExtResource("1_lsjfk")]
+layout_mode = 2
+
+[node name="Slot2" parent="VBoxContainer/HBoxContainer" instance=ExtResource("1_lsjfk")]
+layout_mode = 2
+
+[node name="Slot3" parent="VBoxContainer/HBoxContainer" instance=ExtResource("1_lsjfk")]
+layout_mode = 2
+
+[node name="back_button" type="Button" parent="VBoxContainer"]
+layout_mode = 0
+offset_left = 6.0
+offset_top = 160.0
+offset_right = 464.0
+offset_bottom = 191.0
+text = "Regresar"

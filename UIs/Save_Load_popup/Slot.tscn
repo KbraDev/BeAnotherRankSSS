@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://c18bq8id50x34"]
+
+[node name="Slot" type="Button"]
+custom_minimum_size = Vector2(150, 120)
+offset_right = 150.0
+offset_bottom = 120.0
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 150.0
+offset_bottom = 81.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_top = 84.0
+offset_right = 150.0
+offset_bottom = 120.0

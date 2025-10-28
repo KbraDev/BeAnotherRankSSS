@@ -3,16 +3,13 @@
 [ext_resource type="Script" uid="uid://cjxjyuklir5ve" path="res://UIs/PauseMenu/script/pause_menu.gd" id="1_vlbrm"]
 
 [node name="CanvasLayer" type="CanvasLayer"]
-visible = false
 script = ExtResource("1_vlbrm")
 
 [node name="Panel" type="Panel" parent="."]
-custom_minimum_size = Vector2(200, 550)
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 200.0
+offset_bottom = 350.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
-custom_minimum_size = Vector2(200, 550)
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -20,9 +17,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -100.0
-offset_top = -263.0
+offset_top = -175.0
 offset_right = 100.0
-offset_bottom = 287.0
+offset_bottom = 175.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -34,68 +31,55 @@ text = "Pause"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Save" type="Button" parent="Panel/VBoxContainer"]
+[node name="Resume" type="Button" parent="Panel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Reanudar
+"
+
+[node name="btn_save" type="Button" parent="Panel/VBoxContainer"]
 texture_filter = 1
 custom_minimum_size = Vector2(180, 50)
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
-text = "Guardar"
+text = "Guardar partida"
 
-[node name="Save2" type="Button" parent="Panel/VBoxContainer"]
-custom_minimum_size = Vector2(180, 50)
-layout_mode = 2
-theme_override_font_sizes/font_size = 20
-text = "Guardar (slot 2)"
-
-[node name="Save3" type="Button" parent="Panel/VBoxContainer"]
-custom_minimum_size = Vector2(180, 50)
-layout_mode = 2
-theme_override_font_sizes/font_size = 20
-text = "Guardar (slot 3)"
-
-[node name="LoadSlot1" type="Button" parent="Panel/VBoxContainer"]
+[node name="btn_load" type="Button" parent="Panel/VBoxContainer"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
-text = "Cargar"
+text = "Cargar partida"
 
-[node name="LoadSlot2" type="Button" parent="Panel/VBoxContainer"]
-custom_minimum_size = Vector2(0, 50)
-layout_mode = 2
-theme_override_font_sizes/font_size = 20
-text = "Cargar (slot2)"
-
-[node name="LoadSlot3" type="Button" parent="Panel/VBoxContainer"]
-custom_minimum_size = Vector2(0, 50)
-layout_mode = 2
-theme_override_font_sizes/font_size = 20
-text = "Cargar (slot 3)"
-
-[node name="Leave" type="Button" parent="Panel/VBoxContainer"]
-texture_filter = 1
-custom_minimum_size = Vector2(0, 50)
-layout_mode = 2
-theme_override_font_sizes/font_size = 20
-text = "Salir al menu"
-
-[node name="Settings" type="Button" parent="Panel/VBoxContainer"]
+[node name="btn_settings" type="Button" parent="Panel/VBoxContainer"]
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "Configuracion"
 
-[node name="Close" type="Button" parent="Panel/VBoxContainer"]
+[node name="btn_leave" type="Button" parent="Panel/VBoxContainer"]
+texture_filter = 1
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
-text = "Cerrar
-"
+text = "Menu Principal"
 
-[connection signal="pressed" from="Panel/VBoxContainer/Save" to="." method="_on_save_pressed"]
-[connection signal="pressed" from="Panel/VBoxContainer/Save" to="." method="_on_save1_pressed"]
-[connection signal="pressed" from="Panel/VBoxContainer/Save2" to="." method="_on_save_2_pressed"]
-[connection signal="pressed" from="Panel/VBoxContainer/Save3" to="." method="_on_save_3_pressed"]
-[connection signal="pressed" from="Panel/VBoxContainer/LoadSlot1" to="." method="_on_load_slot_1_pressed"]
-[connection signal="pressed" from="Panel/VBoxContainer/LoadSlot2" to="." method="_on_load_slot_2_pressed"]
-[connection signal="pressed" from="Panel/VBoxContainer/LoadSlot3" to="." method="_on_load_slot_3_pressed"]
-[connection signal="pressed" from="Panel/VBoxContainer/Close" to="." method="_on_close_pressed"]
+[node name="PopupPanel" type="Panel" parent="."]
+self_modulate = Color(1, 1, 1, 0)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -640.0
+offset_top = -160.0
+offset_right = -440.0
+offset_bottom = -160.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[connection signal="pressed" from="Panel/VBoxContainer/Resume" to="." method="_on_close_pressed"]
+[connection signal="pressed" from="Panel/VBoxContainer/btn_save" to="." method="_on_save_pressed"]
+[connection signal="pressed" from="Panel/VBoxContainer/btn_save" to="." method="_on_save1_pressed"]
+[connection signal="pressed" from="Panel/VBoxContainer/btn_load" to="." method="_on_load_slot_1_pressed"]
