@@ -7,23 +7,23 @@ const SLOT_PATHS := {
 	3: SAVE_FOLDER + "slot3.json"
 }
 
-func save_game(player: Node, slot: int = 1 ) -> void:
-	var wm = get_tree().current_scene  # WorldManager debería estar como escena raíz
-	var scene_path = wm.current_world.scene_file_path  # usamos current_world directamente
+func save_game(player: Node, slot: int = 1) -> void:
+	var wm = get_tree().current_scene
+	var scene_path = wm.current_world.scene_file_path
 
 	var data = {
 		"scene_path": scene_path,
 		"player": collect_player_data(player)
 	}
 
-	# Crear carpeta si no existe
 	DirAccess.make_dir_recursive_absolute(SAVE_FOLDER)
 
 	var file = FileAccess.open(SLOT_PATHS[slot], FileAccess.WRITE)
-	file.store_string(JSON.stringify(data, "\t"))  # con identación para debug
+	file.store_string(JSON.stringify(data, "\t"))
 	file.close()
-	print("✅ Partida guardada en slot ", slot)
-	print("💾 Escena guardada:", scene_path)
+
+	# 🟢 Capturar thumbnail después de guardar
+	await _capture_thumbnail(slot)
 
 func load_game(slot: int = 1) -> Dictionary:
 	if not FileAccess.file_exists(SLOT_PATHS[slot]):
@@ -143,3 +143,27 @@ func restore_player_data(player: Node, data: Dictionary) -> void:
 	player.emit_signal("inventory_updated", player.inventory)
 	player.emit_signal("health_changed", player.current_health, player.max_health)
 	print("✅ Datos del jugador restaurados desde SaveManager.")
+
+func _capture_thumbnail(slot: int) -> void:
+	# Captura una imagen del juego sin los CanvasLayers visibles
+	var viewport := get_viewport()
+	if not viewport:
+		return
+
+	# Ocultar temporalmente los CanvasLayers
+	var hidden_layers: Array = []
+	for node in get_tree().get_nodes_in_group("ui"):
+		if node.visible:
+			node.visible = false
+			hidden_layers.append(node)
+
+	# Capturar el contenido actual del viewport
+	await get_tree().process_frame  # Esperar un frame para actualizar
+	var image: Image = viewport.get_texture().get_image()
+	image.resize(320, 180)  # Reducir tamaño (thumbnail estándar)
+	var path := "user://saves/slot%d_thumbnail.png" % slot
+	image.save_png(path)
+
+	# Restaurar visibilidad de los CanvasLayers
+	for node in hidden_layers:
+		node.visible = true

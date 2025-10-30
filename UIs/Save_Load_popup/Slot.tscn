@@ -2,27 +2,27 @@
 
 [ext_resource type="Script" uid="uid://bjxol57qlt5y8" path="res://UIs/Save_Load_popup/slot.gd" id="1_i512n"]
 
-[node name="Slot" type="Button"]
+[node name="Slot" type="Button" groups=["UI"]]
 custom_minimum_size = Vector2(150, 120)
 offset_right = 150.0
 offset_bottom = 120.0
 script = ExtResource("1_i512n")
 
-[node name="TextureRect" type="TextureRect" parent="."]
-layout_mode = 0
-offset_right = 150.0
-offset_bottom = 81.0
-
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 0
-offset_top = 84.0
 offset_right = 150.0
 offset_bottom = 120.0
 
-[node name="LabelTitle" type="Label" parent="VBoxContainer"]
+[node name="Thumbnail" type="TextureRect" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 75)
+layout_mode = 2
+expand_mode = 2
+stretch_mode = 5
+
+[node name="LabelInfo" type="Label" parent="VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 12
 
-[node name="LabelInfo" type="Label" parent="VBoxContainer"]
+[node name="LabelTitle" type="Label" parent="VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 12

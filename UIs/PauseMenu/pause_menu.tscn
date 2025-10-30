@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cjxjyuklir5ve" path="res://UIs/PauseMenu/script/pause_menu.gd" id="1_vlbrm"]
 
-[node name="CanvasLayer" type="CanvasLayer"]
+[node name="CanvasLayer" type="CanvasLayer" groups=["UI"]]
 script = ExtResource("1_vlbrm")
 
 [node name="Panel" type="Panel" parent="."]

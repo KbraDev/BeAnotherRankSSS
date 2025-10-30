@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://c18bq8id50x34" path="res://UIs/Save_Load_popup/Slot.tscn" id="1_lsjfk"]
 [ext_resource type="Script" uid="uid://dcq4bb4hih5by" path="res://UIs/Save_Load_popup/SaveMenu/popup_save_menu.gd" id="1_q2yf7"]
 
-[node name="Popup_save_menu" type="Panel"]
+[node name="Popup_save_menu" type="Panel" groups=["UI"]]
 process_mode = 3
 offset_right = 478.0
 offset_bottom = 200.0

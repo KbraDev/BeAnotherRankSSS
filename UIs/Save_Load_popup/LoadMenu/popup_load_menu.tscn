@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://c18bq8id50x34" path="res://UIs/Save_Load_popup/Slot.tscn" id="1_c38ta"]
 [ext_resource type="Script" uid="uid://cd5naxu4isky1" path="res://UIs/Save_Load_popup/LoadMenu/popup_load_menu.gd" id="1_ldqa5"]
 
-[node name="PopupLoadMenu" type="Panel"]
+[node name="PopupLoadMenu" type="Panel" groups=["UI"]]
 offset_right = 478.0
 offset_bottom = 200.0
 script = ExtResource("1_ldqa5")

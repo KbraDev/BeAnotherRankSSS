@@ -80,7 +80,7 @@ position = Vector2(758, 255)
 
 [node name="FathersHome" parent="WorldContainer" instance=ExtResource("3_mw4p1")]
 
-[node name="HUD" type="CanvasLayer" parent="."]
+[node name="HUD" type="CanvasLayer" parent="." groups=["UI"]]
 script = ExtResource("4_1d48p")
 
 [node name="PlayerHUD" type="Control" parent="HUD"]
