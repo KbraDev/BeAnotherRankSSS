@@ -1,9 +1,12 @@
-[gd_scene format=3 uid="uid://c18bq8id50x34"]
+[gd_scene load_steps=2 format=3 uid="uid://c18bq8id50x34"]
+
+[ext_resource type="Script" uid="uid://bjxol57qlt5y8" path="res://UIs/Save_Load_popup/slot.gd" id="1_i512n"]
 
 [node name="Slot" type="Button"]
 custom_minimum_size = Vector2(150, 120)
 offset_right = 150.0
 offset_bottom = 120.0
+script = ExtResource("1_i512n")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 0
@@ -15,3 +18,11 @@ layout_mode = 0
 offset_top = 84.0
 offset_right = 150.0
 offset_bottom = 120.0
+
+[node name="LabelTitle" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+
+[node name="LabelInfo" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12

@@ -1,40 +1,55 @@
 extends Panel
+signal request_back(resume_game)  # Envía true si se carga partida, false si solo se regresa
 
-signal request_back
-
-@onready var slot1 = $VBoxContainer/HBoxContainer/Slot
-@onready var slot2 = $VBoxContainer/HBoxContainer/Slot2
-@onready var slot3 = $VBoxContainer/HBoxContainer/Slot3
 @onready var back_button = $VBoxContainer/back_button
 
-func _ready():
-	process_mode = Node.PROCESS_MODE_ALWAYS
-	mouse_filter = Control.MOUSE_FILTER_STOP
-	focus_mode = Control.FOCUS_ALL
 
-	# Conexiones
-	slot1.pressed.connect(func(): _on_slot_pressed(1))
-	slot2.pressed.connect(func(): _on_slot_pressed(2))
-	slot3.pressed.connect(func(): _on_slot_pressed(3))
+# --- Inicialización ---
+func _ready() -> void:
+	process_mode = Node.PROCESS_MODE_ALWAYS
+
+	# Buscar contenedor de slots
+	var hbox := get_node_or_null("VBoxContainer/HBoxContainer")
+	if not hbox:
+		return
+
+	# Conectar dinámicamente cada slot
+	var index := 1
+	for child in hbox.get_children():
+		if child.has_signal("slot_pressed"):
+			child.slot_index = index
+			child.slot_pressed.connect(_on_slot_pressed)
+			index += 1
+
+	# Conectar botón de regreso
 	if back_button:
 		back_button.pressed.connect(_on_back_pressed)
 
-	print("📂 Popup de carga listo")
 
-func _on_back_pressed():
-	print("↩️ Botón 'Regresar' PRESSED en Cargar")
-	emit_signal("request_back")
+# --- Refrescar visualmente los slots ---
+func refresh_slots() -> void:
+	var hbox := get_node("VBoxContainer/HBoxContainer")
+	for child in hbox.get_children():
+		if child.has_method("refresh_info"):
+			child.refresh_info()
 
+
+# --- Volver al menú de pausa ---
+func _on_back_pressed() -> void:
+	emit_signal("request_back", false)
+
+
+# --- Cargar partida seleccionada ---
 func _on_slot_pressed(slot_index: int) -> void:
-	print("📂 Intentando cargar slot:", slot_index)
-	if not FileAccess.file_exists("user://saves/slot%d.json" % slot_index):
-		print("⚠️ No hay partida guardada en el slot", slot_index)
+	var path := "user://saves/slot%d.json" % slot_index
+	if not FileAccess.file_exists(path):
 		return
 
-	print("✅ Cargando partida desde slot", slot_index)
-	emit_signal("request_back")
-	get_tree().paused = false
-	SaveManager.load_slot_and_restore(slot_index)
+	# Avisar al PauseMenu que debe cerrar y reanudar el juego
+	emit_signal("request_back", true)
 
-func refresh_slots() -> void:
-	pass
+	# Reanudar el juego antes de cargar
+	get_tree().paused = false
+
+	# Cargar los datos del slot seleccionado
+	SaveManager.load_slot_and_restore(slot_index)
