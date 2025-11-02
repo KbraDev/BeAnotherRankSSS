@@ -174,5 +174,15 @@ func _on_submenu_closed(resume_game: bool) -> void:
 
 # --- Salir al menú principal ---
 func _on_exit_pressed() -> void:
-	# Aquí puedes implementar la transición al menú principal
-	pass
+	_reset_pause_menu_state()
+	hide_menu()
+
+	var world_manager = get_tree().get_first_node_in_group("world_manager")
+
+	if world_manager and world_manager.has_node("HUD/TransitionOverlay/AnimationPlayer"):
+		var anim := world_manager.get_node("HUD/TransitionOverlay/AnimationPlayer")
+		get_tree().paused = false 
+		anim.play("fade_out")
+		await anim.animation_finished
+
+	get_tree().change_scene_to_file("res://scenes/mainScreen/MainScreen.tscn")
