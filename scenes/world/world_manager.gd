@@ -25,39 +25,65 @@ func _ready():
 	_preload_connected_scenes(current_world)
 
 func change_world(scene_path: String, target_marker_name: String) -> void:
-	transition_anim.play("fade_out")
-	await transition_anim.animation_finished
-	
+	print("🌍 [CHANGE_WORLD] Cambiando mundo hacia:", scene_path)
+
+	# --- 1️⃣ Fade Out usando TransitionOverlay global
+	var overlay: Node = null
+	if Engine.has_singleton("TransitionOverlay"):
+		overlay = Engine.get_singleton("TransitionOverlay")
+	elif get_tree().root.has_node("TransitionOverlay"):
+		overlay = get_tree().root.get_node("TransitionOverlay")
+
+	if overlay:
+		print("🎬 [WorldManager] Ejecutando fade_out global...")
+		await overlay.fade_out()
+	elif transition_anim and transition_anim.has_animation("fade_out"):
+		print("🎬 [WorldManager] Ejecutando fade_out local (fallback)...")
+		transition_anim.play("fade_out")
+		await transition_anim.animation_finished
+	else:
+		print("⚠️ Ningún fade_out disponible, cambio instantáneo.")
+
+	# --- 2️⃣ Liberar el mundo actual
 	for child in world_container.get_children():
 		child.queue_free()
 	await get_tree().process_frame
 
+	# --- 3️⃣ Cargar el nuevo mundo
+	var new_world: Node = null
 	if _preloaded_scenes.has(scene_path):
-		_next_scene = _preloaded_scenes[scene_path]
+		new_world = _preloaded_scenes[scene_path].instantiate()
 	else:
-		_next_scene = null
-		_thread.start(Callable(self, "_load_scene_threaded").bind(scene_path))
-		await _thread.wait_to_finish()
+		var loaded_scene := load(scene_path)
+		if loaded_scene:
+			new_world = loaded_scene.instantiate()
+		else:
+			push_error("❌ No se pudo cargar el mundo: " + scene_path)
+			return
 
-	if _next_scene == null:
-		return
-
-	var new_world = _next_scene.instantiate()
-	_remove_duplicate_players(new_world) 
+	_remove_duplicate_players(new_world)
 	world_container.add_child(new_world)
 	current_world = new_world
-	
 	player.update_tilemap_reference()
-	
+
+	# --- 4️⃣ Colocar al jugador en el marcador correcto
 	var marker = _find_marker_in(current_world, target_marker_name)
 	if marker:
 		player.global_position = marker.global_position
+		print("📍 Marcador encontrado:", target_marker_name, "->", player.global_position)
 	else:
-		print("❌ Marker no encontrado:", target_marker_name)
+		print("⚠️ Marcador no encontrado:", target_marker_name)
 
-	transition_anim.play("fade_in")
-	await transition_anim.animation_finished
+	# --- 5️⃣ Fade In global
+	if overlay:
+		print("🎬 [WorldManager] Ejecutando fade_in global...")
+		await overlay.fade_in()
+	elif transition_anim and transition_anim.has_animation("fade_in"):
+		print("🎬 [WorldManager] Ejecutando fade_in local (fallback)...")
+		transition_anim.play("fade_in")
+		await transition_anim.animation_finished
 
+	# --- 6️⃣ Limpieza y postprocesos
 	for s in get_tree().get_nodes_in_group("slime"):
 		s.queue_free()
 
@@ -65,6 +91,8 @@ func change_world(scene_path: String, target_marker_name: String) -> void:
 
 	for checkpoint in current_world.get_tree().get_nodes_in_group("checkpoint"):
 		checkpoint.connect("checkpoint_reached", Callable(player, "update_checkpoint"))
+
+	print("✅ [CHANGE_WORLD] Transición completada correctamente.")
 
 func _remove_duplicate_players(node: Node):
 	if node.name == "player":

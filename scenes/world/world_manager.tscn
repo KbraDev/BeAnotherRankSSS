@@ -80,7 +80,6 @@ script = ExtResource("1_548at")
 [node name="FathersHome" parent="WorldContainer" instance=ExtResource("3_mw4p1")]
 
 [node name="HUD" type="CanvasLayer" parent="." groups=["UI"]]
-visible = false
 script = ExtResource("4_1d48p")
 
 [node name="PlayerHUD" type="Control" parent="HUD"]
@@ -100,7 +99,36 @@ texture_under = ExtResource("5_4uvln")
 texture_over = ExtResource("6_yubee")
 texture_progress = ExtResource("7_f3jnn")
 
+[node name="PauseMenu" parent="HUD" instance=ExtResource("15_i1he6")]
+visible = false
+offset = Vector2(532, 150)
+transform = Transform2D(1, 0, 0, 1, 532, 150)
+
+[node name="TransitionOverlay" type="ColorRect" parent="HUD"]
+modulate = Color(0, 0, 0, 0)
+z_index = 50
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.0142752, 0.0142752, 0.0142752, 1)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="HUD/TransitionOverlay"]
+libraries = {
+&"": SubResource("AnimationLibrary_dtgoh")
+}
+
+[node name="StatsMenu" parent="HUD" instance=ExtResource("16_5kwx7")]
+mouse_filter = 2
+
 [node name="InventoryUI" parent="HUD" instance=ExtResource("4_utxr1")]
+
+[node name="FloatingNotificationManager" parent="HUD" instance=ExtResource("10_uql5h")]
+offset_right = 0.0
+offset_bottom = 0.0
+mouse_filter = 2
 
 [node name="DialogBox" parent="HUD" instance=ExtResource("5_67olm")]
 mouse_filter = 2
@@ -131,32 +159,6 @@ offset_left = 350.0
 offset_top = 10.0
 offset_right = 350.0
 offset_bottom = 10.0
-mouse_filter = 2
-
-[node name="FloatingNotificationManager" parent="HUD" instance=ExtResource("10_uql5h")]
-mouse_filter = 2
-
-[node name="PauseMenu" parent="HUD" instance=ExtResource("15_i1he6")]
-visible = false
-offset = Vector2(532, 150)
-transform = Transform2D(1, 0, 0, 1, 532, 150)
-
-[node name="TransitionOverlay" type="ColorRect" parent="HUD"]
-modulate = Color(0, 0, 0, 0)
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-color = Color(0.0142752, 0.0142752, 0.0142752, 1)
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="HUD/TransitionOverlay"]
-libraries = {
-&"": SubResource("AnimationLibrary_dtgoh")
-}
-
-[node name="StatsMenu" parent="HUD" instance=ExtResource("16_5kwx7")]
 mouse_filter = 2
 
 [node name="MissionDatabase" type="Node2D" parent="."]

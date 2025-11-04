@@ -28,6 +28,7 @@ MissionDataBase="*res://scripts/missions/MissionDataBase.gd"
 Playerwallet="*res://scripts/globals/PlayerWallet.gd"
 ChestRegistry="*res://scripts/globals/ChestRegistry.gd"
 SceneNames="*res://scripts/globals/SceneNames.gd"
+TransitionOverlay="*res://UIs/TransitionOverlay/transition_overlay.tscn"
 
 [display]
 

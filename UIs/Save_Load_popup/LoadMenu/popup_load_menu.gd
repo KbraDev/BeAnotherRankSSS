@@ -1,19 +1,24 @@
 extends Panel
-signal request_back(resume_game)  # Envía true si se carga partida, false si solo se regresa
+
+signal request_back(resume_game: bool)
 
 @onready var back_button = $VBoxContainer/back_button
-var mode: String = "load"  # Puede ser "load" o "new_game"
+var mode: String = "load"  # "new_game" o "load"
 
-# --- Inicialización ---
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
+	refresh_slots()
 
-	# Buscar contenedor de slots
+	if back_button:
+		back_button.pressed.connect(_on_back_pressed)
+
+
+# --- Actualiza visualmente los slots ---
+func refresh_slots() -> void:
 	var hbox := get_node_or_null("VBoxContainer/HBoxContainer")
 	if not hbox:
 		return
 
-	# Conectar dinámicamente cada slot
 	var index := 1
 	for child in hbox.get_children():
 		if child.has_signal("slot_pressed"):
@@ -21,48 +26,72 @@ func _ready() -> void:
 			child.slot_pressed.connect(_on_slot_pressed)
 			index += 1
 
-	# Conectar botón de regreso
-	if back_button:
-		back_button.pressed.connect(_on_back_pressed)
-
-
-# --- Refrescar visualmente los slots ---
-func refresh_slots() -> void:
-	var hbox := get_node("VBoxContainer/HBoxContainer")
-	for child in hbox.get_children():
 		if child.has_method("refresh_info"):
 			child.refresh_info()
 
 
-# --- Volver al menú de pausa ---
+# --- Botón atrás ---
 func _on_back_pressed() -> void:
+	print("↩️ Regresando al MainMenu...")
 	emit_signal("request_back", false)
 
 
-# --- Cargar partida seleccionada ---
+# --- Slot presionado ---
 func _on_slot_pressed(slot_index: int) -> void:
 	var path := "user://saves/slot%d.json" % slot_index
-		
+	
 	if mode == "load":
 		if FileAccess.file_exists(path):
+			print("📂 Cargando partida desde slot %d" % slot_index)
+
+			# 🔹 Fundido a negro antes de cargar
+			if Engine.has_singleton("TransitionOverlay"):
+				await TransitionOverlay.fade_out()
+
 			get_tree().paused = false
 			await SaveManager.load_existing_game(slot_index)
 
+			# 🔹 Fundido desde negro al terminar
+			if Engine.has_singleton("TransitionOverlay"):
+				await TransitionOverlay.fade_in()
+
+			emit_signal("request_back", true)
+		else:
+			print("⚠️ No existe guardado en slot %d" % slot_index)
 
 	elif mode == "new_game":
-		# --- Crear nueva partida ---
 		if FileAccess.file_exists(path):
-			# ⚠️ Confirmación antes de sobrescribir
 			var confirm := ConfirmationDialog.new()
-			confirm.dialog_text = "¿Deseas sobrescribir la partida del Slot %d?" % slot_index
+			confirm.dialog_text = "Esta ya es una partida guardada.\n¿Deseas sobrescribirla?\nSe perderán los datos previos."
 			add_child(confirm)
+
 			confirm.confirmed.connect(func():
-				_create_new_game(slot_index))
+				print("✅ Confirmado: sobrescribiendo slot %d" % slot_index)
+				_create_new_game(slot_index)
+			)
+
+			confirm.canceled.connect(func():
+				print("❌ Cancelado: no se sobrescribirá el slot %d" % slot_index)
+			)
+
 			confirm.popup_centered()
 		else:
+			print("🆕 Creando nueva partida en slot %d" % slot_index)
 			_create_new_game(slot_index)
 
 
+# --- Crear nueva partida ---
 func _create_new_game(slot_index: int) -> void:
 	get_tree().paused = false
+
+	# 🔹 Fundido a negro antes de crear la nueva partida
+	if Engine.has_singleton("TransitionOverlay"):
+		await TransitionOverlay.fade_out()
+
 	await SaveManager.start_new_game(slot_index)
+
+	# 🔹 Fundido desde negro al aparecer el mundo
+	if Engine.has_singleton("TransitionOverlay"):
+		await TransitionOverlay.fade_in()
+
+	emit_signal("request_back", true)

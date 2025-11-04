@@ -7,6 +7,10 @@ const SLOT_PATHS := {
 	3: SAVE_FOLDER + "slot3.json"
 }
 
+
+# ==========================================================
+# 🟢 GUARDAR Y CARGAR JUEGO
+# ==========================================================
 func save_game(player: Node, slot: int = 1) -> void:
 	var wm = get_tree().current_scene
 	var scene_path = wm.current_world.scene_file_path
@@ -25,6 +29,7 @@ func save_game(player: Node, slot: int = 1) -> void:
 	# 🟢 Capturar thumbnail después de guardar
 	await _capture_thumbnail(slot)
 
+
 func load_game(slot: int = 1) -> Dictionary:
 	if not FileAccess.file_exists(SLOT_PATHS[slot]):
 		push_error("❌ Archivo de guardado no encontrado para slot %d" % slot)
@@ -41,6 +46,7 @@ func load_game(slot: int = 1) -> Dictionary:
 
 	return result
 
+
 func load_slot_and_restore(slot: int):
 	var save_data = load_game(slot)
 	if save_data.is_empty():
@@ -56,11 +62,14 @@ func load_slot_and_restore(slot: int):
 
 	var wm = get_tree().current_scene
 	if wm:
-		await wm.load_game_state(save_data)  # este se encargará de buscar al jugador y restaurar
+		await wm.load_game_state(save_data)
 	else:
 		print("❌ WorldManager no está activo como escena actual.")
 
 
+# ==========================================================
+# 🟢 CREAR NUEVO SLOT
+# ==========================================================
 func create_new_slot(slot_index: int) -> void:
 	DirAccess.make_dir_recursive_absolute(SAVE_FOLDER)
 
@@ -74,7 +83,7 @@ func create_new_slot(slot_index: int) -> void:
 		DirAccess.remove_absolute(save_path)
 
 	var new_data := {
-		"scene_path": "res://scenes/world/world_manager.tscn",  # ✅ ruta corregida
+		"scene_path": "res://scenes/world/world_manager.tscn",
 		"player": {
 			"position": [0, 0],
 			"hp": 100,
@@ -103,6 +112,9 @@ func create_new_slot(slot_index: int) -> void:
 		push_error("❌ No se pudo crear el archivo de guardado para el slot %d" % slot_index)
 
 
+# ==========================================================
+# 🟢 RECOLECTAR / RESTAURAR DATOS DE JUGADOR
+# ==========================================================
 func collect_player_data(player: Node) -> Dictionary:
 	var inv := []
 	for item in player.inventory:
@@ -128,12 +140,11 @@ func collect_player_data(player: Node) -> Dictionary:
 		"inventory": inv,
 		"last_checkpoint_id": player.last_checkpoint_id,
 		"last_checkpoint_scene": player.last_checkpoint_scene,
-
-		# 🟢 Monedas y cofres globales
 		"coins": Playerwallet.coins,
 		"opened_chests": ChestRegistry.opened_chests
 	}
-	
+
+
 func restore_player_data(player: Node, data: Dictionary) -> void:
 	var pos = data.get("position", [0, 0])
 	player.global_position = Vector2(pos[0], pos[1])
@@ -150,7 +161,6 @@ func restore_player_data(player: Node, data: Dictionary) -> void:
 	player.last_checkpoint_id = data.get("last_checkpoint_id", "")
 	player.last_checkpoint_scene = data.get("last_checkpoint_scene", "")
 
-	# 🟢 Restaurar monedas y cofres
 	if data.has("coins"):
 		Playerwallet.coins = data["coins"]
 		Playerwallet.emit_signal("coins_changed")
@@ -160,7 +170,6 @@ func restore_player_data(player: Node, data: Dictionary) -> void:
 		for chest in get_tree().get_nodes_in_group("chests"):
 			chest.refresh_state()
 
-	# 🟢 Restaurar inventario
 	var inv_data = data.get("inventory", [])
 	player.inventory.resize(player.INVENTORY_SIZE)
 	for i in range(player.INVENTORY_SIZE):
@@ -173,10 +182,7 @@ func restore_player_data(player: Node, data: Dictionary) -> void:
 				var amount = item_info.get("amount", 0)
 				var item_data = ItemDataBase.get_item_by_id(item_id)
 				if item_data:
-					player.inventory[i] = {
-						"item_data": item_data,
-						"amount": amount
-					}
+					player.inventory[i] = {"item_data": item_data, "amount": amount}
 				else:
 					print("⚠️ No se encontró el ítem:", item_id)
 		else:
@@ -186,86 +192,96 @@ func restore_player_data(player: Node, data: Dictionary) -> void:
 	player.emit_signal("health_changed", player.current_health, player.max_health)
 	print("✅ Datos del jugador restaurados desde SaveManager.")
 
+
+# ==========================================================
+# 🟢 CAPTURA DE MINIATURA
+# ==========================================================
 func _capture_thumbnail(slot: int) -> void:
-	# Captura una imagen del juego sin los CanvasLayers visibles
 	var viewport := get_viewport()
 	if not viewport:
 		return
 
-	# Ocultar temporalmente los CanvasLayers
 	var hidden_layers: Array = []
 	for node in get_tree().get_nodes_in_group("ui"):
 		if node.visible:
 			node.visible = false
 			hidden_layers.append(node)
 
-	# Capturar el contenido actual del viewport
-	await get_tree().process_frame  # Esperar un frame para actualizar
+	await get_tree().process_frame
 	var image: Image = viewport.get_texture().get_image()
-	image.resize(320, 180)  # Reducir tamaño (thumbnail estándar)
+	image.resize(320, 180)
 	var path := "user://saves/slot%d_thumbnail.png" % slot
 	image.save_png(path)
 
-	# Restaurar visibilidad de los CanvasLayers
 	for node in hidden_layers:
 		node.visible = true
 
 
+# ==========================================================
+# 🟡 INICIAR NUEVA PARTIDA
+# ==========================================================
 func start_new_game(slot_index: int) -> void:
-	# 1️⃣ Crear nuevo archivo de guardado limpio
+	print("🟢 [SaveManager] start_new_game() iniciado para slot:", slot_index)
 	create_new_slot(slot_index)
 
-	# 2️⃣ Buscar si la escena actual (MainScreen) tiene una animación de transición
-	var main_screen := get_tree().current_scene
-	var transition_anim: AnimationPlayer = null
+	# 1️⃣ Obtener overlay (asegurarse que exista)
+	var overlay: Node = null
+	if Engine.has_singleton("TransitionOverlay"):
+		overlay = Engine.get_singleton("TransitionOverlay")
+	elif get_tree().root.has_node("TransitionOverlay"):
+		overlay = get_tree().root.get_node("TransitionOverlay")
 
-	if main_screen and main_screen.has_node("TransitionOverlay/AnimationPlayer"):
-		transition_anim = main_screen.get_node("TransitionOverlay/AnimationPlayer")
-		if transition_anim.has_animation("fade_out"):
-			print("🎬 Ejecutando fade_out desde MainScreen...")
-			transition_anim.play("fade_out")
+	# 2️⃣ Si hay overlay, hacer fade_out ANTES de cargar
+	if overlay:
+		print("🎬 Ejecutando fade_out antes de cargar WorldManager...")
+		await overlay.fade_out()
+	else:
+		print("⚠️ TransitionOverlay no encontrado, salto de transición.")
 
-			# Esperar 5 segundos mientras se oculta la pantalla
-			await get_tree().create_timer(5.0).timeout
-			print("⏳ Fade completo — procediendo a cargar WorldManager")
-
-	# 3️⃣ Cambiar a la escena base del mundo
+	# 3️⃣ Ahora que la pantalla está en negro → cambiar escena
 	get_tree().paused = false
 	get_tree().change_scene_to_file("res://scenes/world/world_manager.tscn")
 
-	# 4️⃣ Esperar a que el WorldManager cargue completamente
-	await get_tree().process_frame
+	# 4️⃣ Esperar a que la escena nueva esté completamente cargada
 	await get_tree().process_frame
 	await get_tree().process_frame
 
 	var wm = get_tree().current_scene
 	var retries := 0
-
-	# Esperar hasta que WorldManager tenga su método load_game_state disponible
 	while (not wm or not wm.has_method("load_game_state")) and retries < 60:
 		await get_tree().process_frame
 		retries += 1
 		wm = get_tree().current_scene
 
-	# 5️⃣ Cargar los datos iniciales del nuevo slot
+	# 5️⃣ Restaurar datos o iniciar nueva partida
 	if wm and wm.has_method("load_game_state"):
-		print("✅ WorldManager detectado, cargando partida inicial...")
+		print("✅ WorldManager detectado — cargando partida inicial...")
 		var save_data = load_game(slot_index)
-		save_data["is_new_game"] = true  # 🧭 flag para spawn correcto
-
+		save_data["is_new_game"] = true
 		await wm.load_game_state(save_data)
-		print("✅ Nueva partida iniciada en el slot %d" % slot_index)
 	else:
 		push_error("❌ No se encontró load_game_state incluso tras esperar.")
 
+	# 6️⃣ Cuando todo está listo → Fade in
+	if overlay:
+		print("🎬 Ejecutando fade_in tras carga completa.")
+		await overlay.fade_in()
+
+	print("🏁 Nueva partida iniciada correctamente en slot %d" % slot_index)
 
 
+
+# ==========================================================
+# 🟢 CARGAR PARTIDA EXISTENTE
+# ==========================================================
 func load_existing_game(slot_index: int) -> void:
+	print("📂 Cargando partida existente (slot %d)" % slot_index)
 	var save_data = load_game(slot_index)
 	if save_data.is_empty():
 		push_error("❌ No hay datos en el slot %d" % slot_index)
 		return
 
+	get_tree().paused = false
 	get_tree().change_scene_to_file("res://scenes/world/world_manager.tscn")
 
 	await get_tree().process_frame
@@ -274,7 +290,6 @@ func load_existing_game(slot_index: int) -> void:
 	var wm = get_tree().current_scene
 	if wm and wm.has_method("load_game_state"):
 		await wm.load_game_state(save_data)
-		print("✅ Partida cargada desde el slot %d" % slot_index)
+		print("✅ Partida cargada desde slot %d" % slot_index)
 	else:
-		push_error("❌ No se pudo restaurar la partida, escena actual: %s" % [wm])
- 
+		push_error("❌ No se pudo restaurar la partida correctamente.")
