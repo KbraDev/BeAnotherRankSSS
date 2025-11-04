@@ -2,7 +2,7 @@ extends Panel
 signal request_back(resume_game)  # Envía true si se carga partida, false si solo se regresa
 
 @onready var back_button = $VBoxContainer/back_button
-
+var mode: String = "load"  # Puede ser "load" o "new_game"
 
 # --- Inicialización ---
 func _ready() -> void:
@@ -42,14 +42,27 @@ func _on_back_pressed() -> void:
 # --- Cargar partida seleccionada ---
 func _on_slot_pressed(slot_index: int) -> void:
 	var path := "user://saves/slot%d.json" % slot_index
-	if not FileAccess.file_exists(path):
-		return
+		
+	if mode == "load":
+		if FileAccess.file_exists(path):
+			get_tree().paused = false
+			await SaveManager.load_existing_game(slot_index)
 
-	# Avisar al PauseMenu que debe cerrar y reanudar el juego
-	emit_signal("request_back", true)
 
-	# Reanudar el juego antes de cargar
+	elif mode == "new_game":
+		# --- Crear nueva partida ---
+		if FileAccess.file_exists(path):
+			# ⚠️ Confirmación antes de sobrescribir
+			var confirm := ConfirmationDialog.new()
+			confirm.dialog_text = "¿Deseas sobrescribir la partida del Slot %d?" % slot_index
+			add_child(confirm)
+			confirm.confirmed.connect(func():
+				_create_new_game(slot_index))
+			confirm.popup_centered()
+		else:
+			_create_new_game(slot_index)
+
+
+func _create_new_game(slot_index: int) -> void:
 	get_tree().paused = false
-
-	# Cargar los datos del slot seleccionado
-	SaveManager.load_slot_and_restore(slot_index)
+	await SaveManager.start_new_game(slot_index)

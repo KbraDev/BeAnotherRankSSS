@@ -61,6 +61,48 @@ func load_slot_and_restore(slot: int):
 		print("❌ WorldManager no está activo como escena actual.")
 
 
+func create_new_slot(slot_index: int) -> void:
+	DirAccess.make_dir_recursive_absolute(SAVE_FOLDER)
+
+	var save_path: String = SLOT_PATHS.get(slot_index, "")
+	if save_path == "":
+		push_error("❌ Slot inválido: %d" % slot_index)
+		return
+
+	# 🔄 Si ya existe un archivo viejo, eliminarlo
+	if FileAccess.file_exists(save_path):
+		DirAccess.remove_absolute(save_path)
+
+	var new_data := {
+		"scene_path": "res://scenes/world/world_manager.tscn",  # ✅ ruta corregida
+		"player": {
+			"position": [0, 0],
+			"hp": 100,
+			"max_hp": 100,
+			"mana": 10,
+			"level": 1,
+			"experience": 0,
+			"experience_to_next_level": 100,
+			"stat_points": 0,
+			"base_stats": {},
+			"stat_levels": {},
+			"inventory": [],
+			"last_checkpoint_id": "",
+			"last_checkpoint_scene": "",
+			"coins": 0,
+			"opened_chests": []
+		}
+	}
+
+	var file := FileAccess.open(save_path, FileAccess.WRITE)
+	if file:
+		file.store_string(JSON.stringify(new_data, "\t"))
+		file.close()
+		print("🆕 Nueva partida creada en el slot %d" % slot_index)
+	else:
+		push_error("❌ No se pudo crear el archivo de guardado para el slot %d" % slot_index)
+
+
 func collect_player_data(player: Node) -> Dictionary:
 	var inv := []
 	for item in player.inventory:
@@ -167,3 +209,72 @@ func _capture_thumbnail(slot: int) -> void:
 	# Restaurar visibilidad de los CanvasLayers
 	for node in hidden_layers:
 		node.visible = true
+
+
+func start_new_game(slot_index: int) -> void:
+	# 1️⃣ Crear nuevo archivo de guardado limpio
+	create_new_slot(slot_index)
+
+	# 2️⃣ Buscar si la escena actual (MainScreen) tiene una animación de transición
+	var main_screen := get_tree().current_scene
+	var transition_anim: AnimationPlayer = null
+
+	if main_screen and main_screen.has_node("TransitionOverlay/AnimationPlayer"):
+		transition_anim = main_screen.get_node("TransitionOverlay/AnimationPlayer")
+		if transition_anim.has_animation("fade_out"):
+			print("🎬 Ejecutando fade_out desde MainScreen...")
+			transition_anim.play("fade_out")
+
+			# Esperar 5 segundos mientras se oculta la pantalla
+			await get_tree().create_timer(5.0).timeout
+			print("⏳ Fade completo — procediendo a cargar WorldManager")
+
+	# 3️⃣ Cambiar a la escena base del mundo
+	get_tree().paused = false
+	get_tree().change_scene_to_file("res://scenes/world/world_manager.tscn")
+
+	# 4️⃣ Esperar a que el WorldManager cargue completamente
+	await get_tree().process_frame
+	await get_tree().process_frame
+	await get_tree().process_frame
+
+	var wm = get_tree().current_scene
+	var retries := 0
+
+	# Esperar hasta que WorldManager tenga su método load_game_state disponible
+	while (not wm or not wm.has_method("load_game_state")) and retries < 60:
+		await get_tree().process_frame
+		retries += 1
+		wm = get_tree().current_scene
+
+	# 5️⃣ Cargar los datos iniciales del nuevo slot
+	if wm and wm.has_method("load_game_state"):
+		print("✅ WorldManager detectado, cargando partida inicial...")
+		var save_data = load_game(slot_index)
+		save_data["is_new_game"] = true  # 🧭 flag para spawn correcto
+
+		await wm.load_game_state(save_data)
+		print("✅ Nueva partida iniciada en el slot %d" % slot_index)
+	else:
+		push_error("❌ No se encontró load_game_state incluso tras esperar.")
+
+
+
+func load_existing_game(slot_index: int) -> void:
+	var save_data = load_game(slot_index)
+	if save_data.is_empty():
+		push_error("❌ No hay datos en el slot %d" % slot_index)
+		return
+
+	get_tree().change_scene_to_file("res://scenes/world/world_manager.tscn")
+
+	await get_tree().process_frame
+	await get_tree().process_frame
+
+	var wm = get_tree().current_scene
+	if wm and wm.has_method("load_game_state"):
+		await wm.load_game_state(save_data)
+		print("✅ Partida cargada desde el slot %d" % slot_index)
+	else:
+		push_error("❌ No se pudo restaurar la partida, escena actual: %s" % [wm])
+ 

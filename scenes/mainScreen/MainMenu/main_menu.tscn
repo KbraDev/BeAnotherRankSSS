@@ -1,10 +1,11 @@
-[gd_scene load_steps=14 format=3 uid="uid://cjd1ti0jn2min"]
+[gd_scene load_steps=17 format=3 uid="uid://cjd1ti0jn2min"]
 
 [ext_resource type="Script" uid="uid://c7ixaylsdf1wd" path="res://scenes/mainScreen/MainMenu/main_menu.gd" id="1_4rj8v"]
 [ext_resource type="Texture2D" uid="uid://cgsf4mwfjytlc" path="res://sprites/UIS/buttons/panel-transparent-border-000.png" id="2_uk83t"]
 [ext_resource type="Texture2D" uid="uid://h8au4bywivqy" path="res://sprites/UIS/buttons/panel-transparent-center-000.png" id="3_2mpo1"]
 [ext_resource type="Texture2D" uid="uid://djrj0j5drfytx" path="res://sprites/UIS/buttons/panel-000.png" id="3_np07d"]
 [ext_resource type="Texture2D" uid="uid://bwgpfkhid4ph0" path="res://sprites/UIS/buttons/panel-border-000.png" id="5_np07d"]
+[ext_resource type="Script" uid="uid://83qtco7d4r46" path="res://scripts/preload/ScenePortalData.gd" id="7_bj21d"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2mpo1"]
 
@@ -39,6 +40,17 @@ texture_margin_left = 20.0
 texture_margin_top = 20.0
 texture_margin_right = 20.0
 texture_margin_bottom = 20.0
+
+[sub_resource type="GDScript" id="GDScript_eqdel"]
+script/source = "extends Node2D
+
+@export var portal_data: ScenePortalData
+"
+
+[sub_resource type="Resource" id="Resource_b1m8q"]
+script = ExtResource("7_bj21d")
+connected_scenes = Array[String](["res://scenes/world/world_manager.tscn"])
+metadata/_custom_type_script = "uid://83qtco7d4r46"
 
 [node name="MainMenu" type="Control"]
 custom_minimum_size = Vector2(200, 200)
@@ -117,3 +129,7 @@ size = Vector2i(163, 104)
 theme_override_styles/panel = SubResource("StyleBoxTexture_b1m8q")
 ok_button_text = "Salir"
 dialog_text = "¿Salir del juego?"
+
+[node name="SceneMeta" type="Node2D" parent="."]
+script = SubResource("GDScript_eqdel")
+portal_data = SubResource("Resource_b1m8q")

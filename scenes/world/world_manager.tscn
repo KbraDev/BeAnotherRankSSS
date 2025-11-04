@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://xxcf6vh7atqn"]
+[gd_scene load_steps=22 format=3 uid="uid://xxcf6vh7atqn"]
 
 [ext_resource type="Script" uid="uid://co0lf7i6emfn8" path="res://scenes/world/world_manager.gd" id="1_548at"]
 [ext_resource type="PackedScene" uid="uid://be8s6fsuvru6m" path="res://scenes/characters/player/player.tscn" id="1_armst"]
@@ -17,8 +17,6 @@
 [ext_resource type="PackedScene" uid="uid://bhxvv2llsy1ia" path="res://UIs/notificactionManager/floating_notification_manager.tscn" id="10_uql5h"]
 [ext_resource type="PackedScene" uid="uid://j631k64daxbc" path="res://UIs/PauseMenu/pause_menu.tscn" id="15_i1he6"]
 [ext_resource type="PackedScene" uid="uid://2diufhet7676" path="res://UIs/StatsMenu/stats_menu.tscn" id="16_5kwx7"]
-[ext_resource type="Script" uid="uid://bxx6nm1sh1hhx" path="res://scenes/world/location/MilisCity/tools/scene_meta.gd" id="18_mvcwx"]
-[ext_resource type="Script" uid="uid://83qtco7d4r46" path="res://scripts/preload/ScenePortalData.gd" id="19_h4hwl"]
 
 [sub_resource type="Animation" id="Animation_hvdyb"]
 length = 0.001
@@ -72,22 +70,17 @@ _data = {
 &"fade_out": SubResource("Animation_wihia")
 }
 
-[sub_resource type="Resource" id="Resource_va8yc"]
-script = ExtResource("19_h4hwl")
-connected_scenes = Array[String](["res://scenes/mainScreen/MainScreen.tscn"])
-metadata/_custom_type_script = "uid://83qtco7d4r46"
-
 [node name="WorldManager" type="Node2D" groups=["world_manager"]]
 script = ExtResource("1_548at")
 
 [node name="player" parent="." instance=ExtResource("1_armst")]
-position = Vector2(758, 255)
 
 [node name="WorldContainer" type="Node2D" parent="."]
 
 [node name="FathersHome" parent="WorldContainer" instance=ExtResource("3_mw4p1")]
 
 [node name="HUD" type="CanvasLayer" parent="." groups=["UI"]]
+visible = false
 script = ExtResource("4_1d48p")
 
 [node name="PlayerHUD" type="Control" parent="HUD"]
@@ -107,8 +100,7 @@ texture_under = ExtResource("5_4uvln")
 texture_over = ExtResource("6_yubee")
 texture_progress = ExtResource("7_f3jnn")
 
-[node name="InventoryUI" parent="HUD" node_paths=PackedStringArray("player") instance=ExtResource("4_utxr1")]
-player = NodePath("../../player")
+[node name="InventoryUI" parent="HUD" instance=ExtResource("4_utxr1")]
 
 [node name="DialogBox" parent="HUD" instance=ExtResource("5_67olm")]
 mouse_filter = 2
@@ -145,6 +137,7 @@ mouse_filter = 2
 mouse_filter = 2
 
 [node name="PauseMenu" parent="HUD" instance=ExtResource("15_i1he6")]
+visible = false
 offset = Vector2(532, 150)
 transform = Transform2D(1, 0, 0, 1, 532, 150)
 
@@ -169,6 +162,6 @@ mouse_filter = 2
 [node name="MissionDatabase" type="Node2D" parent="."]
 script = ExtResource("8_0psd8")
 
-[node name="SceneMeta" type="Node2D" parent="."]
-script = ExtResource("18_mvcwx")
-portal_data = SubResource("Resource_va8yc")
+[node name="SpawnPoint" type="Marker2D" parent="."]
+z_index = 4
+position = Vector2(842, 271)

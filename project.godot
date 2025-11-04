@@ -10,8 +10,8 @@ config_version=5
 
 [application]
 
-config/name="BeAnotherRankSSS"
-run/main_scene="res://scenes/world/world_manager.tscn"
+config/name="BeAnotherRankSSS  (Demo)"
+run/main_scene="uid://cvbvcr5aecqcn"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
 

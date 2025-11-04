@@ -113,47 +113,99 @@ func fade_to_black():
 	transition_anim.play("fade_out")
 
 func load_game_state(save_data: Dictionary) -> void:
+	print("\n📥 [LOAD] Iniciando load_game_state()")
 	var scene_path = save_data.get("scene_path", "")
+	print("📂 Escena a cargar:", scene_path)
+
 	if scene_path == "":
+		push_error("❌ No se proporcionó scene_path en save_data.")
 		return
 
+	# --- Fade Out ---
+	print("🎬 Ejecutando fade_out...")
 	transition_anim.play("fade_out")
 	await transition_anim.animation_finished
 
+	# --- Limpiar mundos anteriores ---
+	print("🧹 Eliminando mundos anteriores...")
 	for child in world_container.get_children():
 		child.queue_free()
 	await get_tree().process_frame
 
+	# --- Cargar nuevo mundo ---
 	var packed_scene = load(scene_path)
 	if packed_scene == null:
+		push_error("❌ No se pudo cargar la escena:", scene_path)
 		return
 
+	print("🌍 Instanciando nuevo mundo...")
 	var new_world = packed_scene.instantiate()
-	_remove_duplicate_players(new_world) 
+	_remove_duplicate_players(new_world)
 	world_container.add_child(new_world)
 	current_world = new_world
 
-	# 👇 Esperamos a que la escena nueva procese un frame completo
 	await get_tree().process_frame
+	print("✅ Mundo agregado correctamente a world_container")
 
-	# Actualizamos tilemap antes de restaurar datos
 	player.update_tilemap_reference()
+	print("🎯 Player referencia actualizada")
 
-	# ✅ Restauramos datos del jugador usando SaveManager
+	# --- Determinar posición del jugador ---
+	print("🧭 Determinando posición inicial...")
+
 	if save_data.has("player"):
-		SaveManager.restore_player_data(player, save_data["player"])
+		var player_data = save_data["player"]
+		print("📄 Datos del jugador detectados:", player_data.keys())
 
-	# La posición ya la maneja restore_player_data, así que esto sobra:
-	# var pos = save_data["player"].get("position", [0, 0])
-	# player.global_position = Vector2(pos[0], pos[1])
+		# NUEVA PARTIDA → usar SpawnPoint
+		if save_data.has("is_new_game") and save_data["is_new_game"] == true:
+			print("🆕 Nueva partida detectada — buscando SpawnPoint")
+			var spawn_point = _find_marker_in(current_world, "SpawnPoint")
+			if spawn_point:
+				player.global_position = spawn_point.global_position
+				print("📍 Posición inicial (SpawnPoint):", player.global_position)
+			else:
+				player.global_position = Vector2.ZERO
+				print("⚠️ SpawnPoint no encontrado, usando (0,0)")
+		else:
+			# PARTIDA EXISTENTE
+			if player_data.has("position"):
+				print("📦 Restaurando datos del jugador desde archivo...")
+				SaveManager.restore_player_data(player, player_data)
+				print("📍 Posición restaurada:", player.global_position)
+			else:
+				print("⚠️ Sin posición guardada, usando SpawnPoint")
+				var spawn_point = _find_marker_in(current_world, "SpawnPoint")
+				if spawn_point:
+					player.global_position = spawn_point.global_position
+				else:
+					player.global_position = Vector2.ZERO
+	else:
+		print("⚠️ No hay datos de jugador, usando SpawnPoint")
+		var spawn_point = _find_marker_in(current_world, "SpawnPoint")
+		if spawn_point:
+			player.global_position = spawn_point.global_position
+		else:
+			player.global_position = Vector2.ZERO
 
+	print("✅ Posición final del jugador:", player.global_position)
+
+	# --- Fade In ---
+	print("🎬 Ejecutando fade_in...")
 	transition_anim.play("fade_in")
 	await transition_anim.animation_finished
 
+	# --- Precarga de escenas conectadas ---
+	print("🔁 Precargando escenas conectadas...")
 	_preload_connected_scenes(current_world)
 
+	# --- Conectar checkpoints ---
+	print("📍 Conectando checkpoints...")
 	for checkpoint in current_world.get_tree().get_nodes_in_group("checkpoint"):
 		checkpoint.connect("checkpoint_reached", Callable(player, "update_checkpoint"))
+
+	print("🏁 [LOAD] Proceso de carga completado — posición final:", player.global_position, "\n")
+
 
 func get_current_world_scene_path() -> String:
 	return current_world.scene_file_path
