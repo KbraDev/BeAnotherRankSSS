@@ -44,18 +44,17 @@ func _on_slot_pressed(slot_index: int) -> void:
 		if FileAccess.file_exists(path):
 			print("📂 Cargando partida desde slot %d" % slot_index)
 
-			# 🔹 Fundido a negro antes de cargar
 			if Engine.has_singleton("TransitionOverlay"):
 				await TransitionOverlay.fade_out()
 
 			get_tree().paused = false
 			await SaveManager.load_existing_game(slot_index)
 
-			# 🔹 Fundido desde negro al terminar
 			if Engine.has_singleton("TransitionOverlay"):
 				await TransitionOverlay.fade_in()
 
 			emit_signal("request_back", true)
+			queue_free() # ✅ aquí sí
 		else:
 			print("⚠️ No existe guardado en slot %d" % slot_index)
 
@@ -65,6 +64,9 @@ func _on_slot_pressed(slot_index: int) -> void:
 			confirm.dialog_text = "Esta ya es una partida guardada.\n¿Deseas sobrescribirla?\nSe perderán los datos previos."
 			add_child(confirm)
 
+			# 🔹 Mostrar el popup centrado antes de conectar las señales
+			confirm.popup_centered()
+
 			confirm.confirmed.connect(func():
 				print("✅ Confirmado: sobrescribiendo slot %d" % slot_index)
 				_create_new_game(slot_index)
@@ -72,26 +74,25 @@ func _on_slot_pressed(slot_index: int) -> void:
 
 			confirm.canceled.connect(func():
 				print("❌ Cancelado: no se sobrescribirá el slot %d" % slot_index)
+				emit_signal("request_back", false)
+				queue_free() # ✅ solo si cancela
 			)
 
-			confirm.popup_centered()
 		else:
 			print("🆕 Creando nueva partida en slot %d" % slot_index)
 			_create_new_game(slot_index)
-
 
 # --- Crear nueva partida ---
 func _create_new_game(slot_index: int) -> void:
 	get_tree().paused = false
 
-	# 🔹 Fundido a negro antes de crear la nueva partida
 	if Engine.has_singleton("TransitionOverlay"):
 		await TransitionOverlay.fade_out()
 
 	await SaveManager.start_new_game(slot_index)
 
-	# 🔹 Fundido desde negro al aparecer el mundo
 	if Engine.has_singleton("TransitionOverlay"):
 		await TransitionOverlay.fade_in()
 
 	emit_signal("request_back", true)
+	queue_free()

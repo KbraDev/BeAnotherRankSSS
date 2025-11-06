@@ -162,11 +162,39 @@ func restore_player_data(player: Node, data: Dictionary) -> void:
 	player.last_checkpoint_scene = data.get("last_checkpoint_scene", "")
 
 	if data.has("coins"):
-		Playerwallet.coins = data["coins"]
+		var saved_coins = data["coins"]
+
+		# 🧠 Compatibilidad: puede ser un número antiguo o un diccionario moderno
+		if typeof(saved_coins) == TYPE_DICTIONARY:
+			Playerwallet.coins = saved_coins.duplicate()
+		elif typeof(saved_coins) in [TYPE_INT, TYPE_FLOAT]:
+			# Convertir el valor viejo a nuevo formato
+			Playerwallet.coins = {
+				"BronzeCoin": int(saved_coins),
+				"SilverCoin": 0,
+				"GoldCoin": 0
+			}
+		else:
+			push_warning("⚠️ Tipo inesperado de 'coins' en los datos de guardado: %s" % str(typeof(saved_coins)))
+
 		Playerwallet.emit_signal("coins_changed")
 
 	if data.has("opened_chests"):
-		ChestRegistry.opened_chests = data["opened_chests"].duplicate()
+		var saved_chests = data["opened_chests"]
+
+		# 🧠 Compatibilidad: puede ser un Array viejo o un Dictionary nuevo
+		if typeof(saved_chests) == TYPE_DICTIONARY:
+			ChestRegistry.opened_chests = saved_chests.duplicate()
+		elif typeof(saved_chests) == TYPE_ARRAY:
+			# Convertimos el array en un diccionario simple de cofres abiertos
+			var converted := {}
+			for chest_id in saved_chests:
+				converted[chest_id] = true
+			ChestRegistry.opened_chests = converted
+		else:
+			push_warning("⚠️ Tipo inesperado de 'opened_chests': %s" % str(typeof(saved_chests)))
+
+		# Refrescar cofres en la escena actual
 		for chest in get_tree().get_nodes_in_group("chests"):
 			chest.refresh_state()
 
