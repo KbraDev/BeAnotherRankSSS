@@ -34,11 +34,21 @@ func _ready() -> void:
 
 
 func _unhandled_input(event):
+	# 🔹 Asegurarse de tener referencia al jugador aunque no se haya asignado aún
+	if player == null:
+		player = get_tree().get_first_node_in_group("player")
+		if player:
+			return
+			#print("🧩 Jugador vinculado dinámicamente al inventario en runtime.")
+
 	if event.is_action_pressed("Inventory") and not inventory_cooldown:
 		if player == null:
+			#print("⚠️ El player no está asignado en el inventario")
 			return
+		#print("🎒 Toggle inventario!")
 		toggle_inventory()
 		start_cooldown()
+
 
 func toggle_inventory():
 	visible = !visible

@@ -137,6 +137,15 @@ func _ready():
 
 	stat_points = 0
 	emit_signal("health_changed", current_health, max_health)
+	
+		# 🔹 Enlazar inventario automáticamente
+	var inv = get_tree().get_first_node_in_group("inventory")
+	if inv:
+		inv.player = self
+		#print("✅ Inventario vinculado al jugador correctamente.")
+	else:
+		pass
+		#print("⚠️ No se encontró ningún inventario en el grupo 'inventory'.")
 
 
 

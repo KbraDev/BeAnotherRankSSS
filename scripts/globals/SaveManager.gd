@@ -50,12 +50,12 @@ func load_game(slot: int = 1) -> Dictionary:
 func load_slot_and_restore(slot: int):
 	var save_data = load_game(slot)
 	if save_data.is_empty():
-		print("❌ No se pudo cargar el slot ", slot)
+		#print("❌ No se pudo cargar el slot ", slot)
 		return
 
 	var scene_path = save_data.get("scene_path", "")
 	if scene_path == "":
-		print("❌ No se especificó ninguna escena.")
+		#print("❌ No se especificó ninguna escena.")
 		return
 
 	get_tree().paused = false
@@ -64,7 +64,8 @@ func load_slot_and_restore(slot: int):
 	if wm:
 		await wm.load_game_state(save_data)
 	else:
-		print("❌ WorldManager no está activo como escena actual.")
+		pass
+		#print("❌ WorldManager no está activo como escena actual.")
 
 
 # ==========================================================
@@ -107,7 +108,7 @@ func create_new_slot(slot_index: int) -> void:
 	if file:
 		file.store_string(JSON.stringify(new_data, "\t"))
 		file.close()
-		print("🆕 Nueva partida creada en el slot %d" % slot_index)
+		#print("🆕 Nueva partida creada en el slot %d" % slot_index)
 	else:
 		push_error("❌ No se pudo crear el archivo de guardado para el slot %d" % slot_index)
 
@@ -212,13 +213,14 @@ func restore_player_data(player: Node, data: Dictionary) -> void:
 				if item_data:
 					player.inventory[i] = {"item_data": item_data, "amount": amount}
 				else:
-					print("⚠️ No se encontró el ítem:", item_id)
+					pass
+					#print("⚠️ No se encontró el ítem:", item_id)
 		else:
 			player.inventory[i] = null
 
 	player.emit_signal("inventory_updated", player.inventory)
 	player.emit_signal("health_changed", player.current_health, player.max_health)
-	print("✅ Datos del jugador restaurados desde SaveManager.")
+	#print("✅ Datos del jugador restaurados desde SaveManager.")
 
 
 # ==========================================================
@@ -249,7 +251,7 @@ func _capture_thumbnail(slot: int) -> void:
 # 🟡 INICIAR NUEVA PARTIDA
 # ==========================================================
 func start_new_game(slot_index: int) -> void:
-	print("🟢 [SaveManager] start_new_game() iniciado para slot:", slot_index)
+	#print("🟢 [SaveManager] start_new_game() iniciado para slot:", slot_index)
 	create_new_slot(slot_index)
 
 	# 1️⃣ Obtener overlay (asegurarse que exista)
@@ -261,10 +263,11 @@ func start_new_game(slot_index: int) -> void:
 
 	# 2️⃣ Si hay overlay, hacer fade_out ANTES de cargar
 	if overlay:
-		print("🎬 Ejecutando fade_out antes de cargar WorldManager...")
+		#print("🎬 Ejecutando fade_out antes de cargar WorldManager...")
 		await overlay.fade_out()
 	else:
-		print("⚠️ TransitionOverlay no encontrado, salto de transición.")
+		pass
+		#print("⚠️ TransitionOverlay no encontrado, salto de transición.")
 
 	# 3️⃣ Ahora que la pantalla está en negro → cambiar escena
 	get_tree().paused = false
@@ -292,10 +295,10 @@ func start_new_game(slot_index: int) -> void:
 
 	# 6️⃣ Cuando todo está listo → Fade in
 	if overlay:
-		print("🎬 Ejecutando fade_in tras carga completa.")
+		#print("🎬 Ejecutando fade_in tras carga completa.")
 		await overlay.fade_in()
 
-	print("🏁 Nueva partida iniciada correctamente en slot %d" % slot_index)
+	#print("🏁 Nueva partida iniciada correctamente en slot %d" % slot_index)
 
 
 
@@ -303,7 +306,7 @@ func start_new_game(slot_index: int) -> void:
 # 🟢 CARGAR PARTIDA EXISTENTE
 # ==========================================================
 func load_existing_game(slot_index: int) -> void:
-	print("📂 Cargando partida existente (slot %d)" % slot_index)
+	#print("📂 Cargando partida existente (slot %d)" % slot_index)
 	var save_data = load_game(slot_index)
 	if save_data.is_empty():
 		push_error("❌ No hay datos en el slot %d" % slot_index)
@@ -318,6 +321,6 @@ func load_existing_game(slot_index: int) -> void:
 	var wm = get_tree().current_scene
 	if wm and wm.has_method("load_game_state"):
 		await wm.load_game_state(save_data)
-		print("✅ Partida cargada desde slot %d" % slot_index)
+		#print("✅ Partida cargada desde slot %d" % slot_index)
 	else:
 		push_error("❌ No se pudo restaurar la partida correctamente.")

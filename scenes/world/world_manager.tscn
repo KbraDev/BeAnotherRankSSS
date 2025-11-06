@@ -73,8 +73,6 @@ _data = {
 [node name="WorldManager" type="Node2D" groups=["world_manager"]]
 script = ExtResource("1_548at")
 
-[node name="player" parent="." instance=ExtResource("1_armst")]
-
 [node name="WorldContainer" type="Node2D" parent="."]
 
 [node name="FathersHome" parent="WorldContainer" instance=ExtResource("3_mw4p1")]
@@ -124,6 +122,7 @@ libraries = {
 mouse_filter = 2
 
 [node name="InventoryUI" parent="HUD" instance=ExtResource("4_utxr1")]
+z_index = 50
 
 [node name="FloatingNotificationManager" parent="HUD" instance=ExtResource("10_uql5h")]
 offset_right = 0.0
@@ -167,3 +166,5 @@ script = ExtResource("8_0psd8")
 [node name="SpawnPoint" type="Marker2D" parent="."]
 z_index = 4
 position = Vector2(842, 271)
+
+[node name="player" parent="." instance=ExtResource("1_armst")]

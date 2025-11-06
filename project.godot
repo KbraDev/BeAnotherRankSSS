@@ -62,6 +62,7 @@ peacock=""
 ground=""
 chests=""
 UI=""
+inventory=""
 
 [input]
 

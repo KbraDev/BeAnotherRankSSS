@@ -9,7 +9,7 @@ font_size = 20
 outline_size = 2
 outline_color = Color(0, 0, 0, 1)
 
-[node name="InventoryUI" type="Control"]
+[node name="InventoryUI" type="Control" groups=["inventory"]]
 layout_mode = 3
 anchors_preset = 0
 size_flags_horizontal = 3
