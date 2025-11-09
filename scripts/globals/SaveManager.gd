@@ -17,7 +17,8 @@ func save_game(player: Node, slot: int = 1) -> void:
 
 	var data = {
 		"scene_path": scene_path,
-		"player": collect_player_data(player)
+		"player": collect_player_data(player),
+		"missions": collect_mission_data()
 	}
 
 	DirAccess.make_dir_recursive_absolute(SAVE_FOLDER)
@@ -324,3 +325,49 @@ func load_existing_game(slot_index: int) -> void:
 		#print("✅ Partida cargada desde slot %d" % slot_index)
 	else:
 		push_error("❌ No se pudo restaurar la partida correctamente.")
+
+
+# Misiones activas
+func collect_mission_data() -> Array:
+	var tracker = MissionTracker
+	if not tracker:
+		print("⚠️ No se encontró el MissionTracker al guardar.")
+		return []
+		
+	var data := []
+	for state in tracker.active_mission:
+		if state and state.mission:
+			data.append({
+				"mission_path": state.mission.resource_path,  # guarda la ruta al .tres
+				"status": state.status,
+				"progress": state.progress,
+				"time_started": state.time_started
+			})
+	return data
+
+
+func restore_mission_data(mission_data: Array) -> void:
+	var tracker = MissionTracker
+	if not tracker:
+		print("⚠️ No se encontró MissionTracker al cargar.")
+		return
+
+	tracker.active_mission.clear()
+	for entry in mission_data:
+		var path = entry.get("mission_path", "")
+		if path == "":
+			continue
+
+		var mission_res = load(path)
+		if not mission_res:
+			print("⚠️ No se pudo cargar misión:", path)
+			continue
+
+		var state = MissionState.new()
+		state.mission = mission_res
+		state.status = entry.get("status", "active")
+		state.progress = entry.get("progress", 0)
+		state.time_started = entry.get("time_started", 0)
+
+		tracker.active_mission.append(state)
+		tracker.emit_signal("mission_added", state)

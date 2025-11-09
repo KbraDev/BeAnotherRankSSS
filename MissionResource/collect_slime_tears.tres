@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource("1_0qhtt")
 item_required = "slimeTear"
-amount_required = 3
+amount_required = 5
 track_progress = true
 id = "collect_slime_tears"
 name = "Caza de Slimes"
@@ -13,7 +13,7 @@ description = "Caza slimes y consigue 5 gotas provenientes de Slimes."
 rank = "E"
 mission_type = "base"
 required_rank = "E"
-rewards_xp = 50
+rewards_xp = 65
 rewards_items = [{
 "amount": 10,
 "id": "BronzeCoin"
