@@ -168,11 +168,11 @@ func load_game_state(save_data: Dictionary) -> void:
 	await get_tree().process_frame
 
 	# --- Cargar nuevo mundo ---
-	var packed_scene = load(scene_path)
-	if packed_scene == null:
+	var new_world = await _load_scene_async(scene_path)
+	if new_world == null:
+		push_error("❌ No se pudo cargar el mundo de manera asíncrona.")
 		return
 
-	var new_world = packed_scene.instantiate()
 	_remove_duplicate_players(new_world)
 	world_container.add_child(new_world)
 	current_world = new_world
@@ -232,3 +232,23 @@ func load_game_state(save_data: Dictionary) -> void:
 
 func get_current_world_scene_path() -> String:
 	return current_world.scene_file_path
+
+
+
+# --- carga asincrona ---
+
+func _load_scene_async(scene_path: String) -> Node:
+	# Solicita la carga en segundo plano
+	ResourceLoader.load_threaded_request(scene_path)
+
+	# Espera hasta que termine
+	while ResourceLoader.load_threaded_get_status(scene_path) == ResourceLoader.THREAD_LOAD_IN_PROGRESS:
+		await get_tree().process_frame
+
+	# Obtiene el resultado final
+	var result = ResourceLoader.load_threaded_get(scene_path)
+	if result is PackedScene:
+		return result.instantiate()
+	else:
+		push_error("❌ Fallo al cargar escena: " + scene_path)
+		return null
