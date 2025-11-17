@@ -1,4 +1,4 @@
-[gd_scene load_steps=54 format=4 uid="uid://dpah0ljk08blt"]
+[gd_scene load_steps=56 format=4 uid="uid://dpah0ljk08blt"]
 
 [ext_resource type="TileSet" uid="uid://rngchcx3q02t" path="res://assets/tilesets/terrain.tres" id="1_2u8v6"]
 [ext_resource type="Script" uid="uid://dd64xk5yebmhm" path="res://scenes/world/location/olid_town/olid_town.gd" id="1_plp7c"]
@@ -157,6 +157,15 @@ _data = {
 point_count = 5
 
 [sub_resource type="Curve2D" id="Curve2D_plp7c"]
+
+[sub_resource type="Gradient" id="Gradient_tp5lr"]
+offsets = PackedFloat32Array(0, 0.728643)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ww5af"]
+gradient = SubResource("Gradient_tp5lr")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
 
 [sub_resource type="Resource" id="Resource_3enkw"]
 script = ExtResource("8_ddhl2")
@@ -615,6 +624,64 @@ curve = SubResource("Curve2D_plp7c")
 [node name="PathFollow2D" type="PathFollow2D" parent="NPCs/NPC12/Path2D"]
 
 [node name="NPC" parent="NPCs/NPC12/Path2D/PathFollow2D" instance=ExtResource("10_ugwko")]
+
+[node name="Ligths" type="Node" parent="."]
+
+[node name="PointLight2D2" type="PointLight2D" parent="Ligths"]
+position = Vector2(-336, 431)
+scale = Vector2(1.62462, 1.62826)
+color = Color(0.917281, 0.930555, 0.75095, 1)
+energy = 0.7
+shadow_enabled = true
+texture = SubResource("GradientTexture2D_ww5af")
+
+[node name="PointLight2D3" type="PointLight2D" parent="Ligths"]
+position = Vector2(-128, 430)
+scale = Vector2(1.62462, 1.62826)
+color = Color(0.917281, 0.930555, 0.75095, 1)
+energy = 0.7
+shadow_enabled = true
+texture = SubResource("GradientTexture2D_ww5af")
+
+[node name="PointLight2D4" type="PointLight2D" parent="Ligths"]
+position = Vector2(-592, 431)
+scale = Vector2(1.62462, 1.62826)
+color = Color(0.917281, 0.930555, 0.75095, 1)
+energy = 0.7
+shadow_enabled = true
+texture = SubResource("GradientTexture2D_ww5af")
+
+[node name="PointLight2D5" type="PointLight2D" parent="Ligths"]
+position = Vector2(-368, 781)
+scale = Vector2(1.62462, 1.62826)
+color = Color(0.917281, 0.930555, 0.75095, 1)
+energy = 0.7
+shadow_enabled = true
+texture = SubResource("GradientTexture2D_ww5af")
+
+[node name="PointLight2D" type="PointLight2D" parent="Ligths"]
+position = Vector2(-688, 747)
+scale = Vector2(2.63939, 2.65123)
+color = Color(0.917281, 0.930555, 0.75095, 1)
+energy = 0.7
+shadow_enabled = true
+texture = SubResource("GradientTexture2D_ww5af")
+
+[node name="PointLight2D6" type="PointLight2D" parent="Ligths"]
+position = Vector2(-480, 1114)
+scale = Vector2(2.63939, 2.65123)
+color = Color(0.917281, 0.930555, 0.75095, 1)
+energy = 0.7
+shadow_enabled = true
+texture = SubResource("GradientTexture2D_ww5af")
+
+[node name="PointLight2D7" type="PointLight2D" parent="Ligths"]
+position = Vector2(-65, 1104)
+scale = Vector2(2.63939, 2.65123)
+color = Color(0.917281, 0.930555, 0.75095, 1)
+energy = 0.7
+shadow_enabled = true
+texture = SubResource("GradientTexture2D_ww5af")
 
 [node name="FromOlidForest" type="Marker2D" parent="."]
 z_index = 1
