@@ -24,6 +24,7 @@ func _ready():
 	# Conectar señales del diálogo y menú
 	dialog_box.dialog_finished.connect(_on_dialog_finished)
 	menu_ui.option_selected.connect(_on_menu_option_selected)
+	mission_delivery_menu.mission_delivered_event.connect(_on_mission_delivered_from_menu)
 
 # --- Señales ---
 func _on_dialog_finished():
@@ -32,6 +33,7 @@ func _on_dialog_finished():
 		menu_ui.open()
 
 func _on_menu_option_selected(option: String):
+	menu_ui.close()
 	# Recibe la opción elegida en el menú de recepción
 	match option:
 		"seleccionar":
@@ -59,6 +61,10 @@ func _on_menu_option_selected(option: String):
 			var player = get_tree().get_first_node_in_group("player")
 			if player:
 				player.can_attack = true
+
+
+func _on_mission_delivered_from_menu(_state):
+	mission_delivery_menu.close()
 
 # --- Áreas de interacción ---
 func _on_interact_area_body_entered(body: Node2D) -> void:

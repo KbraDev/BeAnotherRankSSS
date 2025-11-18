@@ -1,5 +1,7 @@
 extends Control ## deliveryMissionMenu
 signal menu_closed
+signal mission_delivered_event(state: MissionState)
+
 
 @onready var btn_close = $btnClose
 @onready var mission_list = $ActiveMissionList
@@ -23,15 +25,18 @@ func open(missions: Array):
 func _on_mission_delivered(state: MissionState):
 	print("🎉 Misión entregada:", state.mission.name)
 
-	# 1) marcar como completada
 	MissionTracker.complete_mission(state)
-
-	# 2) eliminamos la misión del tracker (emite mission_removed)
 	MissionTracker.remove_mission(state)
 
-	# 3) refrescar visual del menú de entrega
+	emit_signal("mission_delivered_event", state)
+
+	# 👉 Si el menú va a cerrarse, NO deberíamos reabrirlo
+	if not visible:
+		return
+
+	# Si no se cerró, refrescar lista
 	_clear_list()
-	open(MissionTracker.get_active_mission()) # refresca el menú
+	open(MissionTracker.get_active_mission())
 
 func _on_close_pressed():
 	close()
