@@ -459,6 +459,7 @@ debug_color = Color(1, 0, 0, 1)
 [node name="WoodChest" parent="Chests" instance=ExtResource("9_iljt4")]
 z_index = 1
 position = Vector2(684, 536)
+chest_id = "0001"
 
 [node name="NPCs" type="Node" parent="."]
 
