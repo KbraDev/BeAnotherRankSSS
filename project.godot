@@ -63,6 +63,7 @@ ground=""
 chests=""
 UI=""
 inventory=""
+dialog_box=""
 
 [input]
 

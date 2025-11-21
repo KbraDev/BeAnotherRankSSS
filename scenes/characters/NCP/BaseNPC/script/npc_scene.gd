@@ -1,36 +1,84 @@
-extends CharacterBody2D ## NPC BASE
+extends CharacterBody2D
+## ===============================================================
+## NPC BASE UNIVERSAL — COMPATIBLE CON GODOT 4.3
+## ---------------------------------------------------------------
+## Funcionalidades:
+##  - Movimiento automático usando PathFollow2D
+##  - Animaciones generadas automáticamente desde un spritesheet
+##  - Detección de jugador mediante un área
+##  - Mostrar un icono de interacción (“Pulsa E”)
+##  - Iniciar un diálogo usando un sistema universal (DialogBox)
+## 
+## Requisitos:
+##  - El DialogBox debe estar en un nodo con el grupo "dialog_box"
+##  - El NPC debe tener un área que llame a:
+##       _on_break_area_body_entered()
+##       _on_break_area_body_exited()
+## ===============================================================
 
-# --- Variables exportadas ---
-# --- Asignables en el editor ---
-@export var new_spritesheet: Texture2D   # La hoja de sprites que este NPC usará.
-@export var path_follow: PathFollow2D    # El nodo PathFollow2D que marca su ruta.
 
-# Biblioteca de dialogos
+
+# ================================================================
+# ----------------------- VARIABLES EXPORTADAS --------------------
+# ================================================================
+
+@export var new_spritesheet: Texture2D
+## Hoja de sprites del NPC.
+## Cada fila es una animación en el orden de ANIM_NAMES.
+
+@export var path_follow: PathFollow2D
+## Nodo PathFollow2D que controla la trayectoria del NPC.
+
 @export var dialog_library: Array[String] = []
+## Lista de diálogos que este NPC dirá, en orden.
 
-# --- Referencias a nodos ---
-@onready var anim := $AnimatedSprite2D              # Referencia al sprite animado del NPC.
-@onready var textBox := $Panel          # Referencia al panel
-@onready var label := $Panel/Label      # Referencia al Label
-@onready var interactBTN := $Panel/AnimatedSprite2D # Referencia al Sprite del BTN
 
-# --- Estado interno ---
-var previous_position: Vector2            # Posición del NPC en el frame anterior.
-var speed = 25.0                          # Velocidad con la que se mueve por el path
 
-# --- Estado interno adicional (jugador) ---
-var player_in_area = false                # Para saber si esta dentro del area
-var can_advance = true
+# ================================================================
+# ----------------------- REFERENCIAS A NODOS ---------------------
+# ================================================================
 
-# --- Indice del dialogo actual ---
-var dialog_index: int = 0
+@onready var anim := $AnimatedSprite2D
+## Sprite animado del NPC.
 
-# --- Constantes ---
-# --- Puede variar segun el tamano, forma o frames del spritesheet ---
-const FRAME_SIZE = Vector2(48, 96)        # Tamaño de cada frame en la hoja de sprites.
+@onready var interactUI := $InteractUI
+## Icono visual para “Pulsa E para interactuar”.
 
-# Lista de animaciones en el orden en que están en el spritesheet.
-const ANIM_NAMES = [
+@onready var dialog_box := get_tree().get_first_node_in_group("dialog_box")
+## Sistema universal de diálogos.
+
+
+
+# ================================================================
+# -------------------------- ESTADO INTERNO -----------------------
+# ================================================================
+
+var previous_position: Vector2
+## Guarda la posición del frame anterior para calcular dirección.
+
+var speed: float = 25.0
+## Velocidad de movimiento por el path.
+
+var player_in_area: bool = false
+## TRUE cuando el jugador está en el área de interacción.
+
+var last_direction: String = "front"
+## Última dirección animada.
+
+var can_move: bool = true
+## Si FALSE, el NPC no avanza por la ruta.
+
+
+
+# ================================================================
+# ---------------------------- CONSTANTES -------------------------
+# ================================================================
+
+const FRAME_SIZE := Vector2(48, 96)
+## Tamaño de cada frame en la hoja del spritesheet.
+
+## Orden exacto de animaciones esperadas por filas:
+const ANIM_NAMES := [
 	"idle_front",
 	"idle_left_side",
 	"idle_right_side",
@@ -41,143 +89,141 @@ const ANIM_NAMES = [
 	"walk_back",
 ]
 
-var last_direction: String = "front"      # Última dirección del NPC para mantener idle correcto.
-var can_move := true                      # Controla si el NPC se mueve o no.
 
-# --- Función _ready() ---
+
+# ================================================================
+# ---------------------------- READY ------------------------------
+# ================================================================
+
 func _ready():
-	# Guardamos la posición inicial para poder medir movimiento en el primer frame.
+	await  get_tree().process_frame
+	interactUI.visible = false
 	previous_position = global_position
-
-	# Generamos las animaciones según el spritesheet asignado.
 	_generate_animations()
+	anim.play("idle_front")
 
-	# Reproducimos la animación inicial (idle mirando al frente).
-	anim.play("idle_" + last_direction)
-	
-	label.visible = false
-	textBox.visible = false
-	interactBTN.play("default")
+	interactUI.visible = false
+
+	# Para saber cuando un diálogo termina
+	dialog_box.dialog_finished.connect(_on_dialog_finished)
 
 
-# --- Función _physics_process(delta) ---
+
+# ================================================================
+# ------------------------ MOVIMIENTO -----------------------------
+# ================================================================
+
 func _physics_process(delta: float) -> void:
-	# Si el NPC no puede moverse o no hay path_follow asignado, salimos.
-	if not can_move or path_follow == null: 
+	if not can_move or path_follow == null:
 		return
-	
-	# Avanza sobre el path aumentando su 'progress'.
-	# Esto mueve al PathFollow2D y, como el NPC está dentro de él, también se mueve.
-	path_follow.progress += speed * delta
-	
-	# Calculamos el desplazamiento REAL del NPC comparando posiciones:
-	var movement = global_position - previous_position
 
-	# Actualizamos la animación en base a la dirección real del movimiento.
+	path_follow.progress += speed * delta
+
+	var movement := global_position - previous_position
 	_update_animation(movement.normalized())
-	
-	# Guardamos la posición actual para el siguiente frame.
+
 	previous_position = global_position
 
 
-# --- Función _update_animation(direction) ---
+
+# ================================================================
+# ---------------------- ANIMACIONES ------------------------------
+# ================================================================
+
 func _update_animation(direction: Vector2):
-	# Si casi no hay movimiento, reproducimos idle en la última dirección registrada.
+	## Si no se mueve → idle
 	if direction.length() < 0.01:
-		var idle_anim = "idle_" + last_direction
-		if anim.animation != idle_anim:
-			anim.play(idle_anim)
+		anim.play("idle_" + last_direction)
 		return
 
-	# Determinar la dirección en la que se mueve para elegir animación de caminar.
+	# Elegir dirección dominante
 	if abs(direction.x) > abs(direction.y):
 		last_direction = "right_side" if direction.x > 0 else "left_side"
 	else:
 		last_direction = "front" if direction.y > 0 else "back"
 
-	# Reproducir la animación de caminar correspondiente.
-	var walk_anim = "walk_" + last_direction
-	if anim.animation != walk_anim:
-		anim.play(walk_anim)
+	anim.play("walk_" + last_direction)
 
-# --- Función _generate_animations() ---
+
+
+# ================================================================
+# ------------ GENERACIÓN AUTOMÁTICA DE ANIMACIONES --------------
+# ================================================================
+
 func _generate_animations():
-	# Creamos un nuevo contenedor de frames para AnimatedSprite2D.
-	var frames = SpriteFrames.new()
+	var frames := SpriteFrames.new()
 
-	# Recorremos cada animación (fila del spritesheet).
 	for row in range(ANIM_NAMES.size()):
-		var anim_name = ANIM_NAMES[row]
+		var anim_name: String = ANIM_NAMES[row]
 		frames.add_animation(anim_name)
 		frames.set_animation_loop(anim_name, true)
 		frames.set_animation_speed(anim_name, 7)
 
-		# Cada animación tiene 4 frames en horizontal.
-		for i in range(4):
+		for col in range(4):
 			var atlas := AtlasTexture.new()
 			atlas.atlas = new_spritesheet
-			# Calculamos la región correspondiente a este frame.
-			atlas.region = Rect2(Vector2(i, row) * FRAME_SIZE, FRAME_SIZE)
+			atlas.region = Rect2(Vector2(col, row) * FRAME_SIZE, FRAME_SIZE)
 			frames.add_frame(anim_name, atlas)
 
-	# Asignamos este conjunto de frames al AnimatedSprite2D.
 	anim.sprite_frames = frames
 
 
-# --- SECCION PARA DETECTAR CUANDO DEBE FRENAR EL NCP ---
-# --- Aplica cuando el Jugador entre en el area del NPC ---
-# --- Su variable "speed" debera ser igual a 0, cuando el jugador salga debera restaurarse. ---
-# --- Control de continuidad en dialogos ---
 
-# --- Interaccion y dialogos en orden ---
-# --- Func para detener al NPC y mostrar dialogos en orden ---
+# ================================================================
+# --------------------- INTERACCIÓN CON EL NPC --------------------
+# ================================================================
+
 func _on_break_area_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
 		player_in_area = true
 		speed = 0.0
-		# Entrada de dialogos (1s despues del frenado)
-		await get_tree().create_timer(0.2).timeout
-		# Llamada a la funcion para mosntrar el dialogo.
-		textBox.visible = true # Se muestra label para mostrar dialogo
-		label.visible = true    # Se muestra label para mostrar dialogo
-		_show_next_dialog()     # Llamada a la funcion para recorrer el array de dialogo
+		interactUI.visible = true
+		interactUI.play("default")
 
-# --- func para reanudar recorrido ---
 func _on_break_area_body_exited(body: Node2D) -> void:
 	if body.is_in_group("player"):
 		player_in_area = false
 		speed = 25.0
-		textBox.visible = false # Se deja de mostrar el dialogo
-		label.visible = false   # Se deja de mostrar el dialogo
-	
-	# Reiniciar dialogs al salir
-	dialog_index = 0
+		interactUI.visible = false
 
-# --- Func para detectar tecla "interact" ---
+		# Si había diálogo → cerrarlo
+		if dialog_box.is_showing:
+			dialog_box.hide_dialog()
+			dialog_box.is_showing = false
+
+
+
+# ================================================================
+# ------------------ CUANDO EL DIALOGO TERMINA --------------------
+# ================================================================
+
+func _on_dialog_finished() -> void:
+	## Cuando el dialogo universal dice “ya terminé”
+	interactUI.visible = true
+	dialog_box.is_showing = false
+	## Esto permite volver a hablar con el NPC sin bugs.
+
+
+
+# ================================================================
+# ------------------- MANEJO DE INPUT DEL JUGADOR -----------------
+# ================================================================
+
 func _input(event: InputEvent) -> void:
-	if player_in_area and event.is_action_pressed("interact"): # Escuchar tecla "interact" del jugador en el NPC
-		can_advance = false
-		_show_next_dialog()
-		# Delay para evitar spam
-		await get_tree().create_timer(0.2).timeout
-		can_advance = true
-
-# --- Func para mostrar dialogos ---
-func _show_next_dialog():
-	if dialog_library.is_empty():
+	if not player_in_area:
 		return
-	# Salimos si no existen dialogos.
-	
-	# Asegurar indice valido
-	if dialog_index < 0: 
-		dialog_index = 0
-	if dialog_index >= dialog_library.size():
-		dialog_index = dialog_library.size() - 1
-	
-	# Mostrar el dialogo actual
-	label.text = dialog_library[dialog_index]
-	
-	# Avanzar al siguiente dialogo SOLO si no es el ultimo
-	if dialog_index < dialog_library.size() - 1: 
-		dialog_index += 1
-	# si es el ultimo no se reinicia
+
+	## Si el jugador presionó "interact" dentro del área
+	if event.is_action_pressed("interact"):
+
+		## Caso 1: NO hay diálogo abierto → abrir diálogo
+		if not dialog_box.is_showing:
+
+			# Evitar que avance automáticamente la primera línea
+			get_viewport().set_input_as_handled()
+
+			dialog_box.show_dialog(dialog_library)
+			return
+
+		## Caso 2: diálogo YA está abierto → dejar que el DialogBox lo maneje
+		## NO usamos set_input_as_handled aquí, para permitir avanzar/cerrar

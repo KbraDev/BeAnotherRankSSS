@@ -1,9 +1,9 @@
 [gd_scene load_steps=3 format=3 uid="uid://d325q8f2ceybl"]
 
-[ext_resource type="Texture2D" uid="uid://b3gps2xe8ss2e" path="res://sprites/UIS/dialogBoxUI/nextButtonDialog.png" id="1_7028w"]
 [ext_resource type="Script" uid="uid://c1t6g71dks4kx" path="res://UIs/DialogBox/dialog_box.gd" id="1_roq7x"]
+[ext_resource type="PackedScene" uid="uid://ylg144phjmak" path="res://UIs/InteractUI/interactUI.tscn" id="2_1rmnq"]
 
-[node name="DialogBox" type="Control"]
+[node name="DialogBox" type="Control" groups=["dialog_box"]]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -20,8 +20,9 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 offset_left = -623.0
-offset_top = -114.0
+offset_top = -172.0
 offset_right = 623.0
+offset_bottom = -16.0
 grow_horizontal = 2
 grow_vertical = 0
 mouse_filter = 2
@@ -33,18 +34,15 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -595.0
-offset_top = -45.0
-offset_right = 595.0
-offset_bottom = 45.0
+offset_left = -576.0
+offset_top = -62.0
+offset_right = 576.0
+offset_bottom = 66.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_font_sizes/font_size = 35
+autowrap_mode = 3
 
-[node name="Button" type="Button" parent="Panel"]
-layout_mode = 0
-offset_left = 1200.0
-offset_top = 69.0
-offset_right = 1240.0
-offset_bottom = 109.0
-icon = ExtResource("1_7028w")
+[node name="InteractuUI" parent="." instance=ExtResource("2_1rmnq")]
+position = Vector2(1239.5, 676.5)
+scale = Vector2(1.20313, 1.20313)
