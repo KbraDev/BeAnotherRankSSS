@@ -1,4 +1,4 @@
-[gd_scene load_steps=56 format=4 uid="uid://dpah0ljk08blt"]
+[gd_scene load_steps=55 format=4 uid="uid://dpah0ljk08blt"]
 
 [ext_resource type="TileSet" uid="uid://rngchcx3q02t" path="res://assets/tilesets/terrain.tres" id="1_2u8v6"]
 [ext_resource type="Script" uid="uid://dd64xk5yebmhm" path="res://scenes/world/location/olid_town/olid_town.gd" id="1_plp7c"]
@@ -21,7 +21,6 @@
 [ext_resource type="Texture2D" uid="uid://drm2pcfivy8ui" path="res://sprites/characters/NPC/NPCs/NpcVariationFemale/NpcFemaleVariation05_000..png" id="17_ww5af"]
 [ext_resource type="Texture2D" uid="uid://dccnbvwihm2lj" path="res://sprites/characters/NPC/NPCs/NpcVariationsMale/NPCVariationLowHair000.png" id="18_plp7c"]
 [ext_resource type="Texture2D" uid="uid://41m2f5js217s" path="res://sprites/characters/NPC/NPCs/NPC_guard_ lvl1/Npc_Guard_lv01.png" id="19_it7mw"]
-[ext_resource type="Texture2D" uid="uid://diqc0ws7f67su" path="res://sprites/characters/NPC/NPCs/NpcVariationsMale/NPCVariationLowHair004.png" id="20_ww5af"]
 [ext_resource type="Texture2D" uid="uid://bcv44vw5m7e3b" path="res://sprites/houses/cartelGremio.png" id="23_a4jh4"]
 [ext_resource type="AudioStream" uid="uid://cro020g013gps" path="res://SFX/Music/OlidTown/08 4 town LOOP.mp3" id="24_ww5af"]
 
@@ -158,7 +157,7 @@ point_count = 5
 
 [sub_resource type="Curve2D" id="Curve2D_plp7c"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, -180, 1175, 0, 0, 0, 0, 53, 1177, 0, 0, 0, 0, -189, 1175)
+"points": PackedVector2Array(0, 0, 0, 0, -180, 1168, 0, 0, 0, 0, 54, 1172, 0, 0, 0, 0, -181, 1168)
 }
 point_count = 3
 
@@ -600,33 +599,20 @@ new_spritesheet = ExtResource("19_it7mw")
 path_follow = NodePath("..")
 dialog_library = Array[String](["Tengo que vigilar esta entrada todos los dias... No hay amenazas cerca pero es mejor prevenir."])
 
-[node name="NPC10" type="Node" parent="NPCs"]
-
-[node name="Path2D" type="Path2D" parent="NPCs/NPC10"]
-curve = SubResource("Curve2D_plp7c")
-
-[node name="PathFollow2D" type="PathFollow2D" parent="NPCs/NPC10/Path2D"]
-position = Vector2(960, 580)
-rotates = false
-
-[node name="NPC" parent="NPCs/NPC10/Path2D/PathFollow2D" instance=ExtResource("10_ugwko")]
-new_spritesheet = ExtResource("20_ww5af")
-dialog_library = Array[String](["Adentro hay mucha gente, no puedes pasar aún."])
-
 [node name="NPC11" type="Node" parent="NPCs"]
 
 [node name="Path2D" type="Path2D" parent="NPCs/NPC11"]
 curve = SubResource("Curve2D_plp7c")
 
 [node name="PathFollow2D" type="PathFollow2D" parent="NPCs/NPC11/Path2D"]
-position = Vector2(-180, 1175)
+position = Vector2(-180, 1168)
 rotation = 0.00858348
 rotates = false
 
 [node name="NPC" parent="NPCs/NPC11/Path2D/PathFollow2D" node_paths=PackedStringArray("path_follow") instance=ExtResource("10_ugwko")]
 new_spritesheet = ExtResource("14_7wv2b")
 path_follow = NodePath("..")
-dialog_library = Array[String](["Mi hijo salio a una  mision de expedicion hace una semana, desde entonces no eh sabido nada de el.", "Es un adulto pero empiezo a preocuparme muchoi."])
+dialog_library = Array[String](["Mi hijo salio a una  mision de expedicion hace una semana, desde entonces no eh sabido nada de el.", "Es un adulto pero empiezo a preocuparme mucho."])
 
 [node name="Ligths" type="Node" parent="."]
 

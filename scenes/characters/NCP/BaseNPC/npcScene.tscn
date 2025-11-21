@@ -16,6 +16,7 @@ polygon = PackedVector2Array(0, -14, 5, -14, 6, -11, 7, -4, 12, 8, 9, 11, 6, 12,
 [node name="NPC" type="CharacterBody2D"]
 z_index = 1
 script = ExtResource("1_wrl5n")
+interact_ui_scene = ExtResource("4_3af8h")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.645833, 0.645833)
@@ -41,11 +42,6 @@ debug_color = Color(0.249372, 0.285124, 0.977254, 0.42)
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="."]
 occluder = SubResource("OccluderPolygon2D_w6qgs")
-
-[node name="InteractUI" parent="." instance=ExtResource("4_3af8h")]
-z_index = 10
-position = Vector2(5.68434e-14, -43)
-scale = Vector2(0.6875, 0.625)
 
 [connection signal="body_entered" from="BreakArea" to="." method="_on_break_area_body_entered"]
 [connection signal="body_exited" from="BreakArea" to="." method="_on_break_area_body_exited"]

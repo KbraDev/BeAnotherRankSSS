@@ -32,6 +32,8 @@ extends CharacterBody2D
 @export var dialog_library: Array[String] = []
 ## Lista de diálogos que este NPC dirá, en orden.
 
+@export var interact_ui_scene: PackedScene
+## Escena interactUI
 
 
 # ================================================================
@@ -41,7 +43,7 @@ extends CharacterBody2D
 @onready var anim := $AnimatedSprite2D
 ## Sprite animado del NPC.
 
-@onready var interactUI := $InteractUI
+# @onready var interactUI := $InteractUI
 ## Icono visual para “Pulsa E para interactuar”.
 
 @onready var dialog_box := get_tree().get_first_node_in_group("dialog_box")
@@ -68,7 +70,7 @@ var last_direction: String = "front"
 var can_move: bool = true
 ## Si FALSE, el NPC no avanza por la ruta.
 
-
+var interact_ui_instance: Node = null
 
 # ================================================================
 # ---------------------------- CONSTANTES -------------------------
@@ -97,12 +99,12 @@ const ANIM_NAMES := [
 
 func _ready():
 	await  get_tree().process_frame
-	interactUI.visible = false
+	#interactUI.visible = false
 	previous_position = global_position
 	_generate_animations()
 	anim.play("idle_front")
 
-	interactUI.visible = false
+	#interactUI.visible = false
 
 	# Para saber cuando un diálogo termina
 	dialog_box.dialog_finished.connect(_on_dialog_finished)
@@ -177,21 +179,29 @@ func _on_break_area_body_entered(body: Node2D) -> void:
 	if body.is_in_group("player"):
 		player_in_area = true
 		speed = 0.0
-		interactUI.visible = true
-		interactUI.play("default")
+
+		# Instanciar la UI de interacción
+		if interact_ui_instance == null:
+			interact_ui_instance = interact_ui_scene.instantiate()
+			add_child(interact_ui_instance)  # se dibuja sobre el NPC
+			interact_ui_instance.position = Vector2(0, -50)  # ajusta como quieras
+
+			# reproducir la animación (si tiene)
+			if interact_ui_instance.has_method("play"):
+				interact_ui_instance.play("default")
 
 func _on_break_area_body_exited(body: Node2D) -> void:
 	if body.is_in_group("player"):
 		player_in_area = false
 		speed = 25.0
-		interactUI.visible = false
 
-		# Si había diálogo → cerrarlo
+		if interact_ui_instance:
+			interact_ui_instance.queue_free()
+			interact_ui_instance = null
+
+		# cerrar diálogo si estaba abierto
 		if dialog_box.is_showing:
 			dialog_box.hide_dialog()
-			dialog_box.is_showing = false
-
-
 
 # ================================================================
 # ------------------ CUANDO EL DIALOGO TERMINA --------------------
@@ -199,7 +209,7 @@ func _on_break_area_body_exited(body: Node2D) -> void:
 
 func _on_dialog_finished() -> void:
 	## Cuando el dialogo universal dice “ya terminé”
-	interactUI.visible = true
+	#interactUI.visible = true
 	dialog_box.is_showing = false
 	## Esto permite volver a hablar con el NPC sin bugs.
 

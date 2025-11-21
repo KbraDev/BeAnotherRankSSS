@@ -96,7 +96,7 @@ animations = [{
 }]
 
 [node name="InteractuUI" type="AnimatedSprite2D"]
-visible = false
+scale = Vector2(0.71875, 0.71875)
 sprite_frames = SubResource("SpriteFrames_w6dyy")
 frame_progress = 0.60101
 script = ExtResource("2_xnwgl")
