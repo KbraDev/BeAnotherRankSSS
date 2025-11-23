@@ -1,8 +1,8 @@
 [gd_scene load_steps=6 format=3 uid="uid://dfmtvhdu7sgvj"]
 
 [ext_resource type="Script" uid="uid://dfruv68k4r2kj" path="res://items/letterItem/letter_ui.gd" id="1_8phla"]
-[ext_resource type="FontFile" uid="uid://cwkvty6qgpjhg" path="res://assets/fonts/smallburg-Italic.otf" id="2_8phla"]
 [ext_resource type="Texture2D" uid="uid://t2s26sxu1g3w" path="res://sprites/UIS/buttons/BOOKS/UI_TravelBook_BookPageLeft01a.png" id="2_adfm2"]
+[ext_resource type="FontFile" uid="uid://bkgdnmgv0l2df" path="res://assets/fonts/smallburg-Regular.ttf" id="3_adfm2"]
 [ext_resource type="Texture2D" uid="uid://bvwvuagqlu1xg" path="res://sprites/UIS/buttons/BOOKS/UI_TravelBook_IconCross01a.png" id="4_ogxqc"]
 [ext_resource type="Texture2D" uid="uid://bm17hosuxnhbh" path="res://sprites/UIS/buttons/BOOKS/UI_TravelBook_IconArrow01a.png" id="5_gulrk"]
 
@@ -27,7 +27,7 @@ offset_top = 108.0
 offset_right = 821.0
 offset_bottom = 605.0
 theme_override_colors/default_color = Color(0, 0, 0, 1)
-theme_override_fonts/normal_font = ExtResource("2_8phla")
+theme_override_fonts/normal_font = ExtResource("3_adfm2")
 theme_override_font_sizes/normal_font_size = 22
 
 [node name="Close" type="Button" parent="."]
