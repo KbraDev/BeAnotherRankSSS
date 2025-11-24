@@ -483,9 +483,6 @@ position = Vector2(2677, -159)
 scale = Vector2(0.027832, 0.027832)
 texture = ExtResource("21_4qygc")
 
-[node name="CanvasModulate" type="CanvasModulate" parent="."]
-color = Color(0.977938, 0.923207, 0.776447, 1)
-
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 position = Vector2(1945, -180)
 stream = ExtResource("26_art45")
@@ -523,6 +520,9 @@ hits_to_open = 3
 position = Vector2(2386, 580)
 chest_id = "0005"
 hits_to_open = 3
+
+[node name="CanvasModulate2" type="CanvasModulate" parent="."]
+color = Color(0.790269, 0.833959, 0.721082, 1)
 
 [connection signal="body_entered" from="ToMilisTrail" to="ToMilisTrail" method="_on_body_entered"]
 [connection signal="body_entered" from="tools/gates/Area2D" to="tools/gates/Area2D" method="_on_body_entered"]
