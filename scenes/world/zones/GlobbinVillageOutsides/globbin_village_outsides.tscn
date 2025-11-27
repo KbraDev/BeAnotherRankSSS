@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=4 uid="uid://b8talgy2equ5v"]
+[gd_scene load_steps=5 format=4 uid="uid://b8talgy2equ5v"]
 
 [ext_resource type="TileSet" uid="uid://rngchcx3q02t" path="res://assets/tilesets/terrain.tres" id="1_rf0jg"]
 [ext_resource type="PackedScene" uid="uid://be8s6fsuvru6m" path="res://scenes/characters/player/player.tscn" id="2_bixr0"]
 [ext_resource type="TileSet" uid="uid://dvfkq370f0fmb" path="res://assets/tilesets/props.tres" id="2_yis6r"]
+[ext_resource type="PackedScene" uid="uid://1wmbdbs64n4n" path="res://scenes/shaders/fog/parallax_background.tscn" id="4_yis6r"]
 
 [node name="GlobbinVillageOutsides" type="Node2D"]
 
@@ -220,3 +221,7 @@ position = Vector2(-252, 454)
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 color = Color(0.790269, 0.833959, 0.721082, 1)
+
+[node name="ParallaxBackground" parent="." instance=ExtResource("4_yis6r")]
+scale = Vector2(4, 4)
+transform = Transform2D(4, 0, 0, 4, 0, 0)
