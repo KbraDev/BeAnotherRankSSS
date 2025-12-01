@@ -29,6 +29,7 @@ Playerwallet="*res://scripts/globals/PlayerWallet.gd"
 ChestRegistry="*res://scripts/globals/ChestRegistry.gd"
 SceneNames="*res://scripts/globals/SceneNames.gd"
 TransitionOverlay="*res://UIs/TransitionOverlay/transition_overlay.tscn"
+Portals="*res://scripts/globals/portals.gd"
 
 [display]
 
