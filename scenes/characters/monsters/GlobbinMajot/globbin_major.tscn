@@ -1,11 +1,15 @@
-[gd_scene load_steps=169 format=3 uid="uid://dp5ry7qcymmll"]
+[gd_scene load_steps=177 format=3 uid="uid://dp5ry7qcymmll"]
 
 [ext_resource type="Texture2D" uid="uid://k6iwxiok6v6b" path="res://sprites/characters/mobs/GlobbinMajor/orc2_death_full.png" id="1_42tx3"]
+[ext_resource type="Script" uid="uid://bryw5yks6ojeq" path="res://scripts/enemy/globbin/globbin.gd" id="1_w4ww8"]
 [ext_resource type="Texture2D" uid="uid://cooiptvuiiod4" path="res://sprites/characters/mobs/GlobbinMajor/orc2_hurt_full.png" id="2_emn4j"]
 [ext_resource type="Texture2D" uid="uid://cbw2hs2ndha1t" path="res://sprites/characters/mobs/GlobbinMajor/orc2_idle_full.png" id="3_ynvh4"]
 [ext_resource type="Texture2D" uid="uid://dma0ndclv6t8n" path="res://sprites/characters/mobs/GlobbinMajor/orc2_run_attack_full.png" id="4_b5jrl"]
 [ext_resource type="Texture2D" uid="uid://dxed7df38u8lq" path="res://sprites/characters/mobs/GlobbinMajor/orc2_run_full.png" id="5_7f7nl"]
 [ext_resource type="Texture2D" uid="uid://bytkdj2ncpdan" path="res://sprites/characters/mobs/GlobbinMajor/orc2_walk_full.png" id="6_emn4j"]
+[ext_resource type="Texture2D" uid="uid://7jj4m1llmyec" path="res://sprites/UIS/healthBar/marco.png" id="8_thuct"]
+[ext_resource type="Texture2D" uid="uid://d1nrndp7wviwo" path="res://sprites/UIS/healthBar/progress.png" id="9_osxxv"]
+[ext_resource type="Script" uid="uid://c8luqh8ewax4r" path="res://scenes/characters/monsters/greenslime/scripts/health_bar.gd" id="10_jnmve"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_wbpo0"]
 radius = 7.0
@@ -1274,7 +1278,27 @@ animations = [{
 "speed": 8.0
 }]
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_4dlnk"]
+radius = 29.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_6fxij"]
+radius = 245.833
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_auixt"]
+radius = 26.0192
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_4mlyu"]
+radius = 22.0
+
 [node name="GlobbinMajor" type="CharacterBody2D"]
+scale = Vector2(1.2, 1.2)
+script = ExtResource("1_w4ww8")
+damage = 12.0
+rush_damage = 16.0
+max_health = 60.0
+move_speed = 60.0
+xp_reward_range = Vector2i(55, 90)
+armor = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -5)
@@ -1283,3 +1307,47 @@ shape = SubResource("CapsuleShape2D_wbpo0")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_r0237")
 animation = &"die_front"
+
+[node name="CollisionCheck" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CollisionCheck"]
+shape = SubResource("CircleShape2D_4dlnk")
+
+[node name="DetectionArea" type="Area2D" parent="."]
+collision_layer = 6
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
+shape = SubResource("CircleShape2D_6fxij")
+debug_color = Color(0.67296, 0.507706, 0, 0.42)
+
+[node name="AttackArea" type="Area2D" parent="."]
+collision_layer = 6
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
+shape = SubResource("CircleShape2D_auixt")
+debug_color = Color(0.980755, 0.137938, 0, 0.42)
+
+[node name="BrakeArea" type="Area2D" parent="."]
+collision_layer = 6
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BrakeArea"]
+shape = SubResource("CircleShape2D_4mlyu")
+debug_color = Color(0.785554, 0.421037, 0.277402, 0.42)
+
+[node name="HealthBar" type="TextureProgressBar" parent="."]
+offset_left = -10.0
+offset_top = -24.0
+offset_right = 30.0
+offset_bottom = 16.0
+texture_over = ExtResource("8_thuct")
+texture_progress = ExtResource("9_osxxv")
+script = ExtResource("10_jnmve")
+
+[node name="Audio_Hit" type="AudioStreamPlayer2D" parent="."]
+
+[node name="Audio_Attack" type="AudioStreamPlayer2D" parent="."]
+
+[node name="Audio_death" type="AudioStreamPlayer2D" parent="."]
