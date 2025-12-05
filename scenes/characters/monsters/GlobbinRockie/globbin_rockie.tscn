@@ -24,10 +24,16 @@ radius = 22.0
 
 [node name="GlobbinRockie" type="CharacterBody2D"]
 script = ExtResource("1_2a2nm")
+damage = null
 rush_damage = 8.0
 max_health = 24.0
 move_speed = 40.0
 xp_reward_range = Vector2i(15, 22)
+armor = null
+enemy_name = null
+mass = null
+knockback_scale = null
+knockback_friction = null
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -4)

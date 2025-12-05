@@ -20,6 +20,9 @@ var is_attacking: bool = false
 var player_in_attack_range: bool = false
 var player_in_brake_range: bool = false
 
+enum State {IDLE, CHASE, ATTACK, HURT, RUSH}
+var current_state: State = State.IDLE
+
 func _ready() -> void:
 	super()
 	randomize()
@@ -171,29 +174,30 @@ func _on_brake_area_body_exited(body: Node) -> void:
 # ===========================
 
 func _perform_attack(body: Node) -> void:
+	if is_hurt or has_died:
+		return
+
 	is_attacking = true
 	can_move = false
 	velocity = Vector2.ZERO
 
-	print("⚔️ Globbin inicia bucle de ataque contra", body.name)
+	while player_in_attack_range and not has_died and is_attacking:
 
-	while player_in_attack_range and not has_died:
 		_play_attack_animation()
-		print("🎬 Ataque ejecutado:", last_direction)
 
 		await get_tree().create_timer(0.6).timeout
+		if is_hurt or not is_attacking:
+			break
 
 		if attack_area.get_overlapping_bodies().has(body):
-			print("💥 Golpe exitoso sobre", body.name)
 			_damage_player(body)
-		else:
-			print("❌ El jugador esquivó el ataque")
-
+		
 		await get_tree().create_timer(0.8).timeout
+		if is_hurt or not is_attacking:
+			break
 
-	print("🛑 Fin del bucle de ataque contra", body.name)
-	can_move = true
 	is_attacking = false
+	can_move = true
 
 # =============================
 # == Aplicar daño al jugador ==
@@ -386,3 +390,11 @@ func _end_rush() -> void:
 	await get_tree().create_timer(6.0).timeout
 	rush_cooldown_active = false
 	print("🎯 Rush listo para intentar de nuevo")
+	
+func _on_enemy_hurt_end():
+	# Este método lo llama Enemy.gd cuando termina HURT
+	# Si está atacando, cancelamos el bucle
+	if is_attacking:
+		print("⛔ Ataque interrumpido por daño")
+		is_attacking = false
+		can_move = true

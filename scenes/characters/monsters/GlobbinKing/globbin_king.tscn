@@ -1520,8 +1520,13 @@ script = ExtResource("1_dkpy5")
 damage = 16.0
 rush_damage = 20.0
 max_health = 65.0
+move_speed = null
 xp_reward_range = Vector2i(99, 120)
 armor = 2.0
+enemy_name = null
+mass = null
+knockback_scale = null
+knockback_friction = null
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, 1)

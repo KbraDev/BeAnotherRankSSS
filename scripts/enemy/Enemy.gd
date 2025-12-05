@@ -45,6 +45,7 @@ class_name Enemy
 var current_health: float
 var has_died: bool = false
 var _death_failsafe_timer: Timer = null
+var is_hurt: bool = false
 
 # =========================
 # === CICLO DE VIDA ===
@@ -87,22 +88,32 @@ func _take_damage(amount: float, last_direction: String = "front") -> void:
 
 	if health_bar:
 		health_bar.value = current_health
-		if health_bar.has_method("show_for_a_while"):
-			health_bar.show_for_a_while()
-		else:
-			health_bar.visible = true
+		health_bar.visible = true
 
 	play_sound("hit")
 
+	is_hurt = true
+
 	if animation:
-		var hurt_dir = "hurt_" + last_direction
-		if animation.sprite_frames.has_animation(hurt_dir):
-			animation.play(hurt_dir)
+		animation.stop()
+		var hurt_anim = "hurt_" + last_direction
+		if animation.sprite_frames.has_animation(hurt_anim):
+			animation.play(hurt_anim)
 		elif animation.sprite_frames.has_animation("hurt_front"):
 			animation.play("hurt_front")
 
+	if animation:
+		await animation.animation_finished
+
 	if current_health <= 0:
-		die()
+		die(last_direction)
+		return
+
+	is_hurt = false
+
+	# ⭐ Avisar al enemigo que terminó hurt
+	if has_method("_on_enemy_hurt_end"):
+		_on_enemy_hurt_end()
 
 # =========================
 # === MUERTE Y DROPS ===
@@ -229,3 +240,12 @@ func play_sound(type: String) -> void:
 	if player:
 		player.pitch_scale = randf_range(0.95, 1.05)
 		player.play()
+
+
+# =========================
+# === CALLBACK HEREDABLE ===
+# =========================
+func _on_enemy_hurt_end() -> void:
+	# Este método está pensado para que los enemigos hijos lo reescriban.
+	# Enemy base no necesita hacer nada aquí.
+	pass

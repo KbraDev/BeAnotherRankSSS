@@ -1299,6 +1299,10 @@ max_health = 60.0
 move_speed = 60.0
 xp_reward_range = Vector2i(55, 90)
 armor = 1.0
+enemy_name = null
+mass = null
+knockback_scale = null
+knockback_friction = null
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -5)
