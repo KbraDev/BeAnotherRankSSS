@@ -38,6 +38,7 @@ var stat_levels = {
 var walk_speed = 80.0
 var run_speed = 160.0
 var is_running = false
+var fuerza_jugador = base_stats ["fuerza"]
 
 var can_move = true
 
@@ -269,12 +270,38 @@ func perform_attack():
 	for body in attack_area.get_overlapping_bodies():
 		if body.is_in_group("enemies"):
 			body._take_damage(damage)
-			var dir = (body.global_position - global_position).normalized()
-			
-			if body.has_method("apply_knockback"):
-				body.apply_knockback(dir, 800.0) # fuerza base para enemigos
 
-			# 🔹 Empuje al jugador en dirección contraria
+			var dir = (body.global_position - global_position).normalized()
+
+			print("🔶 [Player] Golpeando a:", body.enemy_name)
+			print("    Dirección:", dir)
+			print("    Fuerza jugador (stat):", fuerza)
+			print("    Llamando apply_knockback en enemigo...")
+
+			# --- DEBUG: detectar si tiene mass (Godot 4 NO permite has_variable) ---
+			if body.get("mass") != null:
+				print("    enemy.mass:", body.mass)
+			else:
+				print("    ❓ enemy.mass NO existe en este enemigo")
+
+			# --- DEBUG: velocity BEFORE ---
+			if body.get("velocity") != null:
+				print("    enemy.velocity BEFORE:", body.velocity)
+			else:
+				print("    ❓ enemy.velocity NO existe")
+
+			# --- Llamar al knockback real ---
+			if body.has_method("apply_knockback"):
+				body.apply_knockback(dir, 200.0, fuerza)
+			else:
+				print("    ⚠️ Enemy NO tiene apply_knockback()")
+
+			# --- DEBUG: velocity AFTER ---
+			if body.get("velocity") != null:
+				print("    enemy.velocity AFTER:", body.velocity)
+
+			# --- Knockback al jugador ---
+			print("    Aplicando knockback al jugador (contrario)...")
 			apply_knockback(-dir, 100.0)
 
 		elif body.is_in_group("chests"):
@@ -285,7 +312,16 @@ func perform_attack():
 
 
 func apply_knockback(direction: Vector2, force: float):
-	velocity += direction * force
+	# DEBUG: información que recibe el jugador
+	print("🟠 Player.apply_knockback() llamado")
+	print("    direction:", direction, " force:", force)
+	print("    player velocity BEFORE:", velocity)
+
+	# Aplicación real (usa masa del jugador si quieres dividir, ahora directo)
+	velocity += direction.normalized() * force
+
+	# DEBUG: resultado
+	print("    player velocity AFTER:", velocity)
 
 func _on_attack_cooldown_timeout():
 	can_attack = true

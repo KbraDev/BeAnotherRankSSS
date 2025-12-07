@@ -924,7 +924,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_4cxr7")
 }],
 "loop": false,
-"name": &"die_back",
+"name": &"dying_back",
 "speed": 9.0
 }, {
 "frames": [{
@@ -953,7 +953,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_rlpn8")
 }],
 "loop": false,
-"name": &"die_front",
+"name": &"dying_front",
 "speed": 9.0
 }, {
 "frames": [{
@@ -982,7 +982,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_bbgp3")
 }],
 "loop": false,
-"name": &"die_left_side",
+"name": &"dying_left_side",
 "speed": 9.0
 }, {
 "frames": [{
@@ -1011,7 +1011,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_nesj4")
 }],
 "loop": false,
-"name": &"die_right_side",
+"name": &"dying_right_side",
 "speed": 9.0
 }, {
 "frames": [{
@@ -1515,24 +1515,22 @@ radius = 26.0192
 radius = 22.0
 
 [node name="GlobbinKing" type="CharacterBody2D"]
+position = Vector2(1, 0)
 scale = Vector2(1.5, 1.5)
 script = ExtResource("1_dkpy5")
 damage = 16.0
 rush_damage = 20.0
-max_health = 65.0
-move_speed = null
-xp_reward_range = Vector2i(99, 120)
+max_health = 100.0
+xp_reward_range = Vector2i(101, 139)
 armor = 2.0
-enemy_name = null
-mass = null
-knockback_scale = null
-knockback_friction = null
+mass = 50.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+z_index = 1
 position = Vector2(0, 1)
 scale = Vector2(1.48438, 1.48438)
 sprite_frames = SubResource("SpriteFrames_k061o")
-animation = &"die_front"
+animation = &"dying_front"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -7)
@@ -1569,9 +1567,9 @@ debug_color = Color(0.785554, 0.421037, 0.277402, 0.42)
 
 [node name="HealthBar" type="TextureProgressBar" parent="."]
 offset_left = -10.0
-offset_top = -24.0
+offset_top = -42.6666
 offset_right = 30.0
-offset_bottom = 16.0
+offset_bottom = -2.66665
 texture_over = ExtResource("9_3444d")
 texture_progress = ExtResource("10_iake8")
 script = ExtResource("11_wuacg")

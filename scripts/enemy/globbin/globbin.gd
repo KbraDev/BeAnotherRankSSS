@@ -54,27 +54,42 @@ func _ready() -> void:
 	rush_check_timer.timeout.connect(_on_rush_check_timeout)
 	add_child(rush_check_timer)
 
-func _physics_process(delta: float) -> void:
+func _physics_process(delta):
 	if has_died:
 		return
 
-	# ✅ Si está en rush, mueve aquí (no usar timers)
+	# --- PRIORIDAD: si está siendo empujado, procesar knockback primero ---
+	if is_being_pushed:
+		# mover usando la velocity que puso apply_knockback()
+		move_and_slide()
+		return
+
+	# Si está en hurt → detener IA (pero ya NO bloquea el knockback, porque lo procesamos arriba)
+	if is_hurt:
+		return
+
+	# Si está en rush
 	if is_rushing:
 		_process_rush(delta)
 		return
 
-	if not can_move:
-		return
-
+	# IA normal
 	if player_detected and player_target:
 		_chase_player(delta)
 	else:
 		_patrol(delta)
 
+
 # ===========================
 # == Patrullaje ==
 # ===========================
 
+# ---------------------------------------------------------
+# _choose_new_direction()
+# Selecciona aleatoriamente una dirección de movimiento 
+# (arriba, abajo, izquierda, derecha) para el patrullaje.
+# Actualiza también el "last_direction" para animaciones.
+# ---------------------------------------------------------
 func _choose_new_direction() -> void:
 	var dirs = [Vector2.LEFT, Vector2.RIGHT, Vector2.UP, Vector2.DOWN]
 	direction = dirs.pick_random()
@@ -85,7 +100,14 @@ func _choose_new_direction() -> void:
 		Vector2.UP: last_direction = "back"
 		Vector2.DOWN: last_direction = "front"
 
+# ---------------------------------------------------------
+# _patrol(delta)
+# Movimiento base del Globbin cuando no detecta al jugador.
+# Se mueve en línea recta y ocasionalmente cambia dirección.
+# Usa move_and_slide() y reproduce animación de caminar.
+# ---------------------------------------------------------
 func _patrol(delta: float) -> void:
+	#print("👣 [Globbin] PATROL - Sobrescribiendo velocity:", velocity)
 	velocity = direction * move_speed
 	move_and_slide()
 	_play_walk_animation()
@@ -96,7 +118,11 @@ func _patrol(delta: float) -> void:
 # ===========================
 # == Detección del jugador ==
 # ===========================
-
+# ---------------------------------------------------------
+# _on_detection_area_body_entered(body)
+# Activa el estado de persecución cuando el jugador entra 
+# en el área de detección. Guarda la referencia al jugador.
+# ---------------------------------------------------------
 func _on_detection_area_body_entered(body: Node) -> void:
 	if not body or not body.is_in_group("player"):
 		return
@@ -104,6 +130,11 @@ func _on_detection_area_body_entered(body: Node) -> void:
 	player_target = body
 	print("Jugador detectado")
 
+# ---------------------------------------------------------
+# _on_detection_area_body_exited(body)
+# El jugador salió del área de detección, así que el Globbin
+# vuelve a patrullar y limpia la referencia al objetivo.
+# ---------------------------------------------------------
 func _on_detection_area_body_exited(body: Node) -> void:
 	if not body or not body.is_in_group("player"):
 		return
@@ -115,7 +146,14 @@ func _on_detection_area_body_exited(body: Node) -> void:
 # == Persecución ==
 # ===========================
 
+# ---------------------------------------------------------
+# _chase_player(delta)
+# IA de persecución: el Globbin corre hacia el jugador.
+# Si el jugador está en "brake range", el Globbin se detiene.
+# Actualiza dirección, velocidad y reproduce animación.
+# ---------------------------------------------------------
 func _chase_player(delta: float) -> void:
+	#print("🏃 [Globbin] CHASE - Sobrescribiendo velocity a:", direction * (move_speed * 1.5))
 	if player_in_brake_range:
 		velocity = Vector2.ZERO
 		return  # 🚦 Detiene movimiento cuando está en rango de frenado
@@ -128,6 +166,12 @@ func _chase_player(delta: float) -> void:
 	move_and_slide()
 	_play_run_animation()
 
+# ---------------------------------------------------------
+# _get_cardinal_direction(vec)
+# Convierte un vector de movimiento en una dirección 
+# cardinal (front, back, left_side, right_side) para 
+# elegir la animación correcta.
+# ---------------------------------------------------------
 func _get_cardinal_direction(vec: Vector2) -> String:
 	if abs(vec.x) > abs(vec.y):
 		return "right_side" if vec.x > 0 else "left_side"
@@ -138,12 +182,22 @@ func _get_cardinal_direction(vec: Vector2) -> String:
 # == Áreas de ataque ==
 # ===========================
 
+# ---------------------------------------------------------
+# _on_attack_area_body_entered(body)
+# Detecta que el jugador está en rango de ataque.
+# Se usa para iniciar ciclos de ataque continuo.
+# ---------------------------------------------------------
 func _on_attack_area_body_entered(body: Node) -> void:
 	if not body or not body.is_in_group("player"):
 		return
 	player_in_attack_range = true
 	print("🎯 Jugador en rango de ataque")
 
+# ---------------------------------------------------------
+# _on_attack_area_body_exited(body)
+# El jugador sale del rango de ataque. 
+# Detiene el ciclo de ataque continuo.
+# ---------------------------------------------------------
 func _on_attack_area_body_exited(body: Node) -> void:
 	if not body or not body.is_in_group("player"):
 		return
@@ -154,6 +208,11 @@ func _on_attack_area_body_exited(body: Node) -> void:
 # == Área de frenado ==
 # ===========================
 
+# ---------------------------------------------------------
+# _on_brake_area_body_entered(body)
+# Activa el freno del Globbin cuando está demasiado cerca 
+# del jugador. Si también está en ataque range, inicia ataque.
+# ---------------------------------------------------------
 func _on_brake_area_body_entered(body: Node) -> void:
 	if not body or not body.is_in_group("player"):
 		return
@@ -163,6 +222,11 @@ func _on_brake_area_body_entered(body: Node) -> void:
 	if player_in_attack_range and not is_attacking:
 		_perform_attack(body)
 
+# ---------------------------------------------------------
+# _on_brake_area_body_exited(body)
+# El jugador sale del rango de freno. 
+# Globbin puede moverse nuevamente.
+# ---------------------------------------------------------
 func _on_brake_area_body_exited(body: Node) -> void:
 	if not body or not body.is_in_group("player"):
 		return
@@ -173,6 +237,13 @@ func _on_brake_area_body_exited(body: Node) -> void:
 # == ATAQUE CONTINUO ==
 # ===========================
 
+# ---------------------------------------------------------
+# _perform_attack(body)
+# Ciclo de ataque automático mientras el jugador permanezca 
+# en el área de ataque. Reproduce animaciones, inflige daño 
+# cada cierto tiempo y se detiene si el jugador sale del rango 
+# o si Globbin es herido.
+# ---------------------------------------------------------
 func _perform_attack(body: Node) -> void:
 	if is_hurt or has_died:
 		return
@@ -202,6 +273,13 @@ func _perform_attack(body: Node) -> void:
 # =============================
 # == Aplicar daño al jugador ==
 # =============================
+
+# ---------------------------------------------------------
+# _damage_player(body, use_rush_damage)
+# Llama al método del jugador take_damage() y determina 
+# si inflige daño normal o daño aumentado por Rush.
+# También imprime logs útiles.
+# ---------------------------------------------------------
 func _damage_player(body: Node, use_rush_damage: bool = false) -> void:
 	if not body or not body.is_in_group("player"):
 		return
@@ -229,6 +307,12 @@ func _damage_player(body: Node, use_rush_damage: bool = false) -> void:
 # == Colisiones ==
 # ================
 
+# ---------------------------------------------------------
+# _on_collision_check_body_entered(body)
+# Detecta colisiones del Globbin con muros, objetos y 
+# cuerpos válidos. Si el objeto es sólido, cambia 
+# automáticamente de dirección para evitar quedar atorado.
+# ---------------------------------------------------------
 func _on_collision_check_body_entered(body: Node) -> void:
 	if not body:
 		return
@@ -252,18 +336,33 @@ func _on_collision_check_body_entered(body: Node) -> void:
 # == Animaciones ==
 # =================
 
+# ---------------------------------------------------------
+# _play_walk_animation()
+# Reproduce la animación de caminar según la última 
+# dirección registrada. Verifica que exista la animación.
+# ---------------------------------------------------------
 func _play_walk_animation() -> void:
 	if not sprite: return
 	var anim_name = "walk_" + last_direction
 	if sprite.sprite_frames.has_animation(anim_name):
 		if sprite.animation != anim_name: sprite.play(anim_name)
 
+# ---------------------------------------------------------
+# _play_run_animation()
+# Reproduce la animación de correr durante la persecución.
+# Usa la dirección cardinal para elegir la animación.
+# ---------------------------------------------------------
 func _play_run_animation() -> void:
 	if not sprite: return
 	var anim_name = "run_" + last_direction
 	if sprite.sprite_frames.has_animation(anim_name):
 		if sprite.animation != anim_name: sprite.play(anim_name)
 
+# ---------------------------------------------------------
+# _play_attack_animation()
+# Reproduce la animación de ataque correspondiente a la 
+# última dirección. Incluye debug visual en consola.
+# ---------------------------------------------------------
 func _play_attack_animation() -> void:
 	if not sprite: return
 	var anim_name = "attack_" + last_direction
@@ -271,6 +370,10 @@ func _play_attack_animation() -> void:
 		print("🎬 Reproduciendo animación:", anim_name)
 		sprite.play(anim_name)
 
+# ---------------------------------------------------------
+# _play_rush_animation()
+# Reproduce la animación especial del ataque Rush.
+# ---------------------------------------------------------
 func _play_rush_animation() -> void:
 	if not sprite:
 		return
@@ -284,14 +387,24 @@ func _play_rush_animation() -> void:
 # == Recibir daño ==
 # ==================
 
-func _take_damage(amount: float, last_direciton: String = "front") -> void:
-	# Llama al método del padre pero pasando la última dirección real
+# ---------------------------------------------------------
+# _take_damage(amount, dir)
+# Maneja la recepción de daño y delega al método padre.  
+# El Globbin no añade lógica adicional aquí, solo hereda.
+# ---------------------------------------------------------
+func _take_damage(amount: float, dir: String = "front") -> void:
 	super._take_damage(amount, last_direction)
+	# Globbin no hace nada extra aquí
+
 
 # =====================
 # == Muerte direccional ==
 # =====================
-
+# ---------------------------------------------------------
+# die(dir)
+# Llama al método de muerte del padre con la animación 
+# direccional correcta. Asegura que se use last_direction.
+# ---------------------------------------------------------
 func die(dir: String = "") -> void:
 	if dir == "":
 		dir = last_direction
@@ -301,7 +414,11 @@ func die(dir: String = "") -> void:
 # ===========================
 # == RUSH DESESPERADO ==
 # ===========================
-
+# ---------------------------------------------------------
+# _on_rush_check_timeout()
+# Cada cierto tiempo revisa si el Globbin debe activar Rush 
+# según su vida actual. Probabilidad aumenta cada intento.
+# ---------------------------------------------------------
 var rush_attempts: int = 0
 var is_rushing: bool = false
 var rush_check_timer: Timer
@@ -334,6 +451,11 @@ func _on_rush_check_timeout() -> void:
 	else:
 		print("😤 Rush fallido. Intento:", rush_attempts, "Probabilidad:", chance)
 
+# ---------------------------------------------------------
+# _start_rush()
+# Inicializa el ataque Rush: fija objetivo, velocidad 
+# aumentada, dirección, animación y desactiva movilidad normal.
+# ---------------------------------------------------------
 func _start_rush() -> void:
 	if not player_target or has_died:
 		return
@@ -355,6 +477,11 @@ func _start_rush() -> void:
 # =========================
 # == Procesamiento RUSH ==
 # =========================
+# ---------------------------------------------------------
+# _process_rush(delta)
+# Movimiento del Rush: avanza rápidamente hasta el objetivo 
+# o impacta al jugador. Al llegar o golpear, termina el rush.
+# ---------------------------------------------------------
 func _process_rush(delta: float) -> void:
 	var to_target: Vector2 = rush_target - global_position
 
@@ -375,6 +502,11 @@ func _process_rush(delta: float) -> void:
 		_damage_player(player_target, true)  # usa daño de rush
 		_end_rush()
 
+# ---------------------------------------------------------
+# _end_rush()
+# Finaliza el estado Rush, activa una recuperación breve y 
+# luego inicia un cooldown antes de permitir nuevos intentos.
+# ---------------------------------------------------------
 func _end_rush() -> void:
 	is_rushing = false
 	velocity = Vector2.ZERO
@@ -390,11 +522,14 @@ func _end_rush() -> void:
 	await get_tree().create_timer(6.0).timeout
 	rush_cooldown_active = false
 	print("🎯 Rush listo para intentar de nuevo")
-	
+
+# ---------------------------------------------------------
+# _on_enemy_hurt_end()
+# Evento final de la animación de daño. Si el Globbin estaba
+# atacando, detiene el ataque y le permite moverse de nuevo.
+# ---------------------------------------------------------
 func _on_enemy_hurt_end():
-	# Este método lo llama Enemy.gd cuando termina HURT
-	# Si está atacando, cancelamos el bucle
+	# Si estaba atacando → cancelar
 	if is_attacking:
-		print("⛔ Ataque interrumpido por daño")
 		is_attacking = false
 		can_move = true

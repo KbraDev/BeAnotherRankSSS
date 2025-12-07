@@ -90,220 +90,85 @@ debug_color = Color(1, 1, 0, 1)
 
 [node name="GlobbinKing" parent="Globbins/King" instance=ExtResource("5_1iseo")]
 position = Vector2(3503, -2629)
-move_speed = null
-enemy_name = null
-mass = null
-knockback_scale = null
-knockback_friction = null
 
 [node name="Major" type="Node" parent="Globbins"]
 
 [node name="GlobbinMajor" parent="Globbins/Major" instance=ExtResource("6_ce16b")]
 position = Vector2(-553, -1488)
-enemy_name = null
-mass = null
-knockback_scale = null
-knockback_friction = null
 
 [node name="GlobbinMajor2" parent="Globbins/Major" instance=ExtResource("6_ce16b")]
 position = Vector2(-610, -1570)
-enemy_name = null
-mass = null
-knockback_scale = null
-knockback_friction = null
 
 [node name="GlobbinMajor3" parent="Globbins/Major" instance=ExtResource("6_ce16b")]
 position = Vector2(1639, -1465)
-enemy_name = null
-mass = null
-knockback_scale = null
-knockback_friction = null
 
 [node name="GlobbinMajor4" parent="Globbins/Major" instance=ExtResource("6_ce16b")]
 position = Vector2(1486, -1377)
-enemy_name = null
-mass = null
-knockback_scale = null
-knockback_friction = null
 
 [node name="GlobbinMajor5" parent="Globbins/Major" instance=ExtResource("6_ce16b")]
 position = Vector2(1608, -1364)
-enemy_name = null
-mass = null
-knockback_scale = null
-knockback_friction = null
 
 [node name="GlobbinMajor6" parent="Globbins/Major" instance=ExtResource("6_ce16b")]
 position = Vector2(2076, -1413)
-enemy_name = null
-mass = null
-knockback_scale = null
-knockback_friction = null
 
 [node name="GlobbinMajor7" parent="Globbins/Major" instance=ExtResource("6_ce16b")]
 position = Vector2(2120, -1093)
-enemy_name = null
-mass = null
-knockback_scale = null
-knockback_friction = null
 
 [node name="GlobbinMajor8" parent="Globbins/Major" instance=ExtResource("6_ce16b")]
 position = Vector2(2044, -335)
-enemy_name = null
-mass = null
-knockback_scale = null
-knockback_friction = null
 
 [node name="GlobbinMajor9" parent="Globbins/Major" instance=ExtResource("6_ce16b")]
 position = Vector2(2180, -37)
-enemy_name = null
-mass = null
-knockback_scale = null
-knockback_friction = null
 
 [node name="GlobbinMajor10" parent="Globbins/Major" instance=ExtResource("6_ce16b")]
 position = Vector2(1600, -198)
-enemy_name = null
-mass = null
-knockback_scale = null
-knockback_friction = null
 
 [node name="Rockies" type="Node" parent="Globbins"]
 
 [node name="GlobbinRockie" parent="Globbins/Rockies" instance=ExtResource("6_ik66m")]
 position = Vector2(534, -310)
-damage = null
-armor = null
-enemy_name = null
-mass = null
-knockback_scale = null
-knockback_friction = null
 
 [node name="GlobbinRockie2" parent="Globbins/Rockies" instance=ExtResource("6_ik66m")]
 position = Vector2(53, 111)
-damage = null
-armor = null
-enemy_name = null
-mass = null
-knockback_scale = null
-knockback_friction = null
 
 [node name="GlobbinRockie3" parent="Globbins/Rockies" instance=ExtResource("6_ik66m")]
 position = Vector2(-305, 104)
-damage = null
-armor = null
-enemy_name = null
-mass = null
-knockback_scale = null
-knockback_friction = null
 
 [node name="GlobbinRockie4" parent="Globbins/Rockies" instance=ExtResource("6_ik66m")]
 position = Vector2(226, 158)
-damage = null
-armor = null
-enemy_name = null
-mass = null
-knockback_scale = null
-knockback_friction = null
 
 [node name="GlobbinRockie5" parent="Globbins/Rockies" instance=ExtResource("6_ik66m")]
 position = Vector2(-618, -303)
-damage = null
-armor = null
-enemy_name = null
-mass = null
-knockback_scale = null
-knockback_friction = null
 
 [node name="GlobbinRockie6" parent="Globbins/Rockies" instance=ExtResource("6_ik66m")]
 position = Vector2(395, -774)
-damage = null
-armor = null
-enemy_name = null
-mass = null
-knockback_scale = null
-knockback_friction = null
 
 [node name="GlobbinRockie7" parent="Globbins/Rockies" instance=ExtResource("6_ik66m")]
 position = Vector2(395, -774)
-damage = null
-armor = null
-enemy_name = null
-mass = null
-knockback_scale = null
-knockback_friction = null
 
 [node name="GlobbinRockie8" parent="Globbins/Rockies" instance=ExtResource("6_ik66m")]
 position = Vector2(-7, -765)
-damage = null
-armor = null
-enemy_name = null
-mass = null
-knockback_scale = null
-knockback_friction = null
 
 [node name="GlobbinRockie9" parent="Globbins/Rockies" instance=ExtResource("6_ik66m")]
 position = Vector2(213, -665)
-damage = null
-armor = null
-enemy_name = null
-mass = null
-knockback_scale = null
-knockback_friction = null
 
 [node name="GlobbinRockie10" parent="Globbins/Rockies" instance=ExtResource("6_ik66m")]
 position = Vector2(427, -1216)
-damage = null
-armor = null
-enemy_name = null
-mass = null
-knockback_scale = null
-knockback_friction = null
 
 [node name="GlobbinRockie11" parent="Globbins/Rockies" instance=ExtResource("6_ik66m")]
 position = Vector2(-634, -1128)
-damage = null
-armor = null
-enemy_name = null
-mass = null
-knockback_scale = null
-knockback_friction = null
 
 [node name="GlobbinRockie12" parent="Globbins/Rockies" instance=ExtResource("6_ik66m")]
 position = Vector2(-69, -1473)
-damage = null
-armor = null
-enemy_name = null
-mass = null
-knockback_scale = null
-knockback_friction = null
 
 [node name="GlobbinRockie13" parent="Globbins/Rockies" instance=ExtResource("6_ik66m")]
 position = Vector2(-80, -1136)
-damage = null
-armor = null
-enemy_name = null
-mass = null
-knockback_scale = null
-knockback_friction = null
 
 [node name="GlobbinRockie14" parent="Globbins/Rockies" instance=ExtResource("6_ik66m")]
 position = Vector2(988, -994)
-damage = null
-armor = null
-enemy_name = null
-mass = null
-knockback_scale = null
-knockback_friction = null
 
 [node name="GlobbinRockie15" parent="Globbins/Rockies" instance=ExtResource("6_ik66m")]
 position = Vector2(1084, -559)
-damage = null
-armor = null
-enemy_name = null
-mass = null
-knockback_scale = null
-knockback_friction = null
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 color = Color(0.790269, 0.833959, 0.721082, 1)
