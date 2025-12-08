@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ItemData" load_steps=3 format=3 uid="uid://b74bm2sbiet5w"]
+
+[ext_resource type="Texture2D" uid="uid://xs8kjqm333ho" path="res://items/sprites/FaunaDrops/GlobbinMajor.png" id="1_vtb50"]
+[ext_resource type="Script" uid="uid://be38543ni7iqu" path="res://items/items_date.gd" id="2_hn0jh"]
+
+[resource]
+script = ExtResource("2_hn0jh")
+item_id = "GlobbinMajorFinger"
+item_name = "Dedo de \"Duende Adulto\""
+description = "Dedo en descomposicion, puede venderse en alguna tienda."
+icon = ExtResource("1_vtb50")
+max_stack = 6

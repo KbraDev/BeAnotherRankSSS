@@ -1,7 +1,8 @@
-[gd_scene load_steps=11 format=3 uid="uid://dlhligdd2twvb"]
+[gd_scene load_steps=12 format=3 uid="uid://dlhligdd2twvb"]
 
 [ext_resource type="Script" uid="uid://bryw5yks6ojeq" path="res://scripts/enemy/globbin/globbin.gd" id="1_2a2nm"]
 [ext_resource type="SpriteFrames" uid="uid://dnefqpy13h0sy" path="res://scenes/characters/monsters/GlobbinRockie/globbin_rockie.tres" id="1_os86r"]
+[ext_resource type="Resource" uid="uid://datdms6elh0aq" path="res://items/resources/GlobbinRockieFinger.tres" id="2_mcwmj"]
 [ext_resource type="Texture2D" uid="uid://7jj4m1llmyec" path="res://sprites/UIS/healthBar/marco.png" id="2_uok7p"]
 [ext_resource type="Texture2D" uid="uid://d1nrndp7wviwo" path="res://sprites/UIS/healthBar/progress.png" id="3_r1bri"]
 [ext_resource type="Script" uid="uid://c8luqh8ewax4r" path="res://scenes/characters/monsters/greenslime/scripts/health_bar.gd" id="4_r1bri"]
@@ -28,6 +29,7 @@ rush_damage = 8.0
 max_health = 24.0
 move_speed = 40.0
 xp_reward_range = Vector2i(15, 22)
+drop_item = ExtResource("2_mcwmj")
 mass = 12.0
 knockback_friction = 150.0
 

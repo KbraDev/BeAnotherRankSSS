@@ -1,8 +1,9 @@
-[gd_scene load_steps=210 format=3 uid="uid://dp5ry7qcymmll"]
+[gd_scene load_steps=211 format=3 uid="uid://dp5ry7qcymmll"]
 
 [ext_resource type="Texture2D" uid="uid://k6iwxiok6v6b" path="res://sprites/characters/mobs/GlobbinMajor/orc2_death_full.png" id="1_42tx3"]
 [ext_resource type="Script" uid="uid://bryw5yks6ojeq" path="res://scripts/enemy/globbin/globbin.gd" id="1_w4ww8"]
 [ext_resource type="Texture2D" uid="uid://cooiptvuiiod4" path="res://sprites/characters/mobs/GlobbinMajor/orc2_hurt_full.png" id="2_emn4j"]
+[ext_resource type="Resource" uid="uid://b74bm2sbiet5w" path="res://items/resources/GlobbinMajorFinger.tres" id="2_osxxv"]
 [ext_resource type="Texture2D" uid="uid://cbw2hs2ndha1t" path="res://sprites/characters/mobs/GlobbinMajor/orc2_idle_full.png" id="3_ynvh4"]
 [ext_resource type="Texture2D" uid="uid://dma0ndclv6t8n" path="res://sprites/characters/mobs/GlobbinMajor/orc2_run_attack_full.png" id="4_b5jrl"]
 [ext_resource type="Texture2D" uid="uid://dxed7df38u8lq" path="res://sprites/characters/mobs/GlobbinMajor/orc2_run_full.png" id="5_7f7nl"]
@@ -1523,6 +1524,7 @@ max_health = 60.0
 move_speed = 60.0
 xp_reward_range = Vector2i(55, 90)
 armor = 1.0
+drop_item = ExtResource("2_osxxv")
 mass = 22.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

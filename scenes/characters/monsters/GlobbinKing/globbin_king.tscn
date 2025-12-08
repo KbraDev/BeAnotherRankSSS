@@ -1,7 +1,8 @@
-[gd_scene load_steps=210 format=3 uid="uid://cdm6uwrww4unh"]
+[gd_scene load_steps=211 format=3 uid="uid://cdm6uwrww4unh"]
 
 [ext_resource type="Texture2D" uid="uid://cuu7ubmy7gxi8" path="res://sprites/characters/mobs/GobblinKing/orc3_attack_full.png" id="1_4rbns"]
 [ext_resource type="Script" uid="uid://bryw5yks6ojeq" path="res://scripts/enemy/globbin/globbin.gd" id="1_dkpy5"]
+[ext_resource type="Resource" uid="uid://ce7yhfhwubr6c" path="res://items/resources/GlobbinKingFinger.tres" id="2_3444d"]
 [ext_resource type="Texture2D" uid="uid://bebx8ypebwlny" path="res://sprites/characters/mobs/GobblinKing/orc3_death_full.png" id="2_lq82t"]
 [ext_resource type="Texture2D" uid="uid://brsb16b4hm0yt" path="res://sprites/characters/mobs/GobblinKing/orc3_hurt_full.png" id="3_ys6f4"]
 [ext_resource type="Texture2D" uid="uid://cqac6rhdixqgh" path="res://sprites/characters/mobs/GobblinKing/orc3_idle_full.png" id="4_d2al7"]
@@ -1523,6 +1524,7 @@ rush_damage = 20.0
 max_health = 100.0
 xp_reward_range = Vector2i(101, 139)
 armor = 2.0
+drop_item = ExtResource("2_3444d")
 mass = 50.0
 
 [node name="CollisionCheck" type="Area2D" parent="."]

@@ -7,6 +7,9 @@ var all_items := {
 	"carnivorousFang": preload("res://items/resources/carnivorusPlant_fang.tres"),
 	"ArmorSpider": preload("res://items/resources/ArmorSpider.tres"),
 	"SmallHealthPotion": preload("res://items/resources/SmallHealthPotion.tres"),
+	"GlobbinKingFinger": preload("res://items/resources/GlobbinKingFinger.tres"),
+	"GlobbinMajorFinger": preload("res://items/resources/GlobbinMajorFinger.tres"),
+	"GlobbinRockieFinger": preload("res://items/resources/GlobbinRockieFinger.tres"),
 	
 	# Coins
 	"BronzeCoin": preload("res://items/resources/Coins/BronzeCoin.tres"),

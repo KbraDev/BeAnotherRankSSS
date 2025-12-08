@@ -1167,7 +1167,6 @@ panic_speed = 55.0
 extra_escape_distance = 50.0
 drop_item = ExtResource("2_lilwl")
 mass = 1.0
-knockback_scale = 0.25
 knockback_friction = 800.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
