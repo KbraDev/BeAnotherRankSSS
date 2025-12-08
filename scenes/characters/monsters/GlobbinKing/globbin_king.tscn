@@ -12,6 +12,21 @@
 [ext_resource type="Texture2D" uid="uid://d1nrndp7wviwo" path="res://sprites/UIS/healthBar/progress.png" id="10_iake8"]
 [ext_resource type="Script" uid="uid://c8luqh8ewax4r" path="res://scenes/characters/monsters/greenslime/scripts/health_bar.gd" id="11_wuacg"]
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_b2tvg"]
+radius = 29.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_vddib"]
+radius = 218.732
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_whkd6"]
+radius = 26.0192
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_tus02"]
+radius = 22.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dkpy5"]
+size = Vector2(41.3333, 56)
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_wuacg"]
 atlas = ExtResource("1_4rbns")
 region = Rect2(0, 64, 64, 64)
@@ -1499,21 +1514,6 @@ animations = [{
 "speed": 7.0
 }]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_gx25b"]
-height = 42.0
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_b2tvg"]
-radius = 29.0
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_vddib"]
-radius = 218.732
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_whkd6"]
-radius = 26.0192
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_tus02"]
-radius = 22.0
-
 [node name="GlobbinKing" type="CharacterBody2D"]
 position = Vector2(1, 0)
 scale = Vector2(1.5, 1.5)
@@ -1524,17 +1524,6 @@ max_health = 100.0
 xp_reward_range = Vector2i(101, 139)
 armor = 2.0
 mass = 50.0
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-z_index = 1
-position = Vector2(0, 1)
-scale = Vector2(1.48438, 1.48438)
-sprite_frames = SubResource("SpriteFrames_k061o")
-animation = &"dying_front"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -7)
-shape = SubResource("CapsuleShape2D_gx25b")
 
 [node name="CollisionCheck" type="Area2D" parent="."]
 
@@ -1579,3 +1568,15 @@ script = ExtResource("11_wuacg")
 [node name="Audio_Attack" type="AudioStreamPlayer2D" parent="."]
 
 [node name="Audio_death" type="AudioStreamPlayer2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+z_index = 2
+position = Vector2(-0.666667, -10)
+shape = SubResource("RectangleShape2D_dkpy5")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+z_index = 1
+position = Vector2(0, 1)
+scale = Vector2(1.48438, 1.48438)
+sprite_frames = SubResource("SpriteFrames_k061o")
+animation = &"dying_front"

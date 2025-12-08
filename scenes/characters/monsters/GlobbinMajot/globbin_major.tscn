@@ -12,9 +12,8 @@
 [ext_resource type="Texture2D" uid="uid://d1nrndp7wviwo" path="res://sprites/UIS/healthBar/progress.png" id="9_osxxv"]
 [ext_resource type="Script" uid="uid://c8luqh8ewax4r" path="res://scenes/characters/monsters/greenslime/scripts/health_bar.gd" id="10_jnmve"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_wbpo0"]
-radius = 7.0
-height = 24.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_thuct"]
+size = Vector2(21.6667, 30.8333)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_4dlnk"]
 radius = 29.0
@@ -1527,8 +1526,9 @@ armor = 1.0
 mass = 22.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -5)
-shape = SubResource("CapsuleShape2D_wbpo0")
+z_index = 2
+position = Vector2(-4.96705e-07, -5.41667)
+shape = SubResource("RectangleShape2D_thuct")
 
 [node name="CollisionCheck" type="Area2D" parent="."]
 
@@ -1561,12 +1561,13 @@ debug_color = Color(0.785554, 0.421037, 0.277402, 0.42)
 
 [node name="HealthBar" type="TextureProgressBar" parent="."]
 offset_left = -10.0
-offset_top = -24.0
+offset_top = -28.1667
 offset_right = 30.0
-offset_bottom = 16.0
+offset_bottom = 11.8333
 texture_over = ExtResource("8_thuct")
 texture_progress = ExtResource("9_osxxv")
 script = ExtResource("10_jnmve")
+hide_delay = 4.0
 
 [node name="Audio_Hit" type="AudioStreamPlayer2D" parent="."]
 
