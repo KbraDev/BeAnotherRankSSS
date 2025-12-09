@@ -1,4 +1,4 @@
-[gd_scene load_steps=211 format=3 uid="uid://cdm6uwrww4unh"]
+[gd_scene load_steps=215 format=3 uid="uid://cdm6uwrww4unh"]
 
 [ext_resource type="Texture2D" uid="uid://cuu7ubmy7gxi8" path="res://sprites/characters/mobs/GobblinKing/orc3_attack_full.png" id="1_4rbns"]
 [ext_resource type="Script" uid="uid://bryw5yks6ojeq" path="res://scripts/enemy/globbin/globbin.gd" id="1_dkpy5"]
@@ -12,6 +12,10 @@
 [ext_resource type="Texture2D" uid="uid://7jj4m1llmyec" path="res://sprites/UIS/healthBar/marco.png" id="9_3444d"]
 [ext_resource type="Texture2D" uid="uid://d1nrndp7wviwo" path="res://sprites/UIS/healthBar/progress.png" id="10_iake8"]
 [ext_resource type="Script" uid="uid://c8luqh8ewax4r" path="res://scenes/characters/monsters/greenslime/scripts/health_bar.gd" id="11_wuacg"]
+[ext_resource type="AudioStream" uid="uid://c2c2r1bwo2uqj" path="res://SFX/Effects/Globbins/King/amused3.wav" id="13_vddib"]
+[ext_resource type="AudioStream" uid="uid://c8ejekp23ibo4" path="res://SFX/Effects/Globbins/King/attack2.wav" id="14_vddib"]
+[ext_resource type="AudioStream" uid="uid://dpsresvkkmlfe" path="res://SFX/Effects/Globbins/King/heavyattack1.wav" id="15_tus02"]
+[ext_resource type="AudioStream" uid="uid://ci8k2btww3cfs" path="res://SFX/Effects/Globbins/Rockie/irritated1.wav" id="16_ppxge"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_b2tvg"]
 radius = 29.0
@@ -1565,12 +1569,6 @@ texture_over = ExtResource("9_3444d")
 texture_progress = ExtResource("10_iake8")
 script = ExtResource("11_wuacg")
 
-[node name="Audio_Hit" type="AudioStreamPlayer2D" parent="."]
-
-[node name="Audio_Attack" type="AudioStreamPlayer2D" parent="."]
-
-[node name="Audio_death" type="AudioStreamPlayer2D" parent="."]
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 z_index = 2
 position = Vector2(-0.666667, -10)
@@ -1582,3 +1580,15 @@ position = Vector2(0, 1)
 scale = Vector2(1.48438, 1.48438)
 sprite_frames = SubResource("SpriteFrames_k061o")
 animation = &"dying_front"
+
+[node name="StartChase" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("13_vddib")
+
+[node name="Attack" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("14_vddib")
+
+[node name="Hurt" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("15_tus02")
+
+[node name="Rush" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("16_ppxge")

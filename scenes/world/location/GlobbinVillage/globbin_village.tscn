@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=4 uid="uid://duw2jn00emhow"]
+[gd_scene load_steps=12 format=4 uid="uid://duw2jn00emhow"]
 
 [ext_resource type="TileSet" uid="uid://dvfkq370f0fmb" path="res://assets/tilesets/props.tres" id="1_j1d86"]
 [ext_resource type="TileSet" uid="uid://rngchcx3q02t" path="res://assets/tilesets/terrain.tres" id="1_luorb"]
@@ -8,6 +8,8 @@
 [ext_resource type="PackedScene" uid="uid://dp5ry7qcymmll" path="res://scenes/characters/monsters/GlobbinMajot/globbin_major.tscn" id="6_ce16b"]
 [ext_resource type="PackedScene" uid="uid://dlhligdd2twvb" path="res://scenes/characters/monsters/GlobbinRockie/globbin_rockie.tscn" id="6_ik66m"]
 [ext_resource type="PackedScene" uid="uid://1wmbdbs64n4n" path="res://scenes/shaders/fog/parallax_background.tscn" id="8_ce16b"]
+[ext_resource type="PackedScene" uid="uid://dllvjwqfn3upd" path="res://items/_Chests/WoodChests/wood_chest.tscn" id="9_bkx2r"]
+[ext_resource type="PackedScene" uid="uid://c6o2o8pd124ne" path="res://items/_Chests/SilverChest/silver_chest.tscn" id="10_hbtl4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4xcco"]
 size = Vector2(152, 20)
@@ -180,5 +182,86 @@ color = Color(0.790269, 0.833959, 0.721082, 1)
 [node name="ParallaxBackground" parent="." instance=ExtResource("8_ce16b")]
 scale = Vector2(4, 4)
 transform = Transform2D(4, 0, 0, 4, 0, 0)
+
+[node name="Chests" type="Node" parent="."]
+
+[node name="WoodChest" parent="Chests" instance=ExtResource("9_bkx2r")]
+position = Vector2(76, 55)
+chest_id = "0008"
+
+[node name="WoodChest2" parent="Chests" instance=ExtResource("9_bkx2r")]
+position = Vector2(-736, -785)
+chest_id = "0009"
+hits_to_open = 3
+
+[node name="WoodChest3" parent="Chests" instance=ExtResource("9_bkx2r")]
+position = Vector2(-880, -1461)
+chest_id = "00010"
+hits_to_open = 1
+
+[node name="WoodChest4" parent="Chests" instance=ExtResource("9_bkx2r")]
+position = Vector2(845, 96)
+chest_id = "0011"
+hits_to_open = 3
+
+[node name="WoodChest5" parent="Chests" instance=ExtResource("9_bkx2r")]
+position = Vector2(846, 153)
+chest_id = "0012"
+
+[node name="WoodChest6" parent="Chests" instance=ExtResource("9_bkx2r")]
+position = Vector2(1742, -24)
+chest_id = "0013"
+hits_to_open = 3
+
+[node name="silver_chest" parent="Chests" instance=ExtResource("10_hbtl4")]
+position = Vector2(3280, -2601)
+chest_id = "0014"
+loot_table = Array[Dictionary]([{
+"chance": 1.0,
+"id": "BronzeCoin",
+"max": 8,
+"min": 3
+}, {
+"chance": 1.0,
+"id": "SilverCoin",
+"max": 1,
+"min": 1
+}, {
+"chance": 0.05,
+"id": "GoldCoin",
+"max": 1,
+"min": 1
+}, {
+"chance": 1.0,
+"id": "SmallHealthPotion",
+"max": 2,
+"min": 1
+}])
+
+[node name="silver_chest2" parent="Chests" instance=ExtResource("10_hbtl4")]
+position = Vector2(3728, -2603)
+chest_id = "0015"
+hits_to_open = 4
+loot_table = Array[Dictionary]([{
+"chance": 1.0,
+"id": "BronzeCoin",
+"max": 8,
+"min": 3
+}, {
+"chance": 1.0,
+"id": "SilverCoin",
+"max": 1,
+"min": 1
+}, {
+"chance": 0.05,
+"id": "GoldCoin",
+"max": 1,
+"min": 1
+}, {
+"chance": 1.0,
+"id": "SmallHealthPotion",
+"max": 2,
+"min": 1
+}])
 
 [connection signal="body_entered" from="Node/Gates/Area2D" to="Node/Gates/Area2D" method="_on_body_entered"]

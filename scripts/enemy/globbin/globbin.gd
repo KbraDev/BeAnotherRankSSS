@@ -10,6 +10,12 @@ class_name Globbin
 @export var damage: float = 4.0  # 💥 daño base del Globbin
 @export var rush_damage: float = 0.0
 
+# SFX
+@onready var start_chase_sfx = $StartChase
+@onready var attack_sfx = $Attack
+@onready var hurt_sfx = $Hurt
+@onready var rush_sfx = $Rush
+
 var can_move: bool = true
 var direction: Vector2 = Vector2.ZERO
 var last_direction: String = "front"
@@ -129,6 +135,7 @@ func _on_detection_area_body_entered(body: Node) -> void:
 	player_detected = true
 	player_target = body
 	print("Jugador detectado")
+	start_chase_sfx.play()
 
 # ---------------------------------------------------------
 # _on_detection_area_body_exited(body)
@@ -255,6 +262,7 @@ func _perform_attack(body: Node) -> void:
 	while player_in_attack_range and not has_died and is_attacking:
 
 		_play_attack_animation()
+		attack_sfx.play()
 
 		await get_tree().create_timer(0.6).timeout
 		if is_hurt or not is_attacking:
@@ -394,6 +402,7 @@ func _play_rush_animation() -> void:
 # ---------------------------------------------------------
 func _take_damage(amount: float, dir: String = "front") -> void:
 	super._take_damage(amount, last_direction)
+	hurt_sfx.play()
 	# Globbin no hace nada extra aquí
 
 
@@ -472,6 +481,7 @@ func _start_rush() -> void:
 	rush_speed = move_speed * 4.0
 
 	_play_rush_animation()
+	rush_sfx.play()
 	print("💢 Globbin inicia RUSH hacia", rush_target)
 
 # =========================

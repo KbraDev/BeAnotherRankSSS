@@ -1,4 +1,4 @@
-[gd_scene load_steps=211 format=3 uid="uid://dp5ry7qcymmll"]
+[gd_scene load_steps=215 format=3 uid="uid://dp5ry7qcymmll"]
 
 [ext_resource type="Texture2D" uid="uid://k6iwxiok6v6b" path="res://sprites/characters/mobs/GlobbinMajor/orc2_death_full.png" id="1_42tx3"]
 [ext_resource type="Script" uid="uid://bryw5yks6ojeq" path="res://scripts/enemy/globbin/globbin.gd" id="1_w4ww8"]
@@ -12,6 +12,10 @@
 [ext_resource type="Texture2D" uid="uid://7jj4m1llmyec" path="res://sprites/UIS/healthBar/marco.png" id="8_thuct"]
 [ext_resource type="Texture2D" uid="uid://d1nrndp7wviwo" path="res://sprites/UIS/healthBar/progress.png" id="9_osxxv"]
 [ext_resource type="Script" uid="uid://c8luqh8ewax4r" path="res://scenes/characters/monsters/greenslime/scripts/health_bar.gd" id="10_jnmve"]
+[ext_resource type="AudioStream" uid="uid://c6cb8n83lhpd6" path="res://SFX/Effects/Globbins/Rockie/startchase.wav" id="13_auixt"]
+[ext_resource type="AudioStream" uid="uid://bpqt0l7cotjt4" path="res://SFX/Effects/Globbins/Rockie/hit5.wav" id="14_4mlyu"]
+[ext_resource type="AudioStream" uid="uid://cuuypkouxncq7" path="res://SFX/Effects/Globbins/Rockie/defend1.wav" id="15_5f2pu"]
+[ext_resource type="AudioStream" uid="uid://ci8k2btww3cfs" path="res://SFX/Effects/Globbins/Rockie/irritated1.wav" id="16_xet01"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_thuct"]
 size = Vector2(21.6667, 30.8333)
@@ -1571,13 +1575,19 @@ texture_progress = ExtResource("9_osxxv")
 script = ExtResource("10_jnmve")
 hide_delay = 4.0
 
-[node name="Audio_Hit" type="AudioStreamPlayer2D" parent="."]
-
-[node name="Audio_Attack" type="AudioStreamPlayer2D" parent="."]
-
-[node name="Audio_death" type="AudioStreamPlayer2D" parent="."]
-
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 z_index = 1
 sprite_frames = SubResource("SpriteFrames_r0237")
 animation = &"dying_right_side"
+
+[node name="StartChase" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("13_auixt")
+
+[node name="Attack" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("14_4mlyu")
+
+[node name="Hurt" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("15_5f2pu")
+
+[node name="Rush" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("16_xet01")

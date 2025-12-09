@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://dlhligdd2twvb"]
+[gd_scene load_steps=16 format=3 uid="uid://dlhligdd2twvb"]
 
 [ext_resource type="Script" uid="uid://bryw5yks6ojeq" path="res://scripts/enemy/globbin/globbin.gd" id="1_2a2nm"]
 [ext_resource type="SpriteFrames" uid="uid://dnefqpy13h0sy" path="res://scenes/characters/monsters/GlobbinRockie/globbin_rockie.tres" id="1_os86r"]
@@ -6,6 +6,10 @@
 [ext_resource type="Texture2D" uid="uid://7jj4m1llmyec" path="res://sprites/UIS/healthBar/marco.png" id="2_uok7p"]
 [ext_resource type="Texture2D" uid="uid://d1nrndp7wviwo" path="res://sprites/UIS/healthBar/progress.png" id="3_r1bri"]
 [ext_resource type="Script" uid="uid://c8luqh8ewax4r" path="res://scenes/characters/monsters/greenslime/scripts/health_bar.gd" id="4_r1bri"]
+[ext_resource type="AudioStream" uid="uid://c6cb8n83lhpd6" path="res://SFX/Effects/Globbins/Rockie/startchase.wav" id="6_82r7u"]
+[ext_resource type="AudioStream" uid="uid://bpqt0l7cotjt4" path="res://SFX/Effects/Globbins/Rockie/hit5.wav" id="7_hn35v"]
+[ext_resource type="AudioStream" uid="uid://cuuypkouxncq7" path="res://SFX/Effects/Globbins/Rockie/defend1.wav" id="8_iveyc"]
+[ext_resource type="AudioStream" uid="uid://ci8k2btww3cfs" path="res://SFX/Effects/Globbins/Rockie/irritated1.wav" id="9_kei1i"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2a2nm"]
 size = Vector2(20, 28)
@@ -76,11 +80,17 @@ texture_over = ExtResource("2_uok7p")
 texture_progress = ExtResource("3_r1bri")
 script = ExtResource("4_r1bri")
 
-[node name="Audio_Hit" type="AudioStreamPlayer2D" parent="."]
+[node name="StartChase" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_82r7u")
 
-[node name="Audio_Attack" type="AudioStreamPlayer2D" parent="."]
+[node name="Attack" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("7_hn35v")
 
-[node name="Audio_death" type="AudioStreamPlayer2D" parent="."]
+[node name="Hurt" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("8_iveyc")
+
+[node name="Rush" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("9_kei1i")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = ExtResource("1_os86r")
