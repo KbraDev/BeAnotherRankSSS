@@ -9,5 +9,5 @@ func set_player(player):
 
 
 func _on_health_changed(current, max):
-	$PlayerHUD/HealthBar.max_value = max
-	$PlayerHUD/HealthBar.value = current
+	$PlayerHUD/EllipseHealthBar.max_value = max
+	$PlayerHUD/EllipseHealthBar.value = current

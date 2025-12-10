@@ -1,16 +1,14 @@
-[gd_scene load_steps=22 format=3 uid="uid://xxcf6vh7atqn"]
+[gd_scene load_steps=20 format=3 uid="uid://xxcf6vh7atqn"]
 
 [ext_resource type="Script" uid="uid://co0lf7i6emfn8" path="res://scenes/world/world_manager.gd" id="1_548at"]
 [ext_resource type="PackedScene" uid="uid://be8s6fsuvru6m" path="res://scenes/characters/player/player.tscn" id="1_armst"]
 [ext_resource type="PackedScene" uid="uid://uccdoa08jthp" path="res://scenes/world/location/olid_town/InOlidTownScenes/fathers_home.tscn" id="3_mw4p1"]
 [ext_resource type="Script" uid="uid://w4lewyfyeb1g" path="res://scenes/world/hud.gd" id="4_1d48p"]
+[ext_resource type="PackedScene" uid="uid://bo3n1alal6xdn" path="res://UIs/EllipseHeathBar/ellipse_health_bar.tscn" id="4_am5f0"]
 [ext_resource type="PackedScene" uid="uid://bi8atwwdsaybi" path="res://UIs/InventoryUI/inventory_ui.tscn" id="4_utxr1"]
-[ext_resource type="Texture2D" uid="uid://xxrofv5fyiec" path="res://sprites/characters/player/healthBar/no health.png" id="5_4uvln"]
 [ext_resource type="PackedScene" uid="uid://d325q8f2ceybl" path="res://UIs/DialogBox/dialog_box.tscn" id="5_67olm"]
 [ext_resource type="PackedScene" uid="uid://cr4yeo3h2jnqi" path="res://scenes/characters/NCP/recepcionist/receptionMenu/reception_menu.tscn" id="6_37a41"]
-[ext_resource type="Texture2D" uid="uid://kdv432qrlflv" path="res://sprites/characters/player/healthBar/empty health bar.png" id="6_yubee"]
 [ext_resource type="PackedScene" uid="uid://jiovenp0b04v" path="res://UIs/MissionSelecteMenu/mission_selected_menu.tscn" id="7_2ymlc"]
-[ext_resource type="Texture2D" uid="uid://d1modbwestr2j" path="res://sprites/characters/player/healthBar/health.png" id="7_f3jnn"]
 [ext_resource type="Script" uid="uid://d4b5enoam2al2" path="res://scripts/missions/MissionDataBase.gd" id="8_0psd8"]
 [ext_resource type="PackedScene" uid="uid://bfqk3fos52cx5" path="res://UIs/DeliveryMisionMenu/mission_delivery_menu.tscn" id="8_va3kj"]
 [ext_resource type="PackedScene" uid="uid://cqj38508gjs57" path="res://UIs/ActiveMissionsMenu/active_missions_menu.tscn" id="9_7x5vf"]
@@ -82,20 +80,16 @@ script = ExtResource("4_1d48p")
 
 [node name="PlayerHUD" type="Control" parent="HUD"]
 layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="HealthBar" type="TextureProgressBar" parent="HUD/PlayerHUD"]
+[node name="EllipseHealthBar" parent="HUD/PlayerHUD" instance=ExtResource("4_am5f0")]
 layout_mode = 0
-offset_left = 8.0
-offset_top = 8.0
-offset_right = 408.0
-offset_bottom = 48.0
-nine_patch_stretch = true
-texture_under = ExtResource("5_4uvln")
-texture_over = ExtResource("6_yubee")
-texture_progress = ExtResource("7_f3jnn")
+offset_top = 16.0
+offset_bottom = 144.0
 
 [node name="PauseMenu" parent="HUD" instance=ExtResource("15_i1he6")]
 visible = false
