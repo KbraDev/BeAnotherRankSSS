@@ -2375,11 +2375,13 @@ position = Vector2(0, -0.5)
 shape = SubResource("CircleShape2D_s4se6")
 debug_color = Color(0.715864, 0.481528, 0.0693465, 0.42)
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="Camera2D" type="Camera2D" parent="." groups=["player_camera"]]
 position = Vector2(1, -16)
 zoom = Vector2(1.5, 1.5)
+limit_smoothed = true
 position_smoothing_enabled = true
 position_smoothing_speed = 3.0
+rotation_smoothing_enabled = true
 
 [node name="FootstepPlayer" type="AudioStreamPlayer" parent="."]
 volume_db = -27.0

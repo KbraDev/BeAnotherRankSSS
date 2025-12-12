@@ -1,19 +1,18 @@
-[gd_scene load_steps=215 format=3 uid="uid://cdm6uwrww4unh"]
+[gd_scene load_steps=214 format=3 uid="uid://cdm6uwrww4unh"]
 
 [ext_resource type="Texture2D" uid="uid://cuu7ubmy7gxi8" path="res://sprites/characters/mobs/GobblinKing/orc3_attack_full.png" id="1_4rbns"]
-[ext_resource type="Script" uid="uid://bryw5yks6ojeq" path="res://scripts/enemy/globbin/globbin.gd" id="1_dkpy5"]
-[ext_resource type="Resource" uid="uid://ce7yhfhwubr6c" path="res://items/resources/GlobbinKingFinger.tres" id="2_3444d"]
+[ext_resource type="Script" uid="uid://24tw7d8ck5ow" path="res://scenes/characters/monsters/GlobbinKing/globbin_king.gd" id="1_b2tvg"]
 [ext_resource type="Texture2D" uid="uid://bebx8ypebwlny" path="res://sprites/characters/mobs/GobblinKing/orc3_death_full.png" id="2_lq82t"]
 [ext_resource type="Texture2D" uid="uid://brsb16b4hm0yt" path="res://sprites/characters/mobs/GobblinKing/orc3_hurt_full.png" id="3_ys6f4"]
 [ext_resource type="Texture2D" uid="uid://cqac6rhdixqgh" path="res://sprites/characters/mobs/GobblinKing/orc3_idle_full.png" id="4_d2al7"]
 [ext_resource type="Texture2D" uid="uid://bx5175sjqu0bl" path="res://sprites/characters/mobs/GobblinKing/orc3_run_attack_full.png" id="5_dkpy5"]
 [ext_resource type="Texture2D" uid="uid://xvicw5h88bwx" path="res://sprites/characters/mobs/GobblinKing/orc3_run_full.png" id="6_3444d"]
 [ext_resource type="Texture2D" uid="uid://buhxt0rc3dewi" path="res://sprites/characters/mobs/GobblinKing/orc3_walk_full.png" id="7_iake8"]
-[ext_resource type="Texture2D" uid="uid://7jj4m1llmyec" path="res://sprites/UIS/healthBar/marco.png" id="9_3444d"]
-[ext_resource type="Texture2D" uid="uid://d1nrndp7wviwo" path="res://sprites/UIS/healthBar/progress.png" id="10_iake8"]
 [ext_resource type="Script" uid="uid://c8luqh8ewax4r" path="res://scenes/characters/monsters/greenslime/scripts/health_bar.gd" id="11_wuacg"]
 [ext_resource type="AudioStream" uid="uid://c2c2r1bwo2uqj" path="res://SFX/Effects/Globbins/King/amused3.wav" id="13_vddib"]
 [ext_resource type="AudioStream" uid="uid://c8ejekp23ibo4" path="res://SFX/Effects/Globbins/King/attack2.wav" id="14_vddib"]
+[ext_resource type="PackedScene" uid="uid://bxmo4ilo8a4ax" path="res://UIs/BossHealthBar/BossHealthBar.tscn" id="14_whkd6"]
+[ext_resource type="Texture2D" uid="uid://bapdqh4f2knqd" path="res://sprites/portrait/KingGlobbin/KingGlobbinPor.png" id="15_ppxge"]
 [ext_resource type="AudioStream" uid="uid://dpsresvkkmlfe" path="res://SFX/Effects/Globbins/King/heavyattack1.wav" id="15_tus02"]
 [ext_resource type="AudioStream" uid="uid://ci8k2btww3cfs" path="res://SFX/Effects/Globbins/Rockie/irritated1.wav" id="16_ppxge"]
 
@@ -1522,14 +1521,10 @@ animations = [{
 [node name="GlobbinKing" type="CharacterBody2D"]
 position = Vector2(1, 0)
 scale = Vector2(1.5, 1.5)
-script = ExtResource("1_dkpy5")
-damage = 16.0
-rush_damage = 20.0
+script = ExtResource("1_b2tvg")
+boss_ui_path = NodePath("CanvasLayer/BossHealthBar")
 max_health = 100.0
-xp_reward_range = Vector2i(101, 139)
-armor = 2.0
-drop_item = ExtResource("2_3444d")
-mass = 50.0
+enemy_name = "Rey Duende"
 
 [node name="CollisionCheck" type="Area2D" parent="."]
 
@@ -1561,12 +1556,11 @@ shape = SubResource("CircleShape2D_tus02")
 debug_color = Color(0.785554, 0.421037, 0.277402, 0.42)
 
 [node name="HealthBar" type="TextureProgressBar" parent="."]
+visible = false
 offset_left = -10.0
 offset_top = -42.6666
 offset_right = 30.0
 offset_bottom = -2.66665
-texture_over = ExtResource("9_3444d")
-texture_progress = ExtResource("10_iake8")
 script = ExtResource("11_wuacg")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -1592,3 +1586,14 @@ stream = ExtResource("15_tus02")
 
 [node name="Rush" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("16_ppxge")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="BossHealthBar" parent="CanvasLayer" instance=ExtResource("14_whkd6")]
+visible = false
+offset_left = 968.0
+offset_top = 24.0
+offset_right = 1160.0
+offset_bottom = 88.0
+boss_name = "Rey Duende"
+boss_portrait = ExtResource("15_ppxge")

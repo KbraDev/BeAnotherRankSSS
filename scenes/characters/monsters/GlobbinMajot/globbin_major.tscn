@@ -1,4 +1,4 @@
-[gd_scene load_steps=215 format=3 uid="uid://dp5ry7qcymmll"]
+[gd_scene load_steps=216 format=3 uid="uid://dp5ry7qcymmll"]
 
 [ext_resource type="Texture2D" uid="uid://k6iwxiok6v6b" path="res://sprites/characters/mobs/GlobbinMajor/orc2_death_full.png" id="1_42tx3"]
 [ext_resource type="Script" uid="uid://bryw5yks6ojeq" path="res://scripts/enemy/globbin/globbin.gd" id="1_w4ww8"]
@@ -9,12 +9,13 @@
 [ext_resource type="Texture2D" uid="uid://dxed7df38u8lq" path="res://sprites/characters/mobs/GlobbinMajor/orc2_run_full.png" id="5_7f7nl"]
 [ext_resource type="Texture2D" uid="uid://dbo5e0xxbtotm" path="res://sprites/characters/mobs/GlobbinMajor/orc2_attack_full.png" id="5_thuct"]
 [ext_resource type="Texture2D" uid="uid://bytkdj2ncpdan" path="res://sprites/characters/mobs/GlobbinMajor/orc2_walk_full.png" id="6_emn4j"]
-[ext_resource type="Texture2D" uid="uid://7jj4m1llmyec" path="res://sprites/UIS/healthBar/marco.png" id="8_thuct"]
-[ext_resource type="Texture2D" uid="uid://d1nrndp7wviwo" path="res://sprites/UIS/healthBar/progress.png" id="9_osxxv"]
 [ext_resource type="Script" uid="uid://c8luqh8ewax4r" path="res://scenes/characters/monsters/greenslime/scripts/health_bar.gd" id="10_jnmve"]
 [ext_resource type="AudioStream" uid="uid://c6cb8n83lhpd6" path="res://SFX/Effects/Globbins/Rockie/startchase.wav" id="13_auixt"]
 [ext_resource type="AudioStream" uid="uid://bpqt0l7cotjt4" path="res://SFX/Effects/Globbins/Rockie/hit5.wav" id="14_4mlyu"]
+[ext_resource type="Texture2D" uid="uid://c2v83ylyer7g7" path="res://sprites/UIS/GenericHealthBar/bg.png" id="14_5f2pu"]
 [ext_resource type="AudioStream" uid="uid://cuuypkouxncq7" path="res://SFX/Effects/Globbins/Rockie/defend1.wav" id="15_5f2pu"]
+[ext_resource type="Texture2D" uid="uid://ceulw3jv2yggk" path="res://sprites/UIS/GenericHealthBar/Fill.png" id="15_xet01"]
+[ext_resource type="Texture2D" uid="uid://cxtgttpj1qt8j" path="res://sprites/UIS/GenericHealthBar/Outline.png" id="16_8sd1o"]
 [ext_resource type="AudioStream" uid="uid://ci8k2btww3cfs" path="res://SFX/Effects/Globbins/Rockie/irritated1.wav" id="16_xet01"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_thuct"]
@@ -1565,16 +1566,6 @@ collision_mask = 3
 shape = SubResource("CircleShape2D_4mlyu")
 debug_color = Color(0.785554, 0.421037, 0.277402, 0.42)
 
-[node name="HealthBar" type="TextureProgressBar" parent="."]
-offset_left = -10.0
-offset_top = -28.1667
-offset_right = 30.0
-offset_bottom = 11.8333
-texture_over = ExtResource("8_thuct")
-texture_progress = ExtResource("9_osxxv")
-script = ExtResource("10_jnmve")
-hide_delay = 4.0
-
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 z_index = 1
 sprite_frames = SubResource("SpriteFrames_r0237")
@@ -1591,3 +1582,21 @@ stream = ExtResource("15_5f2pu")
 
 [node name="Rush" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("16_xet01")
+
+[node name="HealthBar" type="TextureProgressBar" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -10.8333
+offset_top = -28.3333
+offset_right = 21.1667
+offset_bottom = -22.3333
+grow_horizontal = 2
+scale = Vector2(0.7, 0.7)
+max_value = 10.0
+value = 10.0
+exp_edit = true
+texture_under = ExtResource("14_5f2pu")
+texture_over = ExtResource("15_xet01")
+texture_progress = ExtResource("16_8sd1o")
+script = ExtResource("10_jnmve")

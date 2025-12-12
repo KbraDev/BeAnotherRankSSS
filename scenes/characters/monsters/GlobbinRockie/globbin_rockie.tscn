@@ -1,15 +1,16 @@
-[gd_scene load_steps=16 format=3 uid="uid://dlhligdd2twvb"]
+[gd_scene load_steps=17 format=3 uid="uid://dlhligdd2twvb"]
 
 [ext_resource type="Script" uid="uid://bryw5yks6ojeq" path="res://scripts/enemy/globbin/globbin.gd" id="1_2a2nm"]
 [ext_resource type="SpriteFrames" uid="uid://dnefqpy13h0sy" path="res://scenes/characters/monsters/GlobbinRockie/globbin_rockie.tres" id="1_os86r"]
 [ext_resource type="Resource" uid="uid://datdms6elh0aq" path="res://items/resources/GlobbinRockieFinger.tres" id="2_mcwmj"]
-[ext_resource type="Texture2D" uid="uid://7jj4m1llmyec" path="res://sprites/UIS/healthBar/marco.png" id="2_uok7p"]
-[ext_resource type="Texture2D" uid="uid://d1nrndp7wviwo" path="res://sprites/UIS/healthBar/progress.png" id="3_r1bri"]
 [ext_resource type="Script" uid="uid://c8luqh8ewax4r" path="res://scenes/characters/monsters/greenslime/scripts/health_bar.gd" id="4_r1bri"]
 [ext_resource type="AudioStream" uid="uid://c6cb8n83lhpd6" path="res://SFX/Effects/Globbins/Rockie/startchase.wav" id="6_82r7u"]
 [ext_resource type="AudioStream" uid="uid://bpqt0l7cotjt4" path="res://SFX/Effects/Globbins/Rockie/hit5.wav" id="7_hn35v"]
+[ext_resource type="Texture2D" uid="uid://c2v83ylyer7g7" path="res://sprites/UIS/GenericHealthBar/bg.png" id="8_hn35v"]
 [ext_resource type="AudioStream" uid="uid://cuuypkouxncq7" path="res://SFX/Effects/Globbins/Rockie/defend1.wav" id="8_iveyc"]
+[ext_resource type="Texture2D" uid="uid://ceulw3jv2yggk" path="res://sprites/UIS/GenericHealthBar/Fill.png" id="9_iveyc"]
 [ext_resource type="AudioStream" uid="uid://ci8k2btww3cfs" path="res://SFX/Effects/Globbins/Rockie/irritated1.wav" id="9_kei1i"]
+[ext_resource type="Texture2D" uid="uid://cxtgttpj1qt8j" path="res://sprites/UIS/GenericHealthBar/Outline.png" id="10_kei1i"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2a2nm"]
 size = Vector2(20, 28)
@@ -71,15 +72,6 @@ collision_mask = 3
 shape = SubResource("CircleShape2D_qwdm3")
 debug_color = Color(0.785554, 0.421037, 0.277402, 0.42)
 
-[node name="HealthBar" type="TextureProgressBar" parent="."]
-offset_left = -10.0
-offset_top = -24.0
-offset_right = 30.0
-offset_bottom = 16.0
-texture_over = ExtResource("2_uok7p")
-texture_progress = ExtResource("3_r1bri")
-script = ExtResource("4_r1bri")
-
 [node name="StartChase" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("6_82r7u")
 
@@ -95,3 +87,21 @@ stream = ExtResource("9_kei1i")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = ExtResource("1_os86r")
 animation = &"attack_left_side"
+
+[node name="HealthBar2" type="TextureProgressBar" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -12.0
+offset_top = -25.0
+offset_right = 20.0
+offset_bottom = -19.0
+grow_horizontal = 2
+scale = Vector2(0.7, 0.7)
+max_value = 10.0
+value = 10.0
+exp_edit = true
+texture_under = ExtResource("8_hn35v")
+texture_over = ExtResource("9_iveyc")
+texture_progress = ExtResource("10_kei1i")
+script = ExtResource("4_r1bri")

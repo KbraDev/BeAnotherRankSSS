@@ -50,6 +50,7 @@ var current_health: float
 var has_died: bool = false
 var _death_failsafe_timer: Timer = null              # Ensures enemies don't get stuck in death animations
 var is_hurt: bool = false                            # Blocks AI during hurt animations
+var can_move: bool = true
 
 # ====================================================================
 # ============================== READY ================================
@@ -101,6 +102,11 @@ func _ready() -> void:
 # controller that decides which system overrides movement each frame.
 # --------------------------------------------------------------------
 func _physics_process(delta: float) -> void:
+	# --- GLOBAL FREEZE ---
+	if not can_move:
+		velocity = Vector2.ZERO
+		move_and_slide()
+		return
 	# --- Forced knockback mode ---
 	if knockback_time > 0:
 		velocity = knockback_velocity

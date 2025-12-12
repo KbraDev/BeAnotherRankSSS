@@ -30,6 +30,7 @@ ChestRegistry="*res://scripts/globals/ChestRegistry.gd"
 SceneNames="*res://scripts/globals/SceneNames.gd"
 TransitionOverlay="*res://UIs/TransitionOverlay/transition_overlay.tscn"
 Portals="*res://scripts/globals/portals.gd"
+SmoothCameraChanger="*res://scripts/globals/smoothCameraChanger.gd"
 
 [display]
 
@@ -65,6 +66,7 @@ chests=""
 UI=""
 inventory=""
 dialog_box=""
+player_camera=""
 
 [input]
 

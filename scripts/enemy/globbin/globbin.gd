@@ -16,7 +16,6 @@ class_name Globbin
 @onready var hurt_sfx = $Hurt
 @onready var rush_sfx = $Rush
 
-var can_move: bool = true
 var direction: Vector2 = Vector2.ZERO
 var last_direction: String = "front"
 
@@ -61,6 +60,11 @@ func _ready() -> void:
 	add_child(rush_check_timer)
 
 func _physics_process(delta):
+	if not can_move:
+		velocity = Vector2.ZERO
+		move_and_slide()
+		return
+	
 	if has_died:
 		return
 
@@ -404,7 +408,6 @@ func _take_damage(amount: float, dir: String = "front") -> void:
 	super._take_damage(amount, last_direction)
 	hurt_sfx.play()
 	# Globbin no hace nada extra aquí
-
 
 # =====================
 # == Muerte direccional ==

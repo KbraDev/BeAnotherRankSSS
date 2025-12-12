@@ -1,12 +1,13 @@
-[gd_scene load_steps=57 format=3 uid="uid://b25fhdx87168t"]
+[gd_scene load_steps=58 format=3 uid="uid://b25fhdx87168t"]
 
 [ext_resource type="Script" uid="uid://cgej6dnfp0ru4" path="res://scenes/characters/monsters/Spider/Script/spider.gd" id="1_ed41w"]
 [ext_resource type="Texture2D" uid="uid://di55rf2ba2qru" path="res://sprites/characters/mobs/Spiders/spider02.png" id="1_hnlec"]
 [ext_resource type="Resource" uid="uid://2xm6fmt56rwo" path="res://items/resources/ArmorSpider.tres" id="2_06f2s"]
 [ext_resource type="AudioStream" uid="uid://bc1swu3dglg31" path="res://SFX/Effects/HittinMetal/metal-whoosh-hit.mp3" id="2_menvr"]
-[ext_resource type="Texture2D" uid="uid://7jj4m1llmyec" path="res://sprites/UIS/healthBar/marco.png" id="4_kcuij"]
-[ext_resource type="Texture2D" uid="uid://d1nrndp7wviwo" path="res://sprites/UIS/healthBar/progress.png" id="5_8agfk"]
+[ext_resource type="Texture2D" uid="uid://c2v83ylyer7g7" path="res://sprites/UIS/GenericHealthBar/bg.png" id="5_qxm47"]
 [ext_resource type="Script" uid="uid://c8luqh8ewax4r" path="res://scenes/characters/monsters/greenslime/scripts/health_bar.gd" id="6_8agfk"]
+[ext_resource type="Texture2D" uid="uid://ceulw3jv2yggk" path="res://sprites/UIS/GenericHealthBar/Fill.png" id="6_saf74"]
+[ext_resource type="Texture2D" uid="uid://cxtgttpj1qt8j" path="res://sprites/UIS/GenericHealthBar/Outline.png" id="7_n6qea"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_menvr"]
 atlas = ExtResource("1_hnlec")
@@ -422,13 +423,21 @@ volume_db = -30.0
 max_distance = 1000.0
 
 [node name="HealthBar" type="TextureProgressBar" parent="."]
-offset_left = -10.0
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -12.0
 offset_top = -15.0
-offset_right = 10.0
-offset_bottom = -10.0
-max_value = 25.0
-texture_over = ExtResource("4_kcuij")
-texture_progress = ExtResource("5_8agfk")
+offset_right = 20.0
+offset_bottom = -9.0
+grow_horizontal = 2
+scale = Vector2(0.7, 0.7)
+max_value = 10.0
+value = 10.0
+exp_edit = true
+texture_under = ExtResource("5_qxm47")
+texture_over = ExtResource("6_saf74")
+texture_progress = ExtResource("7_n6qea")
 script = ExtResource("6_8agfk")
 
 [connection signal="animation_changed" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_changed"]

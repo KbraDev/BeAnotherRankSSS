@@ -88,7 +88,9 @@ grow_vertical = 2
 
 [node name="EllipseHealthBar" parent="HUD/PlayerHUD" instance=ExtResource("4_am5f0")]
 layout_mode = 0
+offset_left = 0.0
 offset_top = 16.0
+offset_right = 128.0
 offset_bottom = 144.0
 
 [node name="PauseMenu" parent="HUD" instance=ExtResource("15_i1he6")]

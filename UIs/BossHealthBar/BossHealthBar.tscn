@@ -1,0 +1,45 @@
+[gd_scene load_steps=6 format=3 uid="uid://bxmo4ilo8a4ax"]
+
+[ext_resource type="Texture2D" uid="uid://bbwd1tg0imbk8" path="res://sprites/UIS/BossHealthBar/bg.png" id="1_5ql8g"]
+[ext_resource type="Texture2D" uid="uid://hdpb2adl87r0" path="res://sprites/UIS/BossHealthBar/Outline.png" id="2_wex2h"]
+[ext_resource type="Texture2D" uid="uid://y481m558a7ug" path="res://sprites/UIS/BossHealthBar/Fill.png" id="3_uuoys"]
+[ext_resource type="FontFile" uid="uid://bkgdnmgv0l2df" path="res://assets/fonts/smallburg-Regular.ttf" id="4_tayp1"]
+[ext_resource type="Script" uid="uid://cu8ifasdkw5iw" path="res://UIs/BossHealthBar/boss_health_bar.gd" id="4_uevdl"]
+
+[node name="BossHealthBar" type="TextureProgressBar"]
+offset_left = 976.0
+offset_top = 16.0
+offset_right = 1168.0
+offset_bottom = 80.0
+scale = Vector2(1.5, 1.5)
+min_value = -30.0
+value = 1.0
+fill_mode = 1
+texture_under = ExtResource("1_5ql8g")
+texture_over = ExtResource("2_wex2h")
+texture_progress = ExtResource("3_uuoys")
+script = ExtResource("4_uevdl")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+show_behind_parent = true
+layout_mode = 0
+offset_left = 135.0
+offset_top = 6.0
+offset_right = 187.0
+offset_bottom = 59.0
+expand_mode = 1
+stretch_mode = 4
+flip_h = true
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 14.0
+offset_right = 117.0
+offset_bottom = 35.0
+theme_override_fonts/font = ExtResource("4_tayp1")
+theme_override_font_sizes/font_size = 18
+horizontal_alignment = 2
+vertical_alignment = 1
+uppercase = true
+text_direction = 2

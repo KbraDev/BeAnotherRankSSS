@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=4 uid="uid://duw2jn00emhow"]
+[gd_scene load_steps=14 format=4 uid="uid://duw2jn00emhow"]
 
 [ext_resource type="TileSet" uid="uid://dvfkq370f0fmb" path="res://assets/tilesets/props.tres" id="1_j1d86"]
 [ext_resource type="TileSet" uid="uid://rngchcx3q02t" path="res://assets/tilesets/terrain.tres" id="1_luorb"]
@@ -10,9 +10,13 @@
 [ext_resource type="PackedScene" uid="uid://1wmbdbs64n4n" path="res://scenes/shaders/fog/parallax_background.tscn" id="8_ce16b"]
 [ext_resource type="PackedScene" uid="uid://dllvjwqfn3upd" path="res://items/_Chests/WoodChests/wood_chest.tscn" id="9_bkx2r"]
 [ext_resource type="PackedScene" uid="uid://c6o2o8pd124ne" path="res://items/_Chests/SilverChest/silver_chest.tscn" id="10_hbtl4"]
+[ext_resource type="Script" uid="uid://b1ujcrmnjrngq" path="res://scenes/world/location/GlobbinVillage/Event/boss_trigger_area.gd" id="11_hbtl4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4xcco"]
 size = Vector2(152, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7gum3"]
+size = Vector2(242, 51.5)
 
 [node name="GlobbinVillage" type="Node2D"]
 
@@ -70,7 +74,7 @@ tile_map_data = PackedByteArray("AADVAFr/HAAqADsAAADVAFv/HAAqADwAAADVAFz/HAAqAD0
 tile_set = ExtResource("1_j1d86")
 
 [node name="player" parent="." instance=ExtResource("3_hab1b")]
-position = Vector2(3497, -2211)
+position = Vector2(3506, -1883)
 
 [node name="FromGlobbinVillageOutsides" type="Marker2D" parent="."]
 position = Vector2(549, 106)
@@ -95,12 +99,29 @@ debug_color = Color(1, 1, 0, 1)
 [node name="King" type="Node" parent="Globbins"]
 
 [node name="GlobbinKing" parent="Globbins/King" instance=ExtResource("5_1iseo")]
-position = Vector2(3503, -2629)
+position = Vector2(3503, -2588)
+collision_layer = 6
+collision_mask = 3
+damage = 22.0
+rush_damage = 30.0
+move_speed = 35.0
+xp_reward_range = Vector2i(100, 120)
+mass = 100.0
+
+[node name="KingGlobbinCam" type="Camera2D" parent="Globbins/King/GlobbinKing"]
+zoom = Vector2(1.8, 1.8)
+limit_smoothed = true
+position_smoothing_enabled = true
+position_smoothing_speed = 3.0
+rotation_smoothing_enabled = true
 
 [node name="Major" type="Node" parent="Globbins"]
 
 [node name="GlobbinMajor" parent="Globbins/Major" instance=ExtResource("6_ce16b")]
 position = Vector2(-553, -1488)
+rush_damage = 20.0
+max_health = 80.0
+xp_reward_range = Vector2i(60, 90)
 
 [node name="GlobbinMajor2" parent="Globbins/Major" instance=ExtResource("6_ce16b")]
 position = Vector2(-610, -1570)
@@ -133,6 +154,10 @@ position = Vector2(1600, -198)
 
 [node name="GlobbinRockie" parent="Globbins/Rockies" instance=ExtResource("6_ik66m")]
 position = Vector2(534, -310)
+damage = 6.0
+rush_damage = 12.0
+max_health = 30.0
+move_speed = 50.0
 
 [node name="GlobbinRockie2" parent="Globbins/Rockies" instance=ExtResource("6_ik66m")]
 position = Vector2(53, 111)
@@ -263,5 +288,24 @@ loot_table = Array[Dictionary]([{
 "max": 2,
 "min": 1
 }])
+
+[node name="Event" type="Node" parent="."]
+
+[node name="BossTriggerArea" type="Area2D" parent="Event"]
+z_index = 2
+position = Vector2(3512, -1961)
+collision_layer = 6
+collision_mask = 3
+script = ExtResource("11_hbtl4")
+king_path = NodePath("../../Globbins/King/GlobbinKing")
+king_camera_path = NodePath("../../Globbins/King/GlobbinKing/KingGlobbinCam")
+blend_camera_path = NodePath("../BlendCamera")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Event/BossTriggerArea"]
+shape = SubResource("RectangleShape2D_7gum3")
+debug_color = Color(0.627451, 0.12549, 0.941176, 1)
+
+[node name="BlendCamera" type="Camera2D" parent="Event"]
+zoom = Vector2(1.5, 1.5)
 
 [connection signal="body_entered" from="Node/Gates/Area2D" to="Node/Gates/Area2D" method="_on_body_entered"]
