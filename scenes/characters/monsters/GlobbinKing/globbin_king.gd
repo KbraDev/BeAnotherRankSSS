@@ -5,6 +5,7 @@ var is_active: bool = false
 var phase_2: bool = false
 
 @onready var boss_bar = $CanvasLayer/BossHealthBar
+@onready var war_scream = $WarScream
 @export var boss_ui_path: NodePath
 var boss_ui
 

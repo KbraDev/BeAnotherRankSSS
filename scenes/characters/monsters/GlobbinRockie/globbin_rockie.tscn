@@ -88,7 +88,7 @@ stream = ExtResource("9_kei1i")
 sprite_frames = ExtResource("1_os86r")
 animation = &"attack_left_side"
 
-[node name="HealthBar2" type="TextureProgressBar" parent="."]
+[node name="HealthBar" type="TextureProgressBar" parent="."]
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
@@ -102,6 +102,6 @@ max_value = 10.0
 value = 10.0
 exp_edit = true
 texture_under = ExtResource("8_hn35v")
-texture_over = ExtResource("9_iveyc")
-texture_progress = ExtResource("10_kei1i")
+texture_over = ExtResource("10_kei1i")
+texture_progress = ExtResource("9_iveyc")
 script = ExtResource("4_r1bri")

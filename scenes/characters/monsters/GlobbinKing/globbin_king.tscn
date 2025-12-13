@@ -1,4 +1,4 @@
-[gd_scene load_steps=214 format=3 uid="uid://cdm6uwrww4unh"]
+[gd_scene load_steps=215 format=3 uid="uid://cdm6uwrww4unh"]
 
 [ext_resource type="Texture2D" uid="uid://cuu7ubmy7gxi8" path="res://sprites/characters/mobs/GobblinKing/orc3_attack_full.png" id="1_4rbns"]
 [ext_resource type="Script" uid="uid://24tw7d8ck5ow" path="res://scenes/characters/monsters/GlobbinKing/globbin_king.gd" id="1_b2tvg"]
@@ -8,13 +8,14 @@
 [ext_resource type="Texture2D" uid="uid://bx5175sjqu0bl" path="res://sprites/characters/mobs/GobblinKing/orc3_run_attack_full.png" id="5_dkpy5"]
 [ext_resource type="Texture2D" uid="uid://xvicw5h88bwx" path="res://sprites/characters/mobs/GobblinKing/orc3_run_full.png" id="6_3444d"]
 [ext_resource type="Texture2D" uid="uid://buhxt0rc3dewi" path="res://sprites/characters/mobs/GobblinKing/orc3_walk_full.png" id="7_iake8"]
+[ext_resource type="AudioStream" uid="uid://bw28radlr7y72" path="res://SFX/Effects/Globbins/King/attack3.wav" id="10_b2tvg"]
+[ext_resource type="AudioStream" uid="uid://dycjxrq64klrl" path="res://SFX/Effects/Globbins/King/amused2.wav" id="10_vddib"]
+[ext_resource type="AudioStream" uid="uid://c5tujiqyak8jg" path="res://SFX/Effects/Globbins/King/hit2.wav" id="11_vddib"]
 [ext_resource type="Script" uid="uid://c8luqh8ewax4r" path="res://scenes/characters/monsters/greenslime/scripts/health_bar.gd" id="11_wuacg"]
-[ext_resource type="AudioStream" uid="uid://c2c2r1bwo2uqj" path="res://SFX/Effects/Globbins/King/amused3.wav" id="13_vddib"]
-[ext_resource type="AudioStream" uid="uid://c8ejekp23ibo4" path="res://SFX/Effects/Globbins/King/attack2.wav" id="14_vddib"]
+[ext_resource type="AudioStream" uid="uid://bb2y0j2m6vl6o" path="res://SFX/Effects/Globbins/King/heavyattack2.wav" id="12_whkd6"]
+[ext_resource type="AudioStream" uid="uid://n1qw14vr30qq" path="res://SFX/Effects/Globbins/King/KingScream.wav" id="13_tus02"]
 [ext_resource type="PackedScene" uid="uid://bxmo4ilo8a4ax" path="res://UIs/BossHealthBar/BossHealthBar.tscn" id="14_whkd6"]
 [ext_resource type="Texture2D" uid="uid://bapdqh4f2knqd" path="res://sprites/portrait/KingGlobbin/KingGlobbinPor.png" id="15_ppxge"]
-[ext_resource type="AudioStream" uid="uid://dpsresvkkmlfe" path="res://SFX/Effects/Globbins/King/heavyattack1.wav" id="15_tus02"]
-[ext_resource type="AudioStream" uid="uid://ci8k2btww3cfs" path="res://SFX/Effects/Globbins/Rockie/irritated1.wav" id="16_ppxge"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_b2tvg"]
 radius = 29.0
@@ -29,7 +30,7 @@ radius = 26.0192
 radius = 22.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dkpy5"]
-size = Vector2(41.3333, 56)
+size = Vector2(21.3333, 34)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wuacg"]
 atlas = ExtResource("1_4rbns")
@@ -1523,7 +1524,7 @@ position = Vector2(1, 0)
 scale = Vector2(1.5, 1.5)
 script = ExtResource("1_b2tvg")
 boss_ui_path = NodePath("CanvasLayer/BossHealthBar")
-max_health = 100.0
+max_health = 200.0
 enemy_name = "Rey Duende"
 
 [node name="CollisionCheck" type="Area2D" parent="."]
@@ -1565,7 +1566,7 @@ script = ExtResource("11_wuacg")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 z_index = 2
-position = Vector2(-0.666667, -10)
+position = Vector2(-0.666667, 1)
 shape = SubResource("RectangleShape2D_dkpy5")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -1576,24 +1577,26 @@ sprite_frames = SubResource("SpriteFrames_k061o")
 animation = &"dying_front"
 
 [node name="StartChase" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("13_vddib")
+stream = ExtResource("10_vddib")
 
 [node name="Attack" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("14_vddib")
+stream = ExtResource("10_b2tvg")
 
 [node name="Hurt" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("15_tus02")
+stream = ExtResource("11_vddib")
 
 [node name="Rush" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("16_ppxge")
+stream = ExtResource("12_whkd6")
+
+[node name="WarScream" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("13_tus02")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="BossHealthBar" parent="CanvasLayer" instance=ExtResource("14_whkd6")]
-visible = false
-offset_left = 968.0
+offset_left = 816.0
 offset_top = 24.0
-offset_right = 1160.0
+offset_right = 1112.0
 offset_bottom = 88.0
 boss_name = "Rey Duende"
 boss_portrait = ExtResource("15_ppxge")

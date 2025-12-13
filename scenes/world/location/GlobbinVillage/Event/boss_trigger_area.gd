@@ -48,6 +48,7 @@ func _on_body_entered(body):
 		blend_camera,
 		blend_time,
 		focus_duration,
+		Callable(self, "_on_focus_king"),
 		Callable(self, "_on_camera_sequence_finished")
 	)
 
@@ -68,3 +69,8 @@ func _on_camera_sequence_finished():
 	# Start AI
 	if king.has_node("AI"):
 		king.get_node("AI").set_active(true)
+
+
+func _on_focus_king():
+	if king and king.war_scream:
+		king.war_scream.play()

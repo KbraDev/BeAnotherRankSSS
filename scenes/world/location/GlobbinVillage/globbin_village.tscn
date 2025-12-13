@@ -1,10 +1,11 @@
-[gd_scene load_steps=14 format=4 uid="uid://duw2jn00emhow"]
+[gd_scene load_steps=15 format=4 uid="uid://duw2jn00emhow"]
 
 [ext_resource type="TileSet" uid="uid://dvfkq370f0fmb" path="res://assets/tilesets/props.tres" id="1_j1d86"]
 [ext_resource type="TileSet" uid="uid://rngchcx3q02t" path="res://assets/tilesets/terrain.tres" id="1_luorb"]
 [ext_resource type="PackedScene" uid="uid://be8s6fsuvru6m" path="res://scenes/characters/player/player.tscn" id="3_hab1b"]
 [ext_resource type="Script" uid="uid://w2q7sdpbsh2d" path="res://scripts/globals/portals.gd" id="4_hab1b"]
 [ext_resource type="PackedScene" uid="uid://cdm6uwrww4unh" path="res://scenes/characters/monsters/GlobbinKing/globbin_king.tscn" id="5_1iseo"]
+[ext_resource type="Resource" uid="uid://ce7yhfhwubr6c" path="res://items/resources/GlobbinKingFinger.tres" id="6_7gum3"]
 [ext_resource type="PackedScene" uid="uid://dp5ry7qcymmll" path="res://scenes/characters/monsters/GlobbinMajot/globbin_major.tscn" id="6_ce16b"]
 [ext_resource type="PackedScene" uid="uid://dlhligdd2twvb" path="res://scenes/characters/monsters/GlobbinRockie/globbin_rockie.tscn" id="6_ik66m"]
 [ext_resource type="PackedScene" uid="uid://1wmbdbs64n4n" path="res://scenes/shaders/fog/parallax_background.tscn" id="8_ce16b"]
@@ -104,8 +105,9 @@ collision_layer = 6
 collision_mask = 3
 damage = 22.0
 rush_damage = 30.0
-move_speed = 35.0
 xp_reward_range = Vector2i(100, 120)
+armor = 2.0
+drop_item = ExtResource("6_7gum3")
 mass = 100.0
 
 [node name="KingGlobbinCam" type="Camera2D" parent="Globbins/King/GlobbinKing"]
@@ -300,6 +302,8 @@ script = ExtResource("11_hbtl4")
 king_path = NodePath("../../Globbins/King/GlobbinKing")
 king_camera_path = NodePath("../../Globbins/King/GlobbinKing/KingGlobbinCam")
 blend_camera_path = NodePath("../BlendCamera")
+focus_duration = 2.0
+boss_fade_duration = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Event/BossTriggerArea"]
 shape = SubResource("RectangleShape2D_7gum3")

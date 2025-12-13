@@ -2,13 +2,13 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://5vwyraa7djdc"
-path="res://.godot/imported/crit1.wav-f481bfbcdd9f356aabb494345395b500.sample"
+uid="uid://c5tujiqyak8jg"
+path="res://.godot/imported/hit2.wav-12717ca5cf966d1bfcd2900f61a15090.sample"
 
 [deps]
 
-source_file="res://SFX/Effects/Globbins/King/crit1.wav"
-dest_files=["res://.godot/imported/crit1.wav-f481bfbcdd9f356aabb494345395b500.sample"]
+source_file="res://SFX/Effects/Globbins/King/hit2.wav"
+dest_files=["res://.godot/imported/hit2.wav-12717ca5cf966d1bfcd2900f61a15090.sample"]
 
 [params]
 

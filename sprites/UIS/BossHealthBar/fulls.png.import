@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dds8mn0j1470a"
-path="res://.godot/imported/Outline.png-3ed480f51d124dcd31abd636157df91b.ctex"
+uid="uid://blhbfn16srml"
+path="res://.godot/imported/fulls.png-f0206db2cadd1502cc4f89d34bd21a61.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/UIS/BossHealthBar/Outline.png"
-dest_files=["res://.godot/imported/Outline.png-3ed480f51d124dcd31abd636157df91b.ctex"]
+source_file="res://sprites/UIS/BossHealthBar/fulls.png"
+dest_files=["res://.godot/imported/fulls.png-f0206db2cadd1502cc4f89d34bd21a61.ctex"]
 
 [params]
 
