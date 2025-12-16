@@ -21,61 +21,28 @@ extends Node
 
 # ===================== CAMERAS =====================
 
-var _blend_camera: Camera2D       # Cámara intermedia usada para interpolaciones
-var _player_camera: Camera2D      # Cámara principal del jugador
-var _target_camera: Camera2D      # Cámara objetivo (boss, NPC, punto de interés)
+var _blend_camera: Camera2D
+var _player_camera: Camera2D
+var _target_camera: Camera2D
 
 # ===================== TIMING ======================
 
-var _blend_time: float            # Duración de cada transición (ida y vuelta)
-var _hold_time: float             # Tiempo que la cámara permanece en el target
+var _blend_time: float
+var _hold_time: float
 
 # ===================== CALLBACKS ===================
 
-# Se ejecuta EXACTAMENTE cuando la cámara llega al target
-# (inicio del hold_time)
 var _on_focus_started: Callable = Callable()
-
-# Se ejecuta al finalizar TODA la secuencia
-# (cuando la cámara vuelve al jugador)
 var _on_finished: Callable = Callable()
+
+# ===================== SHAKE =======================
+
+var _shake_tween: Tween
+var _shake_origin: Vector2
 
 
 # --------------------------------------------------------------------
 # play_cutscene()
-#
-# Inicia la secuencia completa de cámaras.
-#
-# Parámetros:
-#   player_cam:
-#       Cámara actual del jugador.
-#
-#   target_cam:
-#       Cámara objetivo a la que se hará focus.
-#
-#   blend_cam:
-#       Cámara intermedia usada para interpolar suavemente.
-#
-#   blend_time:
-#       Tiempo que dura cada interpolación (player->target y target->player).
-#
-#   hold_time:
-#       Tiempo que la cámara permanece enfocando al target.
-#
-#   on_focus_started:
-#       Callback opcional que se ejecuta al llegar al target.
-#       Ideal para:
-#         - Gritos del boss
-#         - Animaciones
-#         - FX
-#         - Diálogos
-#
-#   on_finished:
-#       Callback opcional que se ejecuta al final de la secuencia.
-#       Ideal para:
-#         - Activar IA
-#         - Mostrar UI
-#         - Devolver control al jugador
 # --------------------------------------------------------------------
 func play_cutscene(
 	player_cam: Camera2D,
@@ -98,12 +65,7 @@ func play_cutscene(
 
 
 # --------------------------------------------------------------------
-# _start_blend_to_target()
-#
-# Fase 1:
-#   - Activa la blend camera.
-#   - Copia la posición y zoom actuales del jugador.
-#   - Interpola suavemente hacia la posición y zoom del target.
+# FASE 1 – Blend hacia el target
 # --------------------------------------------------------------------
 func _start_blend_to_target():
 	_blend_camera.global_position = _player_camera.global_position
@@ -131,32 +93,32 @@ func _start_blend_to_target():
 
 
 # --------------------------------------------------------------------
-# _on_arrive_target()
-#
-# Fase 2 (FOCUS / HOLD):
-#   - La cámara real del target se vuelve activa.
-#   - Se dispara el callback on_focus_started.
-#   - Se mantiene el enfoque durante _hold_time.
+# FASE 2 – Focus / Hold
 # --------------------------------------------------------------------
 func _on_arrive_target():
 	_target_camera.make_current()
 
-	# Punto exacto donde el target entra en foco visual.
-	# Aquí deben ocurrir eventos cinematográficos.
+	# Guardar posición base para shake
+	_shake_origin = _target_camera.position
+
+	# Disparar eventos cinematográficos (grito, animaciones, FX)
 	if _on_focus_started.is_valid():
 		_on_focus_started.call()
+
+	# Temblor de cámara sincronizado con el grito
+	_start_camera_shake(
+		_target_camera,
+		8.0,
+		0.35,
+		0.05
+	)
 
 	var tween = create_tween()
 	tween.tween_interval(_hold_time)
 	tween.tween_callback(_start_blend_back)
 
-
 # --------------------------------------------------------------------
-# _start_blend_back()
-#
-# Fase 3:
-#   - Desde la posición del target, la blend camera interpola
-#     de regreso hacia la cámara del jugador.
+# FASE 3 – Blend de regreso
 # --------------------------------------------------------------------
 func _start_blend_back():
 	_blend_camera.global_position = _target_camera.global_position
@@ -184,12 +146,7 @@ func _start_blend_back():
 
 
 # --------------------------------------------------------------------
-# _finish()
-#
-# Fase final:
-#   - La cámara del jugador vuelve a ser la activa.
-#   - Se desactiva la blend camera.
-#   - Se ejecuta el callback final.
+# FASE FINAL
 # --------------------------------------------------------------------
 func _finish():
 	_player_camera.make_current()
@@ -197,3 +154,50 @@ func _finish():
 
 	if _on_finished.is_valid():
 		_on_finished.call()
+
+
+# --------------------------------------------------------------------
+# CAMERA SHAKE
+#
+# Aplica un temblor leve a una Camera2D usando offsets rápidos.
+# Diseñado para impactos, gritos y eventos cinematográficos.
+# --------------------------------------------------------------------
+func _start_camera_shake(
+	camera: Camera2D,
+	intensity := 6.0,
+	duration := 0.3,
+	frequency := 0.04
+):
+	if not is_instance_valid(camera):
+		return
+
+	if _shake_tween and _shake_tween.is_running():
+		_shake_tween.kill()
+
+	_shake_origin = camera.position
+	_shake_tween = create_tween()
+
+	var elapsed := 0.0
+
+	while elapsed < duration:
+		var offset = Vector2(
+			randf_range(-intensity, intensity),
+			randf_range(-intensity, intensity)
+		)
+
+		_shake_tween.tween_property(
+			camera,
+			"position",
+			_shake_origin + offset,
+			frequency
+		)
+
+		elapsed += frequency
+
+	# Volver suavemente a la posición original
+	_shake_tween.tween_property(
+		camera,
+		"position",
+		_shake_origin,
+		0.1
+	)

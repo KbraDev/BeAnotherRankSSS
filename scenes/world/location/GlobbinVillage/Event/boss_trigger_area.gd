@@ -21,23 +21,32 @@ func _ready():
 	king_camera = get_node(king_camera_path)
 	blend_camera = get_node(blend_camera_path)
 
-	var cams = get_tree().get_nodes_in_group("player_camera")
-	if cams.size() > 0:
-		player_camera = cams[0]
-
 
 func _on_body_entered(body):
 	if triggered or not body.is_in_group("player"):
 		return
 
+	# Obtener la cámara ACTUAL del jugador
+	var cams = get_tree().get_nodes_in_group("player_camera")
+	if cams.is_empty():
+		push_error("No player_camera found for boss cutscene")
+		return
+
+	player_camera = cams[0]
+
+	# Seguridad extra
+	if not is_instance_valid(player_camera):
+		push_error("Player camera reference is invalid")
+		return
+
 	triggered = true
 	monitoring = false
-	get_node("CollisionShape2D").disabled = true
+	$CollisionShape2D.disabled = true
 
-	# Activamos boss pero permanece congelado (start_ai = false)
-	king.call("activate", false)
+	# Activamos boss pero permanece congelado
+	king.activate(false)
 
-	# Mantener UI oculta durante la intro
+	# Ocultar UI durante intro
 	if king.boss_ui:
 		king.boss_ui.visible = false
 		king.boss_ui.modulate.a = 0
@@ -51,7 +60,6 @@ func _on_body_entered(body):
 		Callable(self, "_on_focus_king"),
 		Callable(self, "_on_camera_sequence_finished")
 	)
-
 
 func _on_camera_sequence_finished():
 	if king:

@@ -23,9 +23,9 @@ script = ExtResource("4_uevdl")
 [node name="TextureRect" type="TextureRect" parent="."]
 show_behind_parent = true
 layout_mode = 0
-offset_left = 135.0
+offset_left = 237.0
 offset_top = 6.0
-offset_right = 187.0
+offset_right = 289.0
 offset_bottom = 59.0
 expand_mode = 1
 stretch_mode = 4
@@ -34,9 +34,9 @@ flip_h = true
 [node name="Label" type="Label" parent="."]
 layout_mode = 0
 offset_left = 16.0
-offset_top = 14.0
-offset_right = 117.0
-offset_bottom = 35.0
+offset_top = 10.6667
+offset_right = 220.0
+offset_bottom = 31.6667
 theme_override_fonts/font = ExtResource("4_tayp1")
 theme_override_font_sizes/font_size = 18
 horizontal_alignment = 2
