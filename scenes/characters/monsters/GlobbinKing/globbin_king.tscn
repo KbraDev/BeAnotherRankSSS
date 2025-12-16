@@ -1524,7 +1524,9 @@ position = Vector2(1, 0)
 scale = Vector2(1.5, 1.5)
 script = ExtResource("1_b2tvg")
 boss_ui_path = NodePath("CanvasLayer/BossHealthBar")
-max_health = 200.0
+damage = 22.0
+max_health = 130.0
+move_speed = 60.0
 enemy_name = "Rey Duende"
 
 [node name="CollisionCheck" type="Area2D" parent="."]
@@ -1590,6 +1592,7 @@ stream = ExtResource("12_whkd6")
 
 [node name="WarScream" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("13_tus02")
+volume_db = 3.0
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -1598,5 +1601,6 @@ offset_left = 816.0
 offset_top = 24.0
 offset_right = 1112.0
 offset_bottom = 88.0
+max_value = 130.0
 boss_name = "Rey Duende"
 boss_portrait = ExtResource("15_ppxge")

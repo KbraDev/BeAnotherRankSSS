@@ -103,7 +103,8 @@ debug_color = Color(1, 1, 0, 1)
 position = Vector2(3503, -2588)
 collision_layer = 6
 collision_mask = 3
-damage = 22.0
+king_camera_path = NodePath("KingGlobbinCam")
+blend_camera_path = NodePath("../../../Event/BlendCamera")
 xp_reward_range = Vector2i(100, 120)
 armor = 2.0
 drop_item = ExtResource("6_7gum3")
@@ -111,10 +112,7 @@ mass = 100.0
 
 [node name="KingGlobbinCam" type="Camera2D" parent="Globbins/King/GlobbinKing"]
 zoom = Vector2(1.8, 1.8)
-limit_smoothed = true
-position_smoothing_enabled = true
 position_smoothing_speed = 3.0
-rotation_smoothing_enabled = true
 
 [node name="Major" type="Node" parent="Globbins"]
 
@@ -231,11 +229,6 @@ hits_to_open = 3
 [node name="WoodChest5" parent="Chests" instance=ExtResource("9_bkx2r")]
 position = Vector2(846, 153)
 chest_id = "0012"
-
-[node name="WoodChest6" parent="Chests" instance=ExtResource("9_bkx2r")]
-position = Vector2(1742, -24)
-chest_id = "0013"
-hits_to_open = 3
 
 [node name="silver_chest" parent="Chests" instance=ExtResource("10_hbtl4")]
 position = Vector2(3280, -2601)

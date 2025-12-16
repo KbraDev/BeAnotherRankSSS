@@ -34,12 +34,18 @@ var _hold_time: float
 
 var _on_focus_started: Callable = Callable()
 var _on_finished: Callable = Callable()
+var _follow_player := false
+var _return_tween: Tween
 
 # ===================== SHAKE =======================
 
 var _shake_tween: Tween
 var _shake_origin: Vector2
 
+
+func _process(_delta):
+	if _follow_player and is_instance_valid(_player_camera):
+		_blend_camera.global_position = _player_camera.global_position
 
 # --------------------------------------------------------------------
 # play_cutscene()
@@ -126,35 +132,46 @@ func _start_blend_back():
 	_blend_camera.enabled = true
 	_blend_camera.make_current()
 
-	var tween = create_tween()
+	_follow_player = false
 
-	tween.tween_property(
+	if _return_tween:
+		_return_tween.kill()
+
+	_return_tween = create_tween()
+
+	# Regreso visible hacia la posición ACTUAL del jugador
+	_return_tween.tween_property(
 		_blend_camera,
 		"global_position",
 		_player_camera.global_position,
 		_blend_time
 	).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
 
-	tween.parallel().tween_property(
+	_return_tween.parallel().tween_property(
 		_blend_camera,
 		"zoom",
 		_player_camera.zoom,
 		_blend_time
-	).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	)
 
-	tween.tween_callback(_finish)
+	# Al terminar, activar seguimiento dinámico
+	_return_tween.tween_callback(_enable_follow_and_finish)
+
+func _enable_follow_and_finish():
+	_follow_player = true
+	_finish()
 
 
 # --------------------------------------------------------------------
 # FASE FINAL
 # --------------------------------------------------------------------
 func _finish():
+	_follow_player = false
 	_player_camera.make_current()
 	_blend_camera.enabled = false
 
 	if _on_finished.is_valid():
 		_on_finished.call()
-
 
 # --------------------------------------------------------------------
 # CAMERA SHAKE
