@@ -64,7 +64,6 @@ func freeze_globbin():
 
 	can_move = false
 	is_attacking = false
-	is_rushing = false
 	velocity = Vector2.ZERO
 
 	if has_node("AnimatedSprite2D"):

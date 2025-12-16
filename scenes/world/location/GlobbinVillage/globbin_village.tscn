@@ -104,7 +104,6 @@ position = Vector2(3503, -2588)
 collision_layer = 6
 collision_mask = 3
 damage = 22.0
-rush_damage = 30.0
 xp_reward_range = Vector2i(100, 120)
 armor = 2.0
 drop_item = ExtResource("6_7gum3")
@@ -121,7 +120,6 @@ rotation_smoothing_enabled = true
 
 [node name="GlobbinMajor" parent="Globbins/Major" instance=ExtResource("6_ce16b")]
 position = Vector2(-553, -1488)
-rush_damage = 20.0
 max_health = 80.0
 xp_reward_range = Vector2i(60, 90)
 
@@ -157,7 +155,6 @@ position = Vector2(1600, -198)
 [node name="GlobbinRockie" parent="Globbins/Rockies" instance=ExtResource("6_ik66m")]
 position = Vector2(534, -310)
 damage = 6.0
-rush_damage = 12.0
 max_health = 30.0
 move_speed = 50.0
 
