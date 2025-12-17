@@ -51,14 +51,6 @@ var max_health = 50
 var inventory: Array = []
 
 var last_direction := "front"
-var can_attack := true
-var is_attacking := false
-var attack_click_count := 0
-var current_attack := 1
-
-var last_attack_time := 0.0
-var double_click_threshold := 0.50
-var combo_queued := false
 
 # Dash
 var is_dashing: bool = false
@@ -94,10 +86,10 @@ var run_interval := 0.5
 @onready var attack0_voice = $Attack0
 @onready var tilemap: TileMapLayer = get_tree().get_first_node_in_group("ground")
 
-@onready var attack_timer = Timer.new()
-@onready var combo_timer = Timer.new()
 @onready var dash_timer := Timer.new()
 @onready var dash_cooldown_timer := Timer.new()
+@onready var attack_controller: PhisycAttackController = $PhysicAttackController
+
 
 # ───── SEÑALES ─────
 signal inventory_updated(inventory: Array)
@@ -110,15 +102,6 @@ func _ready():
 	print("MissionTracker cargado?", MissionTracker)
 	animation.play("idle_" + last_direction)
 
-	add_child(combo_timer)
-	combo_timer.one_shot = true
-	combo_timer.wait_time = 1.2
-	combo_timer.connect("timeout", _on_combo_timer_timeout)
-
-	add_child(attack_timer)
-	attack_timer.one_shot = true
-	attack_timer.wait_time = 0.4
-	attack_timer.connect("timeout", _on_attack_cooldown_timeout)
 
 	add_child(dash_timer)
 	dash_timer.one_shot = true
@@ -131,6 +114,11 @@ func _ready():
 	dash_cooldown_timer.connect("timeout", _on_dash_cooldown_finished)
 
 	animation.connect("animation_finished", _on_animation_finished)
+	
+	attack_controller.attack_started.connect(_on_attack_started)
+	attack_controller.attack_finished.connect(_on_attack_finished)
+	attack_controller.attack_blocked.connect(_on_attack_blocked)
+
 
 	inventory.resize(INVENTORY_SIZE)
 	for i in range(INVENTORY_SIZE):
@@ -171,33 +159,21 @@ func _physics_process(delta: float) -> void:
 	# --- Menú de estadísticas ---
 	_open_statUI()
 
-func _input(event):
-	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
-		if event.double_click:
-			_on_double_attack_input()
-		else:
-			_on_single_attack_input()
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("RightClick"):
+		attack_controller.request_attack(
+			PhisycAttackController.AttackType.RIGHT_SLASH
+		)
 
-func _on_single_attack_input():
-	if not can_attack or is_attacking:
-		return
-	current_attack = 1
-	velocity = Vector2.ZERO
-	perform_attack()
+	if event.is_action_pressed("LeftClick"):
+		attack_controller.request_attack(
+			PhisycAttackController.AttackType.LEFT_SLASH
+		)
 
-func _on_double_attack_input():
-	# Si el primer ataque está activo, marca combo
-	if is_attacking and current_attack == 1:
-		combo_queued = true
-	# Si no está atacando, lanza combo directamente
-	elif not is_attacking:
-		current_attack = 2
-		velocity = Vector2.ZERO
-		perform_attack()
 
 
 func directional_movement():
-	if not can_move or is_attacking or is_dashing:
+	if not can_move or attack_controller.is_attacking() or is_dashing:
 		if not is_dashing:
 			velocity = Vector2.ZERO
 		return
@@ -229,8 +205,16 @@ func directional_movement():
  
 
 # ───── COMBATE Y ANIMACIÓN ─────
+func _on_attack_started(attack_id: int) -> void:
+	match attack_id:
+		PhisycAttackController.AttackType.RIGHT_SLASH:
+			animation.play("attack1_" + last_direction)
+
+		PhisycAttackController.AttackType.LEFT_SLASH:
+			animation.play("attack2_" + last_direction)
+
 func handle_Animations(direction: Vector2):
-	if is_attacking:
+	if attack_controller.is_attacking():
 		return
 
 	if direction == Vector2.ZERO:
@@ -247,68 +231,23 @@ func handle_Animations(direction: Vector2):
 		else:
 			animation.play("walk_" + last_direction)
 
-func perform_attack():
-	is_attacking = true
-	can_attack = false
+func _on_attack_finished(_attack_id := 0) -> void:
+	# El Player no hace nada aquí
+	pass
 
-	var animation_name = "attack%d_%s" % [current_attack, last_direction]
-	var fuerza = base_stats.get("fuerza", 5)
-	var base_damage = DAMAGE if current_attack == 1 else DAMAGE + 1.5
-	var damage = base_damage + (fuerza * 0.25)
+func _on_attack_blocked() -> void:
+	# UI / sonido opcional en el futuro
+	pass
 
-	animation.play(animation_name)
+func _on_animation_finished() -> void:
+	if not attack_controller.is_attacking():
+		return
 
-	# 🔊 Reproduce el sonido de espadazo
-	sword_hit.play()
-	attack0_voice.play()
+	attack_area.monitoring = false
+	attack_area.set_deferred("collision_layer", 0)
 
-	attack_area.monitoring = true
-	attack_area.set_deferred("collision_layer", 1)
-
-	await get_tree().create_timer(0.05).timeout
-
-	for body in attack_area.get_overlapping_bodies():
-		if body.is_in_group("enemies"):
-			body._take_damage(damage)
-
-			var dir = (body.global_position - global_position).normalized()
-
-			print("🔶 [Player] Golpeando a:", body.enemy_name)
-			print("    Dirección:", dir)
-			print("    Fuerza jugador (stat):", fuerza)
-			print("    Llamando apply_knockback en enemigo...")
-
-			# --- DEBUG: detectar si tiene mass (Godot 4 NO permite has_variable) ---
-			if body.get("mass") != null:
-				print("    enemy.mass:", body.mass)
-			else:
-				print("    ❓ enemy.mass NO existe en este enemigo")
-
-			# --- DEBUG: velocity BEFORE ---
-			if body.get("velocity") != null:
-				print("    enemy.velocity BEFORE:", body.velocity)
-			else:
-				print("    ❓ enemy.velocity NO existe")
-
-			# --- Llamar al knockback real ---
-			if body.has_method("apply_knockback"):
-				body.apply_knockback(dir, 200.0, fuerza)
-			else:
-				print("    ⚠️ Enemy NO tiene apply_knockback()")
-
-			# --- DEBUG: velocity AFTER ---
-			if body.get("velocity") != null:
-				print("    enemy.velocity AFTER:", body.velocity)
-
-			# --- Knockback al jugador ---
-			print("    Aplicando knockback al jugador (contrario)...")
-			apply_knockback(-dir, 100.0)
-
-		elif body.is_in_group("chests"):
-			body.hit()
-
-	attack_timer.start()
-	combo_timer.start()
+	attack_controller.notify_attack_finished()
+	handle_Animations(Vector2.ZERO)
 
 
 func apply_knockback(direction: Vector2, force: float):
@@ -322,30 +261,6 @@ func apply_knockback(direction: Vector2, force: float):
 
 	# DEBUG: resultado
 	print("    player velocity AFTER:", velocity)
-
-func _on_attack_cooldown_timeout():
-	can_attack = true
-
-func _on_combo_timer_timeout():
-	attack_click_count = 0
-	current_attack = 1
-
-func _on_animation_finished():
-	if is_attacking:
-		is_attacking = false
-		attack_area.monitoring = false
-		attack_area.set_deferred("collision_layer", 0)
-		animation.flip_h = false
-
-		if combo_queued and current_attack == 1:
-			combo_queued = false
-			current_attack = 2
-			perform_attack()
-			return
-
-		current_attack = 1
-		combo_queued = false
-		handle_Animations(Vector2.ZERO)
 
 # ───── DASH ─────
 func start_dash():
@@ -400,11 +315,13 @@ func take_damage(amount: float, tipo: String = "fisico"):
 		die()
 		return
 
-	if not is_attacking and not is_dashing:
+	if not attack_controller.is_attacking() and not is_dashing:
 		var prefix := ""  # ya no depende de estado
 		var anim_name = "take_damage_" + last_direction
 		if animation.sprite_frames.has_animation(anim_name):
 			animation.play(anim_name)
+
+
 
 func heal(amount: int):
 	if current_health <= 0:
@@ -419,8 +336,8 @@ func heal(amount: int):
  
 func die():
 	can_move = false
-	can_attack = false
-	is_attacking = false
+	attack_controller.lock_attacks()
+	attack_controller.is_attacking()
 	is_dashing = false
 	velocity = Vector2.ZERO
 	set_collision_layer(0)
@@ -461,8 +378,7 @@ func _on_zoom_finished():
 	current_health = max_health
 	emit_signal("health_changed", current_health, max_health)
 	can_move = true
-	can_attack = true
-	is_attacking = false
+	attack_controller.is_attacking()
 	is_dashing = false
 	set_collision_layer(original_layer)
 	set_collision_mask(original_mask)
@@ -657,11 +573,11 @@ func _open_statUI():
 
 			# Bloquear/permitir ataque y movimiento
 			if stats_menu.visible:
-				can_attack = false
 				can_move = false
+				attack_controller.lock_attacks()
 			else:
-				can_attack = true
 				can_move = true
+				attack_controller.lock_attacks()
 
 # ------- FUNCIONES PARA MEJORAR DE STADISTICAS ------
 

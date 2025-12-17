@@ -1,4 +1,4 @@
-[gd_scene load_steps=346 format=3 uid="uid://be8s6fsuvru6m"]
+[gd_scene load_steps=347 format=3 uid="uid://be8s6fsuvru6m"]
 
 [ext_resource type="Script" uid="uid://jymviqh0n0bu" path="res://scripts/characters/player/player.gd" id="1_nibrf"]
 [ext_resource type="Texture2D" uid="uid://cbqod6x3bj8xs" path="res://sprites/characters/player/ATTACK 1/attack1_up.png" id="2_ieypo"]
@@ -39,6 +39,7 @@
 [ext_resource type="Texture2D" uid="uid://q6bthtffgb3" path="res://sprites/characters/player/WALK/walk_right.png" id="37_c1dak"]
 [ext_resource type="AudioStream" uid="uid://c2cghpqobbu8l" path="res://SFX/Effects/NormalSword/sword-sound.mp3" id="38_sulyr"]
 [ext_resource type="AudioStream" uid="uid://dbfrhuuhyqten" path="res://SFX/Effects/player/Voices/Attack_0.wav" id="39_xm30n"]
+[ext_resource type="Script" uid="uid://cu3t47g86utpd" path="res://scripts/characters/player/Combat/PhisycAttackController.gd" id="40_xm30n"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4fvev"]
 atlas = ExtResource("2_ieypo")
@@ -2358,7 +2359,9 @@ script = ExtResource("1_nibrf")
 texture_filter = 1
 scale = Vector2(1.2106, 1.21059)
 sprite_frames = SubResource("SpriteFrames_6myrh")
-animation = &"death_right_side"
+animation = &"attack1_back"
+frame = 7
+frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 6)
@@ -2400,5 +2403,10 @@ stream = ExtResource("39_xm30n")
 volume_db = -20.0
 max_distance = 100.0
 attenuation = 1.8
+
+[node name="PhysicAttackController" type="Node" parent="."]
+script = ExtResource("40_xm30n")
+right_slash_cooldown = 0.6
+left_slash_cooldown = 0.6
 
 [connection signal="frame_changed" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_frame_changed"]

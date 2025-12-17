@@ -20,6 +20,7 @@ size = Vector2(152, 20)
 size = Vector2(242, 51.5)
 
 [node name="GlobbinVillage" type="Node2D"]
+position = Vector2(0, -1)
 
 [node name="TIles" type="Node" parent="."]
 
