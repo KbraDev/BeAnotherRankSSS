@@ -16,7 +16,6 @@ var player: Node2D = null
 var direction: Vector2 = Vector2.ZERO
 var timer: float = 0.0
 var state: String = "idle"
-var last_direction: String = "front"
 var panic_origin: Vector2
 var traveled_distance: float = 0.0
 

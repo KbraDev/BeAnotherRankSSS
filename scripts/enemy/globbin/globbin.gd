@@ -15,7 +15,6 @@ class_name Globbin
 @onready var hurt_sfx = $Hurt
 
 var direction: Vector2 = Vector2.ZERO
-var last_direction: String = "front"
 
 var player_detected: bool = false
 var player_target: Node2D = null
@@ -231,10 +230,9 @@ func _play_attack_animation() -> void:
 # == Recibir daño ==
 # ======================
 
-func _take_damage(amount: float, dir: String = "front") -> void:
-	super._take_damage(amount, last_direction)
+func take_damage(amount: float, dir: String = "front") -> void:
+	super.take_damage(amount, dir)
 	hurt_sfx.play()
-
 # ======================
 # == Muerte ==
 # ======================

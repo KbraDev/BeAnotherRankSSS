@@ -1,109 +1,239 @@
 extends Node
 class_name PhisycAttackController
+##
+## Controlador central de ataques físicos del jugador.
+##
+## Responsabilidades:
+## - Validar si el jugador puede atacar
+## - Iniciar y finalizar ataques
+## - Gestionar cooldowns entre ataques
+## - Activar / desactivar el Area2D de ataque
+## - Detectar enemigos golpeados (NO calcula daño)
+##
+## El daño real se aplica en el Player, no aquí.
+##
 
-signal attack_started(attack_id: int)
+# ───────────────────────────────
+# ────────── SEÑALES ────────────
+# ───────────────────────────────
+
+## Se emite al comenzar un ataque
+signal attack_started(attack_id: int, hit_index: int)
+
+## Se emite al finalizar completamente un ataque
 signal attack_finished(attack_id: int)
+
+## Se emite si el ataque fue bloqueado (cooldown / estado inválido)
 signal attack_blocked()
 
+## Se emite cuando un enemigo es golpeado por el Area2D
+signal enemy_hit(enemy: Node)
+
+
+# ───────────────────────────────
+# ────────── ENUMS ──────────────
+# ───────────────────────────────
+
 enum AttackType {
-	RIGHT_SLASH = 1,
-	LEFT_SLASH  = 2,
-	DOUBLE_SLASH = 3
+	BASIC_SLASH = 1,
+	DOUBLE_SLASH = 2
 }
 
-@export_category("Cooldowns")
-@export var right_slash_cooldown: float = 0.3
-@export var left_slash_cooldown: float = 0.3
-@export var combo_buffer_time: float = 0.12
+
+# ───────────────────────────────
+# ─────── CONFIGURACIÓN ─────────
+# ───────────────────────────────
+
+## Tiempo de espera entre ataques BASIC_SLASH
+@export var basic_slash_cooldown := 0.35
+@export var double_slash_cooldown := 3.0
+@export var double_click_window := 0.5
+
+## Ruta al Area2D de ataque del jugador
+@export var attack_area_path: NodePath
+
+# ───────────────────────────────
+# ─────── ESTADO INTERNO ─────────
+# ───────────────────────────────
 
 var _can_attack: bool = true
 var _is_attacking: bool = false
 var _current_attack: int = 0
 
-var _buffered_attack: int = 0
-var _combo_timer: Timer
+var _current_hit : int = 0
+var _click_count : int = 0
+
+var _attack_area: Area2D
 @onready var _cooldown_timer: Timer = Timer.new()
+@onready var _double_click_timer: Timer = Timer.new()
+
+# ───────────────────────────────
+# ─────────── READY ─────────────
+# ───────────────────────────────
 
 func _ready() -> void:
+	# Configurar cooldown
 	_cooldown_timer.one_shot = true
 	add_child(_cooldown_timer)
 	_cooldown_timer.timeout.connect(_on_cooldown_finished)
+	
+	_double_click_timer.one_shot = true
+	add_child(_double_click_timer)
+	_double_click_timer.timeout.connect(_on_double_click_timeout)
 
-	_combo_timer = Timer.new()
-	_combo_timer.one_shot = true
-	add_child(_combo_timer)
-	_combo_timer.timeout.connect(_on_combo_buffer_timeout)
+	# Obtener referencia al Area2D de ataque
+	if attack_area_path != NodePath():
+		_attack_area = get_node(attack_area_path)
+		_attack_area.monitoring = false
 
-func request_attack(attack_type: int) -> void:
+
+# ───────────────────────────────
+# ────────── INPUT ──────────────
+# ───────────────────────────────
+
+## Solicitud externa para iniciar un ataque
+func request_attack() -> void:
 	if not _can_attack or _is_attacking:
 		emit_signal("attack_blocked")
 		return
 
-	if _buffered_attack == 0:
-		_buffered_attack = attack_type
-		_combo_timer.start(combo_buffer_time)
-		return
+	_click_count += 1
 
-	if _is_combo(_buffered_attack, attack_type):
-		_combo_timer.stop()
-		_execute_attack(AttackType.DOUBLE_SLASH)
-		_clear_buffer()
+	# PRIMER CLIC → ATAQUE INMEDIATO
+	if _click_count == 1:
+		_start_basic_slash()
+		_double_click_timer.start(double_click_window)
 
-func _on_combo_buffer_timeout() -> void:
-	if _buffered_attack != 0:
-		_execute_attack(_buffered_attack)
-		_clear_buffer()
+	# SEGUNDO CLIC → DOUBLE SLASH
+	elif _click_count == 2:
+		_double_click_timer.stop()
+		_click_count = 0
+		_start_double_slash()
 
-func _execute_attack(attack_type: int) -> void:
+# ───────────────────────────────
+# ─────── LÓGICA DE ATAQUE ───────
+# ───────────────────────────────
+
+## Inicia el ataque BASIC_SLASH
+func _start_basic_slash() -> void:
 	_is_attacking = true
 	_can_attack = false
-	_current_attack = attack_type
+	_current_attack = AttackType.BASIC_SLASH
 
-	_start_cooldown(attack_type)
-	emit_signal("attack_started", attack_type)
+	_enable_attack_area()
+	emit_signal("attack_started", _current_attack, 1)
 
-func _is_combo(a: int, b: int) -> bool:
-	return (
-		(a == AttackType.RIGHT_SLASH and b == AttackType.LEFT_SLASH)
-		or
-		(a == AttackType.LEFT_SLASH and b == AttackType.RIGHT_SLASH)
-	)
 
-func _clear_buffer() -> void:
-	_buffered_attack = 0
-
-func _start_cooldown(attack_type: int) -> void:
-	var cooldown: float = 0.0
-
-	match attack_type:
-		AttackType.RIGHT_SLASH:
-			cooldown = right_slash_cooldown
-		AttackType.LEFT_SLASH:
-			cooldown = left_slash_cooldown
-		AttackType.DOUBLE_SLASH:
-			cooldown = 0.6
-		_:
-			cooldown = 0.3
-
-	_cooldown_timer.start(cooldown)
-
-func _on_cooldown_finished() -> void:
-	_can_attack = true
-	_is_attacking = false
-	_current_attack = 0
-
-func lock_attacks() -> void:
-	_can_attack = false
-
-func unlock_attacks() -> void:
-	_can_attack = true
-
-func is_attacking() -> bool:
-	return _is_attacking
-
+## Debe llamarse cuando la animación de ataque termina
 func notify_attack_finished() -> void:
 	if not _is_attacking:
 		return
 
 	_is_attacking = false
+	_disable_attack_area()
+
 	emit_signal("attack_finished", _current_attack)
+
+	if _current_attack == AttackType.DOUBLE_SLASH:
+		_cooldown_timer.start(double_slash_cooldown)
+	else:
+		_cooldown_timer.start(basic_slash_cooldown)
+
+	_current_attack = 0
+	_current_hit = 0
+
+
+
+## Cooldown terminado → se puede volver a atacar
+func _on_cooldown_finished() -> void:
+	_can_attack = true
+
+
+## Estado público de ataque
+func is_attacking() -> bool:
+	return _is_attacking
+
+## DOUBLE_SLASH
+func _on_double_click_timeout() -> void:
+	_click_count = 0
+
+func _start_double_slash() -> void:
+	_is_attacking = true
+	_can_attack = false
+	_current_attack = AttackType.DOUBLE_SLASH
+	_current_hit = 1
+
+	_enable_attack_area()
+	emit_signal("attack_started", _current_attack, _current_hit)
+
+func notify_next_hit() -> void:
+	if _current_attack != AttackType.DOUBLE_SLASH:
+		return
+
+	if _current_hit == 1:
+		_current_hit = 2
+		_enable_attack_area()
+		emit_signal("attack_started", _current_attack, _current_hit)
+
+
+
+
+# ───────────────────────────────
+# ────── BLOQUEO DE ATAQUES ──────
+# ───────────────────────────────
+
+## Bloquea completamente los ataques (menús, cinemáticas, muerte)
+func lock_attacks() -> void:
+	_can_attack = false
+	_is_attacking = false
+	_current_attack = 0
+	_cooldown_timer.stop()
+
+
+## Habilita nuevamente los ataques
+func unlock_attacks() -> void:
+	_can_attack = true
+	_is_attacking = false
+	_current_attack = 0
+
+
+# ───────────────────────────────
+# ────── DETECCIÓN DE ENEMIGOS ───
+# ───────────────────────────────
+
+## Activa el Area2D de ataque y conecta detección
+func _enable_attack_area() -> void:
+	if not _attack_area:
+		return
+
+	_attack_area.monitoring = true
+	_attack_area.body_entered.connect(_on_attack_area_body_entered)
+
+	# Detectar enemigos que ya estén dentro
+	for body in _attack_area.get_overlapping_bodies():
+		_process_body(body)
+
+
+## Desactiva el Area2D y desconecta señales
+func _disable_attack_area() -> void:
+	if not _attack_area:
+		return
+
+	if _attack_area.body_entered.is_connected(_on_attack_area_body_entered):
+		_attack_area.body_entered.disconnect(_on_attack_area_body_entered)
+
+	_attack_area.monitoring = false
+
+
+## Callback cuando un cuerpo entra al área
+func _on_attack_area_body_entered(body: Node) -> void:
+	_process_body(body)
+
+
+## Valida y notifica impacto a enemigos
+func _process_body(body: Node) -> void:
+	if not _is_attacking:
+		return
+
+	if body.is_in_group("enemies"):
+		emit_signal("enemy_hit", body)

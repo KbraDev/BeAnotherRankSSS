@@ -51,6 +51,7 @@ var has_died: bool = false
 var _death_failsafe_timer: Timer = null              # Ensures enemies don't get stuck in death animations
 var is_hurt: bool = false                            # Blocks AI during hurt animations
 var can_move: bool = true
+var last_direction: String = "front"
 
 # ====================================================================
 # ============================== READY ================================
@@ -141,7 +142,7 @@ func _physics_process(delta: float) -> void:
 #
 # Child classes may override `_on_enemy_hurt_end()` for specific logic.
 # --------------------------------------------------------------------
-func _take_damage(amount: float, last_direction: String = "front") -> void:
+func take_damage(amount: float, last_direction: String = "front") -> void:
 	if has_died:
 		return
 

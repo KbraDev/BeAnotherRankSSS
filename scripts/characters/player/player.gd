@@ -91,6 +91,8 @@ var run_interval := 0.5
 @onready var attack_controller: PhisycAttackController = $PhysicAttackController
 
 
+@onready var combo_timer := Timer.new()
+
 # ───── SEÑALES ─────
 signal inventory_updated(inventory: Array)
 signal health_changed(current_health, max_health)
@@ -113,11 +115,13 @@ func _ready():
 	dash_cooldown_timer.wait_time = dash_cooldown
 	dash_cooldown_timer.connect("timeout", _on_dash_cooldown_finished)
 
-	animation.connect("animation_finished", _on_animation_finished)
+	animation.frame_changed.connect(_on_animated_sprite_2d_frame_changed)
 	
 	attack_controller.attack_started.connect(_on_attack_started)
 	attack_controller.attack_finished.connect(_on_attack_finished)
 	attack_controller.attack_blocked.connect(_on_attack_blocked)
+	attack_controller.enemy_hit.connect(_on_enemy_hit)
+
 
 
 	inventory.resize(INVENTORY_SIZE)
@@ -160,17 +164,11 @@ func _physics_process(delta: float) -> void:
 	_open_statUI()
 
 func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("RightClick"):
-		attack_controller.request_attack(
-			PhisycAttackController.AttackType.RIGHT_SLASH
-		)
-
+	if not can_move:
+		return
+	
 	if event.is_action_pressed("LeftClick"):
-		attack_controller.request_attack(
-			PhisycAttackController.AttackType.LEFT_SLASH
-		)
-
-
+		attack_controller.request_attack()
 
 func directional_movement():
 	if not can_move or attack_controller.is_attacking() or is_dashing:
@@ -205,13 +203,47 @@ func directional_movement():
  
 
 # ───── COMBATE Y ANIMACIÓN ─────
-func _on_attack_started(attack_id: int) -> void:
-	match attack_id:
-		PhisycAttackController.AttackType.RIGHT_SLASH:
-			animation.play("attack1_" + last_direction)
+func _on_attack_started(attack_id: int, hit_index: int) -> void:
+	can_move = false
 
-		PhisycAttackController.AttackType.LEFT_SLASH:
-			animation.play("attack2_" + last_direction)
+	match attack_id:
+		PhisycAttackController.AttackType.BASIC_SLASH:
+			animation.play("attack1_" + last_direction)
+			sword_hit.play()
+			attack0_voice.play()
+
+		PhisycAttackController.AttackType.DOUBLE_SLASH:
+			if hit_index == 1:
+				animation.play("attack1_" + last_direction)
+				sword_hit.play()
+			elif hit_index == 2:
+				animation.play("attack2_" + last_direction)
+				sword_hit.play()
+				
+			attack0_voice.play()
+
+func _on_enemy_hit(enemy: Node) -> void:
+	if not enemy.has_method("take_damage"):
+		return
+
+	var base_damage = base_stats["fuerza"]
+	var final_damage = base_damage
+
+	if attack_controller.is_attacking():
+		if attack_controller._current_attack == PhisycAttackController.AttackType.DOUBLE_SLASH \
+		and attack_controller._current_hit == 2:
+			final_damage = base_damage * 1.35
+
+	# 🔹 Dirección del golpe (player → enemy)
+	var hit_dir_vector = global_position - enemy.global_position
+	var hit_direction = _vector_to_direction(hit_dir_vector)
+	enemy.take_damage(final_damage, hit_direction)
+
+func _vector_to_direction(dir: Vector2) -> String:
+	if abs(dir.x) > abs(dir.y):
+		return "right_side" if dir.x > 0 else "left_side"
+	else:
+		return "front" if dir.y > 0 else "back"
 
 func handle_Animations(direction: Vector2):
 	if attack_controller.is_attacking():
@@ -239,16 +271,14 @@ func _on_attack_blocked() -> void:
 	# UI / sonido opcional en el futuro
 	pass
 
-func _on_animation_finished() -> void:
-	if not attack_controller.is_attacking():
+func _on_animation_finished(anim_name: String) -> void:
+	if not anim_name.begins_with("attack"):
 		return
 
-	attack_area.monitoring = false
-	attack_area.set_deferred("collision_layer", 0)
+	print("🏁 Último frame de ataque:", anim_name)
 
-	attack_controller.notify_attack_finished()
-	handle_Animations(Vector2.ZERO)
-
+	if attack_controller.is_attacking():
+		attack_controller.notify_next_hit()
 
 func apply_knockback(direction: Vector2, force: float):
 	# DEBUG: información que recibe el jugador
@@ -337,7 +367,6 @@ func heal(amount: int):
 func die():
 	can_move = false
 	attack_controller.lock_attacks()
-	attack_controller.is_attacking()
 	is_dashing = false
 	velocity = Vector2.ZERO
 	set_collision_layer(0)
@@ -572,12 +601,13 @@ func _open_statUI():
 			stats_menu.visible = not stats_menu.visible
 
 			# Bloquear/permitir ataque y movimiento
-			if stats_menu.visible:
-				can_move = false
-				attack_controller.lock_attacks()
-			else:
-				can_move = true
-				attack_controller.lock_attacks()
+		if stats_menu.visible:
+			can_move = false
+			attack_controller.lock_attacks()
+		else:
+			can_move = true
+			attack_controller.unlock_attacks()
+
 
 # ------- FUNCIONES PARA MEJORAR DE STADISTICAS ------
 
@@ -832,8 +862,40 @@ func get_surface_type_at(pos: Vector2) -> String:
 
 func _on_animated_sprite_2d_frame_changed() -> void:
 	var anim = animation.animation
-	var f = animation.frame
-	
+	var frame = animation.frame
+
+	if not anim.begins_with("attack"):
+		return
+
+	var total_frames = animation.sprite_frames.get_frame_count(anim)
+
+	if frame != total_frames - 1:
+		return
+
+	# ───── DOUBLE SLASH ─────
+	if attack_controller.is_attacking() \
+	and attack_controller._current_attack == PhisycAttackController.AttackType.DOUBLE_SLASH:
+
+		# Fin del primer golpe → iniciar segundo
+		if anim.begins_with("attack1_"):
+			attack_controller.notify_next_hit()
+			animation.play("attack2_" + last_direction)
+			return
+
+		# Fin del segundo golpe → terminar ataque
+		if anim.begins_with("attack2_"):
+			attack_controller.notify_attack_finished()
+			can_move = true
+			animation.play("idle_" + last_direction)
+			return
+
+	# ───── BASIC SLASH ─────
+	if anim.begins_with("attack1_"):
+		attack_controller.notify_attack_finished()
+		can_move = true
+		animation.play("idle_" + last_direction)
+
+	# --- Pasos ---
 	if anim.begins_with("walk") or anim.begins_with("run"):
-		if f in [3]:
+		if frame == 3:
 			play_footstep()
