@@ -1,4 +1,4 @@
-[gd_scene load_steps=347 format=3 uid="uid://be8s6fsuvru6m"]
+[gd_scene load_steps=349 format=3 uid="uid://be8s6fsuvru6m"]
 
 [ext_resource type="Script" uid="uid://jymviqh0n0bu" path="res://scripts/characters/player/player.gd" id="1_nibrf"]
 [ext_resource type="Texture2D" uid="uid://cbqod6x3bj8xs" path="res://sprites/characters/player/ATTACK 1/attack1_up.png" id="2_ieypo"]
@@ -40,6 +40,8 @@
 [ext_resource type="AudioStream" uid="uid://c2cghpqobbu8l" path="res://SFX/Effects/NormalSword/sword-sound.mp3" id="38_sulyr"]
 [ext_resource type="AudioStream" uid="uid://dbfrhuuhyqten" path="res://SFX/Effects/player/Voices/Attack_0.wav" id="39_xm30n"]
 [ext_resource type="Script" uid="uid://cu3t47g86utpd" path="res://scripts/characters/player/Combat/PhisycAttackController.gd" id="40_xm30n"]
+[ext_resource type="PackedScene" uid="uid://h33o1nnpefuo" path="res://UIs/AbilitySlots/ability_cooldown_slot.tscn" id="41_qe74o"]
+[ext_resource type="Texture2D" uid="uid://cnncsi26viv1r" path="res://sprites/AbilitySlot/SwordCooldown_icon.png" id="42_4c5ab"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4fvev"]
 atlas = ExtResource("2_ieypo")
@@ -2406,5 +2408,14 @@ attenuation = 1.8
 script = ExtResource("40_xm30n")
 double_click_window = 1.2
 attack_area_path = NodePath("../attack_area")
+
+[node name="UIsContainer" type="CanvasLayer" parent="."]
+
+[node name="AbilityCooldownSlot" parent="UIsContainer" instance=ExtResource("41_qe74o")]
+offset_left = 24.0
+offset_top = 160.0
+offset_right = -1192.0
+offset_bottom = -496.0
+icon = ExtResource("42_4c5ab")
 
 [connection signal="frame_changed" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_frame_changed"]

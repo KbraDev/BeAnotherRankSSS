@@ -1,14 +1,11 @@
-[gd_scene load_steps=4 format=3 uid="uid://bempniwcnpq8e"]
+[gd_scene load_steps=3 format=3 uid="uid://bempniwcnpq8e"]
 
 [ext_resource type="PackedScene" uid="uid://be8s6fsuvru6m" path="res://scenes/characters/player/player.tscn" id="1_gyi8q"]
-[ext_resource type="PackedScene" uid="uid://dp5ry7qcymmll" path="res://scenes/characters/monsters/GlobbinMajot/globbin_major.tscn" id="2_gyi8q"]
 [ext_resource type="PackedScene" uid="uid://34rn42brxq64" path="res://scenes/characters/monsters/greenslime/greenSlime.tscn" id="3_3wcx5"]
 
 [node name="Node2D" type="Node2D"]
 
 [node name="player" parent="." instance=ExtResource("1_gyi8q")]
 position = Vector2(355, 122)
-
-[node name="GlobbinMajor" parent="." instance=ExtResource("2_gyi8q")]
 
 [node name="greenSlime" parent="." instance=ExtResource("3_3wcx5")]

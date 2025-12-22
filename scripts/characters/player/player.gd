@@ -76,6 +76,8 @@ var step_timer := 0.0
 var walk_interval := 0.7
 var run_interval := 0.5
 
+# Vars Slots Ability
+@onready var basic_slot: AbilityCooldownSlot = $UIsContainer/AbilityCooldownSlot
 
 # ───── NODOS Y TIMERS ─────
 @onready var attack_area = $attack_area
@@ -263,9 +265,9 @@ func handle_Animations(direction: Vector2):
 		else:
 			animation.play("walk_" + last_direction)
 
-func _on_attack_finished(_attack_id := 0) -> void:
-	# El Player no hace nada aquí
-	pass
+func _on_attack_finished(attack_id: int) -> void:
+	if attack_id == PhisycAttackController.AttackType.BASIC_SLASH:
+		basic_slot.start_cooldown()
 
 func _on_attack_blocked() -> void:
 	# UI / sonido opcional en el futuro
