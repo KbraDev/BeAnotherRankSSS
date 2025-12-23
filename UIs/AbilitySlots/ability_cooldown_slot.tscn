@@ -1,13 +1,13 @@
 [gd_scene load_steps=5 format=3 uid="uid://h33o1nnpefuo"]
 
 [ext_resource type="Script" uid="uid://cf22o21sjoa2r" path="res://UIs/AbilitySlots/ability_cooldown_slot.gd" id="1_5hg7w"]
-[ext_resource type="Texture2D" uid="uid://eum766ctlvdq" path="res://sprites/AbilitySlot/SwordCooldown_Outiline.png" id="1_xt05i"]
 [ext_resource type="Shader" uid="uid://bolifqm2cd1a7" path="res://BarFill.gdshader" id="2_qugea"]
+[ext_resource type="Texture2D" uid="uid://c3sblvmxcc6lq" path="res://sprites/AbilitySlot/OutlineUICooldown.png" id="3_5hg7w"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_40n13"]
 shader = ExtResource("2_qugea")
 shader_parameter/progress = 1.0
-shader_parameter/fill_color = Color(0, 0, 0, 0.392157)
+shader_parameter/fill_color = Color(0.123473, 0.123473, 0.123473, 0.392157)
 shader_parameter/bg_color = Color(0.101961, 0.101961, 0.101961, 0)
 
 [node name="CooldownSlot" type="Control"]
@@ -20,7 +20,7 @@ offset_right = -1216.0
 offset_bottom = -656.0
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.6, 0.6)
 script = ExtResource("1_5hg7w")
 
 [node name="Icon" type="TextureRect" parent="."]
@@ -31,8 +31,10 @@ offset_bottom = 64.0
 [node name="Bar" type="ColorRect" parent="."]
 material = SubResource("ShaderMaterial_40n13")
 layout_mode = 0
-offset_right = 64.0
-offset_bottom = 64.0
+offset_left = 2.0
+offset_top = 4.0
+offset_right = 62.0
+offset_bottom = 62.0
 
 [node name="ShaderMaterial" type="Node" parent="Bar"]
 
@@ -40,4 +42,4 @@ offset_bottom = 64.0
 layout_mode = 0
 offset_right = 65.0
 offset_bottom = 65.0
-texture = ExtResource("1_xt05i")
+texture = ExtResource("3_5hg7w")

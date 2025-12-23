@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dggv62dsgvq6i"
-path="res://.godot/imported/SwordCooldown_cover.png-f5f84cd72e04dceb9315905c426db22e.ctex"
+uid="uid://bx3uhtwmvmcye"
+path="res://.godot/imported/DoubleSwoordICon.png-7ed55dfff6d67c098174d968a9463332.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/AbilitySlot/SwordCooldown_cover.png"
-dest_files=["res://.godot/imported/SwordCooldown_cover.png-f5f84cd72e04dceb9315905c426db22e.ctex"]
+source_file="res://items/sprites/weapons/Sword/DoubleSwoordICon.png"
+dest_files=["res://.godot/imported/DoubleSwoordICon.png-7ed55dfff6d67c098174d968a9463332.ctex"]
 
 [params]
 

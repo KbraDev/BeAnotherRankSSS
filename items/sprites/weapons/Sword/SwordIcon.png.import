@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cnncsi26viv1r"
-path="res://.godot/imported/SwordCooldown_icon.png-91d386daaa6ef5e0822677c4f1a8c4a2.ctex"
+uid="uid://8un71yadb3in"
+path="res://.godot/imported/SwordIcon.png-bbd3303e15eb93f71f5978c85001c63f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/AbilitySlot/SwordCooldown_icon.png"
-dest_files=["res://.godot/imported/SwordCooldown_icon.png-91d386daaa6ef5e0822677c4f1a8c4a2.ctex"]
+source_file="res://items/sprites/weapons/Sword/SwordIcon.png"
+dest_files=["res://.godot/imported/SwordIcon.png-bbd3303e15eb93f71f5978c85001c63f.ctex"]
 
 [params]
 

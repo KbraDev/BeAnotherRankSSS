@@ -77,7 +77,9 @@ var walk_interval := 0.7
 var run_interval := 0.5
 
 # Vars Slots Ability
-@onready var basic_slot: AbilityCooldownSlot = $UIsContainer/AbilityCooldownSlot
+@onready var basic_slot: AbilityCooldownSlot = $UIsContainer/BasicSlashSlot
+@onready var double_slot: AbilityCooldownSlot = $UIsContainer/DoubleSlash
+
 
 # ───── NODOS Y TIMERS ─────
 @onready var attack_area = $attack_area
@@ -124,7 +126,8 @@ func _ready():
 	attack_controller.attack_blocked.connect(_on_attack_blocked)
 	attack_controller.enemy_hit.connect(_on_enemy_hit)
 
-
+	basic_slot.cooldown_duration = attack_controller.basic_slash_cooldown
+	double_slot.cooldown_duration = attack_controller.double_slash_cooldown
 
 	inventory.resize(INVENTORY_SIZE)
 	for i in range(INVENTORY_SIZE):
@@ -168,9 +171,14 @@ func _physics_process(delta: float) -> void:
 func _input(event: InputEvent) -> void:
 	if not can_move:
 		return
-	
+
+	# BASIC SLASH
 	if event.is_action_pressed("LeftClick"):
-		attack_controller.request_attack()
+		attack_controller.request_basic_attack()
+
+	# DOUBLE SLASH
+	if event.is_action_pressed("RightClick"):
+		attack_controller.request_double_attack()
 
 func directional_movement():
 	if not can_move or attack_controller.is_attacking() or is_dashing:
@@ -266,8 +274,13 @@ func handle_Animations(direction: Vector2):
 			animation.play("walk_" + last_direction)
 
 func _on_attack_finished(attack_id: int) -> void:
-	if attack_id == PhisycAttackController.AttackType.BASIC_SLASH:
-		basic_slot.start_cooldown()
+	match attack_id:
+		PhisycAttackController.AttackType.BASIC_SLASH:
+			basic_slot.start_cooldown()
+
+		PhisycAttackController.AttackType.DOUBLE_SLASH:
+			double_slot.start_cooldown()
+
 
 func _on_attack_blocked() -> void:
 	# UI / sonido opcional en el futuro

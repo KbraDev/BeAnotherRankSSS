@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://eum766ctlvdq"
-path="res://.godot/imported/SwordCooldown_Outiline.png-8a3e1aa76dd0b431200b148b5e5e901f.ctex"
+uid="uid://d3dpycg7fhau8"
+path="res://.godot/imported/OutlineUICooldown.png-7423ae62decdf43d73ab17e4400457c6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/AbilitySlot/SwordCooldown_Outiline.png"
-dest_files=["res://.godot/imported/SwordCooldown_Outiline.png-8a3e1aa76dd0b431200b148b5e5e901f.ctex"]
+source_file="res://SFX/OutlineUICooldown.png"
+dest_files=["res://.godot/imported/OutlineUICooldown.png-7423ae62decdf43d73ab17e4400457c6.ctex"]
 
 [params]
 

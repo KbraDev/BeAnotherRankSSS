@@ -47,7 +47,6 @@ enum AttackType {
 ## Tiempo de espera entre ataques BASIC_SLASH
 @export var basic_slash_cooldown := 0.35
 @export var double_slash_cooldown := 3.0
-@export var double_click_window := 0.5
 
 ## Ruta al Area2D de ataque del jugador
 @export var attack_area_path: NodePath
@@ -61,11 +60,9 @@ var _is_attacking: bool = false
 var _current_attack: int = 0
 
 var _current_hit : int = 0
-var _click_count : int = 0
 
 var _attack_area: Area2D
 @onready var _cooldown_timer: Timer = Timer.new()
-@onready var _double_click_timer: Timer = Timer.new()
 
 # ───────────────────────────────
 # ─────────── READY ─────────────
@@ -76,10 +73,6 @@ func _ready() -> void:
 	_cooldown_timer.one_shot = true
 	add_child(_cooldown_timer)
 	_cooldown_timer.timeout.connect(_on_cooldown_finished)
-	
-	_double_click_timer.one_shot = true
-	add_child(_double_click_timer)
-	_double_click_timer.timeout.connect(_on_double_click_timeout)
 
 	# Obtener referencia al Area2D de ataque
 	if attack_area_path != NodePath():
@@ -92,24 +85,23 @@ func _ready() -> void:
 # ───────────────────────────────
 
 ## Solicitud externa para iniciar un ataque
-func request_attack() -> void:
+func request_basic_attack() -> void:
 	if not _can_attack or _is_attacking:
 		emit_signal("attack_blocked")
 		return
 
-	_click_count += 1
+	_start_basic_slash()
 
-	# PRIMER CLIC → ATAQUE INMEDIATO
-	if _click_count == 1:
-		_start_basic_slash()
-		_double_click_timer.start(double_click_window)
 
-	# SEGUNDO CLIC → DOUBLE SLASH
-	elif _click_count == 2:
-		_double_click_timer.stop()
-		_click_count = 0
-		_start_double_slash()
+func request_double_attack() -> void:
+	if not _can_attack or _is_attacking:
+		emit_signal("attack_blocked")
+		return
 
+	if _cooldown_timer.time_left > 0:
+		return
+
+	_start_double_slash()
 # ───────────────────────────────
 # ─────── LÓGICA DE ATAQUE ───────
 # ───────────────────────────────
@@ -154,8 +146,6 @@ func is_attacking() -> bool:
 	return _is_attacking
 
 ## DOUBLE_SLASH
-func _on_double_click_timeout() -> void:
-	_click_count = 0
 
 func _start_double_slash() -> void:
 	_is_attacking = true

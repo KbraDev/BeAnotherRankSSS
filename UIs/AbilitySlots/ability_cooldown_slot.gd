@@ -19,25 +19,18 @@ func _ready() -> void:
 	bar.material = mat
 	mat.set_shader_parameter("progress", 1.0)
 
-
 func start_cooldown() -> void:
 	if _tween:
 		_tween.kill()
 
+	# 1️⃣ Vaciar INSTANTÁNEO
+	mat.set_shader_parameter("progress", 0.0)
+
+	# 2️⃣ Rellenar animado durante el cooldown
 	_tween = get_tree().create_tween()
-
-	# Vaciar
-	_tween.tween_method(
-		func(v): mat.set_shader_parameter("progress", v),
-		1.0,
-		0.0,
-		cooldown_duration
-	).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
-
-	# Rellenar
 	_tween.tween_method(
 		func(v): mat.set_shader_parameter("progress", v),
 		0.0,
 		1.0,
 		cooldown_duration
-	).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
+	).set_trans(Tween.TRANS_LINEAR).set_ease(Tween.EASE_OUT)
