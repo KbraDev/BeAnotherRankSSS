@@ -234,19 +234,32 @@ func _on_attack_started(attack_id: int, hit_index: int) -> void:
 
 func _on_enemy_hit(enemy: Node) -> void:
 	if not enemy.has_method("take_damage"):
+		print("[HIT] Nodo sin take_damage:", enemy.name)
 		return
 
-	var base_damage = base_stats["fuerza"]
-	var final_damage = base_damage
+	var base_damage: float = base_stats["fuerza"]
+	var final_damage: float = base_damage
+	var attack_name := "NORMAL"
 
 	if attack_controller.is_attacking():
 		if attack_controller._current_attack == PhisycAttackController.AttackType.DOUBLE_SLASH \
 		and attack_controller._current_hit == 2:
 			final_damage = base_damage * 1.35
+			attack_name = "DOUBLE_SLASH (2nd hit)"
 
 	# 🔹 Dirección del golpe (player → enemy)
-	var hit_dir_vector = global_position - enemy.global_position
-	var hit_direction = _vector_to_direction(hit_dir_vector)
+	var hit_dir_vector: Vector2 = global_position - enemy.global_position
+	var hit_direction: String = _vector_to_direction(hit_dir_vector)
+
+	# 🧪 DEBUG PRINT
+	print(
+		"[DAMAGE] Enemy:", enemy.name,
+		"| Attack:", attack_name,
+		"| Base:", base_damage,
+		"| Final:", final_damage,
+		"| Dir:", hit_direction
+	)
+
 	enemy.take_damage(final_damage, hit_direction)
 
 func _vector_to_direction(dir: Vector2) -> String:

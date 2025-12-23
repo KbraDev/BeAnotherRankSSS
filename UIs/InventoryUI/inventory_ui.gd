@@ -53,14 +53,14 @@ func _unhandled_input(event):
 func toggle_inventory():
 	visible = !visible
 	if visible:
-		player.can_attack = false
+		player.attack_controller.lock_attacks()
 		player.can_move = false
 		player.velocity = Vector2.ZERO
 		player.animation.play("idle_" + player.last_direction)
 		update_ui(player.inventory)
 	else:
 		player.can_move = true
-		player.can_attack = true
+		player.attack_controller.unlock_attacks()
 
 func start_cooldown():
 	inventory_cooldown = true

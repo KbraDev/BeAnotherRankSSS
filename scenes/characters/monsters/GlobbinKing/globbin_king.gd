@@ -75,8 +75,8 @@ func _ready() -> void:
 # ===================== DAMAGE =======================
 # ====================================================
 
-func _take_damage(amount: float, dir: String = "front") -> void:
-	super._take_damage(amount, dir)
+func take_damage(amount: float, dir: String = "front") -> void:
+	super.take_damage(amount, dir)
 
 	if boss_ui:
 		boss_ui.update_health(current_health)
