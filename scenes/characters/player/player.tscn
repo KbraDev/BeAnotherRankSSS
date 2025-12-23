@@ -1,4 +1,4 @@
-[gd_scene load_steps=351 format=3 uid="uid://be8s6fsuvru6m"]
+[gd_scene load_steps=353 format=3 uid="uid://be8s6fsuvru6m"]
 
 [ext_resource type="Script" uid="uid://jymviqh0n0bu" path="res://scripts/characters/player/player.gd" id="1_nibrf"]
 [ext_resource type="Texture2D" uid="uid://cbqod6x3bj8xs" path="res://sprites/characters/player/ATTACK 1/attack1_up.png" id="2_ieypo"]
@@ -43,7 +43,9 @@
 [ext_resource type="PackedScene" uid="uid://h33o1nnpefuo" path="res://UIs/AbilitySlots/ability_cooldown_slot.tscn" id="41_qe74o"]
 [ext_resource type="Texture2D" uid="uid://8un71yadb3in" path="res://items/sprites/weapons/Sword/SwordIcon.png" id="42_s4se6"]
 [ext_resource type="PackedScene" uid="uid://bo3n1alal6xdn" path="res://UIs/EllipseHeathBar/ellipse_health_bar.tscn" id="43_4c5ab"]
+[ext_resource type="Texture2D" uid="uid://bdhr0g3eeranr" path="res://sprites/UIS/Icons/MouseUILeft.png" id="43_kghjy"]
 [ext_resource type="Texture2D" uid="uid://bx3uhtwmvmcye" path="res://items/sprites/weapons/Sword/DoubleSwoordICon.png" id="43_omk8d"]
+[ext_resource type="Texture2D" uid="uid://doy8fjyoiwtl1" path="res://sprites/UIS/Icons/MouseUIright.png" id="45_72eiu"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4fvev"]
 atlas = ExtResource("2_ieypo")
@@ -2419,6 +2421,11 @@ offset_right = -1197.0
 offset_bottom = -637.0
 cooldown_duration = 0.5
 icon = ExtResource("42_s4se6")
+tooltip_title = "[b]Tajo Basico[/b]"
+tooltip_description = "Ataque con la espada
+la potencia depende de la estadistica \"[b]Fuerza[/b]\". "
+tooltip_usage = "Usa:"
+tooltip_icon = ExtResource("43_kghjy")
 metadata/_edit_use_anchors_ = true
 
 [node name="DoubleSlash" parent="UIsContainer" instance=ExtResource("41_qe74o")]
@@ -2428,6 +2435,11 @@ offset_right = -1210.0
 offset_bottom = -592.0
 cooldown_duration = 3.0
 icon = ExtResource("43_omk8d")
+tooltip_title = "[b]Doble Tajo[/b]"
+tooltip_description = "Usa dos ataques para obtener un ataque potenciado
+la potencia depende de la estadisitca \"[b]Fuerza[/b]\""
+tooltip_usage = "Usa: "
+tooltip_icon = ExtResource("45_72eiu")
 
 [node name="EllipseHealthBar" parent="UIsContainer" instance=ExtResource("43_4c5ab")]
 offset_left = 48.0

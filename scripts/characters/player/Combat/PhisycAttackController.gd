@@ -55,30 +55,38 @@ enum AttackType {
 # ─────── ESTADO INTERNO ─────────
 # ───────────────────────────────
 
-var _can_attack: bool = true
+var _can_basic_attack := true
+var _can_double_attack := true
 var _is_attacking: bool = false
 var _current_attack: int = 0
 
 var _current_hit : int = 0
 
 var _attack_area: Area2D
-@onready var _cooldown_timer: Timer = Timer.new()
+
+@onready var _basic_cooldown_timer := Timer.new()
+@onready var _double_cooldown_timer := Timer.new()
 
 # ───────────────────────────────
 # ─────────── READY ─────────────
 # ───────────────────────────────
 
 func _ready() -> void:
-	# Configurar cooldown
-	_cooldown_timer.one_shot = true
-	add_child(_cooldown_timer)
-	_cooldown_timer.timeout.connect(_on_cooldown_finished)
+	_basic_cooldown_timer.one_shot = true
+	add_child(_basic_cooldown_timer)
+	_basic_cooldown_timer.timeout.connect(func():
+		_can_basic_attack = true
+	)
 
-	# Obtener referencia al Area2D de ataque
+	_double_cooldown_timer.one_shot = true
+	add_child(_double_cooldown_timer)
+	_double_cooldown_timer.timeout.connect(func():
+		_can_double_attack = true
+	)
+
 	if attack_area_path != NodePath():
 		_attack_area = get_node(attack_area_path)
 		_attack_area.monitoring = false
-
 
 # ───────────────────────────────
 # ────────── INPUT ──────────────
@@ -86,7 +94,7 @@ func _ready() -> void:
 
 ## Solicitud externa para iniciar un ataque
 func request_basic_attack() -> void:
-	if not _can_attack or _is_attacking:
+	if not _can_basic_attack or _is_attacking:
 		emit_signal("attack_blocked")
 		return
 
@@ -94,11 +102,8 @@ func request_basic_attack() -> void:
 
 
 func request_double_attack() -> void:
-	if not _can_attack or _is_attacking:
+	if not _can_double_attack or _is_attacking:
 		emit_signal("attack_blocked")
-		return
-
-	if _cooldown_timer.time_left > 0:
 		return
 
 	_start_double_slash()
@@ -109,11 +114,19 @@ func request_double_attack() -> void:
 ## Inicia el ataque BASIC_SLASH
 func _start_basic_slash() -> void:
 	_is_attacking = true
-	_can_attack = false
 	_current_attack = AttackType.BASIC_SLASH
 
 	_enable_attack_area()
 	emit_signal("attack_started", _current_attack, 1)
+
+
+func _start_double_slash() -> void:
+	_is_attacking = true
+	_current_attack = AttackType.DOUBLE_SLASH
+	_current_hit = 1
+
+	_enable_attack_area()
+	emit_signal("attack_started", _current_attack, _current_hit)
 
 
 ## Debe llamarse cuando la animación de ataque termina
@@ -126,35 +139,27 @@ func notify_attack_finished() -> void:
 
 	emit_signal("attack_finished", _current_attack)
 
-	if _current_attack == AttackType.DOUBLE_SLASH:
-		_cooldown_timer.start(double_slash_cooldown)
-	else:
-		_cooldown_timer.start(basic_slash_cooldown)
+	match _current_attack:
+		AttackType.BASIC_SLASH:
+			_can_basic_attack = false
+			_basic_cooldown_timer.start(basic_slash_cooldown)
+
+		AttackType.DOUBLE_SLASH:
+			_can_double_attack = false
+			_double_cooldown_timer.start(double_slash_cooldown)
 
 	_current_attack = 0
 	_current_hit = 0
 
-
-
 ## Cooldown terminado → se puede volver a atacar
 func _on_cooldown_finished() -> void:
-	_can_attack = true
+	_can_basic_attack = true
+	_can_double_attack = true
 
 
 ## Estado público de ataque
 func is_attacking() -> bool:
 	return _is_attacking
-
-## DOUBLE_SLASH
-
-func _start_double_slash() -> void:
-	_is_attacking = true
-	_can_attack = false
-	_current_attack = AttackType.DOUBLE_SLASH
-	_current_hit = 1
-
-	_enable_attack_area()
-	emit_signal("attack_started", _current_attack, _current_hit)
 
 func notify_next_hit() -> void:
 	if _current_attack != AttackType.DOUBLE_SLASH:
@@ -174,17 +179,20 @@ func notify_next_hit() -> void:
 
 ## Bloquea completamente los ataques (menús, cinemáticas, muerte)
 func lock_attacks() -> void:
-	_can_attack = false
+	_can_basic_attack = false
+	_can_double_attack = false
 	_is_attacking = false
 	_current_attack = 0
-	_cooldown_timer.stop()
+	_basic_cooldown_timer.stop()
+	_double_cooldown_timer.stop()
 
 
-## Habilita nuevamente los ataques
 func unlock_attacks() -> void:
-	_can_attack = true
+	_can_basic_attack = true
+	_can_double_attack = true
 	_is_attacking = false
 	_current_attack = 0
+
 
 
 # ───────────────────────────────
