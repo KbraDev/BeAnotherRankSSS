@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=4 uid="uid://fc0amgg3okou"]
+[gd_scene load_steps=13 format=4 uid="uid://fc0amgg3okou"]
 
 [ext_resource type="Script" uid="uid://bcmf2wo72hdft" path="res://scenes/world/zones/milistrail/milis_trail.gd" id="1_r36om"]
 [ext_resource type="Script" uid="uid://c4tovrp06glem" path="res://scenes/world/zones/milistrail/gates/to_milis_city.gd" id="2_11g8x"]
@@ -8,7 +8,6 @@
 [ext_resource type="AudioStream" uid="uid://clssw3ky77adf" path="res://SFX/Music/Paths/OlidForest_&_MilisTrail/21 11 forest LOOP.mp3" id="9_m7qi2"]
 [ext_resource type="PackedScene" uid="uid://be8s6fsuvru6m" path="res://scenes/characters/player/player.tscn" id="9_t8ubn"]
 [ext_resource type="Script" uid="uid://83qtco7d4r46" path="res://scripts/preload/ScenePortalData.gd" id="9_xavse"]
-[ext_resource type="PackedScene" uid="uid://b25fhdx87168t" path="res://scenes/characters/monsters/Spider/spider.tscn" id="10_cfl1s"]
 [ext_resource type="PackedScene" uid="uid://dllvjwqfn3upd" path="res://items/_Chests/WoodChests/wood_chest.tscn" id="11_4p4bu"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_el5a4"]
@@ -112,58 +111,6 @@ max_distance = 10000.0
 parameters/looping = true
 
 [node name="Mobs" type="Node" parent="."]
-
-[node name="Spider" type="Node" parent="Mobs"]
-
-[node name="Spider" parent="Mobs/Spider" instance=ExtResource("10_cfl1s")]
-position = Vector2(535, 654)
-change_dir_time = 3.0
-enemy_scale = 1.2
-max_health = 12.0
-xp_reward_range = Vector2i(14, 18)
-armor = 0.5
-mass = 1.0
-
-[node name="Spider2" parent="Mobs/Spider" instance=ExtResource("10_cfl1s")]
-position = Vector2(1179, 537)
-change_dir_time = 3.0
-enemy_scale = 0.7
-max_health = 8.0
-xp_reward_range = Vector2i(14, 18)
-armor = 1.0
-mass = 0.3
-knockback_friction = 800.0
-
-[node name="Spider3" parent="Mobs/Spider" instance=ExtResource("10_cfl1s")]
-position = Vector2(2126, 524)
-change_dir_time = 3.0
-enemy_scale = 1.4
-max_health = 17.0
-xp_reward_range = Vector2i(14, 23)
-armor = 1.3
-mass = 1.4
-knockback_friction = 800.0
-
-[node name="Spider4" parent="Mobs/Spider" instance=ExtResource("10_cfl1s")]
-position = Vector2(2466, 1088)
-change_dir_time = 3.0
-enemy_scale = 0.9
-max_health = 16.0
-xp_reward_range = Vector2i(15, 23)
-armor = 1.4
-mass = 0.8
-knockback_friction = 500.0
-
-[node name="Spider5" parent="Mobs/Spider" instance=ExtResource("10_cfl1s")]
-position = Vector2(2141, 1864)
-change_dir_time = 3.0
-enemy_scale = 2.0
-max_health = 23.0
-move_speed = 70.0
-xp_reward_range = Vector2i(24, 27)
-armor = 2.1
-mass = 2.4
-knockback_friction = 800.0
 
 [node name="chests" type="Node" parent="."]
 

@@ -35,7 +35,7 @@ var stat_levels = {
 	"lucky": 1
 }
 
-var walk_speed = 80.0
+var walk_speed = 50.0
 var run_speed = 160.0
 var is_running = false
 var fuerza_jugador = base_stats ["fuerza"]

@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://canuxjtdaafpd"]
+
+[ext_resource type="Script" uid="uid://dfipcwqbjbok7" path="res://scenes/tools/AutonomouseMovementController/autonomous_movement_controller.gd" id="1_w2r2a"]
+
+[node name="AutonomousMovementController" type="Node"]
+script = ExtResource("1_w2r2a")
