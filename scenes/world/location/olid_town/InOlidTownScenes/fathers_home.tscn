@@ -173,7 +173,7 @@ position = Vector2(609, 522)
 collision_layer = 6
 collision_mask = 3
 script = ExtResource("10_5jk0l")
-required_badge = "read_letter"
+required_flag = "read_letter"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Blockers"]
 shape = SubResource("RectangleShape2D_q3kpt")

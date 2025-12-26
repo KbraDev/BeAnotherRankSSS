@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://bempniwcnpq8e"]
 
 [ext_resource type="PackedScene" uid="uid://be8s6fsuvru6m" path="res://scenes/characters/player/player.tscn" id="1_gyi8q"]
-[ext_resource type="PackedScene" uid="uid://dtgqmvdbclt7y" path="res://scenes/characters/NCP/Angeler/angeler.tscn" id="2_lob0y"]
+[ext_resource type="PackedScene" uid="uid://dnlt7chfn6xep" path="res://scenes/characters/NCP/Angeler/angeler.tscn" id="2_lob0y"]
 
 [node name="Node2D" type="Node2D"]
 
@@ -10,3 +10,4 @@ position = Vector2(168, 104)
 
 [node name="Angeler" parent="." instance=ExtResource("2_lob0y")]
 position = Vector2(256, 88)
+autonomous_movement_enabled = false

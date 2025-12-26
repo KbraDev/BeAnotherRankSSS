@@ -1,9 +1,12 @@
 extends Node
 
-var badges: Dictionary = {}
+var flags: Dictionary = {}
 
-func add_badge(name: String) -> void:
-	badges[name] = true
+func set_flag(flag: String) -> void:
+	flags[flag] = true
 
-func has_badge(name: String) -> bool:
-	return badges.get(name, false)
+func has_flag(flag: String) -> bool:
+	return flags.get(flag, false)
+
+func clear_flag(flag: String) -> void:
+	flags.erase(flag)

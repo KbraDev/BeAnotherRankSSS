@@ -22,7 +22,6 @@ MissionTracker="*res://scripts/missions/missionTracker.gd"
 CheckPointRegistry="*res://scripts/globals/CheckPointRegistry.gd"
 SaveManager="*res://scripts/globals/SaveManager.gd"
 ItemDataBase="*res://scripts/globals/ItemDataBase.gd"
-GameState="*res://scripts/globals/GameState.gd"
 NotificationManager="*res://scripts/globals/NotificationManager.gd"
 MissionDataBase="*res://scripts/missions/MissionDataBase.gd"
 Playerwallet="*res://scripts/globals/PlayerWallet.gd"
@@ -31,6 +30,7 @@ SceneNames="*res://scripts/globals/SceneNames.gd"
 TransitionOverlay="*res://UIs/TransitionOverlay/transition_overlay.tscn"
 Portals="*res://scripts/globals/portals.gd"
 SmoothCameraChanger="*res://scripts/globals/smoothCameraChanger.gd"
+GameState="*res://scripts/globals/GameState.gd"
 
 [display]
 

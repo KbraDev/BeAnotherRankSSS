@@ -2346,7 +2346,7 @@ animations = [{
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ejou4"]
 radius = 11.0
-height = 36.0
+height = 42.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_s4se6"]
 radius = 43.0029
@@ -2367,7 +2367,7 @@ sprite_frames = SubResource("SpriteFrames_6myrh")
 animation = &"idle_front"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 6)
+position = Vector2(0, 2)
 shape = SubResource("CapsuleShape2D_ejou4")
 
 [node name="attack_area" type="Area2D" parent="."]
