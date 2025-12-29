@@ -126,7 +126,8 @@ func _start_phase_2() -> void:
 		1.2, # blend_time
 		1.5, # hold_time
 		Callable(self, "_on_phase_2_focus"),
-		Callable(self, "_on_phase_2_finished")
+		Callable(self, "_on_phase_2_finished"),
+		true # YES shake
 	)
 
 func _on_phase_2_focus() -> void:

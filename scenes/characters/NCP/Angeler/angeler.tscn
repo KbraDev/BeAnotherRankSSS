@@ -1,8 +1,9 @@
-[gd_scene load_steps=102 format=3 uid="uid://dnlt7chfn6xep"]
+[gd_scene load_steps=103 format=3 uid="uid://dnlt7chfn6xep"]
 
 [ext_resource type="Script" uid="uid://deadvtui4ujy8" path="res://scenes/characters/NCP/Angeler/Angeler.gd" id="1_kvgci"]
 [ext_resource type="PackedScene" uid="uid://canuxjtdaafpd" path="res://scenes/tools/AutonomouseMovementController/autonomous_movement_controller.tscn" id="2_8y5kk"]
 [ext_resource type="Texture2D" uid="uid://1hcf1gw6jqb4" path="res://sprites/characters/NPC/Angeler/Character_ID_2%(12).png" id="2_pe2rv"]
+[ext_resource type="AudioStream" uid="uid://ljs7bhhu11ff" path="res://SFX/Effects/Angeler/hiya.mp3" id="4_pe2rv"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8y5kk"]
 atlas = ExtResource("2_pe2rv")
@@ -737,3 +738,7 @@ shape = SubResource("CapsuleShape2D_8y5kk")
 
 [node name="AutonomousMovementController" parent="." node_paths=PackedStringArray("animated_sprite") instance=ExtResource("2_8y5kk")]
 animated_sprite = NodePath("../AnimatedSprite2D")
+
+[node name="HiyaVoice" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_pe2rv")
+volume_db = -15.0

@@ -2,7 +2,6 @@
 
 [ext_resource type="TileSet" uid="uid://deyvxljh6vbg7" path="res://assets/tilesets/Interrior/interiors.tres" id="1_sq1uj"]
 [ext_resource type="PackedScene" uid="uid://be8s6fsuvru6m" path="res://scenes/characters/player/player.tscn" id="2_hwqui"]
-[ext_resource type="PackedScene" uid="uid://dvhl7s1qwgas3" path="res://scenes/characters/NCP/recepcionist/recepcionist.tscn" id="3_hwqui"]
 [ext_resource type="PackedScene" uid="uid://dnlt7chfn6xep" path="res://scenes/characters/NCP/Angeler/angeler.tscn" id="3_iycrl"]
 [ext_resource type="Script" uid="uid://b4t7vw3ekavgq" path="res://scenes/world/location/olid_town/InOlidTownScenes/GuildOlidTown/Scripts/scene_meta.gd" id="4_v3jtf"]
 [ext_resource type="Script" uid="uid://83qtco7d4r46" path="res://scripts/preload/ScenePortalData.gd" id="5_ape2x"]
@@ -10,6 +9,12 @@
 [ext_resource type="PackedScene" uid="uid://dirfg688w7m5k" path="res://scenes/tools/checkPoint/checkPoint.tscn" id="7_he3pk"]
 [ext_resource type="Script" uid="uid://0c8ebaawo60f" path="res://scenes/world/location/olid_town/InOlidTownScenes/GuildOlidTown/AngelerIntroEvent/Event/angeler_intro_event.gd" id="9_42pig"]
 [ext_resource type="Script" uid="uid://cr8spcvmxtpfe" path="res://scenes/world/location/olid_town/InOlidTownScenes/GuildOlidTown/AngelerIntroEvent/Trigger/event_trigger.gd" id="10_uyib5"]
+
+[sub_resource type="Curve2D" id="Curve2D_42pig"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 397, 271, 0, 0, 0, 0, 395, 337, 0, 0, 0, 0, 597, 337, 0, 0, 0, 0, 596, 400, 0, 0, 0, 0, 640, 400, 0, 0, 0, 0, 642, 465)
+}
+point_count = 6
 
 [sub_resource type="Resource" id="Resource_he3pk"]
 script = ExtResource("5_ape2x")
@@ -55,15 +60,26 @@ tile_set = ExtResource("1_sq1uj")
 tile_set = ExtResource("1_sq1uj")
 
 [node name="player" parent="." instance=ExtResource("2_hwqui")]
-position = Vector2(480, 476)
+position = Vector2(639, 527)
 
 [node name="Angeler" parent="." instance=ExtResource("3_iycrl")]
-position = Vector2(636, 376)
+position = Vector2(396, 250)
 autonomous_movement_enabled = false
 
-[node name="Recepcionist" parent="." instance=ExtResource("3_hwqui")]
-z_index = 1
-position = Vector2(306, 238)
+[node name="Camera2D" type="Camera2D" parent="Angeler"]
+zoom = Vector2(2, 2)
+
+[node name="Paths" type="Node2D" parent="."]
+
+[node name="AngelerToPlayer" type="Path2D" parent="Paths"]
+z_index = 2
+position = Vector2(-2, 0)
+curve = SubResource("Curve2D_42pig")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Paths/AngelerToPlayer"]
+position = Vector2(397, 271)
+rotates = false
+loop = false
 
 [node name="OlidTownToOlidGuild" type="Marker2D" parent="."]
 position = Vector2(639, 527)
@@ -96,8 +112,18 @@ position = Vector2(642, 479)
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 color = Color(0.775063, 0.775063, 0.775063, 1)
 
+[node name="BlendCamera" type="Camera2D" parent="."]
+z_index = 2
+position = Vector2(640, 517)
+enabled = false
+zoom = Vector2(1.8, 1.8)
+
 [node name="AngelerIntroEvent" type="Node" parent="."]
 script = ExtResource("9_42pig")
+angeler_path = NodePath("../Angeler")
+angeler_camera_path = NodePath("../Angeler/Camera2D")
+blend_camera_path = NodePath("../BlendCamera")
+path_to_player = NodePath("../Paths/AngelerToPlayer")
 
 [node name="EventTrigger" type="Area2D" parent="AngelerIntroEvent"]
 z_index = 2

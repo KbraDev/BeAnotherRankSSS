@@ -58,7 +58,8 @@ func _on_body_entered(body):
 		blend_time,
 		focus_duration,
 		Callable(self, "_on_focus_king"),
-		Callable(self, "_on_camera_sequence_finished")
+		Callable(self, "_on_camera_sequence_finished"),
+		true # YES shake
 	)
 
 func _on_camera_sequence_finished():

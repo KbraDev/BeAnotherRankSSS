@@ -41,6 +41,7 @@ var _return_tween: Tween
 
 var _shake_tween: Tween
 var _shake_origin: Vector2
+var _enable_shake = true
 
 
 func _process(_delta):
@@ -57,7 +58,8 @@ func play_cutscene(
 	blend_time := 1.0,
 	hold_time := 2.0,
 	on_focus_started := Callable(),
-	on_finished := Callable()
+	on_finished := Callable(),
+	enable_shake := true
 ):
 	_player_camera = player_cam
 	_target_camera = target_cam
@@ -66,6 +68,7 @@ func play_cutscene(
 	_hold_time = hold_time
 	_on_focus_started = on_focus_started
 	_on_finished = on_finished
+	_enable_shake = enable_shake
 
 	_start_blend_to_target()
 
@@ -104,24 +107,23 @@ func _start_blend_to_target():
 func _on_arrive_target():
 	_target_camera.make_current()
 
-	# Guardar posición base para shake
 	_shake_origin = _target_camera.position
 
-	# Disparar eventos cinematográficos (grito, animaciones, FX)
 	if _on_focus_started.is_valid():
 		_on_focus_started.call()
 
-	# Temblor de cámara sincronizado con el grito
-	_start_camera_shake(
-		_target_camera,
-		8.0,
-		0.35,
-		0.05
-	)
+	if _enable_shake:
+		_start_camera_shake(
+			_target_camera,
+			8.0,
+			0.35,
+			0.05
+		)
 
 	var tween = create_tween()
 	tween.tween_interval(_hold_time)
 	tween.tween_callback(_start_blend_back)
+
 
 # --------------------------------------------------------------------
 # FASE 3 – Blend de regreso
