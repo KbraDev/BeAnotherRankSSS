@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=4 uid="uid://nfm4nxfjd702"]
+[gd_scene load_steps=17 format=4 uid="uid://nfm4nxfjd702"]
 
 [ext_resource type="TileSet" uid="uid://deyvxljh6vbg7" path="res://assets/tilesets/Interrior/interiors.tres" id="1_sq1uj"]
 [ext_resource type="PackedScene" uid="uid://be8s6fsuvru6m" path="res://scenes/characters/player/player.tscn" id="2_hwqui"]
@@ -8,11 +8,18 @@
 [ext_resource type="Script" uid="uid://bvesshjxcvf73" path="res://scenes/world/location/olid_town/InOlidTownScenes/GuildOlidTown/Scripts/to_olid_town_from_olid_guild.gd" id="6_ape2x"]
 [ext_resource type="PackedScene" uid="uid://dirfg688w7m5k" path="res://scenes/tools/checkPoint/checkPoint.tscn" id="7_he3pk"]
 [ext_resource type="Script" uid="uid://0c8ebaawo60f" path="res://scenes/world/location/olid_town/InOlidTownScenes/GuildOlidTown/AngelerIntroEvent/Event/angeler_intro_event.gd" id="9_42pig"]
+[ext_resource type="PackedScene" uid="uid://dvhl7s1qwgas3" path="res://scenes/characters/NCP/recepcionist/recepcionist.tscn" id="10_42pig"]
 [ext_resource type="Script" uid="uid://cr8spcvmxtpfe" path="res://scenes/world/location/olid_town/InOlidTownScenes/GuildOlidTown/AngelerIntroEvent/Trigger/event_trigger.gd" id="10_uyib5"]
 
 [sub_resource type="Curve2D" id="Curve2D_42pig"]
 _data = {
 "points": PackedVector2Array(0, 0, 0, 0, 397, 271, 0, 0, 0, 0, 395, 337, 0, 0, 0, 0, 597, 337, 0, 0, 0, 0, 596, 400, 0, 0, 0, 0, 640, 400, 0, 0, 0, 0, 642, 465)
+}
+point_count = 6
+
+[sub_resource type="Curve2D" id="Curve2D_b83yl"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 640, 464, 0, 0, 0, 0, 639, 401, 0, 0, 0, 0, 394, 399, 0, 0, 0, 0, 394, 399, 0, 0, 0, 0, 394, 235, 0, 0, 0, 0, 394, 256)
 }
 point_count = 6
 
@@ -26,6 +33,9 @@ size = Vector2(193.5, 20)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_iycrl"]
 size = Vector2(194, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_b83yl"]
+size = Vector2(157, 80)
 
 [node name="GuildOlidTown" type="Node2D"]
 
@@ -81,6 +91,15 @@ position = Vector2(397, 271)
 rotates = false
 loop = false
 
+[node name="AngelerToDesk" type="Path2D" parent="Paths"]
+z_index = 2
+curve = SubResource("Curve2D_b83yl")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Paths/AngelerToDesk"]
+position = Vector2(640, 464)
+rotates = false
+loop = false
+
 [node name="OlidTownToOlidGuild" type="Marker2D" parent="."]
 position = Vector2(639, 527)
 
@@ -124,6 +143,8 @@ angeler_path = NodePath("../Angeler")
 angeler_camera_path = NodePath("../Angeler/Camera2D")
 blend_camera_path = NodePath("../BlendCamera")
 path_to_player = NodePath("../Paths/AngelerToPlayer")
+path_to_desk = NodePath("../Paths/AngelerToDesk")
+desk_trigger_path = NodePath("DeskTrigger")
 
 [node name="EventTrigger" type="Area2D" parent="AngelerIntroEvent"]
 z_index = 2
@@ -136,5 +157,21 @@ script = ExtResource("10_uyib5")
 shape = SubResource("RectangleShape2D_iycrl")
 debug_color = Color(0, 0, 1, 1)
 
+[node name="DeskTrigger" type="Area2D" parent="AngelerIntroEvent"]
+z_index = 2
+position = Vector2(339, 231)
+collision_layer = 6
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AngelerIntroEvent/DeskTrigger"]
+position = Vector2(-9.5, 30)
+shape = SubResource("RectangleShape2D_b83yl")
+debug_color = Color(0, 0, 1, 0.447059)
+
+[node name="Recepcionist" parent="." instance=ExtResource("10_42pig")]
+z_index = 1
+position = Vector2(307, 236)
+
 [connection signal="body_entered" from="tools/gates/ToOlidTownFromOlidGuild" to="tools/gates/ToOlidTownFromOlidGuild" method="_on_body_entered"]
 [connection signal="body_entered" from="AngelerIntroEvent/EventTrigger" to="AngelerIntroEvent/EventTrigger" method="_on_body_entered"]
+[connection signal="body_entered" from="AngelerIntroEvent/DeskTrigger" to="AngelerIntroEvent" method="_on_desk_trigger_body_entered"]

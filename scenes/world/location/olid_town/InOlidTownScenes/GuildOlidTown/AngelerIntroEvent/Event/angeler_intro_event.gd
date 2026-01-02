@@ -9,6 +9,8 @@ class_name AngelerIntroEvent
 
 # Ruta única por ahora
 @export var path_to_player: NodePath
+@export var path_to_desk: NodePath
+@export var desk_trigger_path: NodePath
 
 var angeler: Angeler
 var player: Node
@@ -18,7 +20,34 @@ var blend_camera: Camera2D
 
 var is_running := false
 var path_player: Path2D
+var path_desk: Path2D
 
+var desk_trigger: Area2D
+var waiting_player_at_desk := false
+var desk_dialog_started := false
+
+var angeler_dialog_lines: Array[String] = [
+	"¡Auren! Qué bueno verte. Escuché que ya eres un aventurero, igual que yo.",
+	"Me llamo Angeler, soy una aventurera de rango C y me especializo en el combate cuerpo a cuerpo con espada.",
+	"La magia no se me da nada bien… ¡así que siempre opto por las espadas!",
+	"¡Soy una gran admiradora de tus padres! Ambos son magníficos aventureros; tienes que presentármelos algún día.",
+	"¡Cierto! yo te enseñaré todo lo basico que necesitas saber... ¿por donde empiezo?",
+	"Primero te enseñaré cómo funciona el gremio de aventureros. Sígueme, por favor.",
+]
+
+var angeler_desk_dialog_lines: Array[String] = [
+	"Este es el tablón del gremio. La recepcionista se encargará de mostrarte las misiones compatibles con tu rango de aventurero.",
+	"Para saber qué misiones puedes aceptar, basta con hablar con ella e ir al apartado de [Seleccionar misión].",
+	"¡Ahí verás todas las misiones disponibles y compatibles contigo!",
+	"Para ver tus misiones activas y su progreso, presiona la tecla [G]. También podrás revisar tu menú de estadísticas.",
+	"Al terminar una misión, deberás acudir al gremio más cercano para entregarla en el apartado de [Entregar misión].",
+	"El Reino se encargó de construir gremios en la mayoría de las ciudades del continente, así que será fácil encontrarlos. Todos lucen igual por fuera.",
+	"Hmm… ¡ah, cierto! No podrás entregar misiones que no estén completas. Si intentas entregar una misión sin terminar, podrían multarte.",
+	"Prueba hablar con la recepcionista para que conozcas mejor cómo funciona el gremio."
+]
+
+
+const DIALOG_BOX_SCENE := preload("res://UIs/DialogBox/dialog_box.tscn")
 
 func start_event() -> void:
 	if is_running:
@@ -62,17 +91,36 @@ func start_event() -> void:
 		_abort_event()
 		return
 
+	# Ruta hacia el jugador
 	path_player = get_node_or_null(path_to_player)
 	if not path_player:
 		push_error("Path AngelerToPlayer no encontrado")
 		_abort_event()
 		return
 
+	# Ruta hacia el escritorio de recepcion
+	path_desk = get_node_or_null(path_to_desk)
+	if not path_desk:
+		push_error("Path AngelerToDesk no encontrado")
+		_abort_event()
+		return
+	
+	# Area para activar fase del desk
+	desk_trigger = get_node_or_null(desk_trigger_path)
+	if not desk_trigger:
+		push_error("DeskTriggerArea no encontrada")
+		_abort_event()
+		return
+
+	desk_trigger.body_entered.connect(_on_desk_trigger_body_entered)
+
+	
 	# ----------------------------
 	# Bloquear jugador
 	# ----------------------------
 
 	player.can_move = false
+	player.can_dash = false
 
 	# ----------------------------
 	# Secuencia de cámara
@@ -103,7 +151,6 @@ func _on_camera_sequence_finished() -> void:
 	# ÚNICA ACCIÓN DEL EVENTO POR AHORA
 	_start_angeler_to_player()
 
-
 func _start_angeler_to_player() -> void:
 	print("Iniciando ruta AngelerToPlayer")
 
@@ -111,6 +158,109 @@ func _start_angeler_to_player() -> void:
 		return
 
 	angeler.start_scripted_move(path_player)
+
+	# Esperar a que termine la ruta
+	await _wait_for_angeler_path_end()
+
+	# Iniciar presentación
+	_start_angeler_dialog()
+
+func _start_angeler_to_desk() -> void:
+	print("Iniciando ruta AngelerToDesk")
+
+	if not angeler or not path_desk:
+		return
+
+	angeler.start_scripted_move(path_desk)
+
+	await _wait_for_angeler_path_end()
+
+	_on_angeler_reached_desk()
+
+
+func _wait_for_angeler_path_end() -> void:
+	while angeler and not angeler.scripted_move_finished():
+		await get_tree().process_frame
+
+func _on_angeler_reached_desk() -> void:
+	print("Angeler llegó al escritorio")
+
+	waiting_player_at_desk = true
+
+	if player:
+		player.can_move = true
+		player.can_dash = true
+	
+	is_running = false
+
+func _on_desk_trigger_body_entered(body: Node) -> void:
+	if not waiting_player_at_desk:
+		return
+	if desk_dialog_started:
+		return
+	if body != player:
+		return
+
+	print("Jugador llegó junto a Angeler en el escritorio")
+
+	desk_dialog_started = true
+	desk_trigger.monitoring = false
+
+	_start_angeler_desk_dialog()
+
+func _start_angeler_dialog() -> void:
+	print("Iniciando diálogo de Angeler")
+
+	var world_manager := get_tree().root.get_node("WorldManager")
+	var dialog_box := world_manager.get_node("HUD/DialogBox") as DialogBox
+
+	if not dialog_box:
+		push_error("DialogBox no encontrado en HUD")
+		return
+
+	dialog_box.show_dialog(
+		angeler_dialog_lines,
+		angeler.portrait
+	)
+
+	dialog_box.dialog_finished.connect(
+		Callable(self, "_on_angeler_dialog_finished"),
+		CONNECT_ONE_SHOT
+	)
+
+func _on_angeler_dialog_finished() -> void:
+	print("Diálogo de Angeler terminado")
+
+	_start_angeler_to_desk()
+
+func _start_angeler_desk_dialog() -> void:
+	print("Iniciando diálogo del escritorio")
+
+	var world_manager := get_tree().root.get_node("WorldManager")
+	var dialog_box := world_manager.get_node("HUD/DialogBox") as DialogBox
+
+	if not dialog_box:
+		push_error("DialogBox no encontrado en HUD")
+		return
+
+	dialog_box.show_dialog(
+		angeler_desk_dialog_lines,
+		angeler.portrait
+	)
+
+	dialog_box.dialog_finished.connect(
+		Callable(self, "_on_desk_dialog_finished"),
+		CONNECT_ONE_SHOT
+	)
+	
+func _on_desk_dialog_finished() -> void:
+	print("Diálogo del escritorio terminado")
+
+	# Aquí puedes marcar flags o activar sistemas
+	# GameState.set_flag(completed_flag)
+
+	waiting_player_at_desk = false
+	is_running = false
 
 
 func _abort_event() -> void:

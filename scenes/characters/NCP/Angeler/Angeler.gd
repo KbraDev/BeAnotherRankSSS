@@ -26,7 +26,7 @@ class_name Angeler
 
 @onready var autonomous_controller: AutonomousMovementController = $AutonomousMovementController
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
-@onready var hiya: AudioStreamPlayer = $HiyaVoice
+@onready var hiya: AudioStreamPlayer2D = $HiyaVoice
 
 
 # ===============================================================
@@ -48,6 +48,11 @@ var scripted_speed: float = 60.0
 var scripted_direction: int = 1 # 1 = forward, -1 = reverse
 var in_scripted_move: bool = false
 
+# ===============================================================
+# ------------ CONEXIONES CON DIALOGBOX -------------------------
+# ===============================================================
+
+@export var portrait: Texture2D
 
 # ===============================================================
 # ------------------------- READY --------------------------------

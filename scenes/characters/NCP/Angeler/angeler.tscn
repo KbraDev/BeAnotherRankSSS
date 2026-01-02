@@ -1,8 +1,9 @@
-[gd_scene load_steps=103 format=3 uid="uid://dnlt7chfn6xep"]
+[gd_scene load_steps=104 format=3 uid="uid://dnlt7chfn6xep"]
 
 [ext_resource type="Script" uid="uid://deadvtui4ujy8" path="res://scenes/characters/NCP/Angeler/Angeler.gd" id="1_kvgci"]
 [ext_resource type="PackedScene" uid="uid://canuxjtdaafpd" path="res://scenes/tools/AutonomouseMovementController/autonomous_movement_controller.tscn" id="2_8y5kk"]
 [ext_resource type="Texture2D" uid="uid://1hcf1gw6jqb4" path="res://sprites/characters/NPC/Angeler/Character_ID_2%(12).png" id="2_pe2rv"]
+[ext_resource type="Texture2D" uid="uid://6gaak0j5xf1d" path="res://sprites/characters/NPC/Angeler/AngelerPortrait.png" id="2_qvvq8"]
 [ext_resource type="AudioStream" uid="uid://ljs7bhhu11ff" path="res://SFX/Effects/Angeler/hiya.mp3" id="4_pe2rv"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_8y5kk"]
@@ -726,6 +727,7 @@ height = 44.0
 [node name="Angeler" type="CharacterBody2D"]
 z_index = 2
 script = ExtResource("1_kvgci")
+portrait = ExtResource("2_qvvq8")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.59375, 0.59375)
