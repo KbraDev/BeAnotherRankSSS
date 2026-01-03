@@ -6,22 +6,34 @@ extends Area2D
 @export var focus_duration: float = 3.0
 @export var blend_time: float = 1.5
 @export var boss_fade_duration: float = 0.3
+@export var room_blocker_path: NodePath
 
 var king
 var king_camera
 var player_camera
 var blend_camera
+var room_blocker: StaticBody2D
 
 var triggered := false
 
 func _ready():
+	# Si el evento ya fue completado → eliminar todo
+	if GameState.has_flag("KingGlobbinEvent"):
+		_cleanup_completed_event()
+		return
+
 	connect("body_entered", Callable(self, "_on_body_entered"))
 
-	king = get_node(king_path)
-	king_camera = get_node(king_camera_path)
-	blend_camera = get_node(blend_camera_path)
+	king = get_node_or_null(king_path)
+	king_camera = get_node_or_null(king_camera_path)
+	blend_camera = get_node_or_null(blend_camera_path)
 
+	if room_blocker_path != NodePath():
+		room_blocker = get_node_or_null(room_blocker_path)
 
+	if room_blocker:
+		_set_room_blocker(false)
+		
 func _on_body_entered(body):
 	if triggered or not body.is_in_group("player"):
 		return
@@ -43,6 +55,9 @@ func _on_body_entered(body):
 	monitoring = false
 	$CollisionShape2D.disabled = true
 
+	# 🔒 BLOQUEAR LA SALA
+	_set_room_blocker(true)
+	
 	# Activamos boss pero permanece congelado
 	king.activate(false)
 
@@ -83,3 +98,22 @@ func _on_camera_sequence_finished():
 func _on_focus_king():
 	if king and king.war_scream:
 		king.war_scream.play()
+		
+
+func _set_room_blocker(active: bool) -> void:
+	if not room_blocker:
+		return
+
+	for child in room_blocker.get_children():
+		if child is CollisionShape2D:
+			child.set_deferred("disabled", not active)
+			
+func _cleanup_completed_event() -> void:
+	print("[EVENT] KingGlobbinEvent already completed → cleaning up")
+
+	# Eliminar boss
+	if king and is_instance_valid(king):
+		king.queue_free()
+
+	# Eliminar trigger
+	queue_free()

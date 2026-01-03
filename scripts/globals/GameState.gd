@@ -10,3 +10,15 @@ func has_flag(flag: String) -> bool:
 
 func clear_flag(flag: String) -> void:
 	flags.erase(flag)
+
+
+
+# -------------------------
+# 🟢 NUEVO
+# -------------------------
+
+func get_all_flags() -> Dictionary:
+	return flags.duplicate(true)
+
+func restore_flags(saved_flags: Dictionary) -> void:
+	flags = saved_flags.duplicate(true)

@@ -156,6 +156,6 @@ script = ExtResource("8_0psd8")
 
 [node name="SpawnPoint" type="Marker2D" parent="."]
 z_index = 4
-position = Vector2(842, 271)
+position = Vector2(929, 432)
 
 [node name="player" parent="." instance=ExtResource("1_armst")]

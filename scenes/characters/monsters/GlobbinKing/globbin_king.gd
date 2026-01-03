@@ -200,3 +200,12 @@ func unfreeze_globbin() -> void:
 	is_attacking = false
 
 	_choose_new_direction()
+
+func _on_enemy_died() -> void:
+	# Marcar evento como completado
+	GameState.set_flag("KingGlobbinEvent")
+
+	print("[EVENT] KingGlobbin defeated → Event completed")
+
+	# Llamar cleanup normal
+	super._on_enemy_died()

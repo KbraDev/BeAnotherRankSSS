@@ -2372,8 +2372,8 @@ shape = SubResource("CapsuleShape2D_ejou4")
 
 [node name="attack_area" type="Area2D" parent="."]
 position = Vector2(0, 7)
-collision_layer = 14
-collision_mask = 7
+collision_layer = 15
+collision_mask = 15
 monitoring = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="attack_area"]

@@ -136,6 +136,10 @@ func fade_to_black():
 	transition_anim.play("fade_out")
 
 func load_game_state(save_data: Dictionary) -> void:
+	# --- 🔹 Restaurar FLAGS GLOBALES ---
+	if save_data.has("flags"):
+		GameState.restore_flags(save_data["flags"])
+	
 	#print("\n📥 [LOAD] Iniciando load_game_state()")
 	var scene_path = save_data.get("scene_path", "")
 	#print("📂 Escena a cargar:", scene_path)

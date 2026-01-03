@@ -1164,8 +1164,10 @@ collision_layer = 6
 collision_mask = 3
 script = ExtResource("1_6ycib")
 speed = 30.0
-panic_speed = 55.0
-extra_escape_distance = 50.0
+panic_speed = 40.0
+extra_escape_distance = 30.0
+move_speed = 25.0
+xp_reward_range = Vector2i(9, 14)
 drop_item = ExtResource("2_lilwl")
 mass = 1.0
 knockback_friction = 800.0
@@ -1200,8 +1202,8 @@ max_value = 10.0
 value = 10.0
 exp_edit = true
 texture_under = ExtResource("8_1f1kg")
-texture_over = ExtResource("9_g6wsg")
-texture_progress = ExtResource("10_q7ivt")
+texture_over = ExtResource("10_q7ivt")
+texture_progress = ExtResource("9_g6wsg")
 script = ExtResource("9_yuitp")
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]

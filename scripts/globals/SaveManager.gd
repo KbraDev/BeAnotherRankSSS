@@ -18,7 +18,8 @@ func save_game(player: Node, slot: int = 1) -> void:
 	var data = {
 		"scene_path": scene_path,
 		"player": collect_player_data(player),
-		"missions": collect_mission_data()
+		"missions": collect_mission_data(),
+		"flags": GameState.get_all_flags() 
 	}
 
 	DirAccess.make_dir_recursive_absolute(SAVE_FOLDER)

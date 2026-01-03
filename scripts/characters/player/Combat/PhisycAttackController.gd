@@ -228,10 +228,16 @@ func _on_attack_area_body_entered(body: Node) -> void:
 	_process_body(body)
 
 
-## Valida y notifica impacto a enemigos
+## Valida y notifica impacto a enemigos y objetos
 func _process_body(body: Node) -> void:
 	if not _is_attacking:
 		return
 
+	# Enemigos (reciben daño)
 	if body.is_in_group("enemies"):
 		emit_signal("enemy_hit", body)
+		return
+
+	# Objetos golpeables (cofres, barriles, etc.)
+	if body.has_method("hit"):
+		body.hit()
