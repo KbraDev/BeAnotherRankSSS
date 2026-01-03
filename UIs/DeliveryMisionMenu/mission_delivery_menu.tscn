@@ -1,7 +1,22 @@
-[gd_scene load_steps=3 format=3 uid="uid://bfqk3fos52cx5"]
+[gd_scene load_steps=4 format=3 uid="uid://bfqk3fos52cx5"]
 
 [ext_resource type="Script" uid="uid://c15wfhb14crbb" path="res://UIs/DeliveryMisionMenu/mission_delivery_menu.gd" id="1_1c3n3"]
 [ext_resource type="PackedScene" uid="uid://dvgth3wrte133" path="res://UIs/DeliveryMisionMenu/delivery_mission_card.tscn" id="1_jpea0"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b8ita"]
+bg_color = Color(0.941176, 0.835294, 0.666667, 0.654902)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.0941176, 0.0941176, 0.0941176, 1)
+border_blend = true
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+shadow_color = Color(0.519719, 0.400908, 0.195651, 0.654902)
+shadow_size = 2
 
 [node name="MissionDeliveryMenu" type="Control"]
 layout_mode = 3
@@ -9,16 +24,16 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_right = -780.0
-offset_bottom = -120.0
+offset_bottom = -220.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_1c3n3")
 
 [node name="ActiveMissionList" type="VBoxContainer" parent="."]
-custom_minimum_size = Vector2(500, 0)
+custom_minimum_size = Vector2(500, 500)
 layout_mode = 0
 offset_right = 500.0
-offset_bottom = 600.0
+offset_bottom = 548.0
 
 [node name="DeliveryMissionCard" parent="ActiveMissionList" instance=ExtResource("1_jpea0")]
 layout_mode = 2
@@ -31,9 +46,10 @@ layout_mode = 2
 
 [node name="btnClose" type="Button" parent="."]
 layout_mode = 0
-offset_left = 8.0
-offset_top = 552.0
-offset_right = 488.0
-offset_bottom = 583.0
-text = "Cerrar
+offset_top = 510.0
+offset_right = 500.0
+offset_bottom = 541.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_b8ita")
+text = "Volver
 "

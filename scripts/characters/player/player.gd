@@ -393,27 +393,76 @@ func heal(amount: int):
 
  
 func die():
+	if not can_move:
+		return # evita doble muerte
+
 	can_move = false
 	attack_controller.lock_attacks()
 	is_dashing = false
 	velocity = Vector2.ZERO
+
 	set_collision_layer(0)
 	set_collision_mask(0)
 
-	var prefix := ""
-	var anim_name = prefix + "death_" + last_direction
+	# Animación de muerte
+	var anim_name := "death_" + last_direction
 	if animation.sprite_frames.has_animation(anim_name):
 		animation.play(anim_name)
 
-	# 🔹 VACIAR INVENTARIO AL MORIR
+	# Vaciar inventario
+	_clear_inventory()
+
+	# Efecto de cámara
+	var tween := get_tree().create_tween()
+	tween.tween_property(
+		camera,
+		"zoom",
+		Vector2(2.7, 2.7),
+		1.5
+	).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+
+	await tween.finished
+
+	# Esperar 2 segundos antes de reaparecer
+	await get_tree().create_timer(2.0).timeout
+
+	respawn()
+
+func _clear_inventory():
 	for i in range(inventory.size()):
 		inventory[i] = null
 	emit_signal("inventory_updated", inventory)
 
-	var tween := get_tree().create_tween()
-	tween.tween_property(camera, "zoom", Vector2(2.7, 2.7), 1.5).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
-	await tween.finished
-	_on_zoom_finished()
+func respawn():
+	var wm := get_tree().get_first_node_in_group("world_manager")
+
+	if wm and last_checkpoint_scene != "":
+		respawn_pending_checkpoint_id = last_checkpoint_id
+		wm.change_world(last_checkpoint_scene, "")
+		await get_tree().process_frame
+		await _wait_for_checkpoint()
+	else:
+		global_position = Vector2.ZERO
+
+	_restore_player_state()
+
+	if wm:
+		wm.transition_anim.play("fade_in")
+
+func _restore_player_state():
+	current_health = max_health
+	emit_signal("health_changed", current_health, max_health)
+
+	can_move = true
+	is_dashing = false
+
+	set_collision_layer(original_layer)
+	set_collision_mask(original_mask)
+
+	camera.zoom = Vector2(1.5, 1.5)
+	animation.play("idle_" + last_direction)
+
+	attack_controller.unlock_attacks()
 
 func _on_zoom_finished():
 	#print("🔍 Buscando world_manager...")

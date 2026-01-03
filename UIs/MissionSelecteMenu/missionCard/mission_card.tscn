@@ -1,35 +1,57 @@
-[gd_scene load_steps=2 format=3 uid="uid://xo32p22vhwqu"]
+[gd_scene load_steps=4 format=3 uid="uid://xo32p22vhwqu"]
 
 [ext_resource type="Script" uid="uid://l0tt2f2qmkkl" path="res://UIs/MissionSelecteMenu/missionCard/mission_card.gd" id="1_qc2n4"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7c4ar"]
+bg_color = Color(0.941176, 0.835294, 0.666667, 0.654902)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.0941176, 0.0941176, 0.0941176, 1)
+border_blend = true
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qf4mj"]
+bg_color = Color(0.941176, 0.835294, 0.666667, 0.654902)
+shadow_color = Color(0.178254, 0.129071, 0.0435111, 0.654902)
+shadow_size = 2
 
 [node name="MissionCard" type="Control"]
 custom_minimum_size = Vector2(500, 180)
 layout_mode = 3
 anchors_preset = 0
+offset_right = 500.0
+offset_bottom = 180.0
 script = ExtResource("1_qc2n4")
 
 [node name="Panel" type="Panel" parent="."]
-custom_minimum_size = Vector2(0, 180)
+custom_minimum_size = Vector2(0, 165)
 layout_mode = 0
 offset_right = 500.0
-offset_bottom = 120.0
+offset_bottom = 165.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_7c4ar")
 
 [node name="Title" type="Label" parent="Panel"]
 layout_mode = 2
-offset_left = 16.0
-offset_top = 8.0
-offset_right = 280.0
-offset_bottom = 43.0
+offset_left = 8.0
+offset_right = 272.0
+offset_bottom = 35.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 25
 text = "Titulo de Mision"
 
 [node name="Description" type="Label" parent="Panel"]
 custom_minimum_size = Vector2(280, 60)
 layout_mode = 2
-offset_left = 16.0
-offset_top = 51.0
-offset_right = 296.0
-offset_bottom = 140.0
+offset_left = 8.0
+offset_top = 40.0
+offset_right = 288.0
+offset_bottom = 129.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 18
 text = "DESCRIPCION DE MISION"
 autowrap_mode = 3
@@ -38,9 +60,9 @@ autowrap_mode = 3
 custom_minimum_size = Vector2(190, 0)
 layout_mode = 2
 offset_left = 312.0
-offset_top = 8.0
 offset_right = 502.0
-offset_bottom = 112.0
+offset_bottom = 104.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "recompensa
 "
 autowrap_mode = 3
@@ -49,17 +71,20 @@ autowrap_mode = 3
 custom_minimum_size = Vector2(190, 0)
 layout_mode = 2
 offset_left = 312.0
-offset_top = 120.0
+offset_top = 104.0
 offset_right = 502.0
-offset_bottom = 143.0
+offset_bottom = 127.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "Rango: "
 
 [node name="Button" type="Button" parent="Panel"]
 custom_minimum_size = Vector2(470, 0)
 layout_mode = 0
 offset_left = 16.0
-offset_top = 144.0
+offset_top = 128.0
 offset_right = 486.0
-offset_bottom = 177.0
+offset_bottom = 160.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxFlat_qf4mj")
 text = "Aceptar mision"

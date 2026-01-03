@@ -3,7 +3,7 @@ extends Control ## RECEPTION MENu
 signal option_selected(option: String)
 
 @onready var select_button = $"Panel/VBoxContainer/Button(SelectMIsion)"
-@onready var deliver_button = $"Panel/VBoxContainer/Button(EnterMision)"
+@onready var deliver_button = $"Panel/VBoxContainer/Button(EntertMision)"
 @onready var exit_button = $"Panel/VBoxContainer/Button(Salir)"
 
 func _ready():

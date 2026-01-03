@@ -1,6 +1,8 @@
 extends CharacterBody2D
 ## Script de la recepcionista del gremio.
 
+signal interaction_finished
+
 
 @onready var animation = $AnimatedSprite2D
 @onready var interacUIAnimation = $InteractUI
@@ -26,6 +28,8 @@ var player: Node = null
 ## Control de flujo
 var dialog_started_by_receptionist := false
 
+var interaction_active := false
+
 # -------------------------------------------------
 
 func _ready() -> void:
@@ -38,15 +42,25 @@ func _ready() -> void:
 	mission_delivery_menu.mission_delivered_event.connect(
 		_on_mission_delivered_from_menu
 	)
+	
+	mission_menu.menu_closed.connect(_on_submenu_closed)
+	mission_delivery_menu.menu_closed.connect(_on_submenu_closed)
+
 
 # -------------------------------------------------
 # DIÁLOGO
 # -------------------------------------------------
 
 func _on_dialog_finished() -> void:
-	if dialog_started_by_receptionist:
-		dialog_started_by_receptionist = false
-		menu_ui.open()
+	if interaction_active and dialog_started_by_receptionist:
+		_show_base_interaction()
+
+
+func _show_base_interaction() -> void:
+	dialog_box.show_dialog([
+		"Tenemos nuevas misiones disponibles."
+	])
+	menu_ui.open()
 
 # -------------------------------------------------
 # MENÚ
@@ -73,7 +87,8 @@ func _on_menu_option_selected(option: String) -> void:
 			mission_delivery_menu.open(active)
 
 		"salir":
-			_restore_player()
+			_end_interaction()
+
 
 # -------------------------------------------------
 
@@ -94,11 +109,7 @@ func _on_interact_area_body_exited(body: Node2D) -> void:
 	if body == player:
 		player_in_range = false
 		interacUIAnimation.visible = false
-
-		if dialog_box.is_showing:
-			dialog_box._finish_dialog()
-
-		_restore_player()
+		_end_interaction()
 		player = null
 
 # -------------------------------------------------
@@ -110,20 +121,24 @@ func _process(_delta: float) -> void:
 		return
 
 	if Input.is_action_just_pressed("interact"):
-		if dialog_box.is_showing or menu_ui.visible:
+		if interaction_active:
 			return
 
-		if player and player.attack_controller:
-			player.attack_controller.lock_attacks()
+		interaction_active = true
+
+		if player:
+			player.can_move = false
+			if player.attack_controller:
+				player.attack_controller.lock_attacks()
+			if player.has_method("lock_dash"):
+				player.lock_dash()
 
 		dialog_started_by_receptionist = true
 
-		var dialog_lines: Array[String] = [
+		dialog_box.show_dialog([
 			"¡Bienvenido!, ¿Cómo podemos ayudarle hoy?",
 			"Tenemos nuevas misiones disponibles."
-		]
-
-		dialog_box.show_dialog(dialog_lines)
+		])
 
 
 # -------------------------------------------------
@@ -131,5 +146,34 @@ func _process(_delta: float) -> void:
 # -------------------------------------------------
 
 func _restore_player() -> void:
-	if player and player.attack_controller:
+	if not player:
+		return
+
+	player.can_move = true
+
+	if player.attack_controller:
 		player.attack_controller.unlock_attacks()
+
+	if player.has_method("unlock_dash"):
+		player.unlock_dash()
+
+func _on_submenu_closed() -> void:
+	if interaction_active:
+		menu_ui.open()
+
+func _end_interaction() -> void:
+	if not interaction_active:
+		return
+
+	interaction_active = false
+	dialog_started_by_receptionist = false
+
+	menu_ui.close()
+	mission_menu.visible = false
+	mission_delivery_menu.visible = false
+
+	if dialog_box.is_showing:
+		dialog_box._finish_dialog()
+
+	_restore_player()
+	emit_signal("interaction_finished")

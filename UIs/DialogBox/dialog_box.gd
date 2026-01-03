@@ -38,12 +38,15 @@ func show_dialog(texts: Array[String], portrait: Texture2D = null) -> void:
 
 	_display_current_line()
 
-
 func _display_current_line() -> void:
+	if dialog_lines.is_empty():
+		return
 	dialog_label.text = dialog_lines[current_line]
 
-
 func _advance_dialog() -> void:
+	if dialog_lines.is_empty():
+		return
+
 	if current_line < dialog_lines.size() - 1:
 		current_line += 1
 		_display_current_line()

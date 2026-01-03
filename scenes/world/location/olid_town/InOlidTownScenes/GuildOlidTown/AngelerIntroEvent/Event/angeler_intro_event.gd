@@ -11,6 +11,7 @@ class_name AngelerIntroEvent
 @export var path_to_player: NodePath
 @export var path_to_desk: NodePath
 @export var desk_trigger_path: NodePath
+@export var path_to_exit: NodePath
 
 var angeler: Angeler
 var player: Node
@@ -21,10 +22,14 @@ var blend_camera: Camera2D
 var is_running := false
 var path_player: Path2D
 var path_desk: Path2D
+var path_exit: Path2D
 
 var desk_trigger: Area2D
 var waiting_player_at_desk := false
 var desk_dialog_started := false
+
+@export var receptionist_path: NodePath
+var receptionist: Node
 
 var angeler_dialog_lines: Array[String] = [
 	"¡Auren! Qué bueno verte. Escuché que ya eres un aventurero, igual que yo.",
@@ -46,6 +51,25 @@ var angeler_desk_dialog_lines: Array[String] = [
 	"Prueba hablar con la recepcionista para que conozcas mejor cómo funciona el gremio."
 ]
 
+var angeler_phase_3_dialog_lines: Array[String] = [
+	"Muy bien, ahora ya sabes cómo funcionan los gremios de aventureros. Cada misión te dará recompensas y experiencia para mejorar tus habilidades.",
+	"A partir de aquí, podrás aceptar misiones por tu cuenta para hacerte más fuerte.",
+	"Eres libre de ir a donde quieras, cuando quieras, pero ten cuidado: si no eres lo suficientemente fuerte, algún monstruo podría eliminarte fácilmente.",
+	"Y… bueno, no me gustaría perder a alguien como tú tan rápido. ¡Por favor, ten cuidado!",
+	"Antes de despedirme, déjame explicarte algunos detalles más. Por todo el mundo hay cofres que ayudan a los aventureros; suelen contener dinero y pociones.",
+	"Para abrir estos cofres solemos usar la fuerza bruta, ya que no contamos con llaves. ¡Basta con golpearlos unas cuantas veces!",
+	"Las monedas te servirán para comerciar en ciudades o con vendedores ambulantes. Podrás obtener monedas de bronce, tablillas de plata y medallones de oro.",
+	"Los medallones de oro son muy raros. Yo creo que el gobierno del continente los tiene casi todos.",
+	"A ver, a ver… ¿qué más puedo estar olvidando? ¡Ah, sí!",
+	"Los monstruos… verás… debido a mi rango, nunca he tenido la oportunidad de enfrentar monstruos magníficos como un dragón o una hidra.",
+	"Son extremadamente peligrosos, y solo los mejores entre nosotros pueden enfrentarlos. Aun así, salir con vida de algo así es muy difícil.",
+	"Sin embargo, para aventureros de rango bajo como tú y yo, los monstruos son más fáciles de cazar y obtener sus recursos.",
+	"¡Así es! Cada monstruo deja algo al morir. Muchas veces sirve para venderlo por dinero, y otras para fabricar armas y herramientas.",
+	"¡Perdón, ya hablé demasiado! Es que este mundo tiene muchísimas cosas que explicar…",
+	"Lo mejor de ser aventurero es que puedes descubrirlas todas por tu cuenta. No quiero quitarte el placer de aprender por ti mismo.",
+	"Solo quería explicarte un poco… de verdad, ¡perdón! Te dejaré continuar.",
+	"Nos estaremos viendo seguido, Auren. ¡Mucha suerte!"
+]
 
 const DIALOG_BOX_SCENE := preload("res://UIs/DialogBox/dialog_box.tscn")
 
@@ -114,6 +138,17 @@ func start_event() -> void:
 
 	desk_trigger.body_entered.connect(_on_desk_trigger_body_entered)
 
+	receptionist = get_node_or_null(receptionist_path)
+	if not receptionist:
+		push_error("Recepcionista no encontrada")
+		_abort_event()
+		return
+	
+	path_exit = get_node_or_null(path_to_exit)
+	if not path_exit:
+		push_error("Path AngelerToExit no encontrado")
+		_abort_event()
+		return
 	
 	# ----------------------------
 	# Bloquear jugador
@@ -190,8 +225,16 @@ func _on_angeler_reached_desk() -> void:
 	if player:
 		player.can_move = true
 		player.can_dash = true
-	
-	is_running = false
+
+	# Escuchar cuando el jugador termine con la recepcionista
+	if receptionist and not receptionist.interaction_finished.is_connected(_on_receptionist_interaction_finished):
+		receptionist.interaction_finished.connect(
+			_on_receptionist_interaction_finished,
+			CONNECT_ONE_SHOT
+		)
+
+	is_running = true
+
 
 func _on_desk_trigger_body_entered(body: Node) -> void:
 	if not waiting_player_at_desk:
@@ -266,5 +309,68 @@ func _on_desk_dialog_finished() -> void:
 func _abort_event() -> void:
 	if player:
 		player.can_move = true
+
+	is_running = false
+
+
+func _on_receptionist_interaction_finished() -> void:
+	print("Interacción con recepcionista finalizada")
+
+	_lock_receptionist()
+	_start_angeler_phase_3_dialog()
+
+func _lock_receptionist() -> void:
+	if receptionist:
+		receptionist.set_process(false)
+		receptionist.set_physics_process(false)
+
+func _unlock_receptionist() -> void:
+	if receptionist:
+		receptionist.set_process(true)
+		receptionist.set_physics_process(true)
+
+func _start_angeler_phase_3_dialog() -> void:
+	print("Iniciando diálogo final de Angeler")
+
+	var world_manager := get_tree().root.get_node("WorldManager")
+	var dialog_box := world_manager.get_node("HUD/DialogBox") as DialogBox
+
+	if not dialog_box:
+		push_error("DialogBox no encontrado")
+		return
+
+	dialog_box.show_dialog(
+		angeler_phase_3_dialog_lines,
+		angeler.portrait
+	)
+
+	dialog_box.dialog_finished.connect(
+		Callable(self, "_on_angeler_phase_3_finished"),
+		CONNECT_ONE_SHOT
+	)
+
+
+func _start_angeler_exit() -> void:
+	if not angeler or not path_exit:
+		return
+
+	print("Iniciando salida de Angeler")
+
+	angeler.start_scripted_move(path_exit)
+
+	await _wait_for_angeler_path_end()
+
+	if angeler:
+		angeler.queue_free()
+		angeler = null
+
+func _on_angeler_phase_3_finished() -> void:
+	print("Evento AngelerIntro finalizado")
+
+	_unlock_receptionist()
+
+	GameState.set_flag(completed_flag)
+
+	await _start_angeler_exit()
 
 	is_running = false

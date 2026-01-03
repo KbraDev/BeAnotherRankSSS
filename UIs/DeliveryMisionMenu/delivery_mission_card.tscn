@@ -1,30 +1,50 @@
-[gd_scene load_steps=2 format=3 uid="uid://dvgth3wrte133"]
+[gd_scene load_steps=4 format=3 uid="uid://dvgth3wrte133"]
 
 [ext_resource type="Script" uid="uid://jgab7cvb4bc" path="res://UIs/DeliveryMisionMenu/delivery_mission_card.gd" id="1_xtpfj"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_81b5r"]
+bg_color = Color(0.941176, 0.835294, 0.666667, 0.654902)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.0941176, 0.0941176, 0.0941176, 1)
+border_blend = true
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_quu3s"]
+bg_color = Color(0.941176, 0.835294, 0.666667, 0.654902)
+shadow_color = Color(0.346395, 0.262228, 0.116102, 0.654902)
+shadow_size = 2
+
 [node name="DeliveryMissionCard" type="Control"]
-custom_minimum_size = Vector2(500, 180)
+custom_minimum_size = Vector2(500, 165)
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_right = -780.0
-offset_bottom = -120.0
+offset_bottom = -220.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_xtpfj")
 
 [node name="Panel" type="Panel" parent="."]
-custom_minimum_size = Vector2(500, 0)
+custom_minimum_size = Vector2(500, 165)
 layout_mode = 0
 offset_right = 500.0
-offset_bottom = 180.0
+offset_bottom = 165.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_81b5r")
 
 [node name="title" type="Label" parent="Panel"]
 layout_mode = 0
 offset_left = 8.0
 offset_right = 314.0
 offset_bottom = 31.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "Titulo de mision"
 vertical_alignment = 1
 
@@ -34,6 +54,7 @@ offset_left = 8.0
 offset_top = 38.0
 offset_right = 308.0
 offset_bottom = 132.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "Descripcion de mision
 "
 autowrap_mode = 3
@@ -45,14 +66,16 @@ offset_left = 320.0
 offset_top = 7.0
 offset_right = 490.0
 offset_bottom = 82.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "recompensa: "
 
 [node name="rank" type="Label" parent="Panel"]
 layout_mode = 0
-offset_left = 320.0
-offset_top = 91.0
-offset_right = 486.0
-offset_bottom = 140.0
+offset_left = 321.0
+offset_top = 84.0
+offset_right = 487.0
+offset_bottom = 133.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "Rango
 "
 
@@ -60,8 +83,10 @@ text = "Rango
 custom_minimum_size = Vector2(480, 0)
 layout_mode = 0
 offset_left = 8.0
-offset_top = 144.0
+offset_top = 129.0
 offset_right = 488.0
-offset_bottom = 175.0
+offset_bottom = 160.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_quu3s")
 text = "Entregrar mision
 "
