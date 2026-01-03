@@ -24,7 +24,6 @@ func _ready() -> void:
 	enemy_name = "Slime Verde"
 	animation.play("idle_front")
 	add_to_group("slime")
-	set_process(true)
 
 func _process(delta: float) -> void:
 	if has_died:

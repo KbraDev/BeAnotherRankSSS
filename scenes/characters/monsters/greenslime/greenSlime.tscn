@@ -1166,9 +1166,11 @@ script = ExtResource("1_6ycib")
 speed = 30.0
 panic_speed = 40.0
 extra_escape_distance = 30.0
+max_health = 15.0
 move_speed = 25.0
 xp_reward_range = Vector2i(9, 14)
 drop_item = ExtResource("2_lilwl")
+enemy_name = "Slime de agua"
 mass = 1.0
 knockback_friction = 800.0
 

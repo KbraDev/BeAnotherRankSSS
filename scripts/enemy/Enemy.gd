@@ -147,7 +147,7 @@ func take_damage(amount: float, last_direction: String = "front") -> void:
 	if has_died:
 		return
 
-	var final_damage: float = max(amount - armor, 0.0)
+	var final_damage = max(amount - armor, 0.0)
 	current_health = max(current_health - final_damage, 0.0)
 
 	if health_bar:
@@ -155,7 +155,13 @@ func take_damage(amount: float, last_direction: String = "front") -> void:
 		health_bar.visible = true
 
 	play_sound("hit")
-	is_hurt = true  # Prevents AI from running
+
+	# 🔴 MUERTE INMEDIATA (SIN await)
+	if current_health <= 0:
+		die(last_direction)
+		return
+
+	is_hurt = true
 
 	# --- HURT ANIMATION ---
 	if animation:
@@ -169,12 +175,6 @@ func take_damage(amount: float, last_direction: String = "front") -> void:
 
 		await animation.animation_finished
 
-	# --- Death check ---
-	if current_health <= 0:
-		die(last_direction)
-		return
-
-	# --- End of hurt state ---
 	is_hurt = false
 
 	if has_method("_on_enemy_hurt_end"):
@@ -200,8 +200,11 @@ func take_damage(amount: float, last_direction: String = "front") -> void:
 func die(dir: String = "front") -> void:
 	if has_died:
 		return
-
+	
 	has_died = true
+	can_move = false
+	is_hurt = false
+
 	velocity = Vector2.ZERO
 	set_physics_process(false)
 	set_process(false)
