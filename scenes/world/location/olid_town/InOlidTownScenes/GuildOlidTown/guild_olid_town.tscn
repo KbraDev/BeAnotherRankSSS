@@ -144,6 +144,8 @@ debug_color = Color(1, 1, 0, 1)
 [node name="CheckPoint" parent="." instance=ExtResource("7_he3pk")]
 z_index = 2
 position = Vector2(642, 479)
+checkpoint_id = "0001"
+checkpoint_name = "OlidTownGuild"
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 color = Color(0.775063, 0.775063, 0.775063, 1)

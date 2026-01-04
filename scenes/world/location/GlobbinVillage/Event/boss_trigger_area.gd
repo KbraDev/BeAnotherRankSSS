@@ -34,6 +34,10 @@ func _ready():
 	if room_blocker:
 		_set_room_blocker(false)
 		
+	# conectando muerte del boss
+	if king and king.has_signal("boss_defeated"):
+		king.connect("boss_defeated", Callable(self, "_on_boss_defeated"))
+
 func _on_body_entered(body):
 	if triggered or not body.is_in_group("player"):
 		return
@@ -116,4 +120,14 @@ func _cleanup_completed_event() -> void:
 		king.queue_free()
 
 	# Eliminar trigger
+	queue_free()
+
+func _on_boss_defeated() -> void:
+	print("[EVENT] Boss defeated → Unlocking room")
+
+	# 🔓 Desbloquear la sala
+	if room_blocker:
+		room_blocker.queue_free()
+
+	# Limpieza del trigger del evento
 	queue_free()

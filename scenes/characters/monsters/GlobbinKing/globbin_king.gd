@@ -1,6 +1,8 @@
 extends Globbin
 class_name KingGlobbin
 
+signal boss_defeated
+
 # ====================================================
 # ===================== STATE ========================
 # ====================================================
@@ -202,6 +204,9 @@ func unfreeze_globbin() -> void:
 	_choose_new_direction()
 
 func _on_enemy_died() -> void:
+	# senal para el evento
+	emit_signal("boss_defeated")
+	
 	# Marcar evento como completado
 	GameState.set_flag("KingGlobbinEvent")
 
