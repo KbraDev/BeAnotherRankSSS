@@ -117,6 +117,7 @@ animation = &"close"
 position = Vector2(0, -5.5)
 shape = SubResource("RectangleShape2D_4imlx")
 
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." groups=["SFXs"]]
 stream = ExtResource("2_gqq36")
 volume_db = -20.0
+bus = &"SFX "

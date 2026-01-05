@@ -2389,21 +2389,19 @@ position_smoothing_enabled = true
 position_smoothing_speed = 3.0
 rotation_smoothing_enabled = true
 
-[node name="FootstepPlayer" type="AudioStreamPlayer" parent="."]
+[node name="FootstepPlayer" type="AudioStreamPlayer" parent="." groups=["SFXs"]]
 volume_db = -27.0
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="."]
 occluder = SubResource("OccluderPolygon2D_ieypo")
 
-[node name="SwordHit" type="AudioStreamPlayer2D" parent="."]
+[node name="SwordHit" type="AudioStreamPlayer2D" parent="." groups=["SFXs"]]
 stream = ExtResource("38_sulyr")
-volume_db = -15.0
 max_distance = 100.0
 attenuation = 1.8025
 
-[node name="Attack0" type="AudioStreamPlayer2D" parent="."]
+[node name="Attack0" type="AudioStreamPlayer2D" parent="." groups=["SFXs"]]
 stream = ExtResource("39_xm30n")
-volume_db = -20.0
 max_distance = 100.0
 attenuation = 1.8
 

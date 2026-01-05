@@ -13,7 +13,7 @@ config_version=5
 config/name="BeAnotherRankSSS  (Demo)"
 run/main_scene="uid://cvbvcr5aecqcn"
 config/features=PackedStringArray("4.4", "Forward Plus")
-config/icon="res://icon.svg"
+config/icon="uid://7oxtfw1bofnj"
 
 [autoload]
 
@@ -31,6 +31,7 @@ TransitionOverlay="*res://UIs/TransitionOverlay/transition_overlay.tscn"
 Portals="*res://scripts/globals/portals.gd"
 SmoothCameraChanger="*res://scripts/globals/smoothCameraChanger.gd"
 GameState="*res://scripts/globals/GameState.gd"
+SettingsManager="*res://scripts/globals/SettingsManager.gd"
 
 [display]
 
@@ -67,6 +68,8 @@ UI=""
 inventory=""
 dialog_box=""
 player_camera=""
+SFXs=""
+Music=""
 
 [input]
 

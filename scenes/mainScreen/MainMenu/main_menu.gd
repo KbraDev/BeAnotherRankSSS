@@ -1,6 +1,7 @@
 extends Control
 
 @onready var quit_dialog = $ConfirmationDialog
+@onready var ui_layer: CanvasLayer = get_parent()
 
 func _ready():
 	$CenterContainer/VBoxContainer/NewGame.pressed.connect(_on_new_game_pressed)
@@ -40,8 +41,20 @@ func _open_load_menu(mode: String) -> void:
 
 
 # --- Ajustes y salida ---
-func _on_settings_pressed():
-	print("Abrir ajustes")
+func _on_settings_pressed() -> void:
+	var settings_scene := preload("res://UIs/MenuSettings/settings_menu.tscn")
+	var settings_menu := settings_scene.instantiate()
+
+	# MainScreen es el CanvasLayer
+	get_parent().add_child(settings_menu)
+
+	self.visible = false
+
+	settings_menu.request_back.connect(func():
+		self.visible = true
+		settings_menu.queue_free()
+	)
+
 
 func _on_exit_pressed():
 	quit_dialog.popup_centered()

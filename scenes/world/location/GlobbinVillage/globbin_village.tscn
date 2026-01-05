@@ -1,5 +1,6 @@
-[gd_scene load_steps=16 format=4 uid="uid://duw2jn00emhow"]
+[gd_scene load_steps=19 format=4 uid="uid://duw2jn00emhow"]
 
+[ext_resource type="Script" uid="uid://c2yymjkcn64s1" path="res://scenes/world/location/GlobbinVillage/globbin_village.gd" id="1_iiqms"]
 [ext_resource type="TileSet" uid="uid://dvfkq370f0fmb" path="res://assets/tilesets/props.tres" id="1_j1d86"]
 [ext_resource type="TileSet" uid="uid://rngchcx3q02t" path="res://assets/tilesets/terrain.tres" id="1_luorb"]
 [ext_resource type="PackedScene" uid="uid://be8s6fsuvru6m" path="res://scenes/characters/player/player.tscn" id="3_hab1b"]
@@ -12,6 +13,8 @@
 [ext_resource type="PackedScene" uid="uid://dllvjwqfn3upd" path="res://items/_Chests/WoodChests/wood_chest.tscn" id="9_bkx2r"]
 [ext_resource type="PackedScene" uid="uid://c6o2o8pd124ne" path="res://items/_Chests/SilverChest/silver_chest.tscn" id="10_hbtl4"]
 [ext_resource type="Script" uid="uid://b1ujcrmnjrngq" path="res://scenes/world/location/GlobbinVillage/Event/boss_trigger_area.gd" id="11_hbtl4"]
+[ext_resource type="AudioStream" uid="uid://b7cubq2080drq" path="res://SFX/Music/GlobbinVillage/40 21 marching LOOP.mp3" id="14_5lp6t"]
+[ext_resource type="AudioStream" uid="uid://ccbdcs8puptl" path="res://SFX/Music/GlobbinVillage/06 3 critical LOOP.mp3" id="15_5lp6t"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4xcco"]
 size = Vector2(152, 20)
@@ -24,6 +27,7 @@ size = Vector2(233, 20)
 
 [node name="GlobbinVillage" type="Node2D"]
 position = Vector2(0, -1)
+script = ExtResource("1_iiqms")
 
 [node name="TIles" type="Node" parent="."]
 
@@ -79,7 +83,7 @@ tile_map_data = PackedByteArray("AADVAFr/HAAqADsAAADVAFv/HAAqADwAAADVAFz/HAAqAD0
 tile_set = ExtResource("1_j1d86")
 
 [node name="player" parent="." instance=ExtResource("3_hab1b")]
-position = Vector2(3513, -1778)
+position = Vector2(3499, -1700)
 
 [node name="FromGlobbinVillageOutsides" type="Marker2D" parent="."]
 position = Vector2(549, 106)
@@ -303,6 +307,8 @@ blend_camera_path = NodePath("../BlendCamera")
 focus_duration = 2.0
 boss_fade_duration = 1.0
 room_blocker_path = NodePath("../BossRoomLocker")
+village_music_path = NodePath("../../VillageMusic")
+boss_music_path = NodePath("../../BossMusic")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Event/BossTriggerArea"]
 shape = SubResource("RectangleShape2D_7gum3")
@@ -320,5 +326,18 @@ collision_mask = 3
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Event/BossRoomLocker"]
 shape = SubResource("RectangleShape2D_i3sjn")
 debug_color = Color(1, 0, 0, 1)
+
+[node name="VillageMusic" type="AudioStreamPlayer2D" parent="." groups=["Music"]]
+position = Vector2(1227, -716)
+stream = ExtResource("14_5lp6t")
+max_distance = 10000.0
+bus = &"Music"
+parameters/looping = false
+
+[node name="BossMusic" type="AudioStreamPlayer2D" parent="." groups=["Music"]]
+position = Vector2(3505, -2386)
+stream = ExtResource("15_5lp6t")
+bus = &"Music"
+parameters/looping = false
 
 [connection signal="body_entered" from="Node/Gates/Area2D" to="Node/Gates/Area2D" method="_on_body_entered"]

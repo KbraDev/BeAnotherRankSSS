@@ -120,7 +120,8 @@ frame_progress = 1.0
 position = Vector2(0, -2.75)
 shape = SubResource("RectangleShape2D_j2t7o")
 
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." groups=["SFXs"]]
 stream = ExtResource("2_a4p0h")
 volume_db = -20.0
 attenuation = 2.37841
+bus = &"SFX "

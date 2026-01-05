@@ -741,6 +741,7 @@ shape = SubResource("CapsuleShape2D_8y5kk")
 [node name="AutonomousMovementController" parent="." node_paths=PackedStringArray("animated_sprite") instance=ExtResource("2_8y5kk")]
 animated_sprite = NodePath("../AnimatedSprite2D")
 
-[node name="HiyaVoice" type="AudioStreamPlayer2D" parent="."]
+[node name="HiyaVoice" type="AudioStreamPlayer2D" parent="." groups=["SFXs"]]
 stream = ExtResource("4_pe2rv")
 volume_db = -15.0
+bus = &"SFX "

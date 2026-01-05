@@ -71,17 +71,21 @@ collision_mask = 3
 shape = SubResource("CircleShape2D_qwdm3")
 debug_color = Color(0.785554, 0.421037, 0.277402, 0.42)
 
-[node name="StartChase" type="AudioStreamPlayer2D" parent="."]
+[node name="StartChase" type="AudioStreamPlayer2D" parent="." groups=["SFXs"]]
 stream = ExtResource("6_82r7u")
+bus = &"SFX "
 
-[node name="Attack" type="AudioStreamPlayer2D" parent="."]
+[node name="Attack" type="AudioStreamPlayer2D" parent="." groups=["SFXs"]]
 stream = ExtResource("7_hn35v")
+bus = &"SFX "
 
-[node name="Hurt" type="AudioStreamPlayer2D" parent="."]
+[node name="Hurt" type="AudioStreamPlayer2D" parent="." groups=["SFXs"]]
 stream = ExtResource("8_iveyc")
+bus = &"SFX "
 
-[node name="Rush" type="AudioStreamPlayer2D" parent="."]
+[node name="Rush" type="AudioStreamPlayer2D" parent="." groups=["SFXs"]]
 stream = ExtResource("9_kei1i")
+bus = &"SFX "
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = ExtResource("1_os86r")

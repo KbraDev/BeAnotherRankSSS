@@ -10,7 +10,7 @@
 [ext_resource type="Script" uid="uid://c4tovrp06glem" path="res://scenes/world/zones/milistrail/gates/to_milis_city.gd" id="8_m3jlf"]
 [ext_resource type="PackedScene" uid="uid://dllvjwqfn3upd" path="res://items/_Chests/WoodChests/wood_chest.tscn" id="9_fowxs"]
 [ext_resource type="PackedScene" uid="uid://c6o2o8pd124ne" path="res://items/_Chests/SilverChest/silver_chest.tscn" id="10_07vjd"]
-[ext_resource type="AudioStream" uid="uid://cqxp5sfl27md5" path="res://SFX/Music/OlidTemple/33 17 nectar LOOP.mp3" id="10_fowxs"]
+[ext_resource type="AudioStream" uid="uid://cqxp5sfl27md5" path="res://SFX/Music/Paths/OlidTemple_&_OusidesGlobbin/33 17 nectar LOOP.mp3" id="10_fowxs"]
 
 [sub_resource type="Resource" id="Resource_m3jlf"]
 script = ExtResource("7_qg82m")
@@ -104,11 +104,11 @@ position = Vector2(-141.375, 0)
 shape = SubResource("RectangleShape2D_cjuw6")
 debug_color = Color(1, 1, 0, 1)
 
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." groups=["Music"]]
 position = Vector2(1048, -24)
 stream = ExtResource("10_fowxs")
-volume_db = -20.0
 max_distance = 10000.0
+bus = &"Music"
 parameters/looping = true
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]

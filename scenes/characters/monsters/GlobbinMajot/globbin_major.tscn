@@ -1570,17 +1570,21 @@ z_index = 1
 sprite_frames = SubResource("SpriteFrames_r0237")
 animation = &"dying_right_side"
 
-[node name="StartChase" type="AudioStreamPlayer2D" parent="."]
+[node name="StartChase" type="AudioStreamPlayer2D" parent="." groups=["SFXs"]]
 stream = ExtResource("13_auixt")
+bus = &"SFX "
 
-[node name="Attack" type="AudioStreamPlayer2D" parent="."]
+[node name="Attack" type="AudioStreamPlayer2D" parent="." groups=["SFXs"]]
 stream = ExtResource("14_4mlyu")
+bus = &"SFX "
 
-[node name="Hurt" type="AudioStreamPlayer2D" parent="."]
+[node name="Hurt" type="AudioStreamPlayer2D" parent="." groups=["SFXs"]]
 stream = ExtResource("15_5f2pu")
+bus = &"SFX "
 
-[node name="Rush" type="AudioStreamPlayer2D" parent="."]
+[node name="Rush" type="AudioStreamPlayer2D" parent="." groups=["SFXs"]]
 stream = ExtResource("16_xet01")
+bus = &"SFX "
 
 [node name="HealthBar" type="TextureProgressBar" parent="."]
 anchors_preset = 5

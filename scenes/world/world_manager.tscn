@@ -90,8 +90,7 @@ offset_right = 176.0
 offset_bottom = 152.0
 
 [node name="PauseMenu" parent="HUD" instance=ExtResource("15_i1he6")]
-offset = Vector2(532, 150)
-transform = Transform2D(1, 0, 0, 1, 532, 150)
+layer = 2
 
 [node name="TransitionOverlay" type="ColorRect" parent="HUD"]
 modulate = Color(0, 0, 0, 0)

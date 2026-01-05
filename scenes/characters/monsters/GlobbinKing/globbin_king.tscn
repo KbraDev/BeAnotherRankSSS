@@ -1578,21 +1578,26 @@ scale = Vector2(1.48438, 1.48438)
 sprite_frames = SubResource("SpriteFrames_k061o")
 animation = &"dying_front"
 
-[node name="StartChase" type="AudioStreamPlayer2D" parent="."]
+[node name="StartChase" type="AudioStreamPlayer2D" parent="." groups=["SFXs"]]
 stream = ExtResource("10_vddib")
+bus = &"SFX "
 
-[node name="Attack" type="AudioStreamPlayer2D" parent="."]
+[node name="Attack" type="AudioStreamPlayer2D" parent="." groups=["SFXs"]]
 stream = ExtResource("10_b2tvg")
+bus = &"SFX "
 
-[node name="Hurt" type="AudioStreamPlayer2D" parent="."]
+[node name="Hurt" type="AudioStreamPlayer2D" parent="." groups=["SFXs"]]
 stream = ExtResource("11_vddib")
+bus = &"SFX "
 
-[node name="Rush" type="AudioStreamPlayer2D" parent="."]
+[node name="Rush" type="AudioStreamPlayer2D" parent="." groups=["SFXs"]]
 stream = ExtResource("12_whkd6")
+bus = &"SFX "
 
-[node name="WarScream" type="AudioStreamPlayer2D" parent="."]
+[node name="WarScream" type="AudioStreamPlayer2D" parent="." groups=["SFXs"]]
 stream = ExtResource("13_tus02")
 volume_db = 3.0
+bus = &"SFX "
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 

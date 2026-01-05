@@ -1,5 +1,6 @@
-[gd_scene load_steps=12 format=4 uid="uid://b8talgy2equ5v"]
+[gd_scene load_steps=14 format=4 uid="uid://b8talgy2equ5v"]
 
+[ext_resource type="Script" uid="uid://cqnua3c0y7j88" path="res://scenes/world/zones/GlobbinVillageOutsides/globbin_village_outsides.gd" id="1_032l7"]
 [ext_resource type="TileSet" uid="uid://rngchcx3q02t" path="res://assets/tilesets/terrain.tres" id="1_rf0jg"]
 [ext_resource type="PackedScene" uid="uid://be8s6fsuvru6m" path="res://scenes/characters/player/player.tscn" id="2_bixr0"]
 [ext_resource type="TileSet" uid="uid://dvfkq370f0fmb" path="res://assets/tilesets/props.tres" id="2_yis6r"]
@@ -7,6 +8,7 @@
 [ext_resource type="Script" uid="uid://w2q7sdpbsh2d" path="res://scripts/globals/portals.gd" id="5_vhicn"]
 [ext_resource type="Script" uid="uid://denlchldq5ww4" path="res://scenes/guilds/scene_meta.gd" id="6_4sv4s"]
 [ext_resource type="Script" uid="uid://83qtco7d4r46" path="res://scripts/preload/ScenePortalData.gd" id="7_032l7"]
+[ext_resource type="AudioStream" uid="uid://cqxp5sfl27md5" path="res://SFX/Music/Paths/OlidTemple_&_OusidesGlobbin/33 17 nectar LOOP.mp3" id="9_ed1n1"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ed1n1"]
 size = Vector2(2618, 58)
@@ -23,6 +25,7 @@ connected_scenes = Array[String](["res://scenes/world/zones/OlidRuins/templeOlid
 metadata/_custom_type_script = "uid://83qtco7d4r46"
 
 [node name="GlobbinVillageOutsides" type="Node2D"]
+script = ExtResource("1_032l7")
 
 [node name="Tiles" type="Node" parent="."]
 
@@ -307,6 +310,13 @@ debug_color = Color(1, 1, 0, 1)
 [node name="Node2D" type="Node2D" parent="."]
 script = ExtResource("6_4sv4s")
 portal_data = SubResource("Resource_tcyuy")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." groups=["Music"]]
+position = Vector2(2205, -444)
+stream = ExtResource("9_ed1n1")
+max_distance = 10000.0
+bus = &"Music"
+parameters/looping = false
 
 [connection signal="body_entered" from="Tools/Portals/ToTempleOlid" to="Tools/Portals/ToTempleOlid" method="_on_body_entered"]
 [connection signal="body_entered" from="Tools/Portals/ToGlobbinVillage" to="Tools/Portals/ToGlobbinVillage" method="_on_body_entered"]
