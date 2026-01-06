@@ -197,6 +197,7 @@ position = Vector2(307, 236)
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." groups=["Music"]]
 stream = ExtResource("12_ow2as")
 bus = &"Music"
+parameters/looping = true
 
 [connection signal="body_entered" from="tools/gates/ToOlidTownFromOlidGuild" to="tools/gates/ToOlidTownFromOlidGuild" method="_on_body_entered"]
 [connection signal="body_entered" from="AngelerIntroEvent/EventTrigger" to="AngelerIntroEvent/EventTrigger" method="_on_body_entered"]

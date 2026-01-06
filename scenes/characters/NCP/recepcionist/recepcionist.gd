@@ -73,6 +73,7 @@ func _on_menu_option_selected(option: String) -> void:
 		"seleccionar":
 			var missions = MissionDataBase.get_missions_for_rank(player_rank)
 
+
 			var active = MissionTracker.get_active_mission()
 			var active_ids = active.map(func(m): return m.mission.id)
 

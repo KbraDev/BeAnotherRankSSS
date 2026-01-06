@@ -13,7 +13,8 @@ config_version=5
 config/name="BeAnotherRankSSS  (Demo)"
 run/main_scene="uid://cvbvcr5aecqcn"
 config/features=PackedStringArray("4.4", "Forward Plus")
-config/icon="uid://7oxtfw1bofnj"
+run/max_fps=60
+config/icon="uid://c3qge47kqe011"
 
 [autoload]
 
@@ -37,7 +38,8 @@ SettingsManager="*res://scripts/globals/SettingsManager.gd"
 
 window/size/viewport_width=1280
 window/size/viewport_height=720
-window/stretch/mode="viewport"
+window/size/initial_position=Vector2i(0, -100)
+window/stretch/mode="canvas_items"
 
 [file_customization]
 

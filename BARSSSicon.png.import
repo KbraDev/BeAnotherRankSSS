@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://7oxtfw1bofnj"
-path="res://.godot/imported/BARSSS.png-7bb240a11abeb4a7abe14ab9dc8856d4.ctex"
+uid="uid://c3qge47kqe011"
+path="res://.godot/imported/BARSSSicon.png-3588e53a30cd5640d8388fbbb369aed8.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://BARSSS.png"
-dest_files=["res://.godot/imported/BARSSS.png-7bb240a11abeb4a7abe14ab9dc8856d4.ctex"]
+source_file="res://BARSSSicon.png"
+dest_files=["res://.godot/imported/BARSSSicon.png-3588e53a30cd5640d8388fbbb369aed8.ctex"]
 
 [params]
 
