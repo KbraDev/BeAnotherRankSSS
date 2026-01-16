@@ -3,6 +3,7 @@ extends Node2D
 @export var item_data: Resource  # Puede ser ItemData o CoinData
 @export var amount: int = 1
 
+
 func _ready():
 	print("📦 Pickup spawneado en:", global_position)
 	

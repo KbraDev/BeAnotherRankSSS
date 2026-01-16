@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=4 uid="uid://duw2jn00emhow"]
+[gd_scene load_steps=18 format=4 uid="uid://duw2jn00emhow"]
 
 [ext_resource type="Script" uid="uid://c2yymjkcn64s1" path="res://scenes/world/location/GlobbinVillage/globbin_village.gd" id="1_iiqms"]
 [ext_resource type="TileSet" uid="uid://dvfkq370f0fmb" path="res://assets/tilesets/props.tres" id="1_j1d86"]
@@ -6,7 +6,6 @@
 [ext_resource type="PackedScene" uid="uid://be8s6fsuvru6m" path="res://scenes/characters/player/player.tscn" id="3_hab1b"]
 [ext_resource type="Script" uid="uid://w2q7sdpbsh2d" path="res://scripts/globals/portals.gd" id="4_hab1b"]
 [ext_resource type="PackedScene" uid="uid://cdm6uwrww4unh" path="res://scenes/characters/monsters/GlobbinKing/globbin_king.tscn" id="5_1iseo"]
-[ext_resource type="Resource" uid="uid://ce7yhfhwubr6c" path="res://items/resources/GlobbinKingFinger.tres" id="6_7gum3"]
 [ext_resource type="PackedScene" uid="uid://dp5ry7qcymmll" path="res://scenes/characters/monsters/GlobbinMajot/globbin_major.tscn" id="6_ce16b"]
 [ext_resource type="PackedScene" uid="uid://dlhligdd2twvb" path="res://scenes/characters/monsters/GlobbinRockie/globbin_rockie.tscn" id="6_ik66m"]
 [ext_resource type="PackedScene" uid="uid://1wmbdbs64n4n" path="res://scenes/shaders/fog/parallax_background.tscn" id="8_ce16b"]
@@ -83,7 +82,7 @@ tile_map_data = PackedByteArray("AADVAFr/HAAqADsAAADVAFv/HAAqADwAAADVAFz/HAAqAD0
 tile_set = ExtResource("1_j1d86")
 
 [node name="player" parent="." instance=ExtResource("3_hab1b")]
-position = Vector2(3499, -1700)
+position = Vector2(3512, -1651)
 
 [node name="FromGlobbinVillageOutsides" type="Marker2D" parent="."]
 position = Vector2(549, 106)
@@ -113,14 +112,10 @@ collision_layer = 6
 collision_mask = 3
 king_camera_path = NodePath("KingGlobbinCam")
 blend_camera_path = NodePath("../../../Event/BlendCamera")
-phase2_multiplier = 1.8
-damage = 24.0
-max_health = 180.0
-move_speed = 80.0
-xp_reward_range = Vector2i(100, 120)
-armor = 2.0
-drop_item = ExtResource("6_7gum3")
-mass = 100.0
+damage = 26.0
+move_speed = 70.0
+exp_min = 350
+exp_max = 350
 
 [node name="KingGlobbinCam" type="Camera2D" parent="Globbins/King/GlobbinKing"]
 zoom = Vector2(1.8, 1.8)
@@ -130,8 +125,6 @@ position_smoothing_speed = 3.0
 
 [node name="GlobbinMajor" parent="Globbins/Major" instance=ExtResource("6_ce16b")]
 position = Vector2(-553, -1488)
-max_health = 80.0
-xp_reward_range = Vector2i(60, 90)
 
 [node name="GlobbinMajor2" parent="Globbins/Major" instance=ExtResource("6_ce16b")]
 position = Vector2(-610, -1570)
@@ -165,7 +158,6 @@ position = Vector2(1600, -198)
 [node name="GlobbinRockie" parent="Globbins/Rockies" instance=ExtResource("6_ik66m")]
 position = Vector2(534, -310)
 damage = 6.0
-max_health = 30.0
 move_speed = 50.0
 
 [node name="GlobbinRockie2" parent="Globbins/Rockies" instance=ExtResource("6_ik66m")]
@@ -330,14 +322,15 @@ debug_color = Color(1, 0, 0, 1)
 [node name="VillageMusic" type="AudioStreamPlayer2D" parent="." groups=["Music"]]
 position = Vector2(1227, -716)
 stream = ExtResource("14_5lp6t")
-max_distance = 10000.0
+max_distance = 10000000.0
 bus = &"Music"
-parameters/looping = false
+parameters/looping = true
 
 [node name="BossMusic" type="AudioStreamPlayer2D" parent="." groups=["Music"]]
 position = Vector2(3505, -2386)
 stream = ExtResource("15_5lp6t")
+max_distance = 100000.0
 bus = &"Music"
-parameters/looping = false
+parameters/looping = true
 
 [connection signal="body_entered" from="Node/Gates/Area2D" to="Node/Gates/Area2D" method="_on_body_entered"]

@@ -1,8 +1,10 @@
-[gd_scene load_steps=215 format=3 uid="uid://cdm6uwrww4unh"]
+[gd_scene load_steps=217 format=3 uid="uid://cdm6uwrww4unh"]
 
 [ext_resource type="Texture2D" uid="uid://cuu7ubmy7gxi8" path="res://sprites/characters/mobs/GobblinKing/orc3_attack_full.png" id="1_4rbns"]
 [ext_resource type="Script" uid="uid://24tw7d8ck5ow" path="res://scenes/characters/monsters/GlobbinKing/globbin_king.gd" id="1_b2tvg"]
 [ext_resource type="Texture2D" uid="uid://bebx8ypebwlny" path="res://sprites/characters/mobs/GobblinKing/orc3_death_full.png" id="2_lq82t"]
+[ext_resource type="PackedScene" uid="uid://dabadhwkyy5pl" path="res://scenes/World_pick-Ups/pick_ups_items.tscn" id="2_tus02"]
+[ext_resource type="Resource" uid="uid://ce7yhfhwubr6c" path="res://items/resources/GlobbinKingFinger.tres" id="3_ppxge"]
 [ext_resource type="Texture2D" uid="uid://brsb16b4hm0yt" path="res://sprites/characters/mobs/GobblinKing/orc3_hurt_full.png" id="3_ys6f4"]
 [ext_resource type="Texture2D" uid="uid://cqac6rhdixqgh" path="res://sprites/characters/mobs/GobblinKing/orc3_idle_full.png" id="4_d2al7"]
 [ext_resource type="Texture2D" uid="uid://bx5175sjqu0bl" path="res://sprites/characters/mobs/GobblinKing/orc3_run_attack_full.png" id="5_dkpy5"]
@@ -1525,9 +1527,12 @@ scale = Vector2(1.5, 1.5)
 script = ExtResource("1_b2tvg")
 boss_ui_path = NodePath("CanvasLayer/BossHealthBar")
 damage = 22.0
-max_health = 130.0
 move_speed = 60.0
-enemy_name = "Rey Duende"
+pickup_scene = ExtResource("2_tus02")
+drop_item = ExtResource("3_ppxge")
+exp_min = 199
+exp_max = 200
+max_health = 350.0
 
 [node name="CollisionCheck" type="Area2D" parent="."]
 
@@ -1580,24 +1585,19 @@ animation = &"dying_front"
 
 [node name="StartChase" type="AudioStreamPlayer2D" parent="." groups=["SFXs"]]
 stream = ExtResource("10_vddib")
-bus = &"SFX "
 
 [node name="Attack" type="AudioStreamPlayer2D" parent="." groups=["SFXs"]]
 stream = ExtResource("10_b2tvg")
-bus = &"SFX "
 
 [node name="Hurt" type="AudioStreamPlayer2D" parent="." groups=["SFXs"]]
 stream = ExtResource("11_vddib")
-bus = &"SFX "
 
 [node name="Rush" type="AudioStreamPlayer2D" parent="." groups=["SFXs"]]
 stream = ExtResource("12_whkd6")
-bus = &"SFX "
 
 [node name="WarScream" type="AudioStreamPlayer2D" parent="." groups=["SFXs"]]
 stream = ExtResource("13_tus02")
 volume_db = 3.0
-bus = &"SFX "
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 

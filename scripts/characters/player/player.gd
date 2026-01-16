@@ -97,6 +97,12 @@ var run_interval := 0.5
 
 @onready var combo_timer := Timer.new()
 
+var _hitbox_active := false
+const BASIC_SLASH_ACTIVE_FRAMES := [0, 1, 2, 3]
+const DOUBLE_SLASH_ACTIVE_FRAMES := [1, 2]
+
+var _debug_hit_counter := {}
+
 # ───── SEÑALES ─────
 signal inventory_updated(inventory: Array)
 signal health_changed(current_health, max_health)
@@ -104,8 +110,6 @@ signal health_changed(current_health, max_health)
 # ───── READY ─────
 func _ready():
 	update_tilemap_reference()
-	print("Puntos del jugador: ", stat_points)
-	print("MissionTracker cargado?", MissionTracker)
 	animation.play("idle_" + last_direction)
 
 
@@ -148,7 +152,7 @@ func _ready():
 
 
 # ───── PROCESO Y ENTRADA ─────
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	directional_movement()
 	move_and_slide()
 
@@ -261,6 +265,16 @@ func _on_enemy_hit(enemy: Node) -> void:
 	)
 
 	enemy.take_damage(final_damage, hit_direction)
+	
+	if not _debug_hit_counter.has(enemy):
+		_debug_hit_counter[enemy] = 0
+	
+	_debug_hit_counter[enemy] += 1
+	print(
+	"[HIT CONFIRMADO]",
+	enemy.name,
+	"| hits:", _debug_hit_counter[enemy]
+)
 
 func _vector_to_direction(dir: Vector2) -> String:
 	if abs(dir.x) > abs(dir.y):
@@ -374,7 +388,6 @@ func take_damage(amount: float, tipo: String = "fisico"):
 		return
 
 	if not attack_controller.is_attacking() and not is_dashing:
-		var prefix := ""  # ya no depende de estado
 		var anim_name = "take_damage_" + last_direction
 		if animation.sprite_frames.has_animation(anim_name):
 			animation.play(anim_name)
@@ -690,28 +703,28 @@ func _open_statUI():
 
 func _get_stat_value(stat_name: String) -> int:
 	if stat_name == "hp":
-		var level = stat_levels.get("hp", 1)
+		var stat_level = stat_levels.get("hp", 1)
 		return 50 + (level - 1) * 28 # 10 niveles -> 50 a 300
 	elif stat_name == "speed":
-		var level = stat_levels.get("speed", 1)
+		var stat_level = stat_levels.get("speed", 1)
 		return 130 + (level - 1) * 7 # 130 -> 180
 	elif stat_name == "fuerza":
-		var level = stat_levels.get("fuerza", 1)
+		var stat_level = stat_levels.get("fuerza", 1)
 		return int(5 + (level - 1) * 3.5)
 	elif stat_name == "resistencia":
-		var level = stat_levels.get("resistencia", 1)
+		var stat_level = stat_levels.get("resistencia", 1)
 		return int(15 + (level - 1) * 4.5)
 	elif stat_name == "mana":
-		var level = stat_levels.get("mana", 1)
+		var stat_level = stat_levels.get("mana", 1)
 		return 10 + (level - 1) * 10
 	elif stat_name == "poder_magico":
-		var level = stat_levels.get("poder_magico", 1)
+		var stat_level = stat_levels.get("poder_magico", 1)
 		return int(10 + (level - 1) * 7)
 	elif stat_name == "resistencia_hechizos":
-		var level = stat_levels.get("resistencia_hechizos", 1)
+		var stat_level = stat_levels.get("resistencia_hechizos", 1)
 		return int(10 + (level - 1) * 5)
 	elif stat_name == "lucky":
-		var level = stat_levels.get("lucky", 1)
+		var stat_level = stat_levels.get("lucky", 1)
 		return float((level - 1) * 2.5)  # 0.0 → 25.0
 
 
@@ -894,7 +907,8 @@ func update_tilemap_reference():
 	if tilemap:
 		return
 	else:
-		print("❌ No se encontró ningún TileMap en el grupo 'ground'")
+		#print("❌ No se encontró ningún TileMap en el grupo 'ground'")
+		return
 
 
 
@@ -920,7 +934,8 @@ func play_footstep():
 		footstep_player.stream = sounds[surface][mode]
 		footstep_player.play()
 	else:
-		print("❌ No hay sonidos definidos para la superficie:", surface)
+		#print("❌ No hay sonidos definidos para la superficie:", surface)
+		return
 
 
 
@@ -945,34 +960,86 @@ func _on_animated_sprite_2d_frame_changed() -> void:
 		return
 
 	var total_frames = animation.sprite_frames.get_frame_count(anim)
+	var is_last_frame = frame == total_frames - 1
 
-	if frame != total_frames - 1:
+	print("[ANIM]", anim, "| frame:", frame, "/", total_frames - 1)
+
+	# ─────────────────────────
+	# HITBOX CONTROL
+	# ─────────────────────────
+	if attack_controller.is_attacking():
+
+		match attack_controller._current_attack:
+
+			PhisycAttackController.AttackType.BASIC_SLASH:
+				var should_be_active = frame in BASIC_SLASH_ACTIVE_FRAMES
+
+				if should_be_active and not _hitbox_active:
+					print("🟢 BASIC HITBOX ON")
+					_hitbox_active = true
+					attack_controller.enable_hitbox()
+
+				elif not should_be_active and _hitbox_active:
+					print("🔴 BASIC HITBOX OFF")
+					_hitbox_active = false
+					attack_controller.disable_hitbox()
+
+			PhisycAttackController.AttackType.DOUBLE_SLASH:
+				var should_be_active = frame in DOUBLE_SLASH_ACTIVE_FRAMES
+
+				if should_be_active and not _hitbox_active:
+					print("🟢 DOUBLE HITBOX ON | hit:", attack_controller._current_hit)
+					_hitbox_active = true
+					attack_controller.enable_hitbox()
+
+				elif not should_be_active and _hitbox_active:
+					print("🔴 DOUBLE HITBOX OFF")
+					_hitbox_active = false
+					attack_controller.disable_hitbox()
+
+	# ─────────────────────────
+	# FIN DE ANIMACIÓN
+	# ─────────────────────────
+	if not is_last_frame:
 		return
 
-	# ───── DOUBLE SLASH ─────
-	if attack_controller.is_attacking() \
-	and attack_controller._current_attack == PhisycAttackController.AttackType.DOUBLE_SLASH:
+	print("🏁 FIN ANIM:", anim)
+
+	_force_disable_hitbox()
+	attack_controller.disable_hitbox()
+
+	# BASIC SLASH termina aquí
+	if attack_controller._current_attack == PhisycAttackController.AttackType.BASIC_SLASH:
+		print("✅ BASIC SLASH FINISHED")
+		attack_controller.notify_attack_finished()
+		can_move = true
+		animation.play("idle_" + last_direction)
+		return
+
+	# DOUBLE SLASH
+	if attack_controller._current_attack == PhisycAttackController.AttackType.DOUBLE_SLASH:
 
 		# Fin del primer golpe → iniciar segundo
-		if anim.begins_with("attack1_"):
+		if attack_controller._current_hit == 1:
+			print("➡️ DOUBLE: HIT 1 → HIT 2")
 			attack_controller.notify_next_hit()
 			animation.play("attack2_" + last_direction)
 			return
 
 		# Fin del segundo golpe → terminar ataque
-		if anim.begins_with("attack2_"):
+		if attack_controller._current_hit == 2:
+			print("✅ DOUBLE SLASH FINISHED")
 			attack_controller.notify_attack_finished()
 			can_move = true
 			animation.play("idle_" + last_direction)
 			return
 
-	# ───── BASIC SLASH ─────
-	if anim.begins_with("attack1_"):
-		attack_controller.notify_attack_finished()
-		can_move = true
-		animation.play("idle_" + last_direction)
-
 	# --- Pasos ---
 	if anim.begins_with("walk") or anim.begins_with("run"):
 		if frame == 3:
 			play_footstep()
+
+func _force_disable_hitbox():
+	if _hitbox_active:
+		_hitbox_active = false
+		attack_controller.disable_hitbox()

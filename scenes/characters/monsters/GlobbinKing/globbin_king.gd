@@ -3,12 +3,15 @@ class_name KingGlobbin
 
 signal boss_defeated
 
+
+
 # ====================================================
 # ===================== STATE ========================
 # ====================================================
 
 var is_active: bool = false
 var phase_2: bool = false
+var is_dead := false
 
 # Guardar valores base para evitar bugs al buffear
 var _base_speed: float
@@ -26,6 +29,10 @@ var boss_ui
 # Cámaras (asignadas desde el editor)
 @export var king_camera_path: NodePath
 @export var blend_camera_path: NodePath
+@export var boss_name := "King Globbin"
+
+@export_group("Experience")
+@export var boss_exp: int = 350
 
 var king_camera: Camera2D
 var blend_camera: Camera2D
@@ -43,19 +50,29 @@ var blend_camera: Camera2D
 # ====================================================
 
 func _ready() -> void:
+	locked_by_event = true
+	enemy.can_move = false
+	
+	enemy.exp_reward = boss_exp
+	enemy.setup(self, max_health)
 	super()
 
-	# Guardar stats base (CRÍTICO)
 	_base_speed = move_speed
 	_base_damage = damage
 
-	# UI del boss
 	if boss_ui_path != NodePath():
 		boss_ui = get_node_or_null(boss_ui_path)
 		if boss_ui:
-			boss_ui.set_max_health(max_health)
-			boss_ui.update_health(current_health)
-			boss_ui.boss_name = enemy_name
+			boss_ui.set_max_health(enemy.max_health)
+			boss_ui.update_health(enemy.current_health)
+			boss_ui.boss_name = boss_name
+
+	# 🔒 ESTADO INICIAL CORRECTO
+	set_inactive()
+
+	# 🚫 IA APAGADA DESDE EL FRAME 0
+	if has_node("AI"):
+		$AI.set_active(false)
 
 	# Cámaras
 	if king_camera_path != NodePath():
@@ -81,7 +98,7 @@ func take_damage(amount: float, dir: String = "front") -> void:
 	super.take_damage(amount, dir)
 
 	if boss_ui:
-		boss_ui.update_health(current_health)
+		boss_ui.update_health(enemy.current_health)
 
 	_check_phase_2()
 
@@ -93,7 +110,7 @@ func _check_phase_2() -> void:
 	if phase_2:
 		return
 
-	var health_ratio := current_health / max_health
+	var health_ratio: float = enemy.current_health / enemy.max_health
 	if health_ratio <= phase2_health_threshold:
 		_start_phase_2()
 
@@ -138,26 +155,16 @@ func _on_phase_2_focus() -> void:
 		war_scream.play()
 
 func _on_phase_2_finished() -> void:
-	# Buff real de stats
 	move_speed = _base_speed * phase2_multiplier
 	damage = _base_damage * phase2_multiplier
 
-	# RESET DE ESTADOS BLOQUEANTES
-	is_hurt = false
-	is_being_pushed = false
+	enemy.is_hurt = false
 	is_attacking = false
 
-	# Forzar reactivación lógica
 	_choose_new_direction()
 
-	# Reactivar IA
-	if has_node("AI"):
-		$AI.set_active(true)
-
-	# Volver al combate
 	unfreeze_globbin()
 
-	print("[KingGlobbin] Phase 2 started - AI unlocked")
 
 
 # ====================================================
@@ -166,7 +173,16 @@ func _on_phase_2_finished() -> void:
 
 func set_inactive() -> void:
 	is_active = false
-	freeze_globbin()
+
+	enemy.can_move = false
+	velocity = Vector2.ZERO
+	is_attacking = false
+
+	if has_node("AI"):
+		$AI.set_active(false)
+
+	if sprite:
+		sprite.play("idle_front")
 
 	if boss_ui:
 		boss_ui.visible = false
@@ -188,29 +204,42 @@ func activate(start_ai := true) -> void:
 # ====================================================
 
 func freeze_globbin() -> void:
-	can_move = false
+	enemy.can_move = false
 	is_attacking = false
 	velocity = Vector2.ZERO
 
-	if has_node("AnimatedSprite2D"):
-		$AnimatedSprite2D.play("idle_front")
+	if sprite:
+		sprite.play("idle_front")
+
 
 func unfreeze_globbin() -> void:
-	can_move = true
-	is_hurt = false
-	is_being_pushed = false
+	enemy.can_move = true
+	enemy.is_hurt = false
 	is_attacking = false
 
 	_choose_new_direction()
 
-func _on_enemy_died() -> void:
-	# senal para el evento
-	emit_signal("boss_defeated")
-	
-	# Marcar evento como completado
-	GameState.set_flag("KingGlobbinEvent")
+	_choose_new_direction()
 
+func _on_enemy_died(exp_amount: int) -> void:
+	if is_dead:
+		return
+	is_dead = true
+
+	emit_signal("boss_defeated")
+	GameState.set_flag("KingGlobbinEvent")
 	print("[EVENT] KingGlobbin defeated → Event completed")
 
-	# Llamar cleanup normal
-	super._on_enemy_died()
+	super._on_enemy_died(exp_amount)
+
+func debug_print_stats(context := "UNKNOWN") -> void:
+	print("========== KING GLOBBIN STATS ==========")
+	print("Context:", context)
+	print("HP:", enemy.current_health, "/", enemy.max_health)
+	print("Damage:", damage)
+	print("Move Speed:", move_speed)
+	print("Phase 2:", phase_2)
+	print("Can Move:", enemy.can_move)
+	print("Is Active:", is_active)
+	print("Is Dead:", is_dead)
+	print("=======================================")

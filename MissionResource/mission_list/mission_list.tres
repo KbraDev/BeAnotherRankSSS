@@ -1,9 +1,10 @@
-[gd_resource type="Resource" script_class="MissionList" load_steps=4 format=3 uid="uid://dsqiwp8i446bx"]
+[gd_resource type="Resource" script_class="MissionList" load_steps=5 format=3 uid="uid://dsqiwp8i446bx"]
 
 [ext_resource type="Script" uid="uid://b0k6qwsmdt6pf" path="res://scripts/missions/missionResource.gd" id="1_37cno"]
 [ext_resource type="Resource" uid="uid://diafxwdn7i5wr" path="res://MissionResource/collect_slime_tears.tres" id="2_otxsv"]
 [ext_resource type="Script" uid="uid://cpbe3bj1rr7k4" path="res://MissionResource/mission_list/Mission_List.gd" id="2_y7i82"]
+[ext_resource type="Resource" uid="uid://b82obdg2lg3w6" path="res://MissionResource/FingersRockie.tres" id="3_otxsv"]
 
 [resource]
 script = ExtResource("2_y7i82")
-missions = Array[ExtResource("1_37cno")]([ExtResource("2_otxsv")])
+missions = Array[ExtResource("1_37cno")]([ExtResource("2_otxsv"), ExtResource("3_otxsv")])

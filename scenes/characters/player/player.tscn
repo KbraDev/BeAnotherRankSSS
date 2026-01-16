@@ -303,7 +303,6 @@ atlas = ExtResource("9_omk8d")
 region = Rect2(672, 0, 96, 80)
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_ay6xh"]
-load_path = "res://.godot/imported/Sword_10_Template_Special_Attack_Down-Sheet.png-13cf71d5a86a4d959703ff827d685d1d.ctex"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ybpux"]
 atlas = SubResource("CompressedTexture2D_ay6xh")
@@ -2364,7 +2363,7 @@ script = ExtResource("1_nibrf")
 texture_filter = 1
 scale = Vector2(1.2106, 1.21059)
 sprite_frames = SubResource("SpriteFrames_6myrh")
-animation = &"idle_front"
+animation = &"attack2_front"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 2)
@@ -2407,6 +2406,7 @@ attenuation = 1.8
 
 [node name="PhysicAttackController" type="Node" parent="."]
 script = ExtResource("40_xm30n")
+basic_slash_cooldown = 0.7
 attack_area_path = NodePath("../attack_area")
 
 [node name="UIsContainer" type="CanvasLayer" parent="."]

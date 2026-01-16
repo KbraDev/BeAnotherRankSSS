@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="CollectMission" load_steps=2 format=3 uid="uid://b82obdg2lg3w6"]
+
+[ext_resource type="Script" uid="uid://c8qgluqn1kg5p" path="res://scripts/missions/collectMission.gd" id="1_xo04l"]
+
+[resource]
+script = ExtResource("1_xo04l")
+item_required = "GlobbinRockieFinger"
+amount_required = 6
+id = "FingersRockie"
+name = "Duendes Jovenes"
+description = "Consigue 6 dedos de duendes jovenes en \"Aldea de los Duedes\" y entregalas al Gremio."
+rank = "D"
+required_rank = "D"
+rewards_xp = 110
+metadata/_custom_type_script = "uid://c875vtidl7fke"

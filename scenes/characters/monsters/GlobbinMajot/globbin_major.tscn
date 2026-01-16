@@ -1,7 +1,8 @@
-[gd_scene load_steps=216 format=3 uid="uid://dp5ry7qcymmll"]
+[gd_scene load_steps=217 format=3 uid="uid://dp5ry7qcymmll"]
 
 [ext_resource type="Texture2D" uid="uid://k6iwxiok6v6b" path="res://sprites/characters/mobs/GlobbinMajor/orc2_death_full.png" id="1_42tx3"]
 [ext_resource type="Script" uid="uid://bryw5yks6ojeq" path="res://scripts/enemy/globbin/globbin.gd" id="1_w4ww8"]
+[ext_resource type="PackedScene" uid="uid://dabadhwkyy5pl" path="res://scenes/World_pick-Ups/pick_ups_items.tscn" id="2_5f2pu"]
 [ext_resource type="Texture2D" uid="uid://cooiptvuiiod4" path="res://sprites/characters/mobs/GlobbinMajor/orc2_hurt_full.png" id="2_emn4j"]
 [ext_resource type="Resource" uid="uid://b74bm2sbiet5w" path="res://items/resources/GlobbinMajorFinger.tres" id="2_osxxv"]
 [ext_resource type="Texture2D" uid="uid://cbw2hs2ndha1t" path="res://sprites/characters/mobs/GlobbinMajor/orc2_idle_full.png" id="3_ynvh4"]
@@ -1524,12 +1525,12 @@ animations = [{
 scale = Vector2(1.2, 1.2)
 script = ExtResource("1_w4ww8")
 damage = 12.0
-max_health = 60.0
 move_speed = 60.0
-xp_reward_range = Vector2i(55, 90)
-armor = 1.0
+pickup_scene = ExtResource("2_5f2pu")
 drop_item = ExtResource("2_osxxv")
-mass = 22.0
+exp_min = 26
+exp_max = 36
+max_health = 46.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 z_index = 2
@@ -1572,19 +1573,15 @@ animation = &"dying_right_side"
 
 [node name="StartChase" type="AudioStreamPlayer2D" parent="." groups=["SFXs"]]
 stream = ExtResource("13_auixt")
-bus = &"SFX "
 
 [node name="Attack" type="AudioStreamPlayer2D" parent="." groups=["SFXs"]]
 stream = ExtResource("14_4mlyu")
-bus = &"SFX "
 
 [node name="Hurt" type="AudioStreamPlayer2D" parent="." groups=["SFXs"]]
 stream = ExtResource("15_5f2pu")
-bus = &"SFX "
 
 [node name="Rush" type="AudioStreamPlayer2D" parent="." groups=["SFXs"]]
 stream = ExtResource("16_xet01")
-bus = &"SFX "
 
 [node name="HealthBar" type="TextureProgressBar" parent="."]
 anchors_preset = 5

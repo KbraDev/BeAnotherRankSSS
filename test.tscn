@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://bgnsowto35jld"]
+
+[ext_resource type="PackedScene" uid="uid://be8s6fsuvru6m" path="res://scenes/characters/player/player.tscn" id="1_8uh7m"]
+[ext_resource type="PackedScene" uid="uid://cdm6uwrww4unh" path="res://scenes/characters/monsters/GlobbinKing/globbin_king.tscn" id="2_8uh7m"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="player" parent="." instance=ExtResource("1_8uh7m")]
+position = Vector2(890, 305)
+
+[node name="GlobbinKing" parent="." instance=ExtResource("2_8uh7m")]
+position = Vector2(539, 255)

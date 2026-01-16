@@ -67,6 +67,9 @@ var _attack_area: Area2D
 @onready var _basic_cooldown_timer := Timer.new()
 @onready var _double_cooldown_timer := Timer.new()
 
+# Enemigos golpeados en el ataque actual
+var _hit_enemies := {}
+
 # ───────────────────────────────
 # ─────────── READY ─────────────
 # ───────────────────────────────
@@ -87,6 +90,8 @@ func _ready() -> void:
 	if attack_area_path != NodePath():
 		_attack_area = get_node(attack_area_path)
 		_attack_area.monitoring = false
+		_attack_area.body_entered.connect(_on_attack_area_body_entered)
+
 
 # ───────────────────────────────
 # ────────── INPUT ──────────────
@@ -107,6 +112,15 @@ func request_double_attack() -> void:
 		return
 
 	_start_double_slash()
+	
+
+func _on_attack_area_body_entered(body: Node) -> void:
+	if not _is_attacking:
+		return
+
+	_process_body(body)
+
+
 # ───────────────────────────────
 # ─────── LÓGICA DE ATAQUE ───────
 # ───────────────────────────────
@@ -115,8 +129,8 @@ func request_double_attack() -> void:
 func _start_basic_slash() -> void:
 	_is_attacking = true
 	_current_attack = AttackType.BASIC_SLASH
+	_hit_enemies.clear()
 
-	_enable_attack_area()
 	emit_signal("attack_started", _current_attack, 1)
 
 
@@ -124,9 +138,10 @@ func _start_double_slash() -> void:
 	_is_attacking = true
 	_current_attack = AttackType.DOUBLE_SLASH
 	_current_hit = 1
+	_hit_enemies.clear()
 
-	_enable_attack_area()
 	emit_signal("attack_started", _current_attack, _current_hit)
+
 
 
 ## Debe llamarse cuando la animación de ataque termina
@@ -134,8 +149,9 @@ func notify_attack_finished() -> void:
 	if not _is_attacking:
 		return
 
+	_disable_attack_area() # seguridad extra
 	_is_attacking = false
-	_disable_attack_area()
+	_hit_enemies.clear()
 
 	emit_signal("attack_finished", _current_attack)
 
@@ -167,10 +183,9 @@ func notify_next_hit() -> void:
 
 	if _current_hit == 1:
 		_current_hit = 2
+		_hit_enemies.clear() # ← CLAVE
 		_enable_attack_area()
 		emit_signal("attack_started", _current_attack, _current_hit)
-
-
 
 
 # ───────────────────────────────
@@ -205,39 +220,57 @@ func _enable_attack_area() -> void:
 		return
 
 	_attack_area.monitoring = true
-	_attack_area.body_entered.connect(_on_attack_area_body_entered)
 
-	# Detectar enemigos que ya estén dentro
 	for body in _attack_area.get_overlapping_bodies():
 		_process_body(body)
-
 
 ## Desactiva el Area2D y desconecta señales
 func _disable_attack_area() -> void:
 	if not _attack_area:
 		return
 
-	if _attack_area.body_entered.is_connected(_on_attack_area_body_entered):
-		_attack_area.body_entered.disconnect(_on_attack_area_body_entered)
-
 	_attack_area.monitoring = false
-
-
-## Callback cuando un cuerpo entra al área
-func _on_attack_area_body_entered(body: Node) -> void:
-	_process_body(body)
-
 
 ## Valida y notifica impacto a enemigos y objetos
 func _process_body(body: Node) -> void:
 	if not _is_attacking:
 		return
 
-	# Enemigos (reciben daño)
-	if body.is_in_group("enemies"):
-		emit_signal("enemy_hit", body)
+	if not body.is_in_group("enemies"):
+		if body.has_method("hit"):
+			body.hit()
 		return
 
-	# Objetos golpeables (cofres, barriles, etc.)
-	if body.has_method("hit"):
-		body.hit()
+	var hits = _hit_enemies.get(body, 0)
+	var max_hits := _get_max_hits_for_current_attack()
+
+	if hits >= max_hits:
+		return
+
+	_hit_enemies[body] = hits + 1
+	emit_signal("enemy_hit", body)
+
+
+# Límite de impactos por ataque
+func _get_max_hits_for_current_attack() -> int:
+	match _current_attack:
+		AttackType.BASIC_SLASH:
+			return 1
+		AttackType.DOUBLE_SLASH:
+			return 2
+	return 0
+
+
+func enable_hitbox() -> void:
+	if not _attack_area:
+		return
+	_attack_area.monitoring = true
+
+	for body in _attack_area.get_overlapping_bodies():
+		_process_body(body)
+
+
+func disable_hitbox() -> void:
+	if not _attack_area:
+		return
+	_attack_area.monitoring = false
