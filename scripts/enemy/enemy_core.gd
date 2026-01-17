@@ -23,10 +23,11 @@ var knockback_friction := 1800.0
 # EXP
 var exp_reward: int = 0
 
-func setup(_owner: CharacterBody2D, _max_health: float) -> void:
+func setup(_owner: CharacterBody2D, _max_health: float, _armor := 0.0) -> void:
 	owner = _owner
 	max_health = _max_health
 	current_health = max_health
+	armor = max(_armor, 0.0)
 
 	#collision: layer 2 + 3, mask 1 + 2
 	owner.collision_layer = (1 << 1) | (1 << 2) # 6
@@ -36,15 +37,26 @@ func take_damage(amount: float) -> bool:
 	if has_died:
 		return true
 
-	var final_damage = max(amount - armor, 0.0)
+	var reduction = clamp(armor / 100.0, 0.0, 0.95)
+	var final_damage = amount * (1.0 - reduction)
+
 	current_health -= final_damage
 	emit_signal("damaged")
 
-	if current_health <= 0:
+	print(
+		"[DAMAGE]",
+		"Raw:", amount,
+		"Armor:", armor,
+		"Final:", final_damage,
+		"HP:", current_health
+	)
+
+	if current_health <= 0.0:
 		_die()
 		return true
 
 	return false
+
 
 func apply_knockback(direction: Vector2, force: float) -> void:
 	knockback_velocity = direction.normalized() * force

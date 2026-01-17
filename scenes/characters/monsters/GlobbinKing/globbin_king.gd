@@ -3,8 +3,6 @@ class_name KingGlobbin
 
 signal boss_defeated
 
-
-
 # ====================================================
 # ===================== STATE ========================
 # ====================================================
@@ -12,6 +10,9 @@ signal boss_defeated
 var is_active: bool = false
 var phase_2: bool = false
 var is_dead := false
+
+var anchor_position: Vector2
+var ceremonial_idle := true
 
 # Guardar valores base para evitar bugs al buffear
 var _base_speed: float
@@ -50,6 +51,8 @@ var blend_camera: Camera2D
 # ====================================================
 
 func _ready() -> void:
+	anchor_position = global_position
+	ceremonial_idle = true
 	locked_by_event = true
 	enemy.can_move = false
 	
@@ -89,6 +92,14 @@ func _ready() -> void:
 
 	# Boss inicia congelado
 	set_inactive()
+
+func _physics_process(delta: float) -> void:
+	if ceremonial_idle: 
+		global_position = anchor_position
+		velocity = Vector2.ZERO
+		return
+	
+	super._physics_process(delta)
 
 # ====================================================
 # ===================== DAMAGE =======================
@@ -173,6 +184,7 @@ func _on_phase_2_finished() -> void:
 
 func set_inactive() -> void:
 	is_active = false
+	ceremonial_idle = true
 
 	enemy.can_move = false
 	velocity = Vector2.ZERO
@@ -182,22 +194,28 @@ func set_inactive() -> void:
 		$AI.set_active(false)
 
 	if sprite:
-		sprite.play("idle_front")
+		sprite.play("idle_front") # mirando al jugador / trono
 
 	if boss_ui:
 		boss_ui.visible = false
 		boss_ui.modulate.a = 0.0
+
 
 func activate(start_ai := true) -> void:
 	if is_active:
 		return
 
 	is_active = true
+	ceremonial_idle = false
 
 	if start_ai:
 		unfreeze_globbin()
 	else:
 		freeze_globbin()
+
+	if has_node("AI") and start_ai:
+		$AI.set_active(true)
+
 
 # ====================================================
 # ===================== FREEZE =======================

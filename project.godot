@@ -36,10 +36,11 @@ SettingsManager="*res://scripts/globals/SettingsManager.gd"
 
 [display]
 
-window/size/viewport_width=1280
+window/size/viewport_width=1270
 window/size/viewport_height=720
 window/size/initial_position=Vector2i(0, -100)
 window/stretch/mode="canvas_items"
+window/stretch/aspect="expand"
 
 [file_customization]
 

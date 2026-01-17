@@ -256,13 +256,13 @@ func _on_enemy_hit(enemy: Node) -> void:
 	var hit_direction: String = _vector_to_direction(hit_dir_vector)
 
 	# 🧪 DEBUG PRINT
-	print(
-		"[DAMAGE] Enemy:", enemy.name,
-		"| Attack:", attack_name,
-		"| Base:", base_damage,
-		"| Final:", final_damage,
-		"| Dir:", hit_direction
-	)
+	#print(
+		#"[DAMAGE] Enemy:", enemy.name,
+		#"| Attack:", attack_name,
+		#"| Base:", base_damage,
+		#"| Final:", final_damage,
+		#"| Dir:", hit_direction
+	#)
 
 	enemy.take_damage(final_damage, hit_direction)
 	
@@ -317,22 +317,20 @@ func _on_animation_finished(anim_name: String) -> void:
 	if not anim_name.begins_with("attack"):
 		return
 
-	print("🏁 Último frame de ataque:", anim_name)
-
 	if attack_controller.is_attacking():
 		attack_controller.notify_next_hit()
 
 func apply_knockback(direction: Vector2, force: float):
 	# DEBUG: información que recibe el jugador
-	print("🟠 Player.apply_knockback() llamado")
-	print("    direction:", direction, " force:", force)
-	print("    player velocity BEFORE:", velocity)
+	#print("🟠 Player.apply_knockback() llamado")
+	#print("    direction:", direction, " force:", force)
+	#print("    player velocity BEFORE:", velocity)
 
 	# Aplicación real (usa masa del jugador si quieres dividir, ahora directo)
 	velocity += direction.normalized() * force
 
 	# DEBUG: resultado
-	print("    player velocity AFTER:", velocity)
+	#print("    player velocity AFTER:", velocity)
 
 # ───── DASH ─────
 func start_dash():
@@ -962,8 +960,6 @@ func _on_animated_sprite_2d_frame_changed() -> void:
 	var total_frames = animation.sprite_frames.get_frame_count(anim)
 	var is_last_frame = frame == total_frames - 1
 
-	print("[ANIM]", anim, "| frame:", frame, "/", total_frames - 1)
-
 	# ─────────────────────────
 	# HITBOX CONTROL
 	# ─────────────────────────
@@ -975,12 +971,10 @@ func _on_animated_sprite_2d_frame_changed() -> void:
 				var should_be_active = frame in BASIC_SLASH_ACTIVE_FRAMES
 
 				if should_be_active and not _hitbox_active:
-					print("🟢 BASIC HITBOX ON")
 					_hitbox_active = true
 					attack_controller.enable_hitbox()
 
 				elif not should_be_active and _hitbox_active:
-					print("🔴 BASIC HITBOX OFF")
 					_hitbox_active = false
 					attack_controller.disable_hitbox()
 
@@ -988,12 +982,10 @@ func _on_animated_sprite_2d_frame_changed() -> void:
 				var should_be_active = frame in DOUBLE_SLASH_ACTIVE_FRAMES
 
 				if should_be_active and not _hitbox_active:
-					print("🟢 DOUBLE HITBOX ON | hit:", attack_controller._current_hit)
 					_hitbox_active = true
 					attack_controller.enable_hitbox()
 
 				elif not should_be_active and _hitbox_active:
-					print("🔴 DOUBLE HITBOX OFF")
 					_hitbox_active = false
 					attack_controller.disable_hitbox()
 
@@ -1003,14 +995,12 @@ func _on_animated_sprite_2d_frame_changed() -> void:
 	if not is_last_frame:
 		return
 
-	print("🏁 FIN ANIM:", anim)
 
 	_force_disable_hitbox()
 	attack_controller.disable_hitbox()
 
 	# BASIC SLASH termina aquí
 	if attack_controller._current_attack == PhisycAttackController.AttackType.BASIC_SLASH:
-		print("✅ BASIC SLASH FINISHED")
 		attack_controller.notify_attack_finished()
 		can_move = true
 		animation.play("idle_" + last_direction)
@@ -1021,14 +1011,12 @@ func _on_animated_sprite_2d_frame_changed() -> void:
 
 		# Fin del primer golpe → iniciar segundo
 		if attack_controller._current_hit == 1:
-			print("➡️ DOUBLE: HIT 1 → HIT 2")
 			attack_controller.notify_next_hit()
 			animation.play("attack2_" + last_direction)
 			return
 
 		# Fin del segundo golpe → terminar ataque
 		if attack_controller._current_hit == 2:
-			print("✅ DOUBLE SLASH FINISHED")
 			attack_controller.notify_attack_finished()
 			can_move = true
 			animation.play("idle_" + last_direction)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=4 uid="uid://duw2jn00emhow"]
+[gd_scene load_steps=19 format=4 uid="uid://duw2jn00emhow"]
 
 [ext_resource type="Script" uid="uid://c2yymjkcn64s1" path="res://scenes/world/location/GlobbinVillage/globbin_village.gd" id="1_iiqms"]
 [ext_resource type="TileSet" uid="uid://dvfkq370f0fmb" path="res://assets/tilesets/props.tres" id="1_j1d86"]
@@ -13,6 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://c6o2o8pd124ne" path="res://items/_Chests/SilverChest/silver_chest.tscn" id="10_hbtl4"]
 [ext_resource type="Script" uid="uid://b1ujcrmnjrngq" path="res://scenes/world/location/GlobbinVillage/Event/boss_trigger_area.gd" id="11_hbtl4"]
 [ext_resource type="AudioStream" uid="uid://b7cubq2080drq" path="res://SFX/Music/GlobbinVillage/40 21 marching LOOP.mp3" id="14_5lp6t"]
+[ext_resource type="Script" uid="uid://yqx885r1tv37" path="res://scenes/world/location/GlobbinVillage/king_globbin_event.gd" id="14_l7d6l"]
 [ext_resource type="AudioStream" uid="uid://ccbdcs8puptl" path="res://SFX/Music/GlobbinVillage/06 3 critical LOOP.mp3" id="15_5lp6t"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4xcco"]
@@ -111,11 +112,13 @@ position = Vector2(3503, -2588)
 collision_layer = 6
 collision_mask = 3
 king_camera_path = NodePath("KingGlobbinCam")
-blend_camera_path = NodePath("../../../Event/BlendCamera")
-damage = 26.0
+blend_camera_path = NodePath("../../../KingGlobbinEvent/BlendCamera")
+damage = 24.0
 move_speed = 70.0
 exp_min = 350
 exp_max = 350
+max_health = 500.0
+enemy_armour = 25.0
 
 [node name="KingGlobbinCam" type="Camera2D" parent="Globbins/King/GlobbinKing"]
 zoom = Vector2(1.8, 1.8)
@@ -285,40 +288,6 @@ loot_table = Array[Dictionary]([{
 "min": 1
 }])
 
-[node name="Event" type="Node" parent="."]
-
-[node name="BossTriggerArea" type="Area2D" parent="Event"]
-z_index = 2
-position = Vector2(3512, -1961)
-collision_layer = 6
-collision_mask = 3
-script = ExtResource("11_hbtl4")
-king_path = NodePath("../../Globbins/King/GlobbinKing")
-king_camera_path = NodePath("../../Globbins/King/GlobbinKing/KingGlobbinCam")
-blend_camera_path = NodePath("../BlendCamera")
-focus_duration = 2.0
-boss_fade_duration = 1.0
-room_blocker_path = NodePath("../BossRoomLocker")
-village_music_path = NodePath("../../VillageMusic")
-boss_music_path = NodePath("../../BossMusic")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Event/BossTriggerArea"]
-shape = SubResource("RectangleShape2D_7gum3")
-debug_color = Color(0.627451, 0.12549, 0.941176, 1)
-
-[node name="BlendCamera" type="Camera2D" parent="Event"]
-zoom = Vector2(1.5, 1.5)
-
-[node name="BossRoomLocker" type="StaticBody2D" parent="Event"]
-z_index = 2
-position = Vector2(3510, -1859)
-collision_layer = 6
-collision_mask = 3
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Event/BossRoomLocker"]
-shape = SubResource("RectangleShape2D_i3sjn")
-debug_color = Color(1, 0, 0, 1)
-
 [node name="VillageMusic" type="AudioStreamPlayer2D" parent="." groups=["Music"]]
 position = Vector2(1227, -716)
 stream = ExtResource("14_5lp6t")
@@ -333,4 +302,37 @@ max_distance = 100000.0
 bus = &"Music"
 parameters/looping = true
 
+[node name="KingGlobbinEvent" type="Node" parent="."]
+script = ExtResource("14_l7d6l")
+king_path = NodePath("../Globbins/King/GlobbinKing")
+room_blocker_path = NodePath("BossRoomLocker")
+village_music_path = NodePath("../VillageMusic")
+boss_music_path = NodePath("../BossMusic")
+
+[node name="BossTriggerArea" type="Area2D" parent="KingGlobbinEvent"]
+z_index = 2
+position = Vector2(3512, -1961)
+collision_layer = 6
+collision_mask = 3
+script = ExtResource("11_hbtl4")
+event_controller_path = NodePath("..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KingGlobbinEvent/BossTriggerArea"]
+shape = SubResource("RectangleShape2D_7gum3")
+debug_color = Color(0.627451, 0.12549, 0.941176, 1)
+
+[node name="BlendCamera" type="Camera2D" parent="KingGlobbinEvent"]
+zoom = Vector2(1.5, 1.5)
+
+[node name="BossRoomLocker" type="StaticBody2D" parent="KingGlobbinEvent"]
+z_index = 2
+position = Vector2(3510, -1859)
+collision_layer = 6
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KingGlobbinEvent/BossRoomLocker"]
+shape = SubResource("RectangleShape2D_i3sjn")
+debug_color = Color(1, 0, 0, 1)
+
 [connection signal="body_entered" from="Node/Gates/Area2D" to="Node/Gates/Area2D" method="_on_body_entered"]
+[connection signal="body_entered" from="KingGlobbinEvent/BossTriggerArea" to="KingGlobbinEvent/BossTriggerArea" method="_on_body_entered"]

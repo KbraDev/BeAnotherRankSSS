@@ -40,6 +40,7 @@ var enemy := EnemyCore.new()
 
 @export_group("Stats")
 @export var max_health: float = 12.0
+@export var enemy_armour = 0.0
 
 # =========================
 # STUN
@@ -73,7 +74,7 @@ func _ready() -> void:
 	# 🔥 XP ALEATORIA (FALTABA ESTO)
 	enemy.exp_reward = randi_range(exp_min, exp_max)
 
-	enemy.setup(self, max_health)
+	enemy.setup(self, max_health, enemy_armour)
 	sprite.frame_changed.connect(_on_attack_frame)
 	enemy.damaged.connect(_on_enemy_damaged)
 	enemy.died.connect(_on_enemy_died)
@@ -143,22 +144,6 @@ func _enemy_ai(_delta: float) -> void:
 	if is_attacking:
 		velocity = Vector2.ZERO
 		return
-
-	if player_detected and player_target:
-		_chase_player()
-	else:
-		_patrol()
-
-	if player_detected and player_target:
-		_chase_player()
-	else:
-		_patrol()
-
-
-	if player_detected and player_target:
-		_chase_player()
-	else:
-		_patrol()
 
 	if player_detected and player_target:
 		_chase_player()
@@ -256,7 +241,6 @@ func _perform_attack(body: Node) -> void:
 # DAMAGE
 # =========================
 func take_damage(amount: float, dir: String = "front") -> void:
-	print("[DAMAGE] Enemy took damage:", amount)
 
 	last_direction = dir
 	enemy.take_damage(amount)

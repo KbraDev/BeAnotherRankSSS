@@ -10,3 +10,4 @@ position = Vector2(890, 305)
 
 [node name="GlobbinKing" parent="." instance=ExtResource("2_8uh7m")]
 position = Vector2(539, 255)
+enemy_armour = 20.0
