@@ -65,6 +65,8 @@ var current_state := State.IDLE
 
 var locked_by_event := true
 
+var is_dead := false
+
 # =====================
 # READY
 # =====================
@@ -273,12 +275,17 @@ func _on_enemy_damaged() -> void:
 # DEATH
 # =========================
 func _on_enemy_died(exp_amount: int) -> void:
+	is_dead = true
+
 	if exp_amount > 0:
 		var player := get_tree().get_first_node_in_group("player")
 		if player and player.has_method("gain_experience"):
 			player.gain_experience(exp_amount)
 
 	velocity = Vector2.ZERO
+	enemy.can_move = false
+	is_attacking = false
+
 	set_physics_process(false)
 	set_process(false)
 
@@ -288,8 +295,8 @@ func _on_enemy_died(exp_amount: int) -> void:
 	await _play_death_animation()
 	_drop_item()
 	await _fade_out()
-
 	queue_free()
+
 
 func _play_death_animation() -> void:
 	var anim := "dying_" + last_direction
@@ -331,13 +338,20 @@ func _get_cardinal_direction(vec: Vector2) -> String:
 		return "front" if vec.y > 0 else "back"
 
 func _play_walk_animation():
+	if is_dead:
+		return
 	sprite.play("walk_" + last_direction)
 
 func _play_run_animation():
+	if is_dead:
+		return
 	sprite.play("run_" + last_direction)
 
 func _play_attack_animation():
+	if is_dead:
+		return
 	sprite.play("attack_" + last_direction)
+
 
 func _on_attack_frame():
 	if not is_attacking:
@@ -361,11 +375,11 @@ func _try_apply_damage():
 			player_target.take_damage(damage)
 
 func _on_attack_animation_finished() -> void:
-	print("[ANIM] Animation finished:", sprite.animation)
+	if is_dead:
+		return
 
 	# ===== FIN DE ATAQUE =====
 	if sprite.animation.begins_with("attack_"):
-		print("[ATTACK] Attack finished, unlocking AI")
 		is_attacking = false
 		enemy.can_move = true
 		return
@@ -373,7 +387,7 @@ func _on_attack_animation_finished() -> void:
 	# ===== FIN DE HURT =====
 	if sprite.animation.begins_with("hurt_"):
 		if is_stunned:
-			return  # El stun controla la salida
+			return
 
 	if player_detected and player_target:
 		_play_run_animation()

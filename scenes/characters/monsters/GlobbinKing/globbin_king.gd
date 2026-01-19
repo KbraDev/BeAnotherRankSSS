@@ -9,7 +9,6 @@ signal boss_defeated
 
 var is_active: bool = false
 var phase_2: bool = false
-var is_dead := false
 
 var anchor_position: Vector2
 var ceremonial_idle := true

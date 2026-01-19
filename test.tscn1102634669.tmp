@@ -1,8 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://bgnsowto35jld"]
+[gd_scene load_steps=3 format=3 uid="uid://bgnsowto35jld"]
 
 [ext_resource type="PackedScene" uid="uid://be8s6fsuvru6m" path="res://scenes/characters/player/player.tscn" id="1_8uh7m"]
 [ext_resource type="PackedScene" uid="uid://cdm6uwrww4unh" path="res://scenes/characters/monsters/GlobbinKing/globbin_king.tscn" id="2_8uh7m"]
-[ext_resource type="PackedScene" uid="uid://dlhligdd2twvb" path="res://scenes/characters/monsters/GlobbinRockie/globbin_rockie.tscn" id="3_6uqi0"]
 
 [node name="Node2D" type="Node2D"]
 
@@ -11,8 +10,4 @@ position = Vector2(890, 305)
 
 [node name="GlobbinKing" parent="." instance=ExtResource("2_8uh7m")]
 position = Vector2(539, 255)
-max_health = 10.0
 enemy_armour = 20.0
-
-[node name="GlobbinRockie" parent="." instance=ExtResource("3_6uqi0")]
-position = Vector2(961, 440)
