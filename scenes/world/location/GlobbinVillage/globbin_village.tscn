@@ -83,7 +83,7 @@ tile_map_data = PackedByteArray("AADVAFr/HAAqADsAAADVAFv/HAAqADwAAADVAFz/HAAqAD0
 tile_set = ExtResource("1_j1d86")
 
 [node name="player" parent="." instance=ExtResource("3_hab1b")]
-position = Vector2(-276, -1378)
+position = Vector2(3464, -1024)
 
 [node name="FromGlobbinVillageOutsides" type="Marker2D" parent="."]
 position = Vector2(549, 106)

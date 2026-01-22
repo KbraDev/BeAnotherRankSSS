@@ -105,12 +105,15 @@ func _physics_process(delta: float) -> void:
 # ====================================================
 
 func take_damage(amount: float, dir: String = "front") -> void:
+	if ceremonial_idle:
+		ceremonial_idle = false   # 🔴 CLAVE
 	super.take_damage(amount, dir)
 
 	if boss_ui:
 		boss_ui.update_health(enemy.current_health)
 
 	_check_phase_2()
+
 
 # ====================================================
 # ===================== PHASE 2 ======================
@@ -233,6 +236,7 @@ func unfreeze_globbin() -> void:
 	enemy.can_move = true
 	enemy.is_hurt = false
 	is_attacking = false
+	velocity = Vector2.ZERO
 
 	_choose_new_direction()
 

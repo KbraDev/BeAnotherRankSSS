@@ -62,6 +62,7 @@ func apply_knockback(direction: Vector2, force: float) -> void:
 	knockback_velocity = direction.normalized() * force
 	can_move = false
 	is_hurt = true
+	print("KB vel:", knockback_velocity.length())
 
 
 func update_knockback(delta: float) -> bool:

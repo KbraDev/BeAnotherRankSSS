@@ -124,8 +124,15 @@ func _physics_process(delta: float) -> void:
 	if enemy.update_knockback(delta):
 		move_and_slide()
 		return
+	else:
+		# 🔴 Knockback terminó → salir de HURT
+		if current_state == State.HURT:
+			if player_detected and player_target:
+				current_state = State.CHASE
+			else:
+				current_state = State.IDLE
 
-	if enemy.is_hurt or not enemy.can_move:
+	if not enemy.can_move:
 		velocity = Vector2.ZERO
 		move_and_slide()
 		return
@@ -394,6 +401,7 @@ func _on_attack_animation_finished() -> void:
 
 	# ===== FIN DE HURT =====
 	if sprite.animation.begins_with("hurt_"):
+		enemy.is_hurt = false
 		if enemy.has_died:
 			return
 
