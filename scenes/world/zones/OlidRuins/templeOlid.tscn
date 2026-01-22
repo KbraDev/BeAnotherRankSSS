@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=4 uid="uid://bauhtmw7m2e8n"]
+[gd_scene load_steps=17 format=4 uid="uid://bauhtmw7m2e8n"]
 
 [ext_resource type="Script" uid="uid://c0nahuxm1vce2" path="res://scenes/world/zones/OlidRuins/temple_olid.gd" id="1_51fdc"]
 [ext_resource type="TileSet" uid="uid://rngchcx3q02t" path="res://assets/tilesets/terrain.tres" id="1_ljlar"]
@@ -11,6 +11,8 @@
 [ext_resource type="PackedScene" uid="uid://dllvjwqfn3upd" path="res://items/_Chests/WoodChests/wood_chest.tscn" id="9_fowxs"]
 [ext_resource type="PackedScene" uid="uid://c6o2o8pd124ne" path="res://items/_Chests/SilverChest/silver_chest.tscn" id="10_07vjd"]
 [ext_resource type="AudioStream" uid="uid://cqxp5sfl27md5" path="res://SFX/Music/Paths/OlidTemple_&_OusidesGlobbin/33 17 nectar LOOP.mp3" id="10_fowxs"]
+[ext_resource type="Script" uid="uid://daypgdq0wuaxl" path="res://scenes/tools/greenSlimeSpawner/scripts/green_slime_spawn.gd" id="12_y3igc"]
+[ext_resource type="PackedScene" uid="uid://34rn42brxq64" path="res://scenes/characters/monsters/greenslime/greenSlime.tscn" id="13_235bm"]
 
 [sub_resource type="Resource" id="Resource_m3jlf"]
 script = ExtResource("7_qg82m")
@@ -19,6 +21,9 @@ metadata/_custom_type_script = "uid://83qtco7d4r46"
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cjuw6"]
 size = Vector2(597.25, 40.2501)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fpoqh"]
+size = Vector2(507.5, 307.75)
 
 [node name="OlidRuins" type="Node2D"]
 script = ExtResource("1_51fdc")
@@ -176,6 +181,24 @@ loot_table = Array[Dictionary]([{
 
 [node name="player" parent="." instance=ExtResource("5_smxr6")]
 position = Vector2(643, -395)
+
+[node name="greenSlimeSpawn2" type="Area2D" parent="."]
+z_index = 1
+position = Vector2(437, 90)
+script = ExtResource("12_y3igc")
+slime_scene = ExtResource("13_235bm")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="greenSlimeSpawn2"]
+z_index = 1
+shape = SubResource("RectangleShape2D_fpoqh")
+debug_color = Color(0.748967, 0.359722, 0.737896, 0.42)
+
+[node name="initialSpawnTimer" type="Timer" parent="greenSlimeSpawn2"]
+
+[node name="respawnTimer" type="Timer" parent="greenSlimeSpawn2"]
+wait_time = 12.0
+
+[node name="Marker2D" type="Marker2D" parent="greenSlimeSpawn2"]
 
 [connection signal="body_entered" from="ToOlidForest" to="ToOlidForest" method="_on_body_entered"]
 [connection signal="body_entered" from="ToGlobbinOutSides" to="ToGlobbinOutSides" method="_on_body_entered"]

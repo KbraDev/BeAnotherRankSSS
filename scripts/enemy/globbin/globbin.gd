@@ -60,7 +60,7 @@ var is_attacking := false
 var player_in_attack_range := false
 var player_in_brake_range := false
 
-enum State { IDLE, CHASE, ATTACK }
+enum State { IDLE, CHASE, ATTACK, HURT }
 var current_state := State.IDLE
 
 var locked_by_event := true
@@ -143,14 +143,24 @@ func _physics_process(delta: float) -> void:
 # AI
 # =========================
 func _enemy_ai(_delta: float) -> void:
-	if is_attacking:
-		velocity = Vector2.ZERO
-		return
+	match current_state:
+		State.HURT:
+			velocity = Vector2.ZERO
+			return
 
-	if player_detected and player_target:
-		_chase_player()
-	else:
-		_patrol()
+		State.ATTACK:
+			velocity = Vector2.ZERO
+			return
+
+		State.CHASE:
+			_chase_player()
+
+		State.IDLE:
+			if player_detected and player_target:
+				current_state = State.CHASE
+			else:
+				_patrol()
+
 
 # =========================
 # PATROL
@@ -222,15 +232,10 @@ func _on_brake_area_body_exited(body: Node) -> void:
 		player_in_brake_range = false
 
 func _perform_attack(body: Node) -> void:
-	if is_attacking or is_stunned or enemy.has_died or enemy.is_hurt:
+	if is_attacking or is_stunned or enemy.has_died:
 		return
 
-	# 🔴 Calcular dirección antes de atacar
-	if body:
-		var dir = (body.global_position - global_position).normalized()
-		direction = dir
-		last_direction = _get_cardinal_direction(dir)
-
+	current_state = State.ATTACK
 	is_attacking = true
 	enemy.can_move = false
 	velocity = Vector2.ZERO
@@ -254,11 +259,12 @@ func take_damage(amount: float, dir: String = "front") -> void:
 
 	if player_target:
 		var knockback_dir := (global_position - player_target.global_position).normalized()
-		enemy.apply_knockback(knockback_dir, 180)
+		enemy.apply_knockback(knockback_dir, 200)
 
 func _on_enemy_damaged() -> void:
 	is_attacking = false
 	enemy.can_move = false
+	current_state = State.HURT
 
 	if health_bar:
 		health_bar.value = enemy.current_health
@@ -269,6 +275,7 @@ func _on_enemy_damaged() -> void:
 		sprite.play(anim)
 
 	_apply_stun()
+
 
 
 # =========================
@@ -382,12 +389,21 @@ func _on_attack_animation_finished() -> void:
 	if sprite.animation.begins_with("attack_"):
 		is_attacking = false
 		enemy.can_move = true
+		current_state = State.CHASE
 		return
 
 	# ===== FIN DE HURT =====
 	if sprite.animation.begins_with("hurt_"):
-		if is_stunned:
+		if enemy.has_died:
 			return
+
+		if player_detected and player_target:
+			current_state = State.CHASE
+			_play_run_animation()
+		else:
+			current_state = State.IDLE
+			_play_walk_animation()
+
 
 	if player_detected and player_target:
 		_play_run_animation()
@@ -404,8 +420,16 @@ func _apply_stun() -> void:
 	enemy.can_move = false
 	velocity = Vector2.ZERO
 
-	# Mantener animación hurt (ya se reproduce en damaged)
 	await get_tree().create_timer(stun_time).timeout
 
 	is_stunned = false
 	enemy.can_move = true
+
+	# 🔴 Forzar transición visual
+	if enemy.has_died:
+		return
+
+	if player_detected and player_target:
+		_play_run_animation()
+	else:
+		_play_walk_animation()

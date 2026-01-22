@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://co0lf7i6emfn8" path="res://scenes/world/world_manager.gd" id="1_548at"]
 [ext_resource type="PackedScene" uid="uid://be8s6fsuvru6m" path="res://scenes/characters/player/player.tscn" id="1_armst"]
-[ext_resource type="PackedScene" uid="uid://uccdoa08jthp" path="res://scenes/world/location/olid_town/InOlidTownScenes/fathers_home.tscn" id="3_mw4p1"]
+[ext_resource type="PackedScene" uid="uid://uccdoa08jthp" path="res://scenes/world/location/olid_town/InOlidTownScenes/fathers_home.tscn" id="2_am5f0"]
 [ext_resource type="Script" uid="uid://w4lewyfyeb1g" path="res://scenes/world/hud.gd" id="4_1d48p"]
 [ext_resource type="PackedScene" uid="uid://bo3n1alal6xdn" path="res://UIs/EllipseHeathBar/ellipse_health_bar.tscn" id="4_am5f0"]
 [ext_resource type="PackedScene" uid="uid://bi8atwwdsaybi" path="res://UIs/InventoryUI/inventory_ui.tscn" id="4_utxr1"]
@@ -73,28 +73,14 @@ script = ExtResource("1_548at")
 
 [node name="WorldContainer" type="Node2D" parent="."]
 
-[node name="FathersHome" parent="WorldContainer" instance=ExtResource("3_mw4p1")]
+[node name="FathersHome" parent="WorldContainer" instance=ExtResource("2_am5f0")]
 
 [node name="HUD" type="CanvasLayer" parent="." groups=["UI"]]
 script = ExtResource("4_1d48p")
 
-[node name="PlayerHUD" type="Control" parent="HUD"]
-layout_mode = 3
-anchors_preset = 0
-
-[node name="EllipseHealthBar" parent="HUD/PlayerHUD" instance=ExtResource("4_am5f0")]
-layout_mode = 0
-offset_left = 48.0
-offset_top = 24.0
-offset_right = 176.0
-offset_bottom = 152.0
-
-[node name="PauseMenu" parent="HUD" instance=ExtResource("15_i1he6")]
-layer = 2
-
 [node name="TransitionOverlay" type="ColorRect" parent="HUD"]
 modulate = Color(0, 0, 0, 0)
-z_index = 50
+z_index = 4096
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -107,6 +93,24 @@ color = Color(0.0142752, 0.0142752, 0.0142752, 1)
 libraries = {
 &"": SubResource("AnimationLibrary_dtgoh")
 }
+
+[node name="PlayerHUD" type="Control" parent="HUD"]
+z_index = -5
+layout_mode = 3
+anchors_preset = 0
+offset_left = 1.0
+offset_right = 1.0
+mouse_filter = 2
+
+[node name="EllipseHealthBar" parent="HUD/PlayerHUD" instance=ExtResource("4_am5f0")]
+layout_mode = 0
+offset_left = 55.0
+offset_top = 32.0
+offset_right = 183.0
+offset_bottom = 160.0
+
+[node name="PauseMenu" parent="HUD" instance=ExtResource("15_i1he6")]
+layer = 2
 
 [node name="StatsMenu" parent="HUD" instance=ExtResource("16_5kwx7")]
 mouse_filter = 2

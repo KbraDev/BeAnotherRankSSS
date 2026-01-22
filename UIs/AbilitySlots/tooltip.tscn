@@ -20,6 +20,7 @@ shadow_color = Color(0.0987284, 0.0987284, 0.0987284, 0.6)
 shadow_size = 2
 
 [node name="AbilityToolTip" type="Control"]
+z_index = 51
 layout_mode = 3
 anchors_preset = 0
 mouse_filter = 2

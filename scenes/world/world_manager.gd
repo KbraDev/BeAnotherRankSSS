@@ -1,5 +1,8 @@
 extends Node2D
 
+const NEW_GAME_SCENE := "res://scenes/world/location/olid_town/InOlidTownScenes/fathers_home.tscn"
+const NEW_GAME_SPAWN := "SpawnPoint"
+
 @onready var player := $player
 @onready var world_container := $WorldContainer
 @onready var active_mission_menu = $HUD/ActiveMissionsMenu
@@ -14,7 +17,6 @@ var _next_scene: PackedScene = null
 var _preloaded_scenes: Dictionary = {}
 
 func _ready():
-	#print("🎬 WorldManager _ready() ejecutándose desde:", get_path())
 	var hud = $HUD
 	hud.set_player(player)
 
@@ -22,14 +24,33 @@ func _ready():
 	player.connect("inventory_updated", inventory_ui.update_ui)
 	inventory_ui.update_ui(player.inventory)
 
-	# 🔹 Asegurar vínculo entre jugador e inventario
 	if inventory_ui:
 		inventory_ui.player = player
-	#	print("✅ Inventario vinculado al jugador desde WorldManager")
 
-	current_world = world_container.get_child(0)
-	_preload_connected_scenes(current_world)
+	# ⚠️ No asumir que existe un mundo cargado
+	current_world = null
 
+func start_new_game() -> void:
+	var save_data := {
+		"scene_path": NEW_GAME_SCENE,
+		"is_new_game": true
+	}
+
+	await load_game_state(save_data)
+
+
+func _on_world_activated(world: Node) -> void:
+	current_world = world
+
+	# Precargar escenas vecinas
+	_preload_connected_scenes(world)
+
+	# Conectar checkpoints
+	for checkpoint in world.get_tree().get_nodes_in_group("checkpoint"):
+		checkpoint.connect(
+			"checkpoint_reached",
+			Callable(player, "update_checkpoint")
+		)
 
 func change_world(scene_path: String, target_marker_name: String) -> void:
 	var overlay: Node = null
@@ -50,30 +71,30 @@ func change_world(scene_path: String, target_marker_name: String) -> void:
 		child.queue_free()
 	await get_tree().process_frame
 
-	# --- CARGA ASÍNCRONA ---
-	var new_world = null
-
+	# --- Carga asíncrona ---
+	var new_world: Node = null
 	if _preloaded_scenes.has(scene_path):
 		new_world = _preloaded_scenes[scene_path].instantiate()
 	else:
 		new_world = await _load_scene_async(scene_path)
 
-	if new_world == null:
-		push_error("❌ No se pudo cargar el mundo de manera asíncrona.")
+	if not new_world:
+		push_error("❌ No se pudo cargar el mundo.")
 		return
 
 	_remove_duplicate_players(new_world)
 	world_container.add_child(new_world)
-	current_world = new_world
-
 	await get_tree().process_frame
 
 	player.update_tilemap_reference()
 
 	# --- Posición del jugador ---
-	var marker = _find_marker_in(current_world, target_marker_name)
+	var marker = _find_marker_in(new_world, target_marker_name)
 	if marker:
 		player.global_position = marker.global_position
+
+	# --- Activar mundo ---
+	_on_world_activated(new_world)
 
 	# --- Fade In ---
 	if overlay:
@@ -81,12 +102,6 @@ func change_world(scene_path: String, target_marker_name: String) -> void:
 	elif transition_anim and transition_anim.has_animation("fade_in"):
 		transition_anim.play("fade_in")
 		await transition_anim.animation_finished
-
-	# --- Post procesos ---
-	_preload_connected_scenes(current_world)
-
-	for checkpoint in current_world.get_tree().get_nodes_in_group("checkpoint"):
-		checkpoint.connect("checkpoint_reached", Callable(player, "update_checkpoint"))
 
 
 func _remove_duplicate_players(node: Node):
@@ -136,14 +151,11 @@ func fade_to_black():
 	transition_anim.play("fade_out")
 
 func load_game_state(save_data: Dictionary) -> void:
-	# --- 🔹 Restaurar FLAGS GLOBALES ---
+	# --- Restaurar FLAGS GLOBALES ---
 	if save_data.has("flags"):
 		GameState.restore_flags(save_data["flags"])
-	
-	#print("\n📥 [LOAD] Iniciando load_game_state()")
-	var scene_path = save_data.get("scene_path", "")
-	#print("📂 Escena a cargar:", scene_path)
 
+	var scene_path = save_data.get("scene_path", "")
 	if scene_path == "":
 		push_error("❌ No se proporcionó scene_path en save_data.")
 		return
@@ -157,71 +169,42 @@ func load_game_state(save_data: Dictionary) -> void:
 		child.queue_free()
 	await get_tree().process_frame
 
-	# --- Cargar nuevo mundo ---
+	# --- Cargar mundo ---
 	var new_world = await _load_scene_async(scene_path)
-	if new_world == null:
-		push_error("❌ No se pudo cargar el mundo de manera asíncrona.")
+	if not new_world:
+		push_error("❌ No se pudo cargar el mundo.")
 		return
 
 	_remove_duplicate_players(new_world)
 	world_container.add_child(new_world)
-	current_world = new_world
-
 	await get_tree().process_frame
 
 	player.update_tilemap_reference()
 
-	# --- Determinar posición del jugador ---
+	# --- Posición del jugador ---
 	if save_data.has("player"):
 		var player_data = save_data["player"]
 
-		# NUEVA PARTIDA → usar SpawnPoint
-		if save_data.has("is_new_game") and save_data["is_new_game"] == true:
-			var spawn_point = _find_marker_in(current_world, "SpawnPoint")
-			if spawn_point:
-				player.global_position = spawn_point.global_position
-			else:
-				player.global_position = Vector2.ZERO
+		if save_data.get("is_new_game", false):
+			var spawn = _find_marker_in(new_world, "SpawnPoint")
+			player.global_position = spawn.global_position if spawn else Vector2.ZERO
 		else:
-			# PARTIDA EXISTENTE
-			if player_data.has("position"):
-				SaveManager.restore_player_data(player, player_data)
-			else:
-				var spawn_point = _find_marker_in(current_world, "SpawnPoint")
-				if spawn_point:
-					player.global_position = spawn_point.global_position
-				else:
-					player.global_position = Vector2.ZERO
+			SaveManager.restore_player_data(player, player_data)
 	else:
-		var spawn_point = _find_marker_in(current_world, "SpawnPoint")
-		if spawn_point:
-			player.global_position = spawn_point.global_position
-		else:
-			player.global_position = Vector2.ZERO
+		var spawn = _find_marker_in(new_world, "SpawnPoint")
+		player.global_position = spawn.global_position if spawn else Vector2.ZERO
 
-	# --- 🔹 NUEVO: Restaurar misiones guardadas ---
+	# --- Restaurar misiones ---
 	if save_data.has("missions"):
 		SaveManager.restore_mission_data(save_data["missions"])
-		# 🔄 Sincronizar progreso de misiones de tipo "Collect" con el inventario actual
 		player.emit_signal("inventory_updated", player.inventory)
-		print("📜 Misiones restauradas desde archivo de guardado.")
+
+	# --- Activar mundo ---
+	_on_world_activated(new_world)
 
 	# --- Fade In ---
 	transition_anim.play("fade_in")
 	await transition_anim.animation_finished
-
-	# --- Precarga de escenas conectadas ---
-	_preload_connected_scenes(current_world)
-
-	# --- Conectar checkpoints ---
-	for checkpoint in current_world.get_tree().get_nodes_in_group("checkpoint"):
-		checkpoint.connect("checkpoint_reached", Callable(player, "update_checkpoint"))
-
-	#print("🏁 [LOAD] Proceso de carga completado — posición final:", player.global_position, "\n")
-
-
-func get_current_world_scene_path() -> String:
-	return current_world.scene_file_path
 
 
 

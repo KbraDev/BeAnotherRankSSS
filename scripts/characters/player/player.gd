@@ -460,6 +460,29 @@ func respawn():
 	if wm:
 		wm.transition_anim.play("fade_in")
 
+func rebuild_stats_from_save() -> void:
+	for stat in stat_levels.keys():
+		base_stats[stat] = _get_stat_value(stat)
+
+	# sincronizar HP
+	max_health = base_stats["hp"]
+	current_health = min(current_health, max_health)
+
+	# sincronizar velocidad
+	walk_speed = base_stats["speed"] * 0.4
+	run_speed = base_stats["speed"]
+
+	# cache si usas daño directo
+	fuerza_jugador = base_stats["fuerza"]
+
+	emit_signal("health_changed", current_health, max_health)
+
+	# refrescar UI si existe
+	var stats_menu = get_tree().get_first_node_in_group("stats_menu")
+	if stats_menu:
+		stats_menu._update_all_stats()
+
+
 func _restore_player_state():
 	current_health = max_health
 	emit_signal("health_changed", current_health, max_health)

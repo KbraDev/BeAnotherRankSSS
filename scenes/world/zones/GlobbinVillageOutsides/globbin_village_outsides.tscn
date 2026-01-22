@@ -240,6 +240,7 @@ tile_set = ExtResource("2_yis6r")
 position = Vector2(-382, 210)
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
+process_mode = 4
 color = Color(0.790269, 0.833959, 0.721082, 1)
 
 [node name="ParallaxBackground" parent="." instance=ExtResource("4_yis6r")]

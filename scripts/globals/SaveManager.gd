@@ -161,6 +161,8 @@ func restore_player_data(player: Node, data: Dictionary) -> void:
 	player.base_stats = data.get("base_stats", player.base_stats)
 	player.stat_levels = data.get("stat_levels", player.stat_levels)
 
+	player.rebuild_stats_from_save()
+
 	player.last_checkpoint_id = data.get("last_checkpoint_id", "")
 	player.last_checkpoint_scene = data.get("last_checkpoint_scene", "")
 

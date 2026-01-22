@@ -2412,10 +2412,10 @@ attack_area_path = NodePath("../attack_area")
 [node name="UIsContainer" type="CanvasLayer" parent="."]
 
 [node name="BasicSlashSlot" parent="UIsContainer" instance=ExtResource("41_qe74o")]
-offset_left = 19.0
-offset_top = 19.0
-offset_right = -1197.0
-offset_bottom = -637.0
+offset_left = 24.0
+offset_top = 32.0
+offset_right = -1182.0
+offset_bottom = -624.0
 cooldown_duration = 0.5
 icon = ExtResource("42_s4se6")
 tooltip_title = "[b]Tajo Basico[/b]"
@@ -2426,10 +2426,10 @@ tooltip_icon = ExtResource("43_kghjy")
 metadata/_edit_use_anchors_ = true
 
 [node name="DoubleSlash" parent="UIsContainer" instance=ExtResource("41_qe74o")]
-offset_left = 6.0
-offset_top = 64.0
-offset_right = -1210.0
-offset_bottom = -592.0
+offset_left = 14.0
+offset_top = 72.0
+offset_right = -1192.0
+offset_bottom = -584.0
 cooldown_duration = 3.0
 icon = ExtResource("43_omk8d")
 tooltip_title = "[b]Doble Tajo[/b]"

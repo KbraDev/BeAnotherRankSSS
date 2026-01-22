@@ -298,14 +298,14 @@ loop = false
 [node name="NPC" parent="NPCs/NPC1/Path2D/PathFollow2D" node_paths=PackedStringArray("path_follow") instance=ExtResource("7_i1jo7")]
 new_spritesheet = ExtResource("8_gokbw")
 path_follow = NodePath("..")
-dialog_library = Array[String](["¡Bienvenido!, esta es el pueblo Milis...", "Es un pueblito en la costa, lejos de todo... No es genial!"])
+dialog_library = Array[String](["¡Bienvenido!, esta es el pueblo Milis... Es un pueblito en la costa, lejos de todo... ¡No es genial!"])
 
 [node name="NPC2" type="Node" parent="NPCs"]
 
 [node name="NPC" parent="NPCs/NPC2" instance=ExtResource("7_i1jo7")]
 position = Vector2(1469, -186)
 new_spritesheet = ExtResource("10_ta18k")
-dialog_library = Array[String](["¡Tch! Desde que construyeron el gremio el pueblo perdio toda su calma"])
+dialog_library = Array[String](["¡Tch! Desde que construyeron el gremio el pueblo perdio toda su calma."])
 
 [node name="NPC3" type="Node" parent="NPCs"]
 
@@ -327,7 +327,7 @@ dialog_library = Array[String](["¡Hola pequeño!... ¿No eres muy joven para se
 [node name="NPC" parent="NPCs/NPC4" instance=ExtResource("7_i1jo7")]
 position = Vector2(623, 88)
 new_spritesheet = ExtResource("11_t6gsr")
-dialog_library = Array[String](["Me gusta vivir aqui... Ya que es una ciudad junto  al oceano."])
+dialog_library = Array[String](["Me gusta vivir aqui... Ya que es una ciudad junto al oceano."])
 
 [node name="NPC5" type="Node" parent="NPCs"]
 
@@ -342,7 +342,7 @@ loop = false
 [node name="NPC" parent="NPCs/NPC5/Path2D/PathFollow2D" node_paths=PackedStringArray("path_follow") instance=ExtResource("7_i1jo7")]
 new_spritesheet = ExtResource("12_t0ovs")
 path_follow = NodePath("..")
-dialog_library = Array[String](["A este le falta un muelle o un embarcadero!!", "No es posible que no aprovechen una costa tan linda!"])
+dialog_library = Array[String](["A este pueblo le falta un muelle o un embarcadero!!", "No es posible que no aprovechen una costa tan linda!"])
 
 [node name="NPC6" type="Node" parent="NPCs"]
 
@@ -350,7 +350,7 @@ dialog_library = Array[String](["A este le falta un muelle o un embarcadero!!", 
 curve = SubResource("Curve2D_16q6c")
 
 [node name="PathFollow2D" type="PathFollow2D" parent="NPCs/NPC6/Path2D"]
-position = Vector2(1526.71, 342.288)
+position = Vector2(1526.71, 342.28848)
 progress = 546.45
 rotates = false
 loop = false
@@ -373,7 +373,7 @@ loop = false
 [node name="NPC" parent="NPCs/NPC7/Path2D/PathFollow2D" node_paths=PackedStringArray("path_follow") instance=ExtResource("7_i1jo7")]
 new_spritesheet = ExtResource("10_ta18k")
 path_follow = NodePath("..")
-dialog_library = Array[String](["El sacerdote Smith no ah convocado ninguna reunion...", "Espero se encuentre bien."])
+dialog_library = Array[String](["El sacerdote Smith no ah convocado ninguna reunion... Espero se encuentre bien."])
 
 [node name="NPC8" type="Node" parent="NPCs"]
 
@@ -396,7 +396,7 @@ loop = false
 [node name="NPC" parent="NPCs/NPC9/Path2D/PathFollow2D" node_paths=PackedStringArray("path_follow") instance=ExtResource("7_i1jo7")]
 new_spritesheet = ExtResource("15_16q6c")
 path_follow = NodePath("..")
-dialog_library = Array[String](["¡Esa chica de ahi!... ¡Es bellisima!", "Me encanta como el sol golpea su rostro..."])
+dialog_library = Array[String](["¡Esa chica de ahi!... ¡Es bellisima!... Me encanta como el sol golpea su rostro..."])
 
 [node name="NPC10" type="Node" parent="NPCs"]
 
@@ -411,28 +411,28 @@ loop = false
 [node name="NPC" parent="NPCs/NPC10/Path2D/PathFollow2D" node_paths=PackedStringArray("path_follow") instance=ExtResource("7_i1jo7")]
 new_spritesheet = ExtResource("16_0qvaf")
 path_follow = NodePath("..")
-dialog_library = Array[String](["¿El gremio? Si si. Esta justo al este de la ciudad...", "Sigue este camino y lo veras."])
+dialog_library = Array[String](["¿El gremio? Si si. Esta justo al este de la ciudad... Sigue este camino y lo veras."])
 
 [node name="NPC11" type="Node" parent="NPCs"]
 
 [node name="NPC" parent="NPCs/NPC11" instance=ExtResource("7_i1jo7")]
 position = Vector2(1431, 189)
 new_spritesheet = ExtResource("17_0qvaf")
-dialog_library = Array[String](["Antes toda la gente salía de sus casas...", "Con la llegada del gremio dejarón de hacerlo. No les gustan los forasteros."])
+dialog_library = Array[String](["Antes toda la gente salía de sus casas, pero con la llegada del gremio dejarón de hacerlo. No les gustan los forasteros."])
 
 [node name="NPC12" type="Node" parent="NPCs"]
 
 [node name="NPC" parent="NPCs/NPC12" instance=ExtResource("7_i1jo7")]
 position = Vector2(2910, 852)
 new_spritesheet = ExtResource("18_xabve")
-dialog_library = Array[String](["Los mas jovenes se quejan mucho de los forasteros...", "Mi esposo y yo llevamos 54 años aqui....", "Creo que esto es una oportunidad para enriquecer el pueblo."])
+dialog_library = Array[String](["Los mas jovenes se quejan mucho de los forasteros, mi esposo y yo llevamos 54 años aqui....", "Creo que esto es una oportunidad para enriquecer el pueblo."])
 
 [node name="NPC13" type="Node" parent="NPCs"]
 
 [node name="NPC" parent="NPCs/NPC13" instance=ExtResource("7_i1jo7")]
 position = Vector2(2950, 858)
 new_spritesheet = ExtResource("19_2nt1u")
-dialog_library = Array[String](["Me gusta mirar el oceano con mi esposa...", "Pero ella no deja de hablar sobre lo bueno que puede ser esta situación."])
+dialog_library = Array[String](["Me gusta mirar el oceano con mi esposa... Pero ella no deja de hablar sobre lo bueno que puede ser esta situación."])
 
 [node name="NPC14" type="Node" parent="NPCs"]
 

@@ -80,6 +80,9 @@ func _on_intro_finished() -> void:
 	_fade_in_music(boss_music, 0.8)
 
 func _on_boss_defeated() -> void:
+	if GameState.has_flag("KingGlobbinEvent"):
+		return
+
 	GameState.set_flag("KingGlobbinEvent")
 
 	_fade_out_music(boss_music, 1.0)
@@ -90,10 +93,18 @@ func _on_boss_defeated() -> void:
 
 	queue_free()
 
+
 func _cleanup_completed_event() -> void:
+	# Boss nunca debe existir si el evento ya terminó
 	if king:
 		king.queue_free()
+
+	# Asegurar música correcta
+	_fade_out_music(boss_music, 0.5)
+	_fade_in_music(village_music, 0.5)
+
 	queue_free()
+
 
 # ---------------------------------------------------
 

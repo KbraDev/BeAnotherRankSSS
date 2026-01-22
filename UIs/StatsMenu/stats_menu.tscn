@@ -73,6 +73,7 @@ animations = [{
 
 [node name="StatsMenu" type="Control" groups=["stats_menu"]]
 process_mode = 1
+z_index = 51
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -194,13 +195,12 @@ offset_bottom = 246.0
 
 [node name="GoldRow" type="Control" parent="RightPanel/MainBox/CoinsContainer"]
 custom_minimum_size = Vector2(0, 30)
-layout_mode = 2
 anchors_preset = 0
 offset_right = 128.0
 offset_bottom = 31.0
 
 [node name="GoldIcon" type="TextureRect" parent="RightPanel/MainBox/CoinsContainer/GoldRow"]
-layout_mode = 2
+layout_mode = 0
 offset_left = -8.0
 offset_top = -17.0
 offset_right = 56.0
@@ -208,7 +208,7 @@ offset_bottom = 47.0
 texture = ExtResource("6_npwbc")
 
 [node name="GoldLabel" type="Label" parent="RightPanel/MainBox/CoinsContainer/GoldRow"]
-layout_mode = 2
+layout_mode = 0
 offset_left = 48.0
 offset_top = 8.0
 offset_right = 124.0
@@ -216,14 +216,13 @@ offset_bottom = 31.0
 
 [node name="SilverRow" type="Control" parent="RightPanel/MainBox/CoinsContainer"]
 custom_minimum_size = Vector2(0, 30)
-layout_mode = 2
 anchors_preset = 0
 offset_top = 40.0
 offset_right = 128.0
 offset_bottom = 71.0
 
 [node name="SilverIcon" type="TextureRect" parent="RightPanel/MainBox/CoinsContainer/SilverRow"]
-layout_mode = 2
+layout_mode = 0
 offset_left = -8.0
 offset_top = -17.0
 offset_right = 56.0
@@ -231,7 +230,7 @@ offset_bottom = 47.0
 texture = ExtResource("5_0ptx8")
 
 [node name="SilverLabel" type="Label" parent="RightPanel/MainBox/CoinsContainer/SilverRow"]
-layout_mode = 2
+layout_mode = 0
 offset_left = 48.0
 offset_top = 8.0
 offset_right = 124.0
@@ -239,14 +238,13 @@ offset_bottom = 31.0
 
 [node name="BronzeRow" type="Control" parent="RightPanel/MainBox/CoinsContainer"]
 custom_minimum_size = Vector2(0, 30)
-layout_mode = 2
 anchors_preset = 0
 offset_top = 80.0
 offset_right = 128.0
 offset_bottom = 111.0
 
 [node name="BronzeIcon" type="TextureRect" parent="RightPanel/MainBox/CoinsContainer/BronzeRow"]
-layout_mode = 2
+layout_mode = 0
 offset_left = -8.0
 offset_top = -17.0
 offset_right = 56.0
@@ -254,7 +252,7 @@ offset_bottom = 47.0
 texture = ExtResource("4_aacyf")
 
 [node name="BronzeLabel" type="Label" parent="RightPanel/MainBox/CoinsContainer/BronzeRow"]
-layout_mode = 2
+layout_mode = 0
 offset_left = 48.0
 offset_top = 8.0
 offset_right = 124.0
