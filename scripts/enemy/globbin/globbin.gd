@@ -22,6 +22,8 @@ var enemy := EnemyCore.new()
 # =========================
 @export var damage: float = 10.0
 @export var move_speed: float = 45.0
+@export var attack_cooldown := 0.8
+var can_attack := true
 
 # Drops
 @export_group("Drops")
@@ -156,17 +158,20 @@ func _enemy_ai(_delta: float) -> void:
 			return
 
 		State.ATTACK:
-			velocity = Vector2.ZERO
 			return
 
 		State.CHASE:
-			_chase_player()
+			if player_in_brake_range and not is_attacking:
+				_perform_attack(player_target)
+			else:
+				_chase_player()
 
 		State.IDLE:
 			if player_detected and player_target:
 				current_state = State.CHASE
 			else:
 				_patrol()
+
 
 
 # =========================
@@ -231,17 +236,16 @@ func _on_attack_area_body_exited(body: Node) -> void:
 func _on_brake_area_body_entered(body: Node) -> void:
 	if body.is_in_group("player"):
 		player_in_brake_range = true
-		if not is_attacking:
-			_perform_attack(body)
 
 func _on_brake_area_body_exited(body: Node) -> void:
 	if body.is_in_group("player"):
 		player_in_brake_range = false
 
 func _perform_attack(body: Node) -> void:
-	if is_attacking or is_stunned or enemy.has_died:
+	if is_attacking or is_stunned or enemy.has_died or not can_attack:
 		return
 
+	can_attack = false
 	current_state = State.ATTACK
 	is_attacking = true
 	enemy.can_move = false
@@ -249,6 +253,10 @@ func _perform_attack(body: Node) -> void:
 
 	_play_attack_animation()
 	attack_sfx.play()
+
+	await get_tree().create_timer(attack_cooldown).timeout
+	can_attack = true
+
 
 
 # =========================

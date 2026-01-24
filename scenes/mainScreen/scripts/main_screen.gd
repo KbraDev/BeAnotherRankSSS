@@ -1,5 +1,7 @@
 extends Node2D
 
+const PRELOAD_OLID_TOWN := "res://scenes/world/location/olid_town/olid_town.tscn"
+
 @onready var label = $CanvasLayer/Label
 @onready var path_follow = $CanvasLayer/Path2D/PathFollow2D
 @onready var main_menu = $CanvasLayer/MainMenu
@@ -10,6 +12,17 @@ extends Node2D
 var speed := 200.0
 
 func _ready():
+		# Precarga temprana de OlidTown (escena crítica)
+	var status := ResourceLoader.load_threaded_get_status(PRELOAD_OLID_TOWN)
+
+	if status == ResourceLoader.THREAD_LOAD_INVALID_RESOURCE:
+		print("🟡 [BOOT] Precargando OlidTown desde MainScreen")
+		ResourceLoader.load_threaded_request(PRELOAD_OLID_TOWN)
+	elif status == ResourceLoader.THREAD_LOAD_IN_PROGRESS:
+		print("🟡 [BOOT] OlidTown ya se está cargando")
+	elif status == ResourceLoader.THREAD_LOAD_LOADED:
+		print("🟢 [BOOT] OlidTown ya estaba precargada")
+	
 	Once_initial.play()
 	Once_loop.stream.loop = true  # aseguramos que quede en loop
 	Once_initial.finished.connect(_on_intro_finished)

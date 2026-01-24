@@ -75,12 +75,12 @@ script = ExtResource("1_548at")
 
 [node name="FathersHome" parent="WorldContainer" instance=ExtResource("2_am5f0")]
 
-[node name="HUD" type="CanvasLayer" parent="." groups=["UI"]]
-script = ExtResource("4_1d48p")
+[node name="Transition" type="CanvasLayer" parent="."]
+layer = 5
 
-[node name="TransitionOverlay" type="ColorRect" parent="HUD"]
+[node name="TransitionOverlay" type="ColorRect" parent="Transition"]
 modulate = Color(0, 0, 0, 0)
-z_index = 4096
+z_index = 1000
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -89,13 +89,15 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(0.0142752, 0.0142752, 0.0142752, 1)
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="HUD/TransitionOverlay"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Transition/TransitionOverlay"]
 libraries = {
 &"": SubResource("AnimationLibrary_dtgoh")
 }
 
+[node name="HUD" type="CanvasLayer" parent="." groups=["UI"]]
+script = ExtResource("4_1d48p")
+
 [node name="PlayerHUD" type="Control" parent="HUD"]
-z_index = -5
 layout_mode = 3
 anchors_preset = 0
 offset_left = 1.0
@@ -103,6 +105,7 @@ offset_right = 1.0
 mouse_filter = 2
 
 [node name="EllipseHealthBar" parent="HUD/PlayerHUD" instance=ExtResource("4_am5f0")]
+z_index = -5
 layout_mode = 0
 offset_left = 55.0
 offset_top = 32.0

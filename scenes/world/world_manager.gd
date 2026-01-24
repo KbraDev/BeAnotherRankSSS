@@ -2,14 +2,16 @@ extends Node2D
 
 const NEW_GAME_SCENE := "res://scenes/world/location/olid_town/InOlidTownScenes/fathers_home.tscn"
 const NEW_GAME_SPAWN := "SpawnPoint"
+const DEBUG_SLOW_SCENE := "res://scenes/world/location/olid_town/olid_town.tscn"
+
 
 @onready var player := $player
 @onready var world_container := $WorldContainer
 @onready var active_mission_menu = $HUD/ActiveMissionsMenu
 @onready var floating_notification = $HUD/FloatingNotiification
 @onready var notif := get_node("HUD/FloatingNotiification")
-@onready var transition_overlay := $HUD/TransitionOverlay
-@onready var transition_anim := $HUD/TransitionOverlay/AnimationPlayer
+@onready var transition_overlay := $Transition/TransitionOverlay
+@onready var transition_anim := $Transition/TransitionOverlay/AnimationPlayer
 
 var current_world: Node = null
 var _thread := Thread.new()
@@ -211,17 +213,48 @@ func load_game_state(save_data: Dictionary) -> void:
 # --- carga asincrona ---
 
 func _load_scene_async(scene_path: String) -> Node:
-	# Solicita la carga en segundo plano
-	ResourceLoader.load_threaded_request(scene_path)
+	var debug := scene_path == DEBUG_SLOW_SCENE
+	var t_start := Time.get_ticks_msec()
 
-	# Espera hasta que termine
-	while ResourceLoader.load_threaded_get_status(scene_path) == ResourceLoader.THREAD_LOAD_IN_PROGRESS:
+	if debug:
+		print("\n🟡 [LOAD] Iniciando carga:", scene_path)
+
+	# Solicitar carga si no existe
+	var status := ResourceLoader.load_threaded_get_status(scene_path)
+	if status == ResourceLoader.THREAD_LOAD_INVALID_RESOURCE:
+		if debug:
+			print("🟡 [LOAD] Solicitando load_threaded_request")
+		ResourceLoader.load_threaded_request(scene_path)
+
+	# Esperar carga
+	while true:
+		status = ResourceLoader.load_threaded_get_status(scene_path)
+		if status == ResourceLoader.THREAD_LOAD_LOADED:
+			break
+		if status == ResourceLoader.THREAD_LOAD_FAILED:
+			push_error("❌ Fallo al cargar escena: " + scene_path)
+			return null
 		await get_tree().process_frame
 
-	# Obtiene el resultado final
-	var result = ResourceLoader.load_threaded_get(scene_path)
-	if result is PackedScene:
-		return result.instantiate()
-	else:
-		push_error("❌ Fallo al cargar escena: " + scene_path)
-		return null
+	var t_loaded := Time.get_ticks_msec()
+	if debug:
+		print("🟢 [LOAD] PackedScene cargado en",
+			t_loaded - t_start, "ms")
+
+	# Instanciación (ESTO suele ser el cuello de botella)
+	var packed := ResourceLoader.load_threaded_get(scene_path)
+	if packed is PackedScene:
+		var t_inst_start := Time.get_ticks_msec()
+		var instance = packed.instantiate()
+		var t_inst_end := Time.get_ticks_msec()
+
+		if debug:
+			print("🟠 [LOAD] Instanciación tardó",
+				t_inst_end - t_inst_start, "ms")
+			print("🟢 [LOAD] Total:",
+				t_inst_end - t_start, "ms")
+
+		return instance
+
+	push_error("❌ El recurso no es PackedScene: " + scene_path)
+	return null

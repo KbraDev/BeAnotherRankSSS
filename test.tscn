@@ -9,4 +9,4 @@
 position = Vector2(890, 305)
 
 [node name="GlobbinMajor" parent="." instance=ExtResource("2_8uh7m")]
-position = Vector2(521, 276)
+position = Vector2(609, 239)
