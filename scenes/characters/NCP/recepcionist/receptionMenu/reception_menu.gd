@@ -20,12 +20,12 @@ func close():
 
 func _on_select_pressed():
 	print("Seleccionar presionado")
-	emit_signal("option_selected", "seleccionar")
+	emit_signal("option_selected", "Select task")
 
 func _on_deliver_pressed():
 	print("Entregar presionado")
-	emit_signal("option_selected", "entregar")
+	emit_signal("option_selected", "Deliver task")
 
 func _on_exit_pressed():
 	print("Salir presionado")
-	emit_signal("option_selected", "salir")
+	emit_signal("option_selected", "Nothing")

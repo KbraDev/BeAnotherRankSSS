@@ -121,7 +121,7 @@ alignment = 1
 [node name="Level" type="Label" parent="RightPanel/MainBox/LevelBarContainer"]
 custom_minimum_size = Vector2(120, 30)
 layout_mode = 2
-text = "Nivel 1"
+text = "Level 1"
 vertical_alignment = 1
 
 [node name="XpBar" type="ProgressBar" parent="RightPanel/MainBox/LevelBarContainer"]
@@ -156,18 +156,19 @@ layout_mode = 2
 
 [node name="StatRow" parent="RightPanel/MainBox/ScrollContainer/StatsList" instance=ExtResource("1_w0m2v")]
 layout_mode = 2
-stat_name = "Salud"
+stat_name = "Health"
 
 [node name="StatRow2" parent="RightPanel/MainBox/ScrollContainer/StatsList" instance=ExtResource("1_w0m2v")]
 layout_mode = 2
+stat_name = "Speed"
 
 [node name="StatRow3" parent="RightPanel/MainBox/ScrollContainer/StatsList" instance=ExtResource("1_w0m2v")]
 layout_mode = 2
-stat_name = "Fuerza"
+stat_name = "Strength"
 
 [node name="StatRow4" parent="RightPanel/MainBox/ScrollContainer/StatsList" instance=ExtResource("1_w0m2v")]
 layout_mode = 2
-stat_name = "Resistencia"
+stat_name = "Resistence"
 
 [node name="StatRow5" parent="RightPanel/MainBox/ScrollContainer/StatsList" instance=ExtResource("1_w0m2v")]
 layout_mode = 2
@@ -175,15 +176,15 @@ stat_name = "Mana"
 
 [node name="StatRow6" parent="RightPanel/MainBox/ScrollContainer/StatsList" instance=ExtResource("1_w0m2v")]
 layout_mode = 2
-stat_name = "Poder Magico"
+stat_name = "Magical Power"
 
 [node name="StatRow7" parent="RightPanel/MainBox/ScrollContainer/StatsList" instance=ExtResource("1_w0m2v")]
 layout_mode = 2
-stat_name = "R. Magica"
+stat_name = "Magical Res"
 
 [node name="StatRow8" parent="RightPanel/MainBox/ScrollContainer/StatsList" instance=ExtResource("1_w0m2v")]
 layout_mode = 2
-stat_name = "Suerte"
+stat_name = "Lucky"
 
 [node name="CoinsContainer" type="Control" parent="RightPanel/MainBox"]
 layout_mode = 1

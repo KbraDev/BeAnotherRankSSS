@@ -70,7 +70,7 @@ func _on_menu_option_selected(option: String) -> void:
 	menu_ui.close()
 
 	match option:
-		"seleccionar":
+		"Select task":
 			var missions = MissionDataBase.get_missions_for_rank(player_rank)
 
 
@@ -83,11 +83,11 @@ func _on_menu_option_selected(option: String) -> void:
 
 			mission_menu.open(filtered)
 
-		"entregar":
+		"Deliver task":
 			var active = MissionTracker.get_active_mission()
 			mission_delivery_menu.open(active)
 
-		"salir":
+		"Nothing":
 			_end_interaction()
 
 
@@ -137,8 +137,8 @@ func _process(_delta: float) -> void:
 		dialog_started_by_receptionist = true
 
 		dialog_box.show_dialog([
-			"¡Bienvenido!, ¿Cómo podemos ayudarle hoy?",
-			"Tenemos nuevas misiones disponibles."
+			"Welcome! How can we help you today?",
+			"We have new tasks available"
 		])
 
 

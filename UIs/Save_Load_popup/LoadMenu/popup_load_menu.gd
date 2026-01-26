@@ -61,7 +61,7 @@ func _on_slot_pressed(slot_index: int) -> void:
 	elif mode == "new_game":
 		if FileAccess.file_exists(path):
 			var confirm := ConfirmationDialog.new()
-			confirm.dialog_text = "Esta ya es una partida guardada.\n¿Deseas sobrescribirla?\nSe perderán los datos previos."
+			confirm.dialog_text = "This is already a saved game.\nDo you want to overwrite it?\nPrevious data will be lost."
 			add_child(confirm)
 
 			# 🔹 Mostrar el popup centrado antes de conectar las señales

@@ -38,9 +38,9 @@ func _on_mission_accepted(mission: MissionResource):
 
 	if succes: 
 		emit_signal("mission_selected", mission)
-		floating.show_message("🎉 Misión aceptada: %s" % mission.name, Color.WHITE)
+		floating.show_message("🎉 Task Acepted: %s" % mission.name, Color.WHITE)
 	else: 
-		floating.show_message("⚠️ Límite de misiones activas alcanzado", Color.ORANGE)
+		floating.show_message("⚠️ Active task limit reached", Color.ORANGE)
 
 	close()
 

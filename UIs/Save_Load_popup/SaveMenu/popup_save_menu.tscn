@@ -19,16 +19,16 @@ offset_right = 474.0
 offset_bottom = 196.0
 
 [node name="Label" type="Label" parent="VBoxContainer"]
-layout_mode = 2
+layout_mode = 0
 offset_top = 2.0
 offset_right = 470.0
 offset_bottom = 25.0
-text = "Guardar Partida"
+text = "Save Game"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
-layout_mode = 2
+layout_mode = 0
 offset_left = -4.0
 offset_top = 33.0
 offset_right = 474.0
@@ -50,4 +50,4 @@ offset_left = 6.0
 offset_top = 160.0
 offset_right = 464.0
 offset_bottom = 191.0
-text = "Regresar"
+text = "Back"

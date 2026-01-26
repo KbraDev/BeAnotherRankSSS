@@ -26,7 +26,7 @@ offset_bottom = 196.0
 
 [node name="Label" type="Label" parent="VBoxContainer"]
 layout_mode = 2
-text = "Cargar partida"
+text = "Load Game"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -45,4 +45,4 @@ layout_mode = 2
 
 [node name="back_button" type="Button" parent="VBoxContainer"]
 layout_mode = 2
-text = "Regresar"
+text = "Back"

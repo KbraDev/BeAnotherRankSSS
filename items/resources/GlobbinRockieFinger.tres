@@ -6,7 +6,7 @@
 [resource]
 script = ExtResource("2_iumgw")
 item_id = "GlobbinRockieFinger"
-item_name = "Dedo de \"Duende Joven\""
-description = "Dedo en descomposicion, puede venderse en alguna tienda."
+item_name = "Finger of an \"Young Globbin\""
+description = "a decomposing finger; it can be sold in some shop."
 icon = ExtResource("1_phbmg")
 max_stack = 8

@@ -480,7 +480,7 @@ loop = false
 [node name="NPC" parent="NPCs/NPC/Path2D/PathFollow2D" node_paths=PackedStringArray("path_follow") instance=ExtResource("10_ugwko")]
 new_spritesheet = ExtResource("11_q4nh0")
 path_follow = NodePath("..")
-dialog_library = Array[String](["El hombre de la estatua es el fundador del pueblo, su nombre es Rolvo Olid."])
+dialog_library = Array[String](["The man in the statue is the founder of the village; his name is Rolvo Olid."])
 
 [node name="NPC2" type="Node" parent="NPCs"]
 
@@ -495,7 +495,7 @@ loop = false
 [node name="NPC" parent="NPCs/NPC2/Path2D/PathFollow2D" node_paths=PackedStringArray("path_follow") instance=ExtResource("10_ugwko")]
 new_spritesheet = ExtResource("12_gtjd6")
 path_follow = NodePath("..")
-dialog_library = Array[String](["¡Oh! ¡Hola!, ¿Buscas a Angeler? Ella esta en el gremio."])
+dialog_library = Array[String](["Oh! Hey!, are you looking foe Angeler? She is at the guild."])
 
 [node name="NPC3" type="Node" parent="NPCs"]
 
@@ -510,7 +510,7 @@ loop = false
 [node name="NPC" parent="NPCs/NPC3/Path2D/PathFollow2D" node_paths=PackedStringArray("path_follow") instance=ExtResource("10_ugwko")]
 new_spritesheet = ExtResource("13_7wv2b")
 path_follow = NodePath("..")
-dialog_library = Array[String](["Hola Auren, ¿Buscas el gremio?, Sube un poco más la colina y lo veras"])
+dialog_library = Array[String](["Hey Auren! Looking for the guild? It’s just a bit further up the hill."])
 
 [node name="NPC4" type="Node" parent="NPCs"]
 
@@ -525,7 +525,7 @@ loop = false
 [node name="NPC" parent="NPCs/NPC4/Path2D/PathFollow2D" node_paths=PackedStringArray("path_follow") instance=ExtResource("10_ugwko")]
 new_spritesheet = ExtResource("14_7wv2b")
 path_follow = NodePath("..")
-dialog_library = Array[String](["Gracias a los aventureros del pueblo, como tus padres, el pueblo lleva en paz muchos años."])
+dialog_library = Array[String](["Thanks to the village’s adventurers, like your parents, the village has lived in peace for many years."])
 
 [node name="NPC5" type="Node" parent="NPCs"]
 
@@ -540,7 +540,7 @@ loop = false
 [node name="NPC" parent="NPCs/NPC5/Path2D/PathFollow2D" node_paths=PackedStringArray("path_follow") instance=ExtResource("10_ugwko")]
 new_spritesheet = ExtResource("15_d5r1y")
 path_follow = NodePath("..")
-dialog_library = Array[String](["El pueblo ha cuidado de ti a petición de tus padres, ahora es turno de que nos cuides a nosotros."])
+dialog_library = Array[String](["The village took care of you at your parents’ request. Now it’s your turn to take care of us."])
 
 [node name="NPC6" type="Node" parent="NPCs"]
 
@@ -554,7 +554,7 @@ loop = false
 
 [node name="NPC" parent="NPCs/NPC6/Path2D/PathFollow2D" instance=ExtResource("10_ugwko")]
 new_spritesheet = ExtResource("16_a4jh4")
-dialog_library = Array[String](["Hola Auren, se que serás un excelente aventurero.."])
+dialog_library = Array[String](["Hello Auren, I know you’ll be an excellent adventurer."])
 
 [node name="NPC7" type="Node" parent="NPCs"]
 
@@ -569,7 +569,7 @@ loop = false
 [node name="NPC" parent="NPCs/NPC7/Path2D/PathFollow2D" node_paths=PackedStringArray("path_follow") instance=ExtResource("10_ugwko")]
 new_spritesheet = ExtResource("17_ww5af")
 path_follow = NodePath("..")
-dialog_library = Array[String](["Siempre pense que eras una carga para el pueblo, demuestra lo contrario con buenas hazañas."])
+dialog_library = Array[String](["I always thought you were a burden to the village. Prove me wrong with great deeds."])
 
 [node name="NPC8" type="Node" parent="NPCs"]
 
@@ -583,7 +583,7 @@ loop = false
 
 [node name="NPC" parent="NPCs/NPC8/Path2D/PathFollow2D" instance=ExtResource("10_ugwko")]
 new_spritesheet = ExtResource("18_plp7c")
-dialog_library = Array[String](["Tu madre se volvio en la aventurera mas sensacional del pueblo...", "¡Dicen que su magia puede sacudir bosques enteros!"])
+dialog_library = Array[String](["Your mother became the most remarkable adventurer in the village…", "They say her magic can shake entire forests!"])
 
 [node name="NPC9" type="Node" parent="NPCs"]
 
@@ -597,7 +597,7 @@ rotates = false
 [node name="NPC" parent="NPCs/NPC9/Path2D/PathFollow2D" node_paths=PackedStringArray("path_follow") instance=ExtResource("10_ugwko")]
 new_spritesheet = ExtResource("19_it7mw")
 path_follow = NodePath("..")
-dialog_library = Array[String](["Tengo que vigilar esta entrada todos los dias... No hay amenazas cerca pero es mejor prevenir."])
+dialog_library = Array[String](["I have to guard this entrance every day… There are no threats nearby, but it’s better to be safe."])
 
 [node name="NPC11" type="Node" parent="NPCs"]
 
@@ -612,7 +612,7 @@ rotates = false
 [node name="NPC" parent="NPCs/NPC11/Path2D/PathFollow2D" node_paths=PackedStringArray("path_follow") instance=ExtResource("10_ugwko")]
 new_spritesheet = ExtResource("14_7wv2b")
 path_follow = NodePath("..")
-dialog_library = Array[String](["Mi hijo salio a una  mision de expedicion hace una semana, desde entonces no eh sabido nada de el.", "Es un adulto pero empiezo a preocuparme mucho."])
+dialog_library = Array[String](["**My son went on an expedition mission a week ago. I haven’t heard anything from him since.**", "He’s an adult, but I’m starting to worry a lot."])
 
 [node name="Ligths" type="Node" parent="."]
 

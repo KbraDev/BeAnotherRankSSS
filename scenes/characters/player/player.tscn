@@ -2419,9 +2419,9 @@ offset_bottom = -624.0
 cooldown_duration = 0.5
 icon = ExtResource("42_s4se6")
 tooltip_title = "[b]Tajo Basico[/b]"
-tooltip_description = "Ataque con la espada
-la potencia depende de la estadistica \"[b]Fuerza[/b]\". "
-tooltip_usage = "Usa:"
+tooltip_description = "Atack with sword
+Its power depends on the “[b]Strength[/b]” stat."
+tooltip_usage = "Press:"
 tooltip_icon = ExtResource("43_kghjy")
 metadata/_edit_use_anchors_ = true
 
@@ -2433,9 +2433,9 @@ offset_bottom = -584.0
 cooldown_duration = 3.0
 icon = ExtResource("43_omk8d")
 tooltip_title = "[b]Doble Tajo[/b]"
-tooltip_description = "Usa dos ataques para obtener un ataque potenciado
-la potencia depende de la estadisitca \"[b]Fuerza[/b]\""
-tooltip_usage = "Usa: "
+tooltip_description = "Use two attacks to trigger a powered attack.
+Its power depends on the “[b]Strength[/b]” stat."
+tooltip_usage = "Press: "
 tooltip_icon = ExtResource("45_72eiu")
 
 [connection signal="frame_changed" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_frame_changed"]

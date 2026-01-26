@@ -72,7 +72,7 @@ offset_bottom = 63.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("1_vq62k")
 theme_override_font_sizes/font_size = 45
-text = "Menu de configuracion"
+text = "Settings menu"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -111,7 +111,7 @@ offset_bottom = 63.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("1_vq62k")
 theme_override_font_sizes/font_size = 30
-text = "Musica"
+text = "Music"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -140,7 +140,7 @@ offset_bottom = 80.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("1_vq62k")
 theme_override_font_sizes/font_size = 25
-text = "Efectos de sonido"
+text = "Sound Effects"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
@@ -164,6 +164,6 @@ theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("1_vq62k")
 theme_override_font_sizes/font_size = 30
 theme_override_styles/normal = SubResource("StyleBoxFlat_0rsob")
-text = "Volver"
+text = "Back"
 
 [connection signal="pressed" from="back_button" to="." method="_on_back_button_pressed"]

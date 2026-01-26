@@ -7,14 +7,10 @@
 [ext_resource type="Texture2D" uid="uid://bwgpfkhid4ph0" path="res://sprites/UIS/buttons/panel-border-000.png" id="5_np07d"]
 [ext_resource type="Script" uid="uid://83qtco7d4r46" path="res://scripts/preload/ScenePortalData.gd" id="7_bj21d"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2mpo1"]
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_np07d"]
-texture = ExtResource("2_uk83t")
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_eqdel"]
+texture = ExtResource("3_2mpo1")
 texture_margin_left = 20.0
-texture_margin_top = 20.0
 texture_margin_right = 20.0
-texture_margin_bottom = 20.0
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_bj21d"]
 texture = ExtResource("3_np07d")
@@ -23,10 +19,14 @@ texture_margin_top = 20.0
 texture_margin_right = 20.0
 texture_margin_bottom = 20.0
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_eqdel"]
-texture = ExtResource("3_2mpo1")
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_np07d"]
+texture = ExtResource("2_uk83t")
 texture_margin_left = 20.0
+texture_margin_top = 20.0
 texture_margin_right = 20.0
+texture_margin_bottom = 20.0
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2mpo1"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_np07d"]
 
@@ -77,58 +77,60 @@ layout_mode = 2
 [node name="NewGame" type="Button" parent="CenterContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 45)
 layout_mode = 2
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 5
-theme_override_styles/focus = SubResource("StyleBoxEmpty_2mpo1")
-theme_override_styles/hover = SubResource("StyleBoxTexture_np07d")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_bj21d")
 theme_override_styles/normal = SubResource("StyleBoxTexture_eqdel")
-text = "Nueva partida"
+theme_override_styles/pressed = SubResource("StyleBoxTexture_bj21d")
+theme_override_styles/hover = SubResource("StyleBoxTexture_np07d")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_2mpo1")
+text = "New Game"
 
 [node name="LoadGame" type="Button" parent="CenterContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 45)
 layout_mode = 2
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 5
-theme_override_styles/focus = SubResource("StyleBoxEmpty_np07d")
-theme_override_styles/hover = SubResource("StyleBoxTexture_np07d")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_bj21d")
 theme_override_styles/normal = SubResource("StyleBoxTexture_eqdel")
-text = "Cargar partida"
+theme_override_styles/pressed = SubResource("StyleBoxTexture_bj21d")
+theme_override_styles/hover = SubResource("StyleBoxTexture_np07d")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_np07d")
+text = "Load Game"
 
 [node name="Settings" type="Button" parent="CenterContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 45)
 layout_mode = 2
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 5
-theme_override_styles/focus = SubResource("StyleBoxEmpty_eqdel")
-theme_override_styles/hover = SubResource("StyleBoxTexture_np07d")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_bj21d")
 theme_override_styles/normal = SubResource("StyleBoxTexture_eqdel")
-text = "Ajustes"
+theme_override_styles/pressed = SubResource("StyleBoxTexture_bj21d")
+theme_override_styles/hover = SubResource("StyleBoxTexture_np07d")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_eqdel")
+text = "Settings
+"
 
 [node name="Leave" type="Button" parent="CenterContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 45)
 layout_mode = 2
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 5
-theme_override_styles/focus = SubResource("StyleBoxEmpty_bj21d")
-theme_override_styles/hover = SubResource("StyleBoxTexture_np07d")
-theme_override_styles/pressed = SubResource("StyleBoxTexture_bj21d")
 theme_override_styles/normal = SubResource("StyleBoxTexture_eqdel")
-text = "Salir
+theme_override_styles/pressed = SubResource("StyleBoxTexture_bj21d")
+theme_override_styles/hover = SubResource("StyleBoxTexture_np07d")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_bj21d")
+text = "Leave
 "
 
 [node name="ConfirmationDialog" type="AcceptDialog" parent="."]
+oversampling_override = 1.0
 title = ""
-size = Vector2i(163, 104)
+size = Vector2i(170, 104)
 theme_override_styles/panel = SubResource("StyleBoxTexture_b1m8q")
-ok_button_text = "Salir"
-dialog_text = "¿Salir del juego?"
+ok_button_text = "Close"
+dialog_text = "Close the game? "
 
 [node name="SceneMeta" type="Node2D" parent="."]
 script = SubResource("GDScript_eqdel")

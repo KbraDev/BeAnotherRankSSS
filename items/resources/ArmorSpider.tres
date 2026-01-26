@@ -6,7 +6,7 @@
 [resource]
 script = ExtResource("2_y3c61")
 item_id = "ArmorSpider"
-item_name = "Coraza de araña"
-description = "Piel dura proveniente de insectos, muy util para la fabricación de armaduras y armas."
+item_name = "Spider Carapace"
+description = "Tough hide obtained from insects, very useful for crafting armor and weapons."
 icon = ExtResource("1_84pha")
 max_stack = 8

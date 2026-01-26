@@ -52,8 +52,7 @@ theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("2_62q8e")
 theme_override_font_sizes/font_size = 26
 theme_override_styles/normal = ExtResource("3_t1a0j")
-text = "Reanudar
-"
+text = "Resume"
 
 [node name="btn_save" type="Button" parent="Panel/VBoxContainer"]
 texture_filter = 1
@@ -63,7 +62,7 @@ theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("2_62q8e")
 theme_override_font_sizes/font_size = 26
 theme_override_styles/normal = ExtResource("3_t1a0j")
-text = "Guardar partida"
+text = "Save game"
 
 [node name="btn_load" type="Button" parent="Panel/VBoxContainer"]
 custom_minimum_size = Vector2(0, 50)
@@ -72,7 +71,7 @@ theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("2_62q8e")
 theme_override_font_sizes/font_size = 26
 theme_override_styles/normal = ExtResource("3_t1a0j")
-text = "Cargar partida"
+text = "load game"
 
 [node name="btn_settings" type="Button" parent="Panel/VBoxContainer"]
 custom_minimum_size = Vector2(0, 50)
@@ -81,7 +80,7 @@ theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("2_62q8e")
 theme_override_font_sizes/font_size = 26
 theme_override_styles/normal = ExtResource("3_t1a0j")
-text = "Configuracion"
+text = "settings"
 
 [node name="btn_leave" type="Button" parent="Panel/VBoxContainer"]
 texture_filter = 1
@@ -91,7 +90,7 @@ theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("2_62q8e")
 theme_override_font_sizes/font_size = 26
 theme_override_styles/normal = ExtResource("3_t1a0j")
-text = "Menu Principal"
+text = "Back to menu"
 
 [node name="PopupPanel" type="Panel" parent="."]
 self_modulate = Color(1, 1, 1, 0)

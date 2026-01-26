@@ -32,43 +32,43 @@ var desk_dialog_started := false
 var receptionist: Node
 
 var angeler_dialog_lines: Array[String] = [
-	"¡Auren! Qué bueno verte. Escuché que ya eres un aventurero, igual que yo.",
-	"Me llamo Angeler, soy una aventurera de rango C y me especializo en el combate cuerpo a cuerpo con espada.",
-	"La magia no se me da nada bien… ¡así que siempre opto por las espadas!",
-	"¡Soy una gran admiradora de tus padres! Ambos son magníficos aventureros; tienes que presentármelos algún día.",
-	"¡Cierto! yo te enseñaré todo lo basico que necesitas saber... ¿por donde empiezo?",
-	"Primero te enseñaré cómo funciona el gremio de aventureros. Sígueme, por favor.",
+	"Auren! It’s good to see you. I heard you’re an adventurer now, just like me.",
+	"My name is Angeler. I’m a Rank C adventurer, and I specialize in close combat with a sword.",
+	"I’m really bad at magic… so I always stick to swords!",
+	"I’m a huge admirer of your parents! They’re both magnificent adventurers—you’ll have to introduce me to them someday.",
+	"Oh, right! I’ll teach you all the basics you need to know… where should I start?",
+	"First, I’ll show you how the Adventurers’ Guild works. Please, follow me.",
 ]
 
 var angeler_desk_dialog_lines: Array[String] = [
-	"Este es el tablón del gremio. La recepcionista se encargará de mostrarte las misiones compatibles con tu rango de aventurero.",
-	"Para saber qué misiones puedes aceptar, basta con hablar con ella e ir al apartado de [Seleccionar misión].",
-	"¡Ahí verás todas las misiones disponibles y compatibles contigo!",
-	"Para ver tus misiones activas y su progreso, presiona la tecla [G]. También podrás revisar tu menú de estadísticas.",
-	"Al terminar una misión, deberás acudir al gremio más cercano para entregarla en el apartado de [Entregar misión].",
-	"El Reino se encargó de construir gremios en la mayoría de las ciudades del continente, así que será fácil encontrarlos. Todos lucen igual por fuera.",
-	"Hmm… ¡ah, cierto! No podrás entregar misiones que no estén completas. Si intentas entregar una misión sin terminar, podrían multarte.",
-	"Prueba hablar con la recepcionista para que conozcas mejor cómo funciona el gremio."
+	"This is the guild board. The receptionist will show you the quests compatible with your adventurer rank.",
+	"To see which quests you can accept, just talk to her and go to the [Select Quest] section.",
+	"There you’ll see all the available quests that match your rank!",
+	"To view your active quests and their progress, press the [G] key. You can also check your stats menu there.",
+	"Once you complete a quest, you must go to the nearest guild and turn it in under the [Turn In Quest] section.",
+	"The Kingdom built guilds in most cities across the continent, so they’re easy to find. They all look the same from the outside.",
+	"Hmm… oh, right! You can’t turn in quests that aren’t completed. If you try to turn in an unfinished quest, you could be fined.",
+	"Try talking to the receptionist to learn more about how the guild works."
 ]
 
 var angeler_phase_3_dialog_lines: Array[String] = [
-	"Muy bien, ahora ya sabes cómo funcionan los gremios de aventureros. Cada misión te dará recompensas y experiencia para mejorar tus habilidades.",
-	"A partir de aquí, podrás aceptar misiones por tu cuenta para hacerte más fuerte.",
-	"Eres libre de ir a donde quieras, cuando quieras, pero ten cuidado: si no eres lo suficientemente fuerte, algún monstruo podría eliminarte fácilmente.",
-	"Y… bueno, no me gustaría perder a alguien como tú tan rápido. ¡Por favor, ten cuidado!",
-	"Antes de despedirme, déjame explicarte algunos detalles más. Por todo el mundo hay cofres que ayudan a los aventureros; suelen contener dinero y pociones.",
-	"Para abrir estos cofres solemos usar la fuerza bruta, ya que no contamos con llaves. ¡Basta con golpearlos unas cuantas veces!",
-	"Las monedas te servirán para comerciar en ciudades o con vendedores ambulantes. Podrás obtener monedas de bronce, tablillas de plata y medallones de oro.",
-	"Los medallones de oro son muy raros. Yo creo que el gobierno del continente los tiene casi todos.",
-	"A ver, a ver… ¿qué más puedo estar olvidando? ¡Ah, sí!",
-	"Los monstruos… verás… debido a mi rango, nunca he tenido la oportunidad de enfrentar monstruos magníficos como un dragón o una hidra.",
-	"Son extremadamente peligrosos, y solo los mejores entre nosotros pueden enfrentarlos. Aun así, salir con vida de algo así es muy difícil.",
-	"Sin embargo, para aventureros de rango bajo como tú y yo, los monstruos son más fáciles de cazar y obtener sus recursos.",
-	"¡Así es! Cada monstruo deja algo al morir. Muchas veces sirve para venderlo por dinero, y otras para fabricar armas y herramientas.",
-	"¡Perdón, ya hablé demasiado! Es que este mundo tiene muchísimas cosas que explicar…",
-	"Lo mejor de ser aventurero es que puedes descubrirlas todas por tu cuenta. No quiero quitarte el placer de aprender por ti mismo.",
-	"Solo quería explicarte un poco… de verdad, ¡perdón! Te dejaré continuar.",
-	"Nos estaremos viendo seguido, Auren. ¡Mucha suerte!"
+	"Alright, now you know how adventurers’ guilds work. Each quest will grant you rewards and experience to improve your skills.",
+	"From here on, you’ll be able to accept quests on your own to grow stronger.",
+	"You’re free to go wherever you want, whenever you want—but be careful. If you’re not strong enough, some monster could easily kill you.",
+	"And… well, I wouldn’t like to lose someone like you so quickly. Please, be careful!",
+	"Before I go, let me explain a few more details. All over the world there are chests that help adventurers; they usually contain money and potions.",
+	"To open these chests, we usually use brute force, since we don’t have keys. Just hit them a few times!",
+	"Coins are used for trading in cities or with traveling merchants. You can obtain bronze coins, silver tablets, and gold medallions.",
+	"Gold medallions are very rare. I believe the continent’s government has almost all of them.",
+	"Let’s see, let’s see… what else might I be forgetting? Oh, right!",
+	"Monsters… you see… due to my rank, I’ve never had the chance to face magnificent monsters like a dragon or a hydra.",
+	"They’re extremely dangerous, and only the best among us can face them. Even then, surviving such encounters is very difficult.",
+	"However, for low-rank adventurers like you and me, monsters are easier to hunt and harvest for resources.",
+	"That’s right! Every monster leaves something behind when it dies. Often it can be sold for money, and other times it’s used to craft weapons and tools.",
+	"Sorry, I talked too much! This world just has so many things to explain…",
+	"The best part of being an adventurer is that you can discover all of it on your own. I don’t want to take that joy away from you.",
+	"I just wanted to explain a little… really, sorry! I’ll let you continue.",
+	"We’ll be seeing each other often, Auren. Good luck!"
 ]
 
 const DIALOG_BOX_SCENE := preload("res://UIs/DialogBox/dialog_box.tscn")

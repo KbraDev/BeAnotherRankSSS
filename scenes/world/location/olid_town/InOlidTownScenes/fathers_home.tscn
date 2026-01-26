@@ -136,17 +136,17 @@ texture = SubResource("GradientTexture2D_m2dk5")
 [node name="letterItem" parent="Items" instance=ExtResource("3_3k73n")]
 z_index = 1
 position = Vector2(581, 232)
-pages = Array[String](["Querido Auren:
+pages = Array[String](["Dear Auren,
 
-recibi la noticia de que has sido nombrado aventurero, mi corazón se llena de un orgullo difícil de describir. Desde niño soñabas con recorrer el mundo, y ahora ese día ha llegado. Has dado tu primer paso en un sendero que es tan duro como glorioso.
+I received the news that you have been named an adventurer, and my heart is filled with a pride difficult to put into words. Since you were a child, you dreamed of traveling the world, and now that day has come. You have taken your first step on a path as harsh as it is glorious.
 
-Tu madre también desearía escribirte, pero se encuentra en tierras lejanas,  No temas por ella, sigue siendo tan fuerte como la recuerdas. Algún día escucharás de su propia voz sus miles aventuras.", "Nuestro continente, hijo, es vasto y está lleno de maravillas y peligros. Ciudades tan grandes como el mar, ruinas donde las piedras mismas susurran secretos antiguos, y bosques tan viejos que parecen recordar la creación del mundo. Espero puedas ver el mundo de la misma manera que yo lo hago.
+Your mother would also like to write to you, but she is in distant lands. Do not worry about her—she remains as strong as you remember. One day, you will hear of her countless adventures in her own voice.", "Our continent, my son, is vast and filled with wonders and dangers. Cities as great as the sea, ruins where even the stones whisper ancient secrets, and forests so old they seem to remember the creation of the world. I hope you come to see the world the same way I do.
 
-En este mundo, cada aventurero es una chispa de esperanza. Tú ahora formas parte de esa llama.", "Tu madre y yo hemos cargado con la responsabilidad de proteger no solo a nuestro pueblo, sino a todos aquellos que no pueden defenderse. Sé que nuestra ausencia fue dura para ti, y aunque nos duele, recuerda que el pueblo entero esta contigo. Ahora, con tu propio esfuerzo, podrás devolverles ese cuidado, y también forjar tu propio nombre.", "Confío en ti, Auren. Sé que tu viaje apenas comienza, pero tu espíritu ya brilla más fuerte de lo que imaginas.
-Que tus pasos sean firmes, que tus ojos jamás olviden lo bello del mundo, y que tu nombre algún día resuene con honor en todo el continente.
+In this world, every adventurer is a spark of hope. You are now part of that flame.", "Your mother and I have carried the responsibility of protecting not only our people, but all those who cannot defend themselves. I know our absence was hard on you, and though it pains us, remember that the entire village stands with you. Now, through your own efforts, you will be able to return that care—and also forge your own name.", "I trust you, Auren. I know your journey has only just begun, but your spirit already shines brighter than you imagine.
+May your steps be steady, may your eyes never forget the beauty of the world, and may your name one day resound with honor across the entire continent.
 
-Con orgullo y amor,
-Tu padre"])
+With pride and love,
+Your father"])
 
 [node name="CheckPoint" parent="." instance=ExtResource("6_qk76y")]
 z_index = 2

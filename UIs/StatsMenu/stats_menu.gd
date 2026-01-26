@@ -22,13 +22,13 @@ var ActiveMissionCardScene = preload("res://UIs/ActiveMissionsMenu/active_missio
 
 # alias para mapear nombres UI -> campos reales del player
 var stat_aliases := {
-	"salud": "hp",
+	"salud": "health",
 	"velocidad": "speed",
-	"fuerza": "fuerza",
-	"resistencia": "resistencia",
+	"fuerza": "strength",
+	"resistencia": "resistence",
 	"mana": "mana",
-	"poder_magico": "poder_magico",
-	"r._magica": "resistencia_hechizos",
+	"poder_magico": "magical_power",
+	"r._magica": "magical_res",
 	"suerte": "lucky"
 }
 
@@ -86,16 +86,16 @@ func _update_all_stats():
 		print("⚠️ Player aún no está disponible.")
 		return
 
-	points_label.text = "Puntos disponibles: %d" % player.stat_points
+	points_label.text = "Available Points: %d" % player.stat_points
 
 	var max_values := {
-		"hp": 300,
+		"healt": 300,
 		"speed": 180,
-		"fuerza": 40,
-		"resistencia": 60,
+		"strength": 40,
+		"resistence": 60,
 		"mana": 110,
-		"poder_magico": 80,
-		"resistencia_hechizos": 55,
+		"magical_power": 80,
+		"magical_res": 55,
 		"lucky": 25
 	}
 
@@ -118,7 +118,7 @@ func _update_all_stats():
 
 	# experiencia / etiquetas
 	experience_bar.value = float(player.experience) / float(player.experience_to_next_level) * 100
-	level_label.text = "Nivel: %d" % player.level
+	level_label.text = "Level: %d" % player.level
 	next_level_label.text = "%d / %d" % [player.experience, player.experience_to_next_level]
 
 
@@ -137,11 +137,11 @@ func _update_coins():
 # == Active Missions ==
 # ====================
 func _on_mission_added(state: MissionState) -> void:
-	print("🆕 Misión añadida → actualizando panel de stats")
+	print("Task added → updating stats panel")
 	_update_active_missions()
 
 func _on_mission_removed(state: MissionState) -> void:
-	print("🗑️ Misión removida → actualizando panel de stats")
+	print("Task removed → updating stats panel")
 	_update_active_missions()
 
 func _on_mission_progress_updated(state: MissionState) -> void:
@@ -160,7 +160,7 @@ func _update_active_missions():
 
 	var tracker = get_node_or_null("/root/MissionTracker")
 	if tracker == null:
-		print("⚠️ No se encontró el MissionTracker.")
+		#print("⚠️ No se encontró el MissionTracker.")
 		return
 
 	var missions = tracker.get_active_mission()
@@ -172,11 +172,11 @@ func _update_active_missions():
 		var card = ActiveMissionCardScene.instantiate()
 		card.set_mission_state(state)
 		active_mission_container.add_child(card)
-		print("🟦 Card de misión añadida:", state.mission.name)
+		#print("🟦 Card de misión añadida:", state.mission.name)
 
 	# debug count
 	await get_tree().process_frame
-	print("🧩 Total de cards en contenedor:", active_mission_container.get_child_count())
+	#print("🧩 Total de cards en contenedor:", active_mission_container.get_child_count())
 
 
 func _on_visibility_changed():

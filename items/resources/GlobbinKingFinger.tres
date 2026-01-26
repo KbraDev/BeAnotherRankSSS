@@ -6,7 +6,6 @@
 [resource]
 script = ExtResource("2_1w8vx")
 item_id = "GlobbinKingFinger"
-item_name = "Dedo del \"Rey Duende\""
-description = "Dedo unico en su existencia, podria considerarse un trofeo. "
+item_name = "King Globbin's finger"
+description = "A one-of-a-kind finger; it could be considered a trophy."
 icon = ExtResource("1_wxndt")
-max_stack = 1
